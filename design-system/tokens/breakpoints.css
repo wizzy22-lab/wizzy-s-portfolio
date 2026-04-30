@@ -1,0 +1,9 @@
+:root {
+  --bp-tablet: 768px;
+  --bp-desktop: 1440px;
+  --bp-wide: 1920px;
+}
+
+@custom-media --bp-tablet (min-width: 768px);
+@custom-media --bp-desktop (min-width: 1440px);
+@custom-media --bp-wide (min-width: 1920px);

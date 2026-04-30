@@ -1,0 +1,116 @@
+:root {
+  --font-sans: 'Manrope', -apple-system, system-ui, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-kr: 'Pretendard', -apple-system, system-ui, sans-serif;
+
+  --text-display-size: 96px;
+  --text-display-line-height: 91.2px;
+  --text-display-letter-spacing: -2.88px;
+  --text-display-weight: 800;
+
+  --text-h1-size: 64px;
+  --text-h1-line-height: 67.2px;
+  --text-h1-letter-spacing: -1.28px;
+  --text-h1-weight: 700;
+
+  --text-h2-size: 40px;
+  --text-h2-line-height: 46px;
+  --text-h2-letter-spacing: -0.6px;
+  --text-h2-weight: 700;
+
+  --text-h3-size: 22px;
+  --text-h3-line-height: 30.8px;
+  --text-h3-letter-spacing: -0.11px;
+  --text-h3-weight: 600;
+
+  --text-body-lg-size: 18px;
+  --text-body-lg-line-height: 29.7px;
+  --text-body-lg-letter-spacing: 0;
+  --text-body-lg-weight: 400;
+
+  --text-body-size: 16px;
+  --text-body-line-height: 27.2px;
+  --text-body-letter-spacing: 0;
+  --text-body-weight: 400;
+
+  --text-caption-size: 13px;
+  --text-caption-line-height: 19.5px;
+  --text-caption-letter-spacing: 0;
+  --text-caption-weight: 400;
+
+  --text-eyebrow-size: 11px;
+  --text-eyebrow-line-height: 13.2px;
+  --text-eyebrow-letter-spacing: 1.32px;
+  --text-eyebrow-weight: 500;
+
+  /* Larger eyebrow — used by ds-section-header eyebrow (Section 10).
+     Same letter-spacing/weight as base eyebrow; only size + line-height shift. */
+  --text-eyebrow-lg-size: 14px;
+  --text-eyebrow-lg-line-height: 21px;
+
+  --text-counter-size: 12px;
+  --text-counter-line-height: 18px;
+  --text-counter-letter-spacing: 1.8px;
+  --text-counter-weight: 500;
+
+  --text-sig-stat-size: 120px;
+  --text-sig-stat-line-height: 108px;
+  --text-sig-stat-letter-spacing: -6.0px;
+  --text-sig-stat-weight: 400;
+
+  --text-sig-96-size: 96px;
+  --text-sig-96-line-height: 144px;
+  --text-sig-96-letter-spacing: -4.8px;
+  --text-sig-96-weight: 400;
+
+  --text-sig-64-size: 64px;
+  --text-sig-64-line-height: 96px;
+  --text-sig-64-letter-spacing: -3.2px;
+  --text-sig-64-weight: 400;
+
+  --text-sig-48-size: 48px;
+  --text-sig-48-line-height: 72px;
+  --text-sig-48-letter-spacing: -2.4px;
+  --text-sig-48-weight: 400;
+
+  --text-sig-40-size: 40px;
+  --text-sig-40-line-height: 60px;
+  --text-sig-40-letter-spacing: -2.0px;
+  --text-sig-40-weight: 400;
+
+  --text-sig-28-size: 28px;
+  --text-sig-28-line-height: 42px;
+  --text-sig-28-letter-spacing: -1.4px;
+  --text-sig-28-weight: 400;
+
+  /* Korean heading downscale — hangul reads larger at same px,
+     so KR variants are ~83-91% of EN equivalents. Auto-applied
+     via .ds-kr.ds-display / .ds-h1 / .ds-h2 / .ds-h3 in cards.css */
+  --fs-display-kr: 80px;
+  --fs-h1-kr:      54px;
+  --fs-h2-kr:      34px;
+  --fs-h3-kr:      20px;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --text-display-size: 56px;
+    --text-h1-size: 40px;
+    --text-h2-size: 28px;
+    --text-h3-size: 18px;
+    --text-body-lg-size: 17px;
+    --text-body-size: 15px;
+    --text-sig-stat-size: 72px;
+    --text-sig-96-size: 56px;
+
+    /* eyebrow-lg mobile — matches nav-link 12px mobile pattern */
+    --text-eyebrow-lg-size: 12px;
+    --text-eyebrow-lg-line-height: 18px;
+
+    /* KR mobile downscale — same ratio as desktop KR/EN */
+    --fs-display-kr: 48px;
+    --fs-h1-kr:      36px;
+    --fs-h2-kr:      26px;
+    --fs-h3-kr:      18px;
+  }
+}

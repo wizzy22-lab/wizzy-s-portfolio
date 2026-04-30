@@ -1,0 +1,32 @@
+:root {
+  --bg-page: #0A0E0F;
+  --bg-surface: #12171A;
+  --bg-muted: #1A2024;
+
+  --text-primary: #F5F5F0;
+  --text-secondary: #A8ADB0;
+  --text-tertiary: #6A7075;
+  --text-accent-warm: #FDF89C;
+  --text-accent-cool: #B1E0FF;
+  --text-on-cream: #0A0E0F;
+
+  --border-hairline: rgba(245, 245, 240, 0.12);
+  --border-default: rgba(245, 245, 240, 0.20);
+  --border-accent: #B1E0FF;
+
+  --accent-yellow: #FDF89C;
+  --accent-blue: #B1E0FF;
+
+  --card-cream: #CAEAFF; /* legacy name — actual color is light blue (was #F0EBE0 beige) */
+  --card-white: #FFFFFF;
+
+  --success: #7BD389;
+  --warning: #FDD17A;
+  --error: #FF7A85;
+  --info: #B1E0FF;
+
+  --success-bg: rgba(123, 211, 137, 0.12);
+  --warning-bg: rgba(253, 209, 122, 0.12);
+  --error-bg: rgba(255, 122, 133, 0.12);
+  --info-bg: rgba(177, 224, 255, 0.12);
+}

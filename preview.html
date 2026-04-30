@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Design Tokens v2 — Preview</title>
+<link rel="stylesheet" href="./design-system/index.css" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg-page);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: var(--text-body-size);
+    line-height: var(--text-body-line-height);
+    padding: var(--space-14) var(--space-10);
+    min-height: 100vh;
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  header { margin-bottom: var(--space-20); border-bottom: var(--border-thin) solid var(--border-hairline); padding-bottom: var(--space-10); }
+  header .eyebrow {
+    font-size: var(--text-eyebrow-size); line-height: var(--text-eyebrow-line-height);
+    letter-spacing: var(--text-eyebrow-letter-spacing); font-weight: var(--text-eyebrow-weight);
+    text-transform: uppercase; color: var(--text-tertiary); margin-bottom: var(--space-3);
+  }
+  header h1 {
+    font-family: var(--font-sans); font-size: var(--text-h1-size); line-height: var(--text-h1-line-height);
+    letter-spacing: var(--text-h1-letter-spacing); font-weight: var(--text-h1-weight);
+  }
+  header p { color: var(--text-secondary); margin-top: var(--space-3); max-width: 640px; }
+
+  .resp-note {
+    margin-top: var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    background: var(--info-bg); border: var(--border-thin) solid var(--info);
+    border-radius: var(--radius-md); color: var(--info);
+    font-size: var(--text-caption-size); line-height: var(--text-caption-line-height);
+  }
+
+  section { margin-bottom: var(--space-20); }
+  section > h2 {
+    font-size: var(--text-h2-size); line-height: var(--text-h2-line-height);
+    letter-spacing: var(--text-h2-letter-spacing); font-weight: var(--text-h2-weight);
+    margin-bottom: var(--space-8);
+  }
+  section > p.section-desc { color: var(--text-secondary); margin-top: calc(var(--space-8) * -1 + var(--space-3)); margin-bottom: var(--space-8); }
+
+  /* Color swatches */
+  .swatch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: var(--space-3); }
+  .swatch {
+    border: var(--border-thin) solid var(--border-hairline);
+    border-radius: var(--radius-md); overflow: hidden; background: var(--bg-surface);
+  }
+  .swatch .chip { height: 80px; }
+  .swatch .meta { padding: var(--space-3) var(--space-4); }
+  .swatch .name {
+    font-size: var(--text-caption-size); line-height: var(--text-caption-line-height); font-weight: 500;
+    margin-bottom: 2px;
+  }
+  .swatch .value {
+    font-size: var(--text-counter-size); line-height: var(--text-counter-line-height);
+    letter-spacing: var(--text-counter-letter-spacing); color: var(--text-tertiary);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  /* Typography specimens */
+  .type-row {
+    display: grid; grid-template-columns: 220px 1fr; gap: var(--space-6); align-items: baseline;
+    padding: var(--space-6) 0; border-bottom: var(--border-thin) solid var(--border-hairline);
+  }
+  .type-row:last-child { border-bottom: none; }
+  .type-meta { color: var(--text-tertiary); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: var(--text-caption-size); }
+  .type-meta .label { color: var(--text-primary); font-family: var(--font-sans); font-size: var(--text-caption-size); font-weight: 600; display: block; margin-bottom: 2px; }
+
+  /* Spacing scale */
+  .space-row { display: grid; grid-template-columns: 100px 80px 1fr; gap: var(--space-4); align-items: center; padding: var(--space-2) 0; }
+  .space-row .name { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: var(--text-caption-size); color: var(--text-secondary); }
+  .space-row .value { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: var(--text-caption-size); color: var(--text-tertiary); }
+  .space-row .bar { height: 14px; background: var(--accent-blue); border-radius: var(--radius-sm); }
+
+  /* Radius */
+  .radius-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: var(--space-4); }
+  .radius-cell { display: flex; flex-direction: column; align-items: center; gap: var(--space-3); }
+  .radius-cell .box { width: 100px; height: 100px; background: var(--bg-muted); border: var(--border-normal) solid var(--border-default); }
+  .radius-cell .label { font-size: var(--text-caption-size); color: var(--text-secondary); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+  /* Semantic states */
+  .state-stack { display: flex; flex-direction: column; gap: var(--space-3); }
+  .state {
+    padding: var(--space-4) var(--space-6);
+    border-radius: var(--radius-md);
+    display: flex; align-items: center; gap: var(--space-3);
+    font-size: var(--text-body-size); line-height: var(--text-body-line-height);
+    border: var(--border-normal) solid;
+  }
+  .state .dot { width: 8px; height: 8px; border-radius: 999px; flex-shrink: 0; }
+  .state.success { background: var(--success-bg); border-color: var(--success); color: var(--success); }
+  .state.success .dot { background: var(--success); }
+  .state.warning { background: var(--warning-bg); border-color: var(--warning); color: var(--warning); }
+  .state.warning .dot { background: var(--warning); }
+  .state.error   { background: var(--error-bg);   border-color: var(--error);   color: var(--error); }
+  .state.error .dot   { background: var(--error); }
+  .state.info    { background: var(--info-bg);    border-color: var(--info);    color: var(--info); }
+  .state.info .dot    { background: var(--info); }
+
+  /* Motion */
+  .motion-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: var(--space-6); }
+  .motion-cell {
+    background: var(--bg-surface); border-radius: var(--radius-card);
+    padding: var(--space-6); border: var(--border-thin) solid var(--border-hairline);
+    display: flex; flex-direction: column; gap: var(--space-4);
+  }
+  .motion-cell .label { font-size: var(--text-caption-size); color: var(--text-secondary); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .motion-cell .ball {
+    width: 32px; height: 32px; border-radius: 999px; background: var(--accent-blue);
+    transform: translateX(0);
+    transition: transform var(--duration-slow) var(--ease-default);
+  }
+  .motion-cell:hover .ball { transform: translateX(140px); }
+  .motion-cell.linear   .ball { transition-timing-function: var(--ease-linear); }
+  .motion-cell.def      .ball { transition-timing-function: var(--ease-default); }
+  .motion-cell.eo       .ball { transition-timing-function: var(--ease-out); }
+  .motion-cell.eio      .ball { transition-timing-function: var(--ease-in-out); }
+  .motion-cell.spring   .ball { transition-timing-function: var(--ease-spring); }
+
+  /* Card variants (cream/white inverted) */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--space-4); }
+  .card-cream, .card-white {
+    color: var(--text-on-cream); padding: var(--space-8);
+    border-radius: var(--radius-card-lg);
+    font-family: var(--font-serif); font-style: italic; letter-spacing: -0.05em;
+    font-size: var(--text-sig-40-size); line-height: var(--text-sig-40-line-height); font-weight: var(--text-sig-40-weight);
+  }
+  .card-cream { background: var(--card-cream); }
+  .card-white { background: var(--card-white); }
+
+  /* Korean specimen */
+  .kr-block {
+    background: var(--bg-surface); border-radius: var(--radius-card);
+    padding: var(--space-8); display: flex; flex-direction: column; gap: var(--space-4);
+    border: var(--border-thin) solid var(--border-hairline);
+  }
+  .kr-block .label { color: var(--text-tertiary); font-size: var(--text-eyebrow-size); letter-spacing: var(--text-eyebrow-letter-spacing); text-transform: uppercase; }
+  .kr-h2 {
+    font-family: var(--font-kr); font-size: var(--text-h2-size); line-height: var(--text-h2-line-height);
+    letter-spacing: var(--text-h2-letter-spacing); font-weight: 400;
+  }
+  .kr-h2 strong { font-weight: 700; }
+  .kr-body {
+    font-family: var(--font-kr); font-size: var(--text-body-lg-size); line-height: var(--text-body-lg-line-height);
+    font-weight: 400; color: var(--text-secondary);
+  }
+  .kr-stat { display: flex; align-items: baseline; gap: var(--space-2); }
+  .kr-stat-num {
+    font-family: var(--font-serif); font-style: italic; letter-spacing: -0.05em;
+    font-size: var(--text-sig-stat-size); line-height: var(--text-sig-stat-line-height); font-weight: 400;
+    color: var(--text-accent-warm);
+  }
+  .kr-stat-label {
+    font-family: var(--font-kr); font-size: var(--text-h3-size); line-height: var(--text-h3-line-height);
+    font-weight: 600; color: var(--text-secondary);
+  }
+
+  footer { margin-top: var(--space-30); padding-top: var(--space-10); border-top: var(--border-thin) solid var(--border-hairline); color: var(--text-tertiary); font-size: var(--text-caption-size); }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="eyebrow">Design System v2</div>
+    <h1>Design Tokens</h1>
+    <p>DESIGN_SYSTEM.md / Figma 정합 — naming 단순화, shadow 제거, breakpoint 768/1440/1920, Pretendard 한국어 추가, 모바일 타이포 다운스케일.</p>
+    <div class="resp-note">📐 창 너비를 768px 미만으로 줄여보면 display/h1/h2 등 타입 스케일이 자동으로 다운스케일됩니다 (96→56, 64→40 등).</div>
+  </header>
+
+  <!-- 1. Colors -->
+  <section>
+    <h2>1. Color</h2>
+    <p class="section-desc">Background / Text / Border / Accent / Card / Semantic — 24 tokens</p>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="chip" style="background: var(--bg-page);"></div><div class="meta"><div class="name">--bg-page</div><div class="value">#0A0E0F</div></div></div>
+      <div class="swatch"><div class="chip" style="background: var(--bg-surface);"></div><div class="meta"><div class="name">--bg-surface</div><div class="value">#12171A</div></div></div>
+      <div class="swatch"><div class="chip" style="background: var(--bg-muted);"></div><div class="meta"><div class="name">--bg-muted</div><div class="value">#1A2024</div></div></div>
+      <div class="swatch"><div class="chip" style="background: var(--text-primary);"></div><div class="meta"><div class="name">--text-primary</div><div class="value">#F5F5F0</div></div></div>
+      <div class="swatch"><div class="chip" style="background: var(--text-secondary);"></div><div class="meta"><div class="name">--text-secondary</div><div class="value">#A8ADB0</div></div></div>
+      <div class="swatch"><div class="chip" style="background: var(--text-tertiary);"></div><div class="meta"><div class="name">--text-tertiary</div><div class="value">#6A7075</div></div></div>
+      <div class="swatch"><div class="chip" style="background: var(--text-accent-warm);"></div><div class="meta"><div class="name">--text-accent-warm</div><div class="value">#FDF89C</div></div></div>
+      <div class="swatch"><div class="chip" style="background: var(--text-accent-cool);"></div><div class="meta"><div class="name">--text-accent-cool</div><div class="value">#B1E0FF</div></div></div>
+      <div class="swatch"><div class="chip" style="background: var(--border-hairline);"></div><div class="meta"><div class="name">--border-hairline</div><div class="value">rgba(245,245,240,.12)</div></div></div>
+      <div class="swatch"><div class="chip" style="background: var(--border-default);"></div><div class="meta"><div class="name">--border-default</div><div class="value">rgba(245,245,240,.20)</div></div></div>
+      <div class="swatch"><div class="chip" style="background: var(--border-accent);"></div><div class="meta"><div class="name">--border-accent</div><div class="value">#B1E0FF</div></div></div>
+      <div class="swatch"><div class="chip" style="background: var(--accent-yellow);"></div><div class="meta"><div class="name">--accent-yellow</div><div class="value">#FDF89C</div></div></div>
+      <div class="swatch"><div class="chip" style="background: var(--accent-blue);"></div><div class="meta"><div class="name">--accent-blue</div><div class="value">#B1E0FF</div></div></div>
+      <div class="swatch"><div class="chip" style="background: var(--card-cream);"></div><div class="meta"><div class="name">--card-cream</div><div class="value">#F0EBE0</div></div></div>
+      <div class="swatch"><div class="chip" style="background: var(--card-white);"></div><div class="meta"><div class="name">--card-white</div><div class="value">#FFFFFF</div></div></div>
+    </div>
+
+    <h2 style="margin-top: var(--space-14); font-size: var(--text-h3-size); line-height: var(--text-h3-line-height); letter-spacing: var(--text-h3-letter-spacing); font-weight: var(--text-h3-weight);">Inverted Cards (cream/white, Playfair Italic, ls -0.05em)</h2>
+    <div class="card-grid" style="margin-top: var(--space-6);">
+      <div class="card-cream">cream card</div>
+      <div class="card-white">white card</div>
+    </div>
+  </section>
+
+  <!-- 2. Typography -->
+  <section>
+    <h2>2. Typography</h2>
+    <p class="section-desc">Manrope (sans) + Playfair Display (italic-only serif) + Pretendard (Korean)</p>
+
+    <div class="type-row">
+      <div class="type-meta"><span class="label">--text-display</span>96 / 91.2 / -2.88 / 800 (mobile: 56)</div>
+      <div style="font-family: var(--font-sans); font-size: var(--text-display-size); line-height: var(--text-display-line-height); letter-spacing: var(--text-display-letter-spacing); font-weight: var(--text-display-weight);">Display</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><span class="label">--text-h1</span>64 / 67.2 / -1.28 / 700 (mobile: 40)</div>
+      <div style="font-family: var(--font-sans); font-size: var(--text-h1-size); line-height: var(--text-h1-line-height); letter-spacing: var(--text-h1-letter-spacing); font-weight: var(--text-h1-weight);">Heading 1</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><span class="label">--text-h2</span>40 / 46 / -0.6 / 700 (mobile: 28)</div>
+      <div style="font-family: var(--font-sans); font-size: var(--text-h2-size); line-height: var(--text-h2-line-height); letter-spacing: var(--text-h2-letter-spacing); font-weight: var(--text-h2-weight);">Heading 2</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><span class="label">--text-h3</span>22 / 30.8 / -0.11 / 600 (mobile: 18)</div>
+      <div style="font-family: var(--font-sans); font-size: var(--text-h3-size); line-height: var(--text-h3-line-height); letter-spacing: var(--text-h3-letter-spacing); font-weight: var(--text-h3-weight);">Heading 3</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><span class="label">--text-body-lg</span>18 / 29.7 / 0 / 400 (mobile: 17)</div>
+      <div style="font-family: var(--font-sans); font-size: var(--text-body-lg-size); line-height: var(--text-body-lg-line-height); letter-spacing: var(--text-body-lg-letter-spacing); font-weight: var(--text-body-lg-weight);">The quick brown fox jumps over the lazy dog.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><span class="label">--text-body</span>16 / 27.2 / 0 / 400 (mobile: 15)</div>
+      <div style="font-family: var(--font-sans); font-size: var(--text-body-size); line-height: var(--text-body-line-height); letter-spacing: var(--text-body-letter-spacing); font-weight: var(--text-body-weight);">The quick brown fox jumps over the lazy dog.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><span class="label">--text-caption</span>13 / 19.5 / 0 / 400</div>
+      <div style="font-family: var(--font-sans); font-size: var(--text-caption-size); line-height: var(--text-caption-line-height); letter-spacing: var(--text-caption-letter-spacing); font-weight: var(--text-caption-weight);">Caption text — secondary information.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><span class="label">--text-eyebrow</span>11 / 13.2 / 1.32 / 500</div>
+      <div style="font-family: var(--font-sans); font-size: var(--text-eyebrow-size); line-height: var(--text-eyebrow-line-height); letter-spacing: var(--text-eyebrow-letter-spacing); font-weight: var(--text-eyebrow-weight); text-transform: uppercase;">Eyebrow Label</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><span class="label">--text-counter</span>12 / 18 / 1.8 / 500</div>
+      <div style="font-family: var(--font-sans); font-size: var(--text-counter-size); line-height: var(--text-counter-line-height); letter-spacing: var(--text-counter-letter-spacing); font-weight: var(--text-counter-weight); text-transform: uppercase;">01 / 24</div>
+    </div>
+
+    <h2 style="margin-top: var(--space-14); font-size: var(--text-h3-size); line-height: var(--text-h3-line-height); letter-spacing: var(--text-h3-letter-spacing); font-weight: var(--text-h3-weight);">Signature (Playfair Italic, ls -0.05em)</h2>
+
+    <div class="type-row">
+      <div class="type-meta"><span class="label">--text-sig-stat</span>120 / 108 / -6.0 / 400 (mobile: 72)</div>
+      <div style="font-family: var(--font-serif); font-style: italic; font-size: var(--text-sig-stat-size); line-height: var(--text-sig-stat-line-height); letter-spacing: var(--text-sig-stat-letter-spacing); font-weight: var(--text-sig-stat-weight); color: var(--text-accent-warm);">150K+</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><span class="label">--text-sig-96</span>96 / 144 / -4.8 / 400 (mobile: 56)</div>
+      <div style="font-family: var(--font-serif); font-style: italic; font-size: var(--text-sig-96-size); line-height: var(--text-sig-96-line-height); letter-spacing: var(--text-sig-96-letter-spacing); font-weight: var(--text-sig-96-weight);">but</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><span class="label">--text-sig-64</span>64 / 96 / -3.2 / 400</div>
+      <div style="font-family: var(--font-serif); font-style: italic; font-size: var(--text-sig-64-size); line-height: var(--text-sig-64-line-height); letter-spacing: var(--text-sig-64-letter-spacing); font-weight: var(--text-sig-64-weight);">never accumulate</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><span class="label">--text-sig-40</span>40 / 60 / -2.0 / 400</div>
+      <div style="font-family: var(--font-serif); font-style: italic; font-size: var(--text-sig-40-size); line-height: var(--text-sig-40-line-height); letter-spacing: var(--text-sig-40-letter-spacing); font-weight: var(--text-sig-40-weight);">decisions repeat</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><span class="label">--text-sig-28</span>28 / 42 / -1.4 / 400</div>
+      <div style="font-family: var(--font-serif); font-style: italic; font-size: var(--text-sig-28-size); line-height: var(--text-sig-28-line-height); letter-spacing: var(--text-sig-28-letter-spacing); font-weight: var(--text-sig-28-weight);">the criteria</div>
+    </div>
+  </section>
+
+  <!-- 3. Korean (Pretendard) -->
+  <section>
+    <h2>3. Korean Text — Pretendard</h2>
+    <p class="section-desc">한국어는 Pretendard, 강조는 Pretendard Bold (italic 적용 금지). 숫자는 Playfair Italic 유지.</p>
+    <div class="kr-block">
+      <span class="label">한국어 헤딩</span>
+      <h2 class="kr-h2">이 문제는 단순히 <strong>온도</strong>를 조절하는 문제가 아니었다</h2>
+      <span class="label" style="margin-top: var(--space-4);">한국어 본문</span>
+      <p class="kr-body">HVAC 운영자의 의사결정은 매번 반복되지만, 그 판단 기준은 결코 누적되지 않는다. 우리는 이 누락된 메모리 레이어를 메우려 한다.</p>
+      <span class="label" style="margin-top: var(--space-4);">숫자 (한·영 혼합) — 숫자는 Playfair Italic</span>
+      <div class="kr-stat">
+        <span class="kr-stat-num">76</span>
+        <span class="kr-stat-label">SUS 점수</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Spacing -->
+  <section>
+    <h2>4. Spacing</h2>
+    <p class="section-desc">4-base, becomes non-uniform after 24</p>
+    <div class="space-row"><div class="name">--space-1</div><div class="value">4px</div><div class="bar" style="width: 4px;"></div></div>
+    <div class="space-row"><div class="name">--space-2</div><div class="value">8px</div><div class="bar" style="width: 8px;"></div></div>
+    <div class="space-row"><div class="name">--space-3</div><div class="value">12px</div><div class="bar" style="width: 12px;"></div></div>
+    <div class="space-row"><div class="name">--space-4</div><div class="value">16px</div><div class="bar" style="width: 16px;"></div></div>
+    <div class="space-row"><div class="name">--space-6</div><div class="value">24px</div><div class="bar" style="width: 24px;"></div></div>
+    <div class="space-row"><div class="name">--space-8</div><div class="value">32px</div><div class="bar" style="width: 32px;"></div></div>
+    <div class="space-row"><div class="name">--space-10</div><div class="value">40px</div><div class="bar" style="width: 40px;"></div></div>
+    <div class="space-row"><div class="name">--space-14</div><div class="value">56px</div><div class="bar" style="width: 56px;"></div></div>
+    <div class="space-row"><div class="name">--space-20</div><div class="value">80px</div><div class="bar" style="width: 80px;"></div></div>
+    <div class="space-row"><div class="name">--space-30</div><div class="value">120px</div><div class="bar" style="width: 120px;"></div></div>
+    <div class="space-row"><div class="name">--space-40</div><div class="value">160px</div><div class="bar" style="width: 160px;"></div></div>
+  </section>
+
+  <!-- 5. Radius -->
+  <section>
+    <h2>5. Radius</h2>
+    <p class="section-desc">6 steps, from 0 to 24</p>
+    <div class="radius-grid">
+      <div class="radius-cell"><div class="box" style="border-radius: var(--radius-none);"></div><div class="label">--radius-none · 0</div></div>
+      <div class="radius-cell"><div class="box" style="border-radius: var(--radius-sm);"></div><div class="label">--radius-sm · 4</div></div>
+      <div class="radius-cell"><div class="box" style="border-radius: var(--radius-md);"></div><div class="label">--radius-md · 8</div></div>
+      <div class="radius-cell"><div class="box" style="border-radius: var(--radius-card);"></div><div class="label">--radius-card · 16</div></div>
+      <div class="radius-cell"><div class="box" style="border-radius: var(--radius-xl);"></div><div class="label">--radius-xl · 20</div></div>
+      <div class="radius-cell"><div class="box" style="border-radius: var(--radius-card-lg);"></div><div class="label">--radius-card-lg · 24</div></div>
+    </div>
+  </section>
+
+  <!-- 6. Semantic -->
+  <section>
+    <h2>6. Semantic States</h2>
+    <p class="section-desc">success / warning / error / info (MD 비충돌 토큰, 보존)</p>
+    <div class="state-stack">
+      <div class="state success"><span class="dot"></span>Success — Operation completed successfully.</div>
+      <div class="state warning"><span class="dot"></span>Warning — Please review before continuing.</div>
+      <div class="state error"><span class="dot"></span>Error — Something went wrong, retry below.</div>
+      <div class="state info"><span class="dot"></span>Info — New version available.</div>
+    </div>
+  </section>
+
+  <!-- 7. Motion -->
+  <section>
+    <h2>7. Motion</h2>
+    <p class="section-desc">Hover each cell to compare easing curves (duration: 400ms). MD default: --ease-default.</p>
+    <div class="motion-grid">
+      <div class="motion-cell linear"><div class="label">--ease-linear</div><div class="ball"></div></div>
+      <div class="motion-cell def"><div class="label">--ease-default (MD hover)</div><div class="ball"></div></div>
+      <div class="motion-cell eo"><div class="label">--ease-out (expo)</div><div class="ball"></div></div>
+      <div class="motion-cell eio"><div class="label">--ease-in-out (MD image)</div><div class="ball"></div></div>
+      <div class="motion-cell spring"><div class="label">--ease-spring</div><div class="ball"></div></div>
+    </div>
+  </section>
+
+  <!-- 7.5 Tier 1 numbered-step (extended) -->
+  <section>
+    <h2>7.5 numbered-step — extended (__quote · __list · __closing)</h2>
+    <p class="section-desc">New optional children for Overview cards. Compose below __body in order: quote → list → closing.</p>
+
+    <h2 style="margin-top: var(--space-10); font-size: var(--text-h3-size); line-height: var(--text-h3-line-height); font-weight: var(--text-h3-weight); margin-bottom: var(--space-6);">--dark + __quote</h2>
+    <article class="ds-numbered-step">
+      <p class="ds-numbered-step__counter">01</p>
+      <p class="ds-numbered-step__caption">— Question</p>
+      <div class="ds-numbered-step__divider"></div>
+      <h3 class="ds-numbered-step__title">It started with one <em class="ds-signature">question</em></h3>
+      <blockquote class="ds-numbered-step__quote">"Why do people adjust HVAC by feel, with no clear criteria?"</blockquote>
+    </article>
+
+    <h2 style="margin-top: var(--space-14); font-size: var(--text-h3-size); line-height: var(--text-h3-line-height); font-weight: var(--text-h3-weight); margin-bottom: var(--space-6);">--cream + __list + __closing</h2>
+    <article class="ds-numbered-step ds-numbered-step--cream">
+      <p class="ds-numbered-step__counter">02</p>
+      <p class="ds-numbered-step__caption">— Personal Context</p>
+      <div class="ds-numbered-step__divider"></div>
+      <h3 class="ds-numbered-step__title">I had the same problem myself</h3>
+      <ul class="ds-numbered-step__list">
+        <li>While running my own shop,</li>
+        <li>I kept adjusting heating and cooling,</li>
+        <li>but always without any clear criteria.</li>
+      </ul>
+      <p class="ds-numbered-step__closing">That lived experience is where the problem became visible.</p>
+    </article>
+
+    <h2 style="margin-top: var(--space-14); font-size: var(--text-h3-size); line-height: var(--text-h3-line-height); font-weight: var(--text-h3-weight); margin-bottom: var(--space-6);">--with-media (square slot top-right · mobile stacks above)</h2>
+    <article class="ds-numbered-step ds-numbered-step--with-media">
+      <div class="ds-numbered-step__content">
+        <p class="ds-numbered-step__counter">02</p>
+        <p class="ds-numbered-step__caption">— The Problem</p>
+        <div class="ds-numbered-step__divider"></div>
+        <h3 class="ds-numbered-step__title">Three adjustments per day, <em class="ds-signature">zero</em> accumulated learning</h3>
+        <p class="ds-numbered-step__body">Owners make the same decisions repeatedly without developing criteria or patterns to carry forward.</p>
+      </div>
+      <div class="ds-numbered-step__media" aria-label="Media placeholder">
+        <span>200×200 · pattern visualization</span>
+      </div>
+    </article>
+  </section>
+
+  <!-- 8. Tier 2 cards -->
+  <section>
+    <h2>8. Tier 2 — research-finding · criteria-list · before-after</h2>
+    <p class="section-desc">Approach section dependencies. All max-widths per Section 6.</p>
+
+    <h2 style="margin-top: var(--space-10); font-size: var(--text-h3-size); line-height: var(--text-h3-line-height); font-weight: var(--text-h3-weight); margin-bottom: var(--space-6);">8.1 research-finding (1080px max, borderless · base structure)</h2>
+    <div class="ds-research-finding">
+      <p class="ds-research-finding__eyebrow">[ SECONDARY RESEARCH ]</p>
+      <h3 class="ds-research-finding__title">HVAC operators rely on tribal <em class="ds-signature">knowledge</em> not systems</h3>
+      <p class="ds-research-finding__body">Across 14 maintenance teams, decisions repeated weekly but criteria stayed in operators' heads — never written, never shared, never accumulated.</p>
+      <div class="ds-research-finding__grid">
+        <figure class="ds-research-finding__figure">
+          <div class="ds-research-finding__media"></div>
+          <figcaption class="ds-research-finding__caption">Fig. 01 — Field interview, Plant A</figcaption>
+        </figure>
+        <figure class="ds-research-finding__figure">
+          <div class="ds-research-finding__media"></div>
+          <figcaption class="ds-research-finding__caption">Fig. 02 — Whiteboard reconstruction</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <h2 style="margin-top: var(--space-14); font-size: var(--text-h3-size); line-height: var(--text-h3-line-height); font-weight: var(--text-h3-weight); margin-bottom: var(--space-6);">8.1b research-finding compound (__media-grid · __sub-heading · __list · __paragraph + ds-media-placeholder)</h2>
+    <article class="ds-research-finding">
+      <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 02.1 — SECONDARY RESEARCH ]</p>
+      <h2 class="ds-h2">Analyzing community data revealed <em class="ds-signature">recurring patterns</em></h2>
+
+      <div class="ds-research-finding__media-grid">
+        <div class="ds-media-placeholder" data-aspect="16/10">
+          <span class="ds-eyebrow ds-eyebrow--accent-blue">FIG. 02.1.1</span>
+          <p class="ds-media-placeholder__label">Community data sample 1</p>
+          <p class="ds-media-placeholder__meta">operator/approach/secondary-research-01.jpg</p>
+        </div>
+        <div class="ds-media-placeholder" data-aspect="16/10">
+          <span class="ds-eyebrow ds-eyebrow--accent-blue">FIG. 02.1.2</span>
+          <p class="ds-media-placeholder__label">Community data sample 2</p>
+          <p class="ds-media-placeholder__meta">operator/approach/secondary-research-02.jpg</p>
+        </div>
+      </div>
+
+      <h3 class="ds-research-finding__sub-heading">Pattern</h3>
+      <ul class="ds-research-finding__list">
+        <li>Constant adjustment driven by anxiety from lacking criteria</li>
+        <li>Emotional conflict between comfort and cost</li>
+        <li>Store-specific operations causing stress, leading to abandonment</li>
+        <li>Cost-saving behavior focused only on manual control</li>
+      </ul>
+
+      <h3 class="ds-research-finding__sub-heading">Observation</h3>
+      <p class="ds-research-finding__paragraph">Operators were under stress balancing cost and comfort. They wanted to maintain a comfortable store environment while minimizing energy costs — and were visibly wrestling with how to operate the system to achieve both.</p>
+    </article>
+
+    <h2 style="margin-top: var(--space-14); font-size: var(--text-h3-size); line-height: var(--text-h3-line-height); font-weight: var(--text-h3-weight); margin-bottom: var(--space-6);">8.2 criteria-list (3 columns → mobile stack)</h2>
+    <div class="ds-criteria-list">
+      <div class="ds-criteria-list__item">
+        <span class="ds-criteria-list__dot"></span>
+        <p class="ds-criteria-list__eyebrow">01</p>
+        <p class="ds-criteria-list__text">Decisions must be reviewable after the shift ends.</p>
+      </div>
+      <div class="ds-criteria-list__item">
+        <span class="ds-criteria-list__dot"></span>
+        <p class="ds-criteria-list__eyebrow">02</p>
+        <p class="ds-criteria-list__text">Criteria must travel between operators.</p>
+      </div>
+      <div class="ds-criteria-list__item">
+        <span class="ds-criteria-list__dot"></span>
+        <p class="ds-criteria-list__eyebrow">03</p>
+        <p class="ds-criteria-list__text">No new tools — must fit existing rounds.</p>
+      </div>
+    </div>
+
+    <h2 style="margin-top: var(--space-14); font-size: var(--text-h3-size); line-height: var(--text-h3-line-height); font-weight: var(--text-h3-weight); margin-bottom: var(--space-6);">8.3 before-after (inverse 2-col → mobile stack, arrow rotates)</h2>
+    <div class="ds-before-after">
+      <div class="ds-before-after__col ds-before-after__col--before">
+        <p class="ds-before-after__eyebrow">[ BEFORE ]</p>
+        <p class="ds-before-after__text">Operators logged temperatures, then made calls from memory each round.</p>
+      </div>
+      <div class="ds-before-after__arrow" aria-hidden="true"></div>
+      <div class="ds-before-after__col ds-before-after__col--after">
+        <p class="ds-before-after__eyebrow">[ AFTER ]</p>
+        <p class="ds-before-after__text">Decisions are <em class="ds-signature">surfaced</em> from criteria the team agreed on.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Tier 3 cards -->
+  <section>
+    <h2>9. Tier 3 — split-feature · insight · media</h2>
+    <p class="section-desc">Supporting / finishing components.</p>
+
+    <h2 style="margin-top: var(--space-10); font-size: var(--text-h3-size); line-height: var(--text-h3-line-height); font-weight: var(--text-h3-weight); margin-bottom: var(--space-6);">9.1 split-feature --50-50 --media-left --dark · Solution Feature</h2>
+    <article class="ds-split-feature ds-split-feature--50-50 ds-split-feature--media-left ds-split-feature--dark">
+      <div class="ds-split-feature__media"></div>
+      <div class="ds-split-feature__content">
+        <p class="ds-eyebrow">[ FEATURE 01 ]</p>
+        <h2 class="ds-split-feature__title"><em class="ds-signature">One</em> screen — judge and choose together</h2>
+        <p>Cost projection, comfort history, and selection collapse into a single round-card so operators don't context-switch.</p>
+        <ul class="ds-split-feature__list">
+          <li>Real-time cost projection</li>
+          <li>Historical comfort data</li>
+          <li>One-tap selection</li>
+        </ul>
+        <div class="ds-split-feature__outcome">
+          <span class="ds-eyebrow">결과 / OUTCOME</span>
+          <p class="ds-body-lg">Decisions made in under 10 seconds</p>
+        </div>
+      </div>
+    </article>
+
+    <h2 style="margin-top: var(--space-14); font-size: var(--text-h3-size); line-height: var(--text-h3-line-height); font-weight: var(--text-h3-weight); margin-bottom: var(--space-6);">9.2 split-feature --60-40 --media-right --dark · Iteration</h2>
+    <article class="ds-split-feature ds-split-feature--60-40 ds-split-feature--media-right ds-split-feature--dark">
+      <div class="ds-split-feature__content">
+        <p class="ds-eyebrow">[ ITERATION 01 ]</p>
+        <h3 class="ds-split-feature__title">First prototype hid the <em class="ds-signature">decision</em> behind a modal</h3>
+        <p>Operators dismissed it without reading. We pulled criteria into the round itself, and engagement doubled the next week.</p>
+      </div>
+      <div class="ds-split-feature__media"></div>
+    </article>
+
+    <h2 style="margin-top: var(--space-14); font-size: var(--text-h3-size); line-height: var(--text-h3-line-height); font-weight: var(--text-h3-weight); margin-bottom: var(--space-6);">9.3 split-feature --50-50 --media-right --cream · Contrast</h2>
+    <article class="ds-split-feature ds-split-feature--50-50 ds-split-feature--media-right ds-split-feature--cream">
+      <div class="ds-split-feature__content">
+        <p class="ds-eyebrow">[ FEATURE 02 ]</p>
+        <h2 class="ds-split-feature__title"><em class="ds-signature">Criteria</em> live where the work happens</h2>
+        <p>Surface team-agreed criteria inline so the next operator starts from context, not a blank slate.</p>
+      </div>
+      <div class="ds-split-feature__media"></div>
+    </article>
+
+    <h2 style="margin-top: var(--space-14); font-size: var(--text-h3-size); line-height: var(--text-h3-line-height); font-weight: var(--text-h3-weight); margin-bottom: var(--space-6);">9.4 insight --cream + --yellow (560px max)</h2>
+    <div style="display: grid; grid-template-columns: 1fr; gap: var(--space-4);">
+      <article class="ds-insight">
+        <p class="ds-insight__eyebrow">[ INSIGHT ]</p>
+        <h3 class="ds-insight__title">The work isn't the <em class="ds-signature">log</em> — it's the conversation that didn't happen.</h3>
+        <p class="ds-insight__body">When criteria stay in heads, the next operator starts from zero. Surface them and the round becomes the meeting.</p>
+      </article>
+      <article class="ds-insight ds-insight--yellow">
+        <p class="ds-insight__eyebrow">[ INSIGHT ]</p>
+        <h3 class="ds-insight__title">A field tool earns its place by getting <em class="ds-signature">out of the way</em>.</h3>
+        <p class="ds-insight__body">Operators tolerate 8 seconds of friction per round, not more. Above that, they invent a workaround.</p>
+      </article>
+    </div>
+
+    <h2 style="margin-top: var(--space-14); font-size: var(--text-h3-size); line-height: var(--text-h3-line-height); font-weight: var(--text-h3-weight); margin-bottom: var(--space-6);">9.4b insight --dark + .ds-need-pain-grid (Need vs Pain side-by-side)</h2>
+    <div class="ds-need-pain-grid">
+      <article class="ds-insight">
+        <p class="ds-eyebrow">USER NEED</p>
+        <p class="ds-h3">Stay <em class="ds-signature">comfortable</em> while cutting cost</p>
+      </article>
+      <article class="ds-insight ds-insight--dark">
+        <p class="ds-eyebrow">PAIN POINT</p>
+        <p class="ds-h3">Adjustments lack <em class="ds-signature">cost feedback</em> — anxiety follows</p>
+      </article>
+    </div>
+
+    <h2 style="margin-top: var(--space-14); font-size: var(--text-h3-size); line-height: var(--text-h3-line-height); font-weight: var(--text-h3-weight); margin-bottom: var(--space-6);">9.5 media --full / --inline / --two-up</h2>
+    <figure class="ds-media ds-media--full">
+      <p class="ds-media__label">Fig. 03</p>
+      <div class="ds-media__slot"></div>
+      <figcaption class="ds-media__caption">Affinity mapping — operator/approach/affinity-mapping.jpg</figcaption>
+    </figure>
+
+    <div style="display: flex; gap: var(--space-4); margin-top: var(--space-10); flex-wrap: wrap;">
+      <figure class="ds-media ds-media--two-up">
+        <p class="ds-media__label">Fig. 04a</p>
+        <div class="ds-media__slot"></div>
+        <figcaption class="ds-media__caption">Round screen — before</figcaption>
+      </figure>
+      <figure class="ds-media ds-media--two-up">
+        <p class="ds-media__label">Fig. 04b</p>
+        <div class="ds-media__slot"></div>
+        <figcaption class="ds-media__caption">Round screen — after</figcaption>
+      </figure>
+    </div>
+
+    <figure class="ds-media ds-media--inline" style="margin-top: var(--space-10);">
+      <p class="ds-media__label">Fig. 05</p>
+      <div class="ds-media__slot"></div>
+      <figcaption class="ds-media__caption">Inline diagram — 720px desktop max</figcaption>
+    </figure>
+  </section>
+
+  <!-- 10. UI Elements -->
+  <section>
+    <h2>10. UI Elements</h2>
+    <p class="section-desc">.ds-tag · .ds-btn · .ds-divider · .ds-eyebrow · .ds-nav-link — Section 9 of MD.</p>
+
+    <h2 style="margin-top: var(--space-10); font-size: var(--text-h3-size); line-height: var(--text-h3-line-height); font-weight: var(--text-h3-weight); margin-bottom: var(--space-6);">10.1 Tags (default · hover · active · disabled)</h2>
+    <div style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
+      <button class="ds-tag">Product</button>
+      <button class="ds-tag">Field Research</button>
+      <button class="ds-tag is-active">Selected</button>
+      <button class="ds-tag" disabled>Disabled</button>
+    </div>
+
+    <h2 style="margin-top: var(--space-14); font-size: var(--text-h3-size); line-height: var(--text-h3-line-height); font-weight: var(--text-h3-weight); margin-bottom: var(--space-6);">10.2 Buttons (primary · secondary · link · disabled)</h2>
+    <div style="display: flex; gap: var(--space-4); flex-wrap: wrap; align-items: center;">
+      <button class="ds-btn ds-btn--primary">View Case Study</button>
+      <button class="ds-btn ds-btn--secondary">Download PDF</button>
+      <a class="ds-btn ds-btn--link" href="#">Read more</a>
+      <button class="ds-btn ds-btn--primary" disabled>Disabled</button>
+      <button class="ds-btn ds-btn--secondary" disabled>Disabled</button>
+    </div>
+
+    <h2 style="margin-top: var(--space-14); font-size: var(--text-h3-size); line-height: var(--text-h3-line-height); font-weight: var(--text-h3-weight); margin-bottom: var(--space-6);">10.3 Dividers (5 variants)</h2>
+    <div style="display: flex; flex-direction: column; gap: var(--space-6);">
+      <div><p class="ds-eyebrow ds-eyebrow--secondary" style="margin-bottom: var(--space-2);">--hairline (default, 0.5px)</p><hr class="ds-divider" /></div>
+      <div><p class="ds-eyebrow ds-eyebrow--secondary" style="margin-bottom: var(--space-2);">--default (1px, stronger)</p><hr class="ds-divider ds-divider--default" /></div>
+      <div><p class="ds-eyebrow ds-eyebrow--secondary" style="margin-bottom: var(--space-2);">--accent-yellow (40px swatch)</p><hr class="ds-divider ds-divider--accent-yellow" /></div>
+      <div><p class="ds-eyebrow ds-eyebrow--secondary" style="margin-bottom: var(--space-2);">--accent-blue (40px swatch)</p><hr class="ds-divider ds-divider--accent-blue" /></div>
+      <div><p class="ds-eyebrow ds-eyebrow--secondary" style="margin-bottom: var(--space-2);">--section (page-level rhythm)</p><hr class="ds-divider ds-divider--section" /></div>
+    </div>
+
+    <h2 style="margin-top: var(--space-14); font-size: var(--text-h3-size); line-height: var(--text-h3-line-height); font-weight: var(--text-h3-weight); margin-bottom: var(--space-6);">10.4 Eyebrow (color modifiers)</h2>
+    <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+      <p class="ds-eyebrow">[ DEFAULT — TERTIARY ]</p>
+      <p class="ds-eyebrow ds-eyebrow--accent-yellow">[ ACCENT YELLOW ]</p>
+      <p class="ds-eyebrow ds-eyebrow--accent-blue">[ ACCENT BLUE ]</p>
+      <p class="ds-eyebrow ds-eyebrow--primary">[ PRIMARY ]</p>
+      <p class="ds-eyebrow ds-eyebrow--secondary">[ SECONDARY ]</p>
+    </div>
+
+    <h2 style="margin-top: var(--space-14); font-size: var(--text-h3-size); line-height: var(--text-h3-line-height); font-weight: var(--text-h3-weight); margin-bottom: var(--space-6);">10.5 Nav links (default · hover · active)</h2>
+    <nav style="display: flex; gap: var(--space-8); flex-wrap: wrap;">
+      <a class="ds-nav-link" href="#">Work</a>
+      <a class="ds-nav-link is-active" href="#">About</a>
+      <a class="ds-nav-link" href="#">Writing</a>
+      <a class="ds-nav-link" href="#">Contact</a>
+    </nav>
+  </section>
+
+  <footer>
+    Design tokens v2 · 16 colors + 4 semantic + 4 semantic-bg · 14 type scales (mobile-downscaled) · 11 spacing · 6 radius · 5 duration · 5 ease · 8 z-index · 3 breakpoints (768/1440/1920) · 3 fonts (Manrope, Playfair Italic, Pretendard) · NO shadows · 10 cards (Tier 1+2+3) · 5 UI elements
+  </footer>
+
+</div>
+</body>
+</html>

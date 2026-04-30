@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="ko" data-lang="kr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Operator — Hajiwi</title>
+  <meta name="description" content="Operator — a tool for small business owners to make HVAC decisions with judgment criteria, not by feel." />
+  <link rel="stylesheet" href="../design-system/index.css" />
+  <style>
+    /* Page-level reset & layout (uses tokens only) */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg-page);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: var(--text-body-size);
+      line-height: var(--text-body-line-height);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    html[data-lang="kr"] body {
+      font-family: var(--font-kr);
+    }
+
+    /* Lang content visibility */
+    html[data-lang="kr"] [data-lang-content="en"],
+    html[data-lang="en"] [data-lang-content="kr"] {
+      display: none !important;
+    }
+
+    /* Container — Section 5 spec */
+    .ds-container {
+      width: 100%;
+      max-width: 100%;
+      margin-inline: auto;
+      padding-inline: var(--space-4);
+    }
+    @media (min-width: 768px) {
+      .ds-container { max-width: 720px; padding-inline: var(--space-8); }
+    }
+    @media (min-width: 1440px) {
+      .ds-container { max-width: 1280px; padding-inline: var(--space-20); }
+    }
+    @media (min-width: 1920px) {
+      .ds-container { max-width: 1440px; padding-inline: var(--space-20); }
+    }
+
+    /* Nav */
+    .ds-nav {
+      position: sticky;
+      top: 0;
+      z-index: var(--z-sticky, 100);
+      background: var(--bg-page);
+      border-bottom: var(--border-thin) solid var(--border-hairline);
+    }
+    .ds-nav__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-6);
+      padding-block: var(--space-4);
+    }
+    .ds-nav__brand {
+      font-family: var(--font-sans);
+      font-size: var(--text-eyebrow-size);
+      letter-spacing: var(--text-eyebrow-letter-spacing);
+      font-weight: var(--text-eyebrow-weight);
+      text-transform: uppercase;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+    .ds-nav__links {
+      display: none;
+      gap: var(--space-8);
+    }
+    @media (min-width: 768px) {
+      .ds-nav__links { display: flex; }
+    }
+    .ds-nav__lang {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .ds-nav__lang button {
+      background: transparent;
+      border: 0;
+      padding: var(--space-2);
+      cursor: pointer;
+      font-family: var(--font-sans);
+      font-size: var(--text-eyebrow-size);
+      letter-spacing: var(--text-eyebrow-letter-spacing);
+      font-weight: var(--text-eyebrow-weight);
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      transition: color var(--duration-base) var(--ease-default);
+    }
+    .ds-nav__lang button:hover { color: var(--text-primary); }
+    html[data-lang="kr"] .ds-nav__lang button[data-set-lang="kr"],
+    html[data-lang="en"] .ds-nav__lang button[data-set-lang="en"] {
+      color: var(--text-primary);
+    }
+    .ds-nav__lang span {
+      color: var(--text-tertiary);
+      font-size: var(--text-eyebrow-size);
+    }
+
+    /* Hero placeholder */
+    #hero {
+      padding-block: var(--space-30);
+      border-bottom: var(--border-thin) solid var(--border-hairline);
+    }
+    .hero-placeholder {
+      background: var(--bg-muted);
+      border: var(--border-thin) dashed var(--border-hairline);
+      border-radius: var(--radius-card);
+      aspect-ratio: 16 / 9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-tertiary);
+      font-family: monospace;
+      font-size: var(--text-caption-size);
+    }
+
+    /* Section spacing — Section 10 spec */
+    main > section {
+      padding-block: var(--space-20);
+    }
+    @media (min-width: 1440px) {
+      main > section {
+        padding-block: var(--space-30);
+      }
+    }
+
+    /* Section header */
+    .ds-section-header {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      margin-bottom: var(--space-10);
+      max-width: 800px;
+    }
+    @media (min-width: 1440px) {
+      .ds-section-header {
+        margin-bottom: var(--space-14);
+      }
+    }
+    .ds-section-header__eyebrow {
+      font-family: var(--font-sans);
+      font-size: var(--text-eyebrow-lg-size);
+      line-height: var(--text-eyebrow-lg-line-height);
+      letter-spacing: var(--text-eyebrow-letter-spacing);
+      font-weight: var(--text-eyebrow-weight);
+      text-transform: uppercase;
+      color: var(--accent-yellow);
+      margin: 0;
+    }
+    .ds-section-header__title {
+      font-family: var(--font-sans);
+      font-size: var(--text-h1-size);
+      line-height: var(--text-h1-line-height);
+      letter-spacing: var(--text-h1-letter-spacing);
+      font-weight: var(--text-h1-weight);
+      margin: 0;
+    }
+    html[data-lang="kr"] .ds-section-header__title {
+      font-family: var(--font-kr);
+    }
+    html[data-lang="kr"] .ds-section-header__title strong {
+      font-weight: 700;
+    }
+
+    /* Overview card stack */
+    .overview-stack {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-8);
+      align-items: center;
+    }
+    @media (min-width: 1440px) {
+      .overview-stack { gap: var(--space-10); }
+    }
+
+    /* Approach / Define / Ideate / Outcome — flex column with explicit
+       vertical gap between cards (cards have varying max-widths and
+       margin-inline:auto for centering; flex parent ensures separation). */
+    #approach .ds-container,
+    #define .ds-container,
+    #ideate .ds-container,
+    #outcome .ds-container {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-20);
+      align-items: center;
+    }
+    @media (max-width: 767px) {
+      #approach .ds-container,
+      #define .ds-container,
+      #ideate .ds-container,
+      #outcome .ds-container {
+        gap: var(--space-10);
+      }
+    }
+    /* Section header occupies full container width (don't constrain) */
+    #approach .ds-section-header,
+    #define .ds-section-header,
+    #ideate .ds-section-header,
+    #outcome .ds-section-header {
+      align-self: stretch;
+    }
+
+    /* Footer */
+    .ds-footer {
+      border-top: var(--border-thin) solid var(--border-hairline);
+      padding-block: var(--space-10);
+      color: var(--text-tertiary);
+      font-size: var(--text-caption-size);
+    }
+    .ds-footer__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====================  NAV  ==================== -->
+  <header class="ds-nav">
+    <div class="ds-container ds-nav__inner">
+      <a class="ds-nav__brand" href="../index.html">Hajiwi</a>
+
+      <nav class="ds-nav__links">
+        <a class="ds-nav-link" href="../index.html"><span data-lang-content="kr">홈</span><span data-lang-content="en">Home</span></a>
+        <a class="ds-nav-link is-active" href="#"><span data-lang-content="kr">프로젝트</span><span data-lang-content="en">Projects</span></a>
+        <a class="ds-nav-link" href="#"><span data-lang-content="kr">어바웃</span><span data-lang-content="en">About</span></a>
+        <a class="ds-nav-link" href="#"><span data-lang-content="kr">이력서</span><span data-lang-content="en">Resume</span></a>
+      </nav>
+
+      <div class="ds-nav__lang" role="group" aria-label="Language">
+        <button type="button" data-set-lang="en" aria-label="English">EN</button>
+        <span aria-hidden="true">/</span>
+        <button type="button" data-set-lang="kr" aria-label="Korean">KR</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ====================  HERO (placeholder)  ==================== -->
+    <section id="hero">
+      <div class="ds-container">
+        <div class="hero-placeholder">Hero — to be designed in Figma</div>
+      </div>
+    </section>
+
+    <!-- ====================  OVERVIEW  ==================== -->
+    <section id="overview">
+      <div class="ds-container">
+
+        <header class="ds-section-header" data-lang-aware>
+          <p class="ds-section-header__eyebrow">[ 01 — PROJECT SUMMARY ]</p>
+          <h2 class="ds-section-header__title ds-h1">
+            <span data-lang-content="kr">문제는 냉난방 제어가 아니라 냉난방 조정 시 <em class="ds-signature">판단 기준의 부재</em>였다</span>
+            <span data-lang-content="en">The problem wasn't HVAC control — it was the <em class="ds-signature">absence of judgment criteria</em></span>
+          </h2>
+        </header>
+
+        <div class="overview-stack">
+
+          <!-- ===== CARD 01 — dark + quote ===== -->
+          <article class="ds-numbered-step ds-kr" data-lang-aware>
+            <p class="ds-numbered-step__counter">01</p>
+            <p class="ds-numbered-step__caption">
+              <span data-lang-content="kr">— 시작 질문</span>
+              <span data-lang-content="en">— Question</span>
+            </p>
+            <div class="ds-numbered-step__divider"></div>
+            <h3 class="ds-numbered-step__title">
+              <span data-lang-content="kr">이 프로젝트는 한 가지 질문에서 시작되었습니다</span>
+              <span data-lang-content="en">It started with one <em class="ds-signature">question</em></span>
+            </h3>
+            <blockquote class="ds-numbered-step__quote">
+              <span data-lang-content="kr">왜 사람들은 냉난방을 명확한 기준 없이 감으로 조절하고 있을까?</span>
+              <span data-lang-content="en">Why do people adjust HVAC by feel, with no clear criteria?</span>
+            </blockquote>
+          </article>
+
+          <!-- ===== CARD 02 — cream + list + closing + media slot ===== -->
+          <article class="ds-numbered-step ds-numbered-step--cream ds-numbered-step--with-media ds-kr" data-lang-aware>
+            <div class="ds-numbered-step__content">
+              <p class="ds-numbered-step__counter">02</p>
+              <p class="ds-numbered-step__caption">
+                <span data-lang-content="kr">— 개인 맥락</span>
+                <span data-lang-content="en">— Personal Context</span>
+              </p>
+              <div class="ds-numbered-step__divider"></div>
+              <h3 class="ds-numbered-step__title">
+                <span data-lang-content="kr">저 역시 같은 문제를 겪은 경험이 있었습니다</span>
+                <span data-lang-content="en">I had the same problem myself</span>
+              </h3>
+              <ul class="ds-numbered-step__list">
+                <li>
+                  <span data-lang-content="kr">실제로 매장을 운영하며</span>
+                  <span data-lang-content="en">While running my own shop,</span>
+                </li>
+                <li>
+                  <span data-lang-content="kr">냉난방을 계속 조절하고 있었지만</span>
+                  <span data-lang-content="en">I kept adjusting heating and cooling,</span>
+                </li>
+                <li>
+                  <span data-lang-content="kr">명확한 기준 없이 반복하고 있었습니다</span>
+                  <span data-lang-content="en">but always without any clear criteria.</span>
+                </li>
+              </ul>
+              <p class="ds-numbered-step__closing">
+                <span data-lang-content="kr">이 경험에서 문제의식을 발견했습니다</span>
+                <span data-lang-content="en">That lived experience is where the problem became visible.</span>
+              </p>
+            </div>
+            <div class="ds-numbered-step__media" aria-label="Media placeholder — operator/overview/personal-context.jpg">
+              <span>operator/overview/personal-context.jpg</span>
+            </div>
+          </article>
+
+          <!-- ===== CARD 03 — dark + list ===== -->
+          <article class="ds-numbered-step ds-kr" data-lang-aware>
+            <p class="ds-numbered-step__counter">03</p>
+            <p class="ds-numbered-step__caption">
+              <span data-lang-content="kr">— 접근</span>
+              <span data-lang-content="en">— Approach</span>
+            </p>
+            <div class="ds-numbered-step__divider"></div>
+            <h3 class="ds-numbered-step__title">
+              <span data-lang-content="kr">문제를 해결하기 위해 타겟을 먼저 정의했습니다</span>
+              <span data-lang-content="en">To solve the problem, I defined the target first</span>
+            </h3>
+            <ul class="ds-numbered-step__list">
+              <li>
+                <span data-lang-content="kr">모든 사용자로 확장하기보다</span>
+                <span data-lang-content="en">Rather than scoping to all users,</span>
+              </li>
+              <li>
+                <span data-lang-content="kr">문제와 효과가 가장 명확하게 드러나는 집단에 집중했습니다</span>
+                <span data-lang-content="en">I focused on the group where the problem and the impact would show up most clearly.</span>
+              </li>
+            </ul>
+          </article>
+
+          <!-- ===== CARD 04 — cream + list ===== -->
+          <article class="ds-numbered-step ds-numbered-step--cream ds-kr" data-lang-aware>
+            <p class="ds-numbered-step__counter">04</p>
+            <p class="ds-numbered-step__caption">
+              <span data-lang-content="kr">— 타겟 선정 로직</span>
+              <span data-lang-content="en">— Target Selection Logic</span>
+            </p>
+            <div class="ds-numbered-step__divider"></div>
+            <h3 class="ds-numbered-step__title">
+              <span data-lang-content="kr">사용자 그룹별 구조는 다음과 같았습니다</span>
+              <span data-lang-content="en">The user-group landscape looked like this</span>
+            </h3>
+            <ul class="ds-numbered-step__list">
+              <li>
+                <span data-lang-content="kr"><strong>가정</strong>: 비용 영향이 상대적으로 적음</span>
+                <span data-lang-content="en"><strong>Households</strong> — relatively low cost sensitivity</span>
+              </li>
+              <li>
+                <span data-lang-content="kr"><strong>프랜차이즈</strong>: 고정비 구조로 관리됨</span>
+                <span data-lang-content="en"><strong>Franchises</strong> — managed under fixed-cost structures</span>
+              </li>
+              <li>
+                <span data-lang-content="kr"><strong>자영업자</strong>: 조절 결과가 매장 운영에 직접적인 영향을 줌</span>
+                <span data-lang-content="en"><strong>Small business owners</strong> — adjustment outcomes hit the shop directly</span>
+              </li>
+            </ul>
+          </article>
+
+          <!-- ===== CARD 05 — dark + list + closing ===== -->
+          <article class="ds-numbered-step ds-kr" data-lang-aware>
+            <p class="ds-numbered-step__counter">05</p>
+            <p class="ds-numbered-step__caption">
+              <span data-lang-content="kr">— 타겟 정의</span>
+              <span data-lang-content="en">— Target Definition</span>
+            </p>
+            <div class="ds-numbered-step__divider"></div>
+            <h3 class="ds-numbered-step__title">
+              <span data-lang-content="kr"><em class="ds-signature">Small business owner</em>를 핵심 타겟으로 정의했습니다</span>
+              <span data-lang-content="en">I defined <em class="ds-signature">small business owners</em> as the core target</span>
+            </h3>
+            <ul class="ds-numbered-step__list">
+              <li>
+                <span data-lang-content="kr">냉난방 조절의 영향이 가장 크게 나타나고</span>
+                <span data-lang-content="en">The impact of HVAC adjustment shows up most clearly,</span>
+              </li>
+              <li>
+                <span data-lang-content="kr">비용 변화가 직접적으로 체감되며</span>
+                <span data-lang-content="en">cost change is directly felt,</span>
+              </li>
+              <li>
+                <span data-lang-content="kr">의사결정이 반복적으로 이루어지는 환경이기 때문입니다</span>
+                <span data-lang-content="en">and decisions are made repeatedly in this environment.</span>
+              </li>
+            </ul>
+            <p class="ds-numbered-step__closing">
+              <span data-lang-content="kr">비즈니스 임팩트와 도입 가능성을 고려한 선택이었습니다</span>
+              <span data-lang-content="en">It's a choice grounded in business impact and adoption likelihood.</span>
+            </p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================  APPROACH  ==================== -->
+    <section id="approach">
+      <div class="ds-container">
+
+        <header class="ds-section-header" data-lang-aware>
+          <p class="ds-section-header__eyebrow">[ 02 — APPROACH ]</p>
+          <h2 class="ds-section-header__title ds-h1">
+            <span data-lang-content="kr">리서치를 통해 문제의 <em class="ds-signature">구조</em>를 발견했다</span>
+            <span data-lang-content="en">Research revealed the <em class="ds-signature">structure</em> of the problem</span>
+          </h2>
+        </header>
+
+        <!-- ===== 02.1 — SECONDARY RESEARCH ===== -->
+        <article class="ds-research-finding">
+          <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 02.1 — SECONDARY RESEARCH ]</p>
+
+          <h2 class="ds-h2" data-lang-content="en">Analyzing community data revealed <em class="ds-signature">recurring patterns</em></h2>
+          <h2 class="ds-h2 ds-kr" data-lang-content="kr">자영업자 커뮤니티 데이터를 분석한 결과 다음과 같은 <em class="ds-signature">패턴</em>이 반복적으로 나타났습니다</h2>
+
+          <!-- 2-column media grid -->
+          <div class="ds-research-finding__media-grid">
+            <div class="ds-media-placeholder" data-aspect="16/10">
+              <span class="ds-eyebrow ds-eyebrow--accent-blue">FIG. 02.1.1</span>
+              <p class="ds-media-placeholder__label" data-lang-content="en">Community data sample 1</p>
+              <p class="ds-media-placeholder__label ds-kr" data-lang-content="kr">커뮤니티 데이터 샘플 1</p>
+              <p class="ds-media-placeholder__meta">operator/approach/secondary-research-01.jpg</p>
+            </div>
+            <div class="ds-media-placeholder" data-aspect="16/10">
+              <span class="ds-eyebrow ds-eyebrow--accent-blue">FIG. 02.1.2</span>
+              <p class="ds-media-placeholder__label" data-lang-content="en">Community data sample 2</p>
+              <p class="ds-media-placeholder__label ds-kr" data-lang-content="kr">커뮤니티 데이터 샘플 2</p>
+              <p class="ds-media-placeholder__meta">operator/approach/secondary-research-02.jpg</p>
+            </div>
+          </div>
+
+          <!-- Pattern -->
+          <h3 class="ds-research-finding__sub-heading" data-lang-content="en">Pattern</h3>
+          <h3 class="ds-research-finding__sub-heading ds-kr" data-lang-content="kr">패턴</h3>
+          <ul class="ds-research-finding__list">
+            <li data-lang-content="en">Constant adjustment driven by anxiety from lacking criteria</li>
+            <li class="ds-kr" data-lang-content="kr">기준이 없어 불안해서 계속 조정하는 행동</li>
+
+            <li data-lang-content="en">Emotional conflict between comfort and cost</li>
+            <li class="ds-kr" data-lang-content="kr">쾌적함과 비용 사이에서의 감정적 충돌</li>
+
+            <li data-lang-content="en">Store-specific operations causing stress, leading to abandonment</li>
+            <li class="ds-kr" data-lang-content="kr">매장별 상황에 따라 달라지는 조작법으로 인한 스트레스로 결국 도입 포기</li>
+
+            <li data-lang-content="en">Cost-saving behavior focused only on manual control</li>
+            <li class="ds-kr" data-lang-content="kr">조작 중심으로 절약하려는 행동</li>
+          </ul>
+
+          <!-- Observation -->
+          <h3 class="ds-research-finding__sub-heading" data-lang-content="en">Observation</h3>
+          <h3 class="ds-research-finding__sub-heading ds-kr" data-lang-content="kr">관찰</h3>
+          <p class="ds-research-finding__paragraph" data-lang-content="en">
+            Operators were under stress balancing cost and comfort. They wanted to maintain a comfortable store environment while minimizing energy costs — and were visibly wrestling with how to operate the system to achieve both.
+          </p>
+          <p class="ds-research-finding__paragraph ds-kr" data-lang-content="kr">
+            비용과 쾌적함 때문에 스트레스를 받고 있었고 매장 내 쾌적함을 유지하면서도 비용은 최대한 아끼고 싶어하는 니즈 속에서 어떻게 조작할지에 대해 고민하는 모습들이 관찰되었다
+          </p>
+        </article>
+
+        <!-- ===== 02.2 — PRIMARY RESEARCH ===== -->
+        <article class="ds-research-finding">
+          <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 02.2 — PRIMARY RESEARCH ]</p>
+
+          <h2 class="ds-h2" data-lang-content="en">Five interviews revealed <em class="ds-signature">how</em> the pattern actually unfolds</h2>
+          <h2 class="ds-h2 ds-kr" data-lang-content="kr">5인의 인터뷰로 <em class="ds-signature">패턴</em>이 실제로 어떻게 나타나는지 확인했다</h2>
+
+          <!-- 3-column media grid -->
+          <div class="ds-research-finding__media-grid ds-research-finding__media-grid--3col">
+            <div class="ds-media-placeholder" data-aspect="4/3">
+              <span class="ds-eyebrow ds-eyebrow--accent-blue">FIG. 02.2.1</span>
+              <p class="ds-media-placeholder__label" data-lang-content="en">Interview session 1</p>
+              <p class="ds-media-placeholder__label ds-kr" data-lang-content="kr">인터뷰 세션 1</p>
+              <p class="ds-media-placeholder__meta">operator/approach/interview-01.jpg</p>
+            </div>
+            <div class="ds-media-placeholder" data-aspect="4/3">
+              <span class="ds-eyebrow ds-eyebrow--accent-blue">FIG. 02.2.2</span>
+              <p class="ds-media-placeholder__label" data-lang-content="en">Interview session 2</p>
+              <p class="ds-media-placeholder__label ds-kr" data-lang-content="kr">인터뷰 세션 2</p>
+              <p class="ds-media-placeholder__meta">operator/approach/interview-02.jpg</p>
+            </div>
+            <div class="ds-media-placeholder" data-aspect="4/3">
+              <span class="ds-eyebrow ds-eyebrow--accent-blue">FIG. 02.2.3</span>
+              <p class="ds-media-placeholder__label" data-lang-content="en">Interview protocol</p>
+              <p class="ds-media-placeholder__label ds-kr" data-lang-content="kr">인터뷰 프로토콜</p>
+              <p class="ds-media-placeholder__meta">operator/approach/interview-protocol.jpg</p>
+            </div>
+          </div>
+
+          <!-- Interview & Analysis -->
+          <h3 class="ds-research-finding__sub-heading" data-lang-content="en">Interview & Analysis</h3>
+          <h3 class="ds-research-finding__sub-heading ds-kr" data-lang-content="kr">인터뷰 & 분석</h3>
+          <p class="ds-research-finding__paragraph" data-lang-content="en">
+            To understand how prevalent these struggles are in real-store contexts — when stress peaks, how often operators adjust controls, and what specifically drives those decisions — we conducted interviews with 5 small business owners.
+          </p>
+          <p class="ds-research-finding__paragraph ds-kr" data-lang-content="kr">
+            실제 매장 운영 상황에서 자영업자들이 이런 고민을 하는 비중은 얼마나 되는지, 언제 가장 스트레스를 받는지, 몇 번이나 조작하는지 등 좀 더 구체적인 이유를 알아보기 위해 5인의 인터뷰를 진행했습니다
+          </p>
+
+          <!-- Data Structuring -->
+          <h3 class="ds-research-finding__sub-heading" data-lang-content="en">Data Structuring</h3>
+          <h3 class="ds-research-finding__sub-heading ds-kr" data-lang-content="kr">데이터 구조화</h3>
+          <p class="ds-research-finding__paragraph" data-lang-content="en">
+            We structured interview data using affinity mapping and thematic coding, which surfaced the following recurring patterns.
+          </p>
+          <p class="ds-research-finding__paragraph ds-kr" data-lang-content="kr">
+            이 인터뷰 내용을 어피니티 맵핑과 Thematic coding을 통해 구조화한 결과 다음과 같은 패턴이 도출되었습니다
+          </p>
+
+          <!-- Findings -->
+          <h3 class="ds-research-finding__sub-heading" data-lang-content="en">Findings</h3>
+          <h3 class="ds-research-finding__sub-heading ds-kr" data-lang-content="kr">발견점</h3>
+          <ul class="ds-research-finding__list">
+            <li data-lang-content="en">Adjusting temperature is not the difficult part</li>
+            <li class="ds-kr" data-lang-content="kr">온도를 올리고 내리는 조작 자체에는 어려움이 없다</li>
+
+            <li data-lang-content="en">Cost concerns complicate decisions, but operators can't tell which choice actually reduces cost</li>
+            <li class="ds-kr" data-lang-content="kr">비용이라는 고려사항 때문에 온도를 조작할 때 고민이 많아지지만 어떤 선택이 비용을 줄이는지 불명확하다</li>
+
+            <li data-lang-content="en">Anxiety about post-bill cost drives repeated adjustments</li>
+            <li class="ds-kr" data-lang-content="kr">사후 비용에 대한 불안감 때문에 계속해서 반복 조작을 하게 된다</li>
+
+            <li data-lang-content="en">Without feedback on whether actions actually reduced cost, operators feel stuck</li>
+            <li class="ds-kr" data-lang-content="kr">이러한 행동이 실제 비용 감축으로 이어졌는지는 알 수 없어 답답함을 느끼고 있는 상태이다</li>
+          </ul>
+
+          <!-- Insight (pull-quote 컴포넌트 재활용) -->
+          <h3 class="ds-research-finding__sub-heading" data-lang-content="en">Insight</h3>
+          <h3 class="ds-research-finding__sub-heading ds-kr" data-lang-content="kr">인사이트</h3>
+          <div class="ds-pull-quote ds-pull-quote--cream">
+            <p class="ds-body-lg" data-lang-content="en">
+              Operators experience <em class="ds-signature">emotional conflict</em> between comfort and cost. They want to balance both efficiently, but without comparable criteria, cost inefficiency emerges.
+            </p>
+            <p class="ds-body-lg ds-kr" data-lang-content="kr">
+              쾌적함과 비용 사이에서 <em class="ds-signature">감정적 충돌</em>이 발생하고 있었고 이 두 요소를 효율적으로 운용하고 싶지만 비교할 기준이 없어 비용적 비효율이 발생하고 있었습니다
+            </p>
+          </div>
+        </article>
+
+        <!-- ===== 02.x — USER NEED & PAIN POINT ===== -->
+        <article class="ds-research-finding">
+          <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 02.x — USER NEED & PAIN POINT ]</p>
+
+          <h2 class="ds-h2" data-lang-content="en">Two forces in <em class="ds-signature">tension</em></h2>
+          <h2 class="ds-h2 ds-kr" data-lang-content="kr">두 가지 <em class="ds-signature">대립하는</em> 힘</h2>
+
+          <div class="ds-need-pain-grid">
+
+            <!-- User Need (cream / positive) -->
+            <article class="ds-insight">
+              <p class="ds-eyebrow" data-lang-content="en">USER NEED</p>
+              <p class="ds-eyebrow ds-kr" data-lang-content="kr">사용자 니즈</p>
+              <p class="ds-h3" data-lang-content="en">
+                Stay <em class="ds-signature">comfortable</em> while cutting cost
+              </p>
+              <p class="ds-h3 ds-kr" data-lang-content="kr">
+                쾌적하면서도 비용은 <em class="ds-signature">절감</em>하고 싶다
+              </p>
+            </article>
+
+            <!-- Pain Point (dark / negative) -->
+            <article class="ds-insight ds-insight--dark">
+              <p class="ds-eyebrow" data-lang-content="en">PAIN POINT</p>
+              <p class="ds-eyebrow ds-kr" data-lang-content="kr">페인 포인트</p>
+              <p class="ds-h3" data-lang-content="en">
+                Adjustments lack <em class="ds-signature">cost feedback</em> — anxiety follows
+              </p>
+              <p class="ds-h3 ds-kr" data-lang-content="kr">
+                조절에 따른 비용 효과를 알 수 없어 <em class="ds-signature">불안하다</em>
+              </p>
+            </article>
+
+          </div>
+        </article>
+
+        <!-- ===== 02.x — CONTEXT RESEARCH ===== -->
+        <article class="ds-research-finding">
+          <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 02.x — CONTEXT RESEARCH ]</p>
+
+          <h2 class="ds-h2" data-lang-content="en">Cost was the keyword — but the <em class="ds-signature">structure</em> was complex</h2>
+          <h2 class="ds-h2 ds-kr" data-lang-content="kr">유저에게 중요한 키워드의 큰 축은 <em class="ds-signature">비용</em>이었습니다</h2>
+
+          <p class="ds-research-finding__paragraph" data-lang-content="en">
+            So how is this cost actually structured?
+          </p>
+          <p class="ds-research-finding__paragraph ds-kr" data-lang-content="kr">
+            그렇다면 이 비용은 어떻게 구성되어 있을까
+          </p>
+
+          <!-- Energy Pricing Structure -->
+          <h3 class="ds-research-finding__sub-heading" data-lang-content="en">Energy Pricing Structure</h3>
+          <h3 class="ds-research-finding__sub-heading ds-kr" data-lang-content="kr">에너지 요금 구조</h3>
+          <p class="ds-research-finding__paragraph" data-lang-content="en">
+            Analysis of the energy pricing structure revealed multiple variables — peak / mid / off-peak time slots, progressive billing based on usage, and more.
+          </p>
+          <p class="ds-research-finding__paragraph ds-kr" data-lang-content="kr">
+            에너지 요금 구조를 분석한 결과 피크 / 중간 / 경부하 시간, 사용량에 따른 누적 과금 등 여러 변수들이 존재했습니다
+          </p>
+
+          <!-- Interpretation -->
+          <h3 class="ds-research-finding__sub-heading" data-lang-content="en">Interpretation</h3>
+          <h3 class="ds-research-finding__sub-heading ds-kr" data-lang-content="kr">해석</h3>
+          <p class="ds-research-finding__paragraph" data-lang-content="en">
+            For busy small business owners, this billing structure is too complex to fully understand during operation.
+          </p>
+          <p class="ds-research-finding__paragraph ds-kr" data-lang-content="kr">
+            운영에 바쁜 자영업자가 요금 구조를 이해하기에는 과금 체계가 복잡한 상태였습니다
+          </p>
+
+          <!-- Scenario Test -->
+          <h3 class="ds-research-finding__sub-heading" data-lang-content="en">Scenario Test</h3>
+          <h3 class="ds-research-finding__sub-heading ds-kr" data-lang-content="kr">시나리오 테스트</h3>
+          <p class="ds-research-finding__paragraph" data-lang-content="en">
+            To verify this, we wrote a simple store-operation scenario and explored ways to minimize cost based on the pricing structure.
+          </p>
+          <p class="ds-research-finding__paragraph ds-kr" data-lang-content="kr">
+            이를 검증하기 위해 간단한 매장 운영 시나리오를 작성하고 요금 구조에 따라 비용을 최소화할 수 있는 방법을 모색했습니다
+          </p>
+
+          <!-- Result -->
+          <h3 class="ds-research-finding__sub-heading" data-lang-content="en">Result</h3>
+          <h3 class="ds-research-finding__sub-heading ds-kr" data-lang-content="kr">결과</h3>
+          <p class="ds-research-finding__paragraph" data-lang-content="en">
+            Optimizing for cost alone made it possible to reduce energy use based on time slots or usage — but in real store operations, this couldn't satisfy comfort, one of the user's core needs.
+          </p>
+          <p class="ds-research-finding__paragraph ds-kr" data-lang-content="kr">
+            비용 구조 기준으로 효율만 따랐을 때 시간대나 사용량을 기준으로 에너지 사용을 줄이는 방식은 가능했지만 실제 매장 운영 상황에서는 유저의 니즈 축 중 하나인 쾌적도를 만족시키기 어려웠습니다
+          </p>
+
+          <!-- → Conflict implications -->
+          <ul class="ds-research-finding__implication-list">
+            <li data-lang-content="en"><span class="ds-implication-arrow">→</span>Cost optimization criteria</li>
+            <li class="ds-kr" data-lang-content="kr"><span class="ds-implication-arrow">→</span>비용 최적화 기준과</li>
+
+            <li data-lang-content="en"><span class="ds-implication-arrow">→</span>Real-operation comfort criteria conflict structurally</li>
+            <li class="ds-kr" data-lang-content="kr"><span class="ds-implication-arrow">→</span>실제 운영에서의 쾌적도 기준이 서로 충돌하는 구조였습니다</li>
+          </ul>
+
+          <!-- Additional Finding -->
+          <h3 class="ds-research-finding__sub-heading" data-lang-content="en">Additional Finding</h3>
+          <h3 class="ds-research-finding__sub-heading ds-kr" data-lang-content="kr">추가 발견점</h3>
+          <p class="ds-research-finding__paragraph" data-lang-content="en">
+            The cost reduction achieved this way was not significant.
+          </p>
+          <p class="ds-research-finding__paragraph ds-kr" data-lang-content="kr">
+            이 방식으로 감축된 비용은 유의미하지 않은 수준에 그쳤습니다
+          </p>
+
+          <!-- Research Implication -->
+          <h3 class="ds-research-finding__sub-heading" data-lang-content="en">Research Implication</h3>
+          <h3 class="ds-research-finding__sub-heading ds-kr" data-lang-content="kr">리서치 시사점</h3>
+          <p class="ds-research-finding__paragraph" data-lang-content="en">
+            But this research confirmed: optimizing only for cost cannot satisfy user needs in actual operation environments.
+          </p>
+          <p class="ds-research-finding__paragraph ds-kr" data-lang-content="kr">
+            하지만 이 리서치를 통해 비용만을 기준으로 한 최적화는 실제 운영 환경에서 유저의 니즈를 충분히 만족시키지 못한다는 것을 확인할 수 있었습니다
+          </p>
+
+          <!-- Final implication (pull-quote 강조) -->
+          <div class="ds-pull-quote ds-pull-quote--cream">
+            <p class="ds-body-lg" data-lang-content="en">
+              <span class="ds-implication-arrow">→</span>A judgment criterion that considers <em class="ds-signature">both</em> cost and comfort was needed
+            </p>
+            <p class="ds-body-lg ds-kr" data-lang-content="kr">
+              <span class="ds-implication-arrow">→</span>비용과 쾌적도를 <em class="ds-signature">함께</em> 고려한 판단 기준이 필요했습니다
+            </p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ====================  DEFINE  ==================== -->
+    <section id="define">
+      <div class="ds-container">
+
+        <header class="ds-section-header" data-lang-aware>
+          <p class="ds-section-header__eyebrow">[ 03 — DEFINE ]</p>
+          <h2 class="ds-section-header__title ds-h1">
+            <span data-lang-content="kr">문제 정의</span>
+            <span data-lang-content="en">Problem Definition</span>
+          </h2>
+        </header>
+
+        <!-- Problem Definition statement — yellow filled callout, h2-sized for impact -->
+        <article class="ds-insight ds-insight--yellow">
+          <p class="ds-eyebrow" data-lang-content="en">PROBLEM DEFINITION</p>
+          <p class="ds-eyebrow ds-kr" data-lang-content="kr">문제 정의</p>
+
+          <h3 class="ds-h2" data-lang-content="en">
+            Action and outcome aren't connected — users can't see <em class="ds-signature">how</em> their choices affect cost
+          </h3>
+          <h3 class="ds-h2 ds-kr" data-lang-content="kr">
+            행동과 결과가 연결되지 않아 사용자는 자신의 선택이 비용에 <em class="ds-signature">어떤</em> 영향을 주는지 알 수 없다
+          </h3>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ====================  IDEATE  ==================== -->
+    <section id="ideate">
+      <div class="ds-container">
+
+        <header class="ds-section-header" data-lang-aware>
+          <p class="ds-section-header__eyebrow">[ 04 — IDEATE ]</p>
+          <h2 class="ds-section-header__title ds-h1">
+            <span data-lang-content="kr">접근 방식을 <em class="ds-signature">다시</em> 정의하다</span>
+            <span data-lang-content="en">Reframing the <em class="ds-signature">approach</em></span>
+          </h2>
+        </header>
+
+        <!-- Direction Shift card (numbered-step, default dark) -->
+        <article class="ds-numbered-step ds-kr" data-lang-aware>
+          <p class="ds-numbered-step__counter">01</p>
+          <p class="ds-numbered-step__caption">
+            <span data-lang-content="kr">— 방향 전환</span>
+            <span data-lang-content="en">— Direction Shift</span>
+          </p>
+          <div class="ds-numbered-step__divider"></div>
+          <h3 class="ds-numbered-step__title">
+            <span data-lang-content="kr">그래서 저희는 접근 방식을 <em class="ds-signature">바꿨습니다</em></span>
+            <span data-lang-content="en">So we shifted the <em class="ds-signature">direction</em></span>
+          </h3>
+          <p class="ds-numbered-step__body">
+            <span data-lang-content="kr">기존 시스템은 조작을 쉽게 만드는 데 집중하고, 쾌적이라는 한 축을 중심으로 설계되는 경우가 많았습니다.</span>
+            <span data-lang-content="en">Existing systems focused on making controls easier to operate, often centered on a single axis: comfort.</span>
+          </p>
+          <p class="ds-numbered-step__body">
+            <span data-lang-content="kr">하지만 우리는 유저가 비용이라는 페인포인트를 해결하지 못하고 있다는 점에 집중해 문제를 해결하기 위한 접근을 새롭게 정의했습니다.</span>
+            <span data-lang-content="en">But we focused on the fact that users were unable to resolve the cost pain point — and redefined our approach to solving the problem from there.</span>
+          </p>
+        </article>
+
+        <!-- Ideate 02 — Understanding the Context (cream / inverse rhythm) -->
+        <article class="ds-numbered-step ds-numbered-step--cream ds-kr" data-lang-aware>
+          <p class="ds-numbered-step__counter">02</p>
+          <p class="ds-numbered-step__caption">
+            <span data-lang-content="kr">— 맥락 이해</span>
+            <span data-lang-content="en">— Understanding the Context</span>
+          </p>
+          <div class="ds-numbered-step__divider"></div>
+          <h3 class="ds-numbered-step__title">
+            <span data-lang-content="kr">운영자의 <em class="ds-signature">실제 매장</em> 환경을 살펴보다</span>
+            <span data-lang-content="en">Mapping the operator's <em class="ds-signature">real-store</em> reality</span>
+          </h3>
+          <p class="ds-numbered-step__body">
+            <span data-lang-content="kr">실제 매장 운영 상황에서 도입 가능한 프로덕트를 만들기 위해 유저 퍼소나를 설정하고 유저 저니를 통해 운영자의 상황을 살펴보았습니다.</span>
+            <span data-lang-content="en">To build a product that could realistically be adopted in store operations, we set up user personas and walked through their journey to understand operator context.</span>
+          </p>
+          <p class="ds-numbered-step__body">
+            <span data-lang-content="kr">운영자는 크게 오픈 / 피크 / 마감 시점에서 냉난방을 조절하고 있었습니다.</span>
+            <span data-lang-content="en">Operators were primarily adjusting HVAC at three moments: opening, peak, and closing.</span>
+          </p>
+          <p class="ds-numbered-step__body">
+            <span data-lang-content="kr">또한 실제 매장 운영 환경에서는 냉난방이 중요하지만 운영자가 이에 많은 시간을 쓰기 어려운 상황이었습니다.</span>
+            <span data-lang-content="en">Furthermore, in real store environments, while HVAC is important, operators couldn't afford to spend much time on it.</span>
+          </p>
+
+          <!-- → implication -->
+          <ul class="ds-research-finding__implication-list">
+            <li data-lang-content="en"><span class="ds-implication-arrow">→</span>A <em class="ds-signature">simple, fast</em> structure was needed</li>
+            <li class="ds-kr" data-lang-content="kr"><span class="ds-implication-arrow">→</span><em class="ds-signature">간단하고 빠르게</em> 사용할 수 있는 구조가 필요했습니다</li>
+          </ul>
+        </article>
+
+        <!-- Ideate 03 — Solution Direction (dark / continues inverse rhythm) -->
+        <article class="ds-numbered-step ds-kr" data-lang-aware>
+          <p class="ds-numbered-step__counter">03</p>
+          <p class="ds-numbered-step__caption">
+            <span data-lang-content="kr">— 솔루션 방향</span>
+            <span data-lang-content="en">— Solution Direction</span>
+          </p>
+          <div class="ds-numbered-step__divider"></div>
+          <h3 class="ds-numbered-step__title">
+            <span data-lang-content="kr">시스템이 결과를 <em class="ds-signature">예측</em>하고 최적의 선택을 제안하는 구조</span>
+            <span data-lang-content="en">System <em class="ds-signature">predicts</em> outcomes — and proposes the optimal choice</span>
+          </h3>
+          <p class="ds-numbered-step__body">
+            <span data-lang-content="kr">솔루션 방향은 냉난방 데이터를 나열하는 방식이 아니라 시스템이 각 선택의 결과 예측값을 계산해 유저에게 최적의 선택을 제안하는 구조로 전환했습니다.</span>
+            <span data-lang-content="en">Instead of listing HVAC data, we shifted to a structure where the system calculates predicted outcomes for each choice and proposes the optimal selection to the user.</span>
+          </p>
+        </article>
+
+        <!-- Ideate 04 — Ideation Process (cream / continues inverse rhythm) -->
+        <article class="ds-numbered-step ds-numbered-step--cream ds-kr" data-lang-aware>
+          <p class="ds-numbered-step__counter">04</p>
+          <p class="ds-numbered-step__caption">
+            <span data-lang-content="kr">— 아이디에이션 프로세스</span>
+            <span data-lang-content="en">— Ideation Process</span>
+          </p>
+          <div class="ds-numbered-step__divider"></div>
+          <h3 class="ds-numbered-step__title">
+            <span data-lang-content="kr"><em class="ds-signature">변수</em>에서 MVP 기능까지</span>
+            <span data-lang-content="en">From <em class="ds-signature">variables</em> to MVP features</span>
+          </h3>
+          <p class="ds-numbered-step__body">
+            <span data-lang-content="kr">이를 구현하기 위해 실제 HVAC에 영향을 주는 요소들을 마인드맵으로 정리했고, 결과 예측에 필요한 변수들을 정의했습니다. 이를 기반으로 기능을 아이디에이션 했습니다.</span>
+            <span data-lang-content="en">To build this, we mapped the factors actually affecting HVAC into a mind map and defined the variables needed for outcome prediction. Based on this, we ideated features.</span>
+          </p>
+          <p class="ds-numbered-step__body">
+            <span data-lang-content="kr">또한 유저 저니를 기반으로 실제 필요한 기능들을 도출했습니다.</span>
+            <span data-lang-content="en">We also derived the actually-needed features from user journey mapping.</span>
+          </p>
+          <p class="ds-numbered-step__body">
+            <span data-lang-content="kr">이후 다음 방법을 통해 MVP 필수 기능을 선별했습니다:</span>
+            <span data-lang-content="en">We then narrowed down to MVP-essential features through:</span>
+          </p>
+          <ul class="ds-numbered-step__list">
+            <li>
+              <span data-lang-content="kr">다양한 유저 시나리오</span>
+              <span data-lang-content="en">Multiple user scenarios</span>
+            </li>
+            <li>
+              <span data-lang-content="kr">Prioritization Matrix</span>
+              <span data-lang-content="en">Prioritization Matrix</span>
+            </li>
+            <li>
+              <span data-lang-content="kr">MoSCoW</span>
+              <span data-lang-content="en">MoSCoW</span>
+            </li>
+          </ul>
+        </article>
+
+        <!-- Ideate 05 — Structure Design (dark / continues inverse rhythm) -->
+        <article class="ds-numbered-step ds-kr" data-lang-aware>
+          <p class="ds-numbered-step__counter">05</p>
+          <p class="ds-numbered-step__caption">
+            <span data-lang-content="kr">— 구조 설계</span>
+            <span data-lang-content="en">— Structure Design</span>
+          </p>
+          <div class="ds-numbered-step__divider"></div>
+          <h3 class="ds-numbered-step__title">
+            <span data-lang-content="kr"><em class="ds-signature">정보 구조</em>를 설계하다</span>
+            <span data-lang-content="en">Designing the <em class="ds-signature">information architecture</em></span>
+          </h3>
+          <p class="ds-numbered-step__body">
+            <span data-lang-content="kr">선별한 기능을 기준으로 IA와 시스템 플로우를 설계했습니다.</span>
+            <span data-lang-content="en">Based on the selected features, we designed the IA and system flow.</span>
+          </p>
+          <p class="ds-numbered-step__body">
+            <span data-lang-content="kr">메인 홈에는 다음 요소가 필요했습니다:</span>
+            <span data-lang-content="en">The main home needed:</span>
+          </p>
+          <ul class="ds-numbered-step__list">
+            <li>
+              <span data-lang-content="kr">현재 상태</span>
+              <span data-lang-content="en">Current state</span>
+            </li>
+            <li>
+              <span data-lang-content="kr">예측 요금</span>
+              <span data-lang-content="en">Predicted cost</span>
+            </li>
+            <li>
+              <span data-lang-content="kr">누적 요금</span>
+              <span data-lang-content="en">Accumulated cost</span>
+            </li>
+            <li>
+              <span data-lang-content="kr">기대 변화</span>
+              <span data-lang-content="en">Expected change</span>
+            </li>
+            <li>
+              <span data-lang-content="kr">추천 솔루션</span>
+              <span data-lang-content="en">Recommended solution</span>
+            </li>
+            <li>
+              <span data-lang-content="kr">적용 CTA</span>
+              <span data-lang-content="en">Apply CTA</span>
+            </li>
+          </ul>
+          <p class="ds-numbered-step__body">
+            <span data-lang-content="kr">정보 요소가 많은 상황에서 빠르게 다양한 레이아웃을 탐색하기 위해 <em class="ds-signature">Crazy 8</em>을 진행했습니다.</span>
+            <span data-lang-content="en">With many information elements to handle, we ran <em class="ds-signature">Crazy 8</em> to rapidly explore diverse layouts.</span>
+          </p>
+        </article>
+
+        <!-- Ideate 06 — Interaction Strategy (cream / continues inverse rhythm) -->
+        <article class="ds-numbered-step ds-numbered-step--cream ds-kr" data-lang-aware>
+          <p class="ds-numbered-step__counter">06</p>
+          <p class="ds-numbered-step__caption">
+            <span data-lang-content="kr">— 인터랙션 전략</span>
+            <span data-lang-content="en">— Interaction Strategy</span>
+          </p>
+          <div class="ds-numbered-step__divider"></div>
+          <h3 class="ds-numbered-step__title">
+            <span data-lang-content="kr">대다수는 <em class="ds-signature">팝업</em>으로 결정 — 궁금한 유저만 메인으로 이동</span>
+            <span data-lang-content="en">Most users decide via <em class="ds-signature">popup</em> — only the curious go deeper</span>
+          </h3>
+          <p class="ds-numbered-step__body">
+            <span data-lang-content="kr">대다수의 유저는 팝업 알림을 통해 빠르게 결정을 처리하고 추천에 대해 더 알고 싶거나 의문이 생긴 유저만 메인 화면으로 이동할 것이라고 판단했습니다.</span>
+            <span data-lang-content="en">We judged that most users would handle decisions quickly through popup notifications, with only those wanting more detail about the recommendation — or having questions — moving to the main screen.</span>
+          </p>
+        </article>
+
+        <!-- Ideate 07 — Screen Design (dark / continues inverse rhythm) -->
+        <article class="ds-numbered-step ds-kr" data-lang-aware>
+          <p class="ds-numbered-step__counter">07</p>
+          <p class="ds-numbered-step__caption">
+            <span data-lang-content="kr">— 화면 설계</span>
+            <span data-lang-content="en">— Screen Design</span>
+          </p>
+          <div class="ds-numbered-step__divider"></div>
+          <h3 class="ds-numbered-step__title">
+            <span data-lang-content="kr">메인 화면을 먼저, <em class="ds-signature">확장</em>은 그 다음</span>
+            <span data-lang-content="en">Main screen first, <em class="ds-signature">expanding</em> outward</span>
+          </h3>
+          <p class="ds-numbered-step__body">
+            <span data-lang-content="kr">이러한 흐름을 기반으로 의문을 가진 유저에게 필요한 메인 화면을 설계했고 정보의 중요도 순서에 따라 화면을 구성했습니다.</span>
+            <span data-lang-content="en">Based on this flow, we designed the main screen needed for users with deeper questions, and structured the screen by importance order of information.</span>
+          </p>
+          <p class="ds-numbered-step__body">
+            <span data-lang-content="kr">메인 화면을 먼저 정의한 뒤 필요한 화면들에 대한 와이어프레임을 확장했습니다.</span>
+            <span data-lang-content="en">After defining the main screen, we expanded wireframes for the other necessary screens.</span>
+          </p>
+        </article>
+
+        <!-- Ideate 08 — Design Principle (cream / continues inverse rhythm) -->
+        <article class="ds-numbered-step ds-numbered-step--cream ds-kr" data-lang-aware>
+          <p class="ds-numbered-step__counter">08</p>
+          <p class="ds-numbered-step__caption">
+            <span data-lang-content="kr">— 디자인 원칙</span>
+            <span data-lang-content="en">— Design Principle</span>
+          </p>
+          <div class="ds-numbered-step__divider"></div>
+          <h3 class="ds-numbered-step__title">
+            <span data-lang-content="kr">바쁜 운영자를 위한 <em class="ds-signature">사용성</em> 중심 설계</span>
+            <span data-lang-content="en"><em class="ds-signature">Usability</em>-first for busy operators</span>
+          </h3>
+          <p class="ds-numbered-step__body">
+            <span data-lang-content="kr">디자인 시스템은 바쁜 매장 운영 환경에서도 유저가 빠르게 인지하고 사용할 수 있도록 사용성 중심으로 설계했습니다.</span>
+            <span data-lang-content="en">We designed the system around usability — so users can quickly recognize and use it even in busy store-operation environments.</span>
+          </p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ====================  OUTCOME (Result & Impact)  ==================== -->
+    <section id="outcome">
+      <div class="ds-container">
+
+        <header class="ds-section-header" data-lang-aware>
+          <p class="ds-section-header__eyebrow">[ 06 — RESULT & IMPACT ]</p>
+          <h2 class="ds-section-header__title ds-h1">
+            <span data-lang-content="kr"><em class="ds-signature">사용성</em> 기준을 상회하다</span>
+            <span data-lang-content="en">Validated against <em class="ds-signature">usability</em> standards</span>
+          </h2>
+        </header>
+
+        <!-- ===== SUS Score (stat-standalone) ===== -->
+        <article class="ds-stat-standalone">
+          <p class="ds-eyebrow">SUS SCORE</p>
+          <div class="ds-stat-standalone__number">76</div>
+          <hr class="ds-divider ds-divider--accent-thin" />
+          <p class="ds-body">
+            <span data-lang-content="kr">사용성 기준을 상회하는 결과를 확인했습니다</span>
+            <span data-lang-content="en">Above the usability benchmark for B2B productivity tools</span>
+          </p>
+        </article>
+
+        <!-- ===== Iteration from SUS (numbered-step --dark, no counter — breaks cream/cream sequence) ===== -->
+        <article class="ds-numbered-step ds-kr" data-lang-aware>
+          <p class="ds-numbered-step__caption">
+            <span data-lang-content="kr">— SUS 기반 개선</span>
+            <span data-lang-content="en">— Iteration from SUS</span>
+          </p>
+          <div class="ds-numbered-step__divider"></div>
+          <h3 class="ds-numbered-step__title">
+            <span data-lang-content="kr"><em class="ds-signature">온보딩</em>으로 진입 마찰을 해소하다</span>
+            <span data-lang-content="en">Adding <em class="ds-signature">onboarding</em> closed the entry-friction gap</span>
+          </h3>
+          <p class="ds-numbered-step__body">
+            <span data-lang-content="kr">SUS 평가에서 초기 진입과 설정 과정이 어렵다는 피드백이 존재했습니다. 이를 개선하기 위해 매장을 보다 쉽게 설정할 수 있는 온보딩을 추가했습니다.</span>
+            <span data-lang-content="en">SUS evaluation surfaced feedback that initial entry and setup were difficult. We added an onboarding flow that helps users set up their store more easily.</span>
+          </p>
+          <ul class="ds-research-finding__implication-list">
+            <li data-lang-content="en"><span class="ds-implication-arrow">→</span>After the new onboarding, scores on this item <em class="ds-signature">improved significantly</em></li>
+            <li class="ds-kr" data-lang-content="kr"><span class="ds-implication-arrow">→</span>신규 온보딩 도입 이후 해당 항목의 평가 점수가 <em class="ds-signature">유의미하게</em> 향상되었습니다</li>
+          </ul>
+        </article>
+
+        <!-- ===== Impact Grid (3-column: User / Business / Expected KPI) ===== -->
+        <div class="ds-impact-grid">
+
+          <article class="ds-insight">
+            <p class="ds-eyebrow">USER IMPACT</p>
+            <ul class="ds-numbered-step__list">
+              <li>
+                <span data-lang-content="kr">비용에 대한 불안감 감소</span>
+                <span data-lang-content="en">Reduced anxiety about cost</span>
+              </li>
+              <li>
+                <span data-lang-content="kr">의사결정 시간 감소</span>
+                <span data-lang-content="en">Faster decision-making</span>
+              </li>
+              <li>
+                <span data-lang-content="kr">중요한 매장 운영 요소에 집중 가능</span>
+                <span data-lang-content="en">Focus on what matters most for the store</span>
+              </li>
+            </ul>
+          </article>
+
+          <article class="ds-insight ds-insight--dark">
+            <p class="ds-eyebrow">BUSINESS IMPACT</p>
+            <ul class="ds-numbered-step__list">
+              <li>
+                <span data-lang-content="kr">불필요한 냉난방 비용 감축</span>
+                <span data-lang-content="en">Reduced unnecessary HVAC cost</span>
+              </li>
+              <li>
+                <span data-lang-content="kr">매장 쾌적도 일관성 향상</span>
+                <span data-lang-content="en">Improved consistency in store comfort</span>
+              </li>
+            </ul>
+          </article>
+
+          <article class="ds-insight ds-insight--yellow">
+            <p class="ds-eyebrow">EXPECTED KPI</p>
+            <p class="ds-caption">
+              <span data-lang-content="kr">인터뷰 기반 평균값과 시나리오 계산을 기반으로 산출</span>
+              <span data-lang-content="en">Calculated from interview averages and scenario-based modeling</span>
+            </p>
+            <ul class="ds-numbered-step__list">
+              <li>
+                <span data-lang-content="kr">판단 시간 약 10% 단축</span>
+                <span data-lang-content="en">Decision time reduced by ~10%</span>
+              </li>
+              <li>
+                <span data-lang-content="kr">반복 조작 빈도 약 40% 감소</span>
+                <span data-lang-content="en">Repeated adjustments reduced by ~40%</span>
+              </li>
+              <li>
+                <span data-lang-content="kr">에너지 비용 절감 가능성 약 15%</span>
+                <span data-lang-content="en">Energy cost savings potential ~15%</span>
+              </li>
+            </ul>
+          </article>
+
+        </div>
+
+        <!-- ===== Scalability (pull-quote --cream) ===== -->
+        <article class="ds-pull-quote ds-pull-quote--cream">
+          <p class="ds-eyebrow">SCALABILITY</p>
+          <p class="ds-h2">
+            <span data-lang-content="kr">서울 내 전 매장에 적용할 경우 —</span>
+            <span data-lang-content="en">Applied across all Seoul stores —</span>
+          </p>
+          <ul class="ds-research-finding__implication-list">
+            <li data-lang-content="en"><span class="ds-implication-arrow">→</span>On a monthly basis</li>
+            <li class="ds-kr" data-lang-content="kr"><span class="ds-implication-arrow">→</span>월 단위 기준</li>
+
+            <li data-lang-content="en"><span class="ds-implication-arrow">→</span>Expected cost savings of approximately <em class="ds-signature">₩1.6 billion</em></li>
+            <li class="ds-kr" data-lang-content="kr"><span class="ds-implication-arrow">→</span>약 <em class="ds-signature">16억 원</em> 수준의 비용 절감 효과를 기대할 수 있습니다</li>
+          </ul>
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ====================  FOOTER  ==================== -->
+  <footer class="ds-footer">
+    <div class="ds-container ds-footer__inner">
+      <span>
+        <span data-lang-content="kr">© 2025 Hajiwi · 모든 권리 보유</span>
+        <span data-lang-content="en">© 2025 Hajiwi · All rights reserved</span>
+      </span>
+      <span>
+        <span data-lang-content="kr">디자인 시스템 v2</span>
+        <span data-lang-content="en">Design System v2</span>
+      </span>
+    </div>
+  </footer>
+
+  <!-- ====================  LANG TOGGLE JS  ==================== -->
+  <script>
+    (function () {
+      const root = document.documentElement;
+      const setLang = (lang) => {
+        if (lang !== 'kr' && lang !== 'en') return;
+        root.dataset.lang = lang;
+        root.setAttribute('lang', lang === 'kr' ? 'ko' : 'en');
+        // Toggle .ds-kr on language-aware components so font-family follows locale
+        document.querySelectorAll('[data-lang-aware]').forEach((el) => {
+          el.classList.toggle('ds-kr', lang === 'kr');
+        });
+      };
+      document.querySelectorAll('[data-set-lang]').forEach((btn) => {
+        btn.addEventListener('click', () => setLang(btn.dataset.setLang));
+      });
+      // Initialize from current data-lang (default = kr)
+      setLang(root.dataset.lang || 'kr');
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,433 @@
+/* =============================================================
+   UI Elements — DESIGN_SYSTEM.md Section 9
+   .ds-tag · .ds-btn · .ds-divider · .ds-eyebrow · .ds-nav-link
+   ============================================================= */
+
+
+/* =============================================================
+   Typography utility classes — pair with .ds-kr for KR auto-downscale
+   (KR overrides live in cards.css alongside heading auto-downscale rules).
+   ============================================================= */
+
+.ds-display {
+  font-family: var(--font-sans);
+  font-size: var(--text-display-size);
+  line-height: var(--text-display-line-height);
+  letter-spacing: var(--text-display-letter-spacing);
+  font-weight: var(--text-display-weight);
+}
+
+.ds-h1 {
+  font-family: var(--font-sans);
+  font-size: var(--text-h1-size);
+  line-height: var(--text-h1-line-height);
+  letter-spacing: var(--text-h1-letter-spacing);
+  font-weight: var(--text-h1-weight);
+}
+
+.ds-h2 {
+  font-family: var(--font-sans);
+  font-size: var(--text-h2-size);
+  line-height: var(--text-h2-line-height);
+  letter-spacing: var(--text-h2-letter-spacing);
+  font-weight: var(--text-h2-weight);
+}
+
+.ds-h3 {
+  font-family: var(--font-sans);
+  font-size: var(--text-h3-size);
+  line-height: var(--text-h3-line-height);
+  letter-spacing: var(--text-h3-letter-spacing);
+  font-weight: var(--text-h3-weight);
+}
+
+.ds-body-lg {
+  font-family: var(--font-sans);
+  font-size: var(--text-body-lg-size);
+  line-height: var(--text-body-lg-line-height);
+  letter-spacing: var(--text-body-lg-letter-spacing);
+  font-weight: var(--text-body-lg-weight);
+}
+
+.ds-body {
+  font-family: var(--font-sans);
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-line-height);
+  letter-spacing: var(--text-body-letter-spacing);
+  font-weight: var(--text-body-weight);
+}
+
+.ds-caption {
+  font-family: var(--font-sans);
+  font-size: var(--text-caption-size);
+  line-height: var(--text-caption-line-height);
+  letter-spacing: var(--text-caption-letter-spacing);
+  font-weight: var(--text-caption-weight);
+}
+
+
+/* =============================================================
+   .ds-tag  ·  pill, 4 states (default/hover/active/disabled)
+   ============================================================= */
+
+.ds-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--text-eyebrow-size);
+  line-height: var(--text-eyebrow-line-height);
+  letter-spacing: var(--text-eyebrow-letter-spacing);
+  font-weight: var(--text-eyebrow-weight);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  background: transparent;
+  border: var(--border-thin) solid var(--border-hairline);
+  border-radius: var(--radius-xl);
+  padding: var(--space-2) var(--space-4);
+  cursor: pointer;
+  transition: color var(--duration-base) var(--ease-default),
+              background var(--duration-base) var(--ease-default),
+              border-color var(--duration-base) var(--ease-default);
+}
+
+.ds-tag:hover {
+  color: var(--text-primary);
+  border-color: var(--border-default);
+}
+
+.ds-tag.is-active,
+.ds-tag[aria-pressed="true"] {
+  color: var(--text-on-cream);
+  background: var(--accent-yellow);
+  border-color: var(--accent-yellow);
+}
+
+.ds-tag:disabled,
+.ds-tag.is-disabled {
+  color: var(--text-tertiary);
+  border-color: var(--border-hairline);
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ds-tag.ds-kr {
+  font-family: var(--font-kr);
+}
+
+
+/* =============================================================
+   .ds-btn  ·  --primary | --secondary | --link · 3 states each
+   ============================================================= */
+
+.ds-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-line-height);
+  letter-spacing: var(--text-body-letter-spacing);
+  font-weight: var(--text-h3-weight);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-6);
+  cursor: pointer;
+  text-decoration: none;
+  border: var(--border-normal) solid transparent;
+  transition: color var(--duration-base) var(--ease-default),
+              background var(--duration-base) var(--ease-default),
+              border-color var(--duration-base) var(--ease-default),
+              transform var(--duration-base) var(--ease-default);
+}
+
+/* Primary — yellow filled */
+.ds-btn--primary {
+  background: var(--accent-yellow);
+  color: var(--text-on-cream);
+  border-color: var(--accent-yellow);
+}
+
+.ds-btn--primary:hover {
+  transform: translateY(-1px);
+  background: var(--text-accent-warm);
+  border-color: var(--text-accent-warm);
+}
+
+.ds-btn--primary:disabled,
+.ds-btn--primary.is-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Secondary — transparent + border */
+.ds-btn--secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border-color: var(--border-default);
+}
+
+.ds-btn--secondary:hover {
+  border-color: var(--text-primary);
+  background: var(--bg-surface);
+}
+
+.ds-btn--secondary:disabled,
+.ds-btn--secondary.is-disabled {
+  color: var(--text-tertiary);
+  border-color: var(--border-hairline);
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Link — text-only with underline-on-hover */
+.ds-btn--link {
+  background: transparent;
+  border-color: transparent;
+  color: var(--text-primary);
+  padding: var(--space-2) 0;
+  border-radius: 0;
+  position: relative;
+}
+
+.ds-btn--link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: var(--border-normal);
+  background: currentColor;
+  transition: width var(--duration-fast) var(--ease-default);
+}
+
+.ds-btn--link:hover::after {
+  width: 100%;
+}
+
+.ds-btn--link:disabled,
+.ds-btn--link.is-disabled {
+  color: var(--text-tertiary);
+  cursor: not-allowed;
+}
+
+.ds-btn.ds-kr {
+  font-family: var(--font-kr);
+}
+
+
+/* =============================================================
+   .ds-divider  ·  5 variants
+   --hairline (default) | --default | --accent-yellow
+   --accent-blue | --section
+   ============================================================= */
+
+.ds-divider {
+  width: 100%;
+  height: var(--border-thin);
+  background: var(--border-hairline);
+  border: 0;
+  margin: 0;
+}
+
+.ds-divider--default {
+  height: var(--border-normal);
+  background: var(--border-default);
+}
+
+.ds-divider--accent-yellow {
+  height: var(--border-normal);
+  background: var(--accent-yellow);
+  width: var(--space-10);
+}
+
+.ds-divider--accent-blue {
+  height: var(--border-normal);
+  background: var(--accent-blue);
+  width: var(--space-10);
+}
+
+.ds-divider--accent-thin {
+  height: var(--border-thin);
+  background: var(--accent-yellow);
+  width: var(--space-10);
+}
+
+.ds-divider--section {
+  height: var(--border-thin);
+  background: var(--border-hairline);
+  margin-block: var(--space-20);
+}
+
+@media (min-width: 1440px) {
+  .ds-divider--section {
+    margin-block: var(--space-30);
+  }
+}
+
+
+/* =============================================================
+   .ds-eyebrow  ·  uppercase caps with tracking + color modifiers
+   ============================================================= */
+
+.ds-eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--text-eyebrow-size);
+  line-height: var(--text-eyebrow-line-height);
+  letter-spacing: var(--text-eyebrow-letter-spacing);
+  font-weight: var(--text-eyebrow-weight);
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin: 0;
+  display: inline-block;
+}
+
+.ds-eyebrow--accent-yellow {
+  color: var(--accent-yellow);
+}
+
+.ds-eyebrow--accent-blue {
+  color: var(--accent-blue);
+}
+
+.ds-eyebrow--primary {
+  color: var(--text-primary);
+}
+
+.ds-eyebrow--secondary {
+  color: var(--text-secondary);
+}
+
+.ds-eyebrow--on-cream {
+  color: var(--text-on-cream);
+  opacity: 0.6;
+}
+
+.ds-eyebrow.ds-kr {
+  font-family: var(--font-kr);
+  letter-spacing: 0;
+}
+
+
+/* =============================================================
+   .ds-nav-link  ·  uppercase, 3 states (default/hover/active)
+   ============================================================= */
+
+.ds-nav-link {
+  font-family: var(--font-sans);
+  font-size: var(--text-counter-size);
+  line-height: var(--text-counter-line-height);
+  letter-spacing: var(--text-eyebrow-letter-spacing);
+  font-weight: var(--text-eyebrow-weight);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  text-decoration: none;
+  position: relative;
+  padding: var(--space-2) 0;
+  display: inline-block;
+  transition: color var(--duration-base) var(--ease-default);
+}
+
+@media (min-width: 768px) {
+  .ds-nav-link {
+    font-size: 14px;
+    line-height: 21px;
+  }
+}
+
+.ds-nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: var(--border-normal);
+  background: var(--accent-yellow);
+  transition: width var(--duration-fast) var(--ease-default);
+}
+
+.ds-nav-link:hover {
+  color: var(--text-primary);
+}
+
+.ds-nav-link:hover::after {
+  width: 100%;
+}
+
+.ds-nav-link.is-active,
+.ds-nav-link[aria-current="page"] {
+  color: var(--text-primary);
+}
+
+.ds-nav-link.is-active::after,
+.ds-nav-link[aria-current="page"]::after {
+  width: 100%;
+  background: var(--accent-yellow);
+}
+
+.ds-nav-link.ds-kr {
+  font-family: var(--font-kr);
+  letter-spacing: 0;
+}
+
+
+/* =============================================================
+   .ds-media-placeholder  ·  informative placeholder for unfinished
+   image/video slots (DESIGN_SYSTEM.md Section 8).
+   data-aspect attribute switches aspect-ratio. Default 16/10.
+   ============================================================= */
+
+.ds-media-placeholder {
+  background: var(--bg-muted);
+  border: var(--border-thin) dashed var(--border-hairline);
+  border-radius: var(--radius-card);
+  aspect-ratio: 16 / 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  color: var(--text-tertiary);
+  text-align: center;
+}
+
+.ds-media-placeholder[data-aspect="1/1"]   { aspect-ratio: 1 / 1; }
+.ds-media-placeholder[data-aspect="4/3"]   { aspect-ratio: 4 / 3; }
+.ds-media-placeholder[data-aspect="3/2"]   { aspect-ratio: 3 / 2; }
+.ds-media-placeholder[data-aspect="16/9"]  { aspect-ratio: 16 / 9; }
+.ds-media-placeholder[data-aspect="9/16"]  { aspect-ratio: 9 / 16; }
+
+.ds-media-placeholder__label {
+  font-family: var(--font-sans);
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-line-height);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.ds-media-placeholder__meta {
+  font-family: monospace;
+  font-size: var(--text-caption-size);
+  line-height: var(--text-caption-line-height);
+  color: var(--text-tertiary);
+  opacity: 0.7;
+  margin: 0;
+  word-break: break-all;
+}
+
+
+/* =============================================================
+   .ds-implication-arrow  ·  inline arrow marker for conclusion
+   / implication statements ("→ a thing followed"). Pairs with
+   .ds-research-finding__implication-list or sits inside a
+   pull-quote's body for final emphasis.
+   ============================================================= */
+
+.ds-implication-arrow {
+  color: var(--accent-yellow);
+  font-weight: 600;
+  margin-right: var(--space-3);
+  display: inline-block;
+}
