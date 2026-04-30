@@ -17,7 +17,7 @@
 .ds-kr .ds-signature,
 .ds-kr.ds-signature,
 .ds-signature.ds-kr,
-html[data-lang="kr"] .ds-signature {
+html[data-lang="ko"] .ds-signature {
   font-family: var(--font-kr);
   font-style: normal;
   font-weight: 700;

@@ -97,7 +97,7 @@ Three font families used:
 
 ### `.ds-signature` — Korean override (HARD RULE)
 
-`.ds-signature` is Playfair Italic only in EN context. In any KR context (`.ds-kr` ancestor/self, or page in `data-lang="kr"`) it MUST switch to Pretendard normal-style. The override below is included in `cards.css`:
+`.ds-signature` is Playfair Italic only in EN context. In any Korean context (`.ds-kr` ancestor/self, or page in `data-lang="ko"`) it MUST switch to Pretendard normal-style. The override below is included in `cards.css`:
 
 ```css
 /* EN default — Playfair Italic, ls -0.05em */
@@ -112,7 +112,7 @@ Three font families used:
 .ds-kr .ds-signature,
 .ds-kr.ds-signature,
 .ds-signature.ds-kr,
-html[data-lang="kr"] .ds-signature {
+html[data-lang="ko"] .ds-signature {
   font-family: var(--font-kr);
   font-style: normal;
   font-weight: 700;
@@ -120,7 +120,9 @@ html[data-lang="kr"] .ds-signature {
 }
 ```
 
-**Markup rule**: any element wrapping KR signature words must either be `data-lang-aware` (JS-toggled `.ds-kr`) or sit inside `<html data-lang="kr">`. Number stats are unaffected (still Playfair Italic per design tokens).
+**Markup rule**: any element wrapping Korean signature words must either be `data-lang-aware` (JS-toggled `.ds-kr`) or sit inside `<html data-lang="ko">`. Number stats are unaffected (still Playfair Italic per design tokens).
+
+> **Language code convention**: `en` / `ko` (NOT `kr`). `KR` is the country code (Republic of Korea), `KO` is the ISO 639-1 language code. CSS attribute selectors, JS data attributes, and toggle button labels all use `EN` / `KO`.
 
 ### Markup pattern
 
@@ -461,7 +463,7 @@ Adds a square media slot inset at the top-right of the card. Requires wrapping t
 
 **Bilingual markup pattern** (`data-lang-content` + element-level `.ds-kr` for KR):
 - EN element: `<h3 class="ds-research-finding__sub-heading" data-lang-content="en">Pattern</h3>`
-- KR element: `<h3 class="ds-research-finding__sub-heading ds-kr" data-lang-content="kr">패턴</h3>`
+- KR element: `<h3 class="ds-research-finding__sub-heading ds-kr" data-lang-content="ko">패턴</h3>`
 
 ### 7.5 `criteria-list`
 
@@ -666,6 +668,40 @@ For the content-review meeting, images are placeholder. Make placeholders **info
 ---
 
 ## 9. UI Elements
+
+### Navigation rules (HARD RULE)
+
+The site nav is **language-agnostic** — chrome elements never translate. Only body content responds to the language toggle.
+
+| Element | Translates? | Notes |
+| --- | --- | --- |
+| `.ds-nav__logo` ("wizzy") | ❌ Fixed English (lowercase brand mark) | No `data-lang-content` attribute |
+| `.ds-nav__tagline` ("Product designer") | ❌ Fixed English | No `data-lang-content` attribute. Sub-line under logo. |
+| `.ds-nav-link` (PROJECT / ABOUT / RESUME) | ❌ Fixed English (uppercase) | Section labels stay English in both modes |
+| `.ds-lang-toggle__btn` (EN / KO) | ❌ Fixed labels | The toggle itself doesn't translate; clicking sets `<html data-lang>` |
+
+Body content (`<section>` everything below the nav) uses `data-lang-content="en"` / `data-lang-content="ko"` paired siblings — JS toggle on `.ds-lang-toggle__btn` swaps `<html data-lang>` and CSS reveals the active locale only.
+
+**Toggle JS pattern** (page-local in `<script>`):
+```js
+const buttons = document.querySelectorAll('.ds-lang-toggle__btn');
+const setLang = (lang) => {
+  if (lang !== 'en' && lang !== 'ko') return;
+  document.documentElement.dataset.lang = lang;
+  document.documentElement.setAttribute('lang', lang);
+  buttons.forEach(b => b.classList.toggle('ds-lang-toggle__btn--active', b.dataset.lang === lang));
+  document.querySelectorAll('[data-lang-aware]').forEach(el => el.classList.toggle('ds-kr', lang === 'ko'));
+};
+buttons.forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
+setLang(document.documentElement.dataset.lang || 'ko');
+```
+
+**Visibility CSS** (page-local):
+```css
+[data-lang-content="en"], [data-lang-content="ko"] { display: none; }
+html[data-lang="en"] [data-lang-content="en"],
+html[data-lang="ko"] [data-lang-content="ko"] { display: revert; }
+```
 
 ### Typography utility classes
 
