@@ -199,11 +199,37 @@
     .overview-stack {
       display: flex;
       flex-direction: column;
-      gap: var(--space-8);
+      gap: var(--space-6);            /* 24 — per Figma */
       align-items: center;
     }
+    /* Overview cards are wider (960) than the design-system default (640) */
+    .overview-stack .ds-numbered-step { max-width: 960px; }
+
+    /* Overview-only square 120px media slot (overrides 16:10 → 160sq → 200sq default) */
+    .overview-stack .ds-numbered-step--with-media .ds-numbered-step__media {
+      aspect-ratio: 1 / 1;
+      max-width: 120px;
+      margin-left: auto;
+      margin-bottom: var(--space-6);
+    }
+    @media (min-width: 768px) {
+      .overview-stack .ds-numbered-step--with-media .ds-numbered-step__media {
+        width: 120px;
+        height: 120px;
+        max-width: 120px;
+      }
+      .overview-stack .ds-numbered-step--with-media .ds-numbered-step__content {
+        padding-right: calc(120px + var(--space-6));
+      }
+    }
     @media (min-width: 1440px) {
-      .overview-stack { gap: var(--space-10); }
+      .overview-stack .ds-numbered-step--with-media .ds-numbered-step__media {
+        width: 120px;
+        height: 120px;
+      }
+      .overview-stack .ds-numbered-step--with-media .ds-numbered-step__content {
+        padding-right: calc(120px + var(--space-6));
+      }
     }
 
     /* Approach / Define / Ideate / Outcome — flex column with explicit
@@ -296,25 +322,30 @@
 
         <div class="overview-stack">
 
-          <!-- ===== CARD 01 — dark + quote ===== -->
-          <article class="ds-numbered-step ds-kr" data-lang-aware>
-            <p class="ds-numbered-step__counter">01</p>
-            <p class="ds-numbered-step__caption">
-              <span data-lang-content="ko">— 시작 질문</span>
-              <span data-lang-content="en">— Question</span>
-            </p>
-            <div class="ds-numbered-step__divider"></div>
-            <h3 class="ds-numbered-step__title">
-              <span data-lang-content="ko">이 프로젝트는 한 가지 질문에서 시작되었습니다</span>
-              <span data-lang-content="en">It started with one <em class="ds-signature">question</em></span>
-            </h3>
-            <blockquote class="ds-numbered-step__quote">
-              <span data-lang-content="ko">왜 사람들은 냉난방을 명확한 기준 없이 감으로 조절하고 있을까?</span>
-              <span data-lang-content="en">Why do people adjust HVAC by feel, with no clear criteria?</span>
-            </blockquote>
+          <!-- ===== CARD 01 — dark + quote + media ===== -->
+          <article class="ds-numbered-step ds-numbered-step--with-media ds-kr" data-lang-aware>
+            <div class="ds-numbered-step__content">
+              <p class="ds-numbered-step__counter">01</p>
+              <p class="ds-numbered-step__caption">
+                <span data-lang-content="ko">— 시작 질문</span>
+                <span data-lang-content="en">— Question</span>
+              </p>
+              <div class="ds-numbered-step__divider"></div>
+              <h3 class="ds-numbered-step__title">
+                <span data-lang-content="ko">이 프로젝트는 한 가지 질문에서 시작되었습니다</span>
+                <span data-lang-content="en">It started with one <em class="ds-signature">question</em></span>
+              </h3>
+              <blockquote class="ds-numbered-step__quote">
+                <span data-lang-content="ko">왜 사람들은 냉난방을 명확한 기준 없이 감으로 조절하고 있을까?</span>
+                <span data-lang-content="en">Why do people adjust HVAC by feel, with no clear criteria?</span>
+              </blockquote>
+            </div>
+            <div class="ds-numbered-step__media" aria-label="Media placeholder — operator/overview/01-question.jpg">
+              <span>operator/overview/01-question.jpg</span>
+            </div>
           </article>
 
-          <!-- ===== CARD 02 — cream + list + closing + media slot ===== -->
+          <!-- ===== CARD 02 — cream + quote + closing + media ===== -->
           <article class="ds-numbered-step ds-numbered-step--cream ds-numbered-step--with-media ds-kr" data-lang-aware>
             <div class="ds-numbered-step__content">
               <p class="ds-numbered-step__counter">02</p>
@@ -327,112 +358,111 @@
                 <span data-lang-content="ko">저 역시 같은 문제를 겪은 경험이 있었습니다</span>
                 <span data-lang-content="en">I had the same problem myself</span>
               </h3>
-              <ul class="ds-numbered-step__list">
-                <li>
-                  <span data-lang-content="ko">실제로 매장을 운영하며</span>
-                  <span data-lang-content="en">While running my own shop,</span>
-                </li>
-                <li>
-                  <span data-lang-content="ko">냉난방을 계속 조절하고 있었지만</span>
-                  <span data-lang-content="en">I kept adjusting heating and cooling,</span>
-                </li>
-                <li>
-                  <span data-lang-content="ko">명확한 기준 없이 반복하고 있었습니다</span>
-                  <span data-lang-content="en">but always without any clear criteria.</span>
-                </li>
-              </ul>
+              <blockquote class="ds-numbered-step__quote">
+                <span data-lang-content="ko">실제로 매장을 운영했을 때, 냉난방을 계속 조절하고 있었지만 명확한 기준 없이 반복하고 있었습니다</span>
+                <span data-lang-content="en">While running my own shop, I kept adjusting heating and cooling without any clear criteria.</span>
+              </blockquote>
               <p class="ds-numbered-step__closing">
-                <span data-lang-content="ko">이 경험에서 문제의식을 발견했습니다</span>
+                <span data-lang-content="ko">이 경험에서 문제 의식을 발견했습니다</span>
                 <span data-lang-content="en">That lived experience is where the problem became visible.</span>
               </p>
             </div>
-            <div class="ds-numbered-step__media" aria-label="Media placeholder — operator/overview/personal-context.jpg">
-              <span>operator/overview/personal-context.jpg</span>
+            <div class="ds-numbered-step__media" aria-label="Media placeholder — operator/overview/02-context.jpg">
+              <span>operator/overview/02-context.jpg</span>
             </div>
           </article>
 
-          <!-- ===== CARD 03 — dark + list ===== -->
-          <article class="ds-numbered-step ds-kr" data-lang-aware>
-            <p class="ds-numbered-step__counter">03</p>
-            <p class="ds-numbered-step__caption">
-              <span data-lang-content="ko">— 접근</span>
-              <span data-lang-content="en">— Approach</span>
-            </p>
-            <div class="ds-numbered-step__divider"></div>
-            <h3 class="ds-numbered-step__title">
-              <span data-lang-content="ko">문제를 해결하기 위해 타겟을 먼저 정의했습니다</span>
-              <span data-lang-content="en">To solve the problem, I defined the target first</span>
-            </h3>
-            <ul class="ds-numbered-step__list">
-              <li>
-                <span data-lang-content="ko">모든 사용자로 확장하기보다</span>
-                <span data-lang-content="en">Rather than scoping to all users,</span>
-              </li>
-              <li>
-                <span data-lang-content="ko">문제와 효과가 가장 명확하게 드러나는 집단에 집중했습니다</span>
-                <span data-lang-content="en">I focused on the group where the problem and the impact would show up most clearly.</span>
-              </li>
-            </ul>
+          <!-- ===== CARD 03 — dark + quote + media ===== -->
+          <article class="ds-numbered-step ds-numbered-step--with-media ds-kr" data-lang-aware>
+            <div class="ds-numbered-step__content">
+              <p class="ds-numbered-step__counter">03</p>
+              <p class="ds-numbered-step__caption">
+                <span data-lang-content="ko">— 접근</span>
+                <span data-lang-content="en">— Approach</span>
+              </p>
+              <div class="ds-numbered-step__divider"></div>
+              <h3 class="ds-numbered-step__title">
+                <span data-lang-content="ko">문제를 해결하기 위해 타겟을 먼저 정의했습니다</span>
+                <span data-lang-content="en">To solve the problem, I defined the target first</span>
+              </h3>
+              <blockquote class="ds-numbered-step__quote">
+                <span data-lang-content="ko">모든 사용자가 아닌 문제의 효과가 가장 명확하게 드러나는 집단에 집중했습니다.</span>
+                <span data-lang-content="en">Rather than scoping to all users, I focused on the group where the problem and the impact would show up most clearly.</span>
+              </blockquote>
+            </div>
+            <div class="ds-numbered-step__media" aria-label="Media placeholder — operator/overview/03-approach.jpg">
+              <span>operator/overview/03-approach.jpg</span>
+            </div>
           </article>
 
-          <!-- ===== CARD 04 — cream + list ===== -->
-          <article class="ds-numbered-step ds-numbered-step--cream ds-kr" data-lang-aware>
-            <p class="ds-numbered-step__counter">04</p>
-            <p class="ds-numbered-step__caption">
-              <span data-lang-content="ko">— 타겟 선정 로직</span>
-              <span data-lang-content="en">— Target Selection Logic</span>
-            </p>
-            <div class="ds-numbered-step__divider"></div>
-            <h3 class="ds-numbered-step__title">
-              <span data-lang-content="ko">사용자 그룹별 구조는 다음과 같았습니다</span>
-              <span data-lang-content="en">The user-group landscape looked like this</span>
-            </h3>
-            <ul class="ds-numbered-step__list">
-              <li>
-                <span data-lang-content="ko"><strong>가정</strong>: 비용 영향이 상대적으로 적음</span>
-                <span data-lang-content="en"><strong>Households</strong> — relatively low cost sensitivity</span>
-              </li>
-              <li>
-                <span data-lang-content="ko"><strong>프랜차이즈</strong>: 고정비 구조로 관리됨</span>
-                <span data-lang-content="en"><strong>Franchises</strong> — managed under fixed-cost structures</span>
-              </li>
-              <li>
-                <span data-lang-content="ko"><strong>자영업자</strong>: 조절 결과가 매장 운영에 직접적인 영향을 줌</span>
-                <span data-lang-content="en"><strong>Small business owners</strong> — adjustment outcomes hit the shop directly</span>
-              </li>
-            </ul>
+          <!-- ===== CARD 04 — cream + list + media ===== -->
+          <article class="ds-numbered-step ds-numbered-step--cream ds-numbered-step--with-media ds-kr" data-lang-aware>
+            <div class="ds-numbered-step__content">
+              <p class="ds-numbered-step__counter">04</p>
+              <p class="ds-numbered-step__caption">
+                <span data-lang-content="ko">— 타겟 선정 로직</span>
+                <span data-lang-content="en">— Target Selection Logic</span>
+              </p>
+              <div class="ds-numbered-step__divider"></div>
+              <h3 class="ds-numbered-step__title">
+                <span data-lang-content="ko">사용자 그룹별 구조는 다음과 같았습니다</span>
+                <span data-lang-content="en">The user-group landscape looked like this</span>
+              </h3>
+              <ul class="ds-numbered-step__list">
+                <li>
+                  <span data-lang-content="ko"><strong>가정</strong>: 비용 영향이 상대적으로 적음</span>
+                  <span data-lang-content="en"><strong>Households</strong> — relatively low cost sensitivity</span>
+                </li>
+                <li>
+                  <span data-lang-content="ko"><strong>프랜차이즈</strong>: 고정비 구조로 관리됨</span>
+                  <span data-lang-content="en"><strong>Franchises</strong> — managed under fixed-cost structures</span>
+                </li>
+                <li>
+                  <span data-lang-content="ko"><strong>자영업자</strong>: 조절 결과가 매장 운영에 직접적인 영향을 줌</span>
+                  <span data-lang-content="en"><strong>Small business owners</strong> — adjustment outcomes hit the shop directly</span>
+                </li>
+              </ul>
+            </div>
+            <div class="ds-numbered-step__media" aria-label="Media placeholder — operator/overview/04-target-logic.jpg">
+              <span>operator/overview/04-target-logic.jpg</span>
+            </div>
           </article>
 
-          <!-- ===== CARD 05 — dark + list + closing ===== -->
-          <article class="ds-numbered-step ds-kr" data-lang-aware>
-            <p class="ds-numbered-step__counter">05</p>
-            <p class="ds-numbered-step__caption">
-              <span data-lang-content="ko">— 타겟 정의</span>
-              <span data-lang-content="en">— Target Definition</span>
-            </p>
-            <div class="ds-numbered-step__divider"></div>
-            <h3 class="ds-numbered-step__title">
-              <span data-lang-content="ko"><em class="ds-signature">Small business owner</em>를 핵심 타겟으로 정의했습니다</span>
-              <span data-lang-content="en">I defined <em class="ds-signature">small business owners</em> as the core target</span>
-            </h3>
-            <ul class="ds-numbered-step__list">
-              <li>
-                <span data-lang-content="ko">냉난방 조절의 영향이 가장 크게 나타나고</span>
-                <span data-lang-content="en">The impact of HVAC adjustment shows up most clearly,</span>
-              </li>
-              <li>
-                <span data-lang-content="ko">비용 변화가 직접적으로 체감되며</span>
-                <span data-lang-content="en">cost change is directly felt,</span>
-              </li>
-              <li>
-                <span data-lang-content="ko">의사결정이 반복적으로 이루어지는 환경이기 때문입니다</span>
-                <span data-lang-content="en">and decisions are made repeatedly in this environment.</span>
-              </li>
-            </ul>
-            <p class="ds-numbered-step__closing">
-              <span data-lang-content="ko">비즈니스 임팩트와 도입 가능성을 고려한 선택이었습니다</span>
-              <span data-lang-content="en">It's a choice grounded in business impact and adoption likelihood.</span>
-            </p>
+          <!-- ===== CARD 05 — dark + list + closing + media ===== -->
+          <article class="ds-numbered-step ds-numbered-step--with-media ds-kr" data-lang-aware>
+            <div class="ds-numbered-step__content">
+              <p class="ds-numbered-step__counter">05</p>
+              <p class="ds-numbered-step__caption">
+                <span data-lang-content="ko">— 타겟 정의</span>
+                <span data-lang-content="en">— Target Definition</span>
+              </p>
+              <div class="ds-numbered-step__divider"></div>
+              <h3 class="ds-numbered-step__title">
+                <span data-lang-content="ko"><em class="ds-signature">Small business owner</em>를 핵심 타겟으로 정의했습니다</span>
+                <span data-lang-content="en">I defined <em class="ds-signature">small business owners</em> as the core target</span>
+              </h3>
+              <ul class="ds-numbered-step__list">
+                <li>
+                  <span data-lang-content="ko">냉난방 조절의 영향이 가장 크게 나타나고</span>
+                  <span data-lang-content="en">The impact of HVAC adjustment shows up most clearly,</span>
+                </li>
+                <li>
+                  <span data-lang-content="ko">비용 변화가 직접적으로 체감되며</span>
+                  <span data-lang-content="en">cost change is directly felt,</span>
+                </li>
+                <li>
+                  <span data-lang-content="ko">의사결정이 반복적으로 이루어지는 환경이기 때문입니다</span>
+                  <span data-lang-content="en">and decisions are made repeatedly in this environment.</span>
+                </li>
+              </ul>
+              <p class="ds-numbered-step__closing">
+                <span data-lang-content="ko">비즈니스 임팩트와 도입 가능성을 고려한 선택이었습니다</span>
+                <span data-lang-content="en">It's a choice grounded in business impact and adoption likelihood.</span>
+              </p>
+            </div>
+            <div class="ds-numbered-step__media" aria-label="Media placeholder — operator/overview/05-target-definition.jpg">
+              <span>operator/overview/05-target-definition.jpg</span>
+            </div>
           </article>
 
         </div>
