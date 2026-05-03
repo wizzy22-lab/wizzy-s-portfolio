@@ -211,6 +211,13 @@
       max-width: none;
     }
 
+    /* Research-finding modifier: flush to container left edge
+       (at 1920 with container max-width 1280, this gives 320 left margin from viewport) */
+    .ds-research-finding--align-left {
+      margin-inline: 0;
+      text-align: left;
+    }
+
     /* Overview card stack */
     .overview-stack {
       display: flex;
@@ -549,11 +556,11 @@
         </header>
 
         <!-- ===== 02.1 — SECONDARY RESEARCH ===== -->
-        <article class="ds-research-finding">
+        <article class="ds-research-finding ds-research-finding--align-left">
           <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 02.1 — SECONDARY RESEARCH ]</p>
 
-          <h2 class="ds-h2" data-lang-content="en">Analyzing community data revealed <em class="ds-signature">recurring patterns</em></h2>
-          <h2 class="ds-h2 ds-kr" data-lang-content="ko">자영업자 커뮤니티 데이터를 분석한 결과 다음과 같은 <em class="ds-signature">패턴</em>이 반복적으로 나타났습니다</h2>
+          <h2 class="ds-h2" data-lang-content="en">Without clear criteria for when or how to adjust HVAC, small business owners kept anxiously changing the settings</h2>
+          <h2 class="ds-h2 ds-kr" data-lang-content="ko">냉난방을 언제, 어떻게 바꿔야 할 기준이 없어, 자영업자는 불안해서 계속 설정을 바꾸고 있었다</h2>
 
           <!-- 2-column media grid -->
           <div class="ds-research-finding__media-grid">
