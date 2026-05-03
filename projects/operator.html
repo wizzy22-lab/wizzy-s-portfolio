@@ -258,6 +258,23 @@
       }
     }
 
+    /* Context Research block — 2-col layout (image left + text right) */
+    .context-block {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-6);                    /* 24 — Figma image to text gap */
+    }
+    @media (min-width: 768px) {
+      .context-block {
+        grid-template-columns: 634fr 622fr;   /* image | text — Figma proportions */
+      }
+    }
+    .context-block__text {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);                    /* 24 — between heading-groups */
+    }
+
 
     /* Problem statement — full-bleed cream callout (Figma Frame 12) */
     .problem-statement {
@@ -866,6 +883,100 @@
             </div>
           </div>
 
+        </article>
+
+        <!-- ===== 02.3 — CONTEXT RESEARCH ===== -->
+        <article class="ds-research-finding ds-research-finding--align-left">
+          <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 02.3 — CONTEXT RESEARCH ]</p>
+
+          <h2 class="ds-h2" data-lang-content="en">Cost mattered most — but the actual pricing structure<br>was hard to understand and judge.</h2>
+          <h2 class="ds-h2 ds-kr" data-lang-content="ko">비용이 중요했지만, 실제 요금구조는<br>쉽게 이해하고 판단하기 어려웠습니다.</h2>
+
+          <!-- Block 1: image (left) + Energy Pricing Structure text (right) -->
+          <div class="context-block">
+            <figure class="ds-media-figure">
+              <div class="ds-media-placeholder" data-aspect="4/3">
+                <span class="ds-eyebrow ds-eyebrow--accent-blue">FIG. 02.3.1</span>
+                <p class="ds-media-placeholder__meta">operator/approach/pricing-structure.jpg</p>
+              </div>
+              <figcaption class="ds-media-figure__caption" data-lang-aware>
+                <span data-lang-content="en">Pricing structure analysis</span>
+                <span data-lang-content="ko">요금구조 분석 이미지</span>
+              </figcaption>
+            </figure>
+            <div class="context-block__text">
+              <div class="ds-research-finding__heading-group">
+                <h3 class="ds-research-finding__sub-heading">Energy Pricing Structure</h3>
+                <p class="ds-research-finding__paragraph" data-lang-content="en">
+                  The pricing structure analysis revealed multiple variables — peak / mid / off-peak time slots,<br>and progressive billing based on usage.
+                  <br><br>
+                  For busy small business owners, the pricing structure<br>was too complex to understand during operation.
+                </p>
+                <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
+                  에너지 요금 구조를 분석한 결과 피크 / 중간 / 경부하 시간,<br>사용량에 따른 누적 과금 등 여러 변수들이 존재했습니다
+                  <br><br>
+                  운영에 바쁜 자영업자가 요금 구조를 이해하기에는<br>과금 체계가 복잡한 상태였습니다
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Block 2: image (left) + Scenario Test Try + Result text (right) -->
+          <div class="context-block">
+            <figure class="ds-media-figure">
+              <div class="ds-media-placeholder" data-aspect="4/3">
+                <span class="ds-eyebrow ds-eyebrow--accent-blue">FIG. 02.3.2</span>
+                <p class="ds-media-placeholder__meta">operator/approach/scenario.jpg</p>
+              </div>
+              <figcaption class="ds-media-figure__caption" data-lang-aware>
+                <span data-lang-content="en">Scenario diagram</span>
+                <span data-lang-content="ko">시나리오 이미지</span>
+              </figcaption>
+            </figure>
+            <div class="context-block__text">
+              <div class="ds-research-finding__heading-group">
+                <h3 class="ds-research-finding__sub-heading">Scenario Test — Try</h3>
+                <p class="ds-research-finding__paragraph" data-lang-content="en">
+                  We checked whether the cost structure alone could really reduce cost in actual operation.
+                  <br><br>
+                  To test this, we wrote a simple store-operation scenario<br>and applied cost-minimizing methods based on the pricing structure.
+                </p>
+                <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
+                  그래서 비용 구조만 잘 활용하면 실제 운영에서도<br>비용을 줄일 수 있는지 확인해봤습니다.
+                  <br><br>
+                  이를 위해 간단한 매장 운영 시나리오를 작성하고<br>요금 구조에 따라 비용을 최소화할 수 있는 방법을 적용해봤습니다.
+                </p>
+              </div>
+              <div class="ds-research-finding__heading-group">
+                <h3 class="ds-research-finding__sub-heading">Scenario Test — Result</h3>
+                <p class="ds-research-finding__paragraph" data-lang-content="en">
+                  As a result, adjusting based on time slots or usage<br>did reduce energy use.
+                  <br><br>
+                  But in real stores:<br>
+                  1) the cost-cutting criteria conflicted with the comfort criteria, and<br>
+                  2) the savings were smaller than expected.
+                </p>
+                <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
+                  그 결과, 시간대나 사용량을 기준으로 조절하면<br>에너지 사용을 줄일 수는 있었습니다.
+                  <br><br>
+                  하지만 실제 매장에서는<br>
+                  1) 비용을 줄이는 기준과 쾌적하게 유지하는 기준이 서로 충돌했고<br>
+                  2) 그리고 절감효과도 예상보다 크지 않았습니다.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Insight callout (centered cream card) -->
+          <div class="ds-research-finding__heading-group">
+            <h3 class="ds-research-finding__sub-heading pattern-heading">Insight</h3>
+            <div class="ds-insight observation-card" data-lang-aware>
+              <p class="ds-insight__body">
+                <span data-lang-content="ko">비용만 기준으로는 실제 운영 문제를 해결할 수 없다는 것을 확인했습니다.<br>그래서 비용과 쾌적도를 함께 고려할 수 있는 기준이 필요했습니다.</span>
+                <span data-lang-content="en">We confirmed that cost alone can't solve real operation problems.<br>That's why we needed a criterion combining both cost and comfort.</span>
+              </p>
+            </div>
+          </div>
         </article>
 
         <!-- ===== 02.x — USER NEED & PAIN POINT ===== -->
