@@ -1008,6 +1008,13 @@ html[data-lang="ko"] {
   margin-top: var(--space-6);
 }
 
+/* Inside a heading-group, adjacent paragraphs are KO/EN language pairs
+   (one always display:none). Suppress the inter-paragraph margin so the
+   visible p sits at the parent's flex gap (12) from the h3. */
+.ds-research-finding__heading-group .ds-research-finding__paragraph + .ds-research-finding__paragraph {
+  margin-top: 0;
+}
+
 .ds-research-finding__paragraph.ds-kr,
 .ds-research-finding.ds-kr .ds-research-finding__paragraph {
   font-family: var(--font-kr);
