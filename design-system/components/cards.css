@@ -920,7 +920,7 @@ html[data-lang="ko"] {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-3);
-  margin-block: var(--space-10);
+  margin-block: 0;                         /* Spacing handled by parent flex gap */
 }
 
 @media (min-width: 768px) {
@@ -941,12 +941,25 @@ html[data-lang="ko"] {
   font-weight: 700;                        /* Bold */
   font-style: normal;
   color: var(--text-primary);
-  margin: 0;
-  margin-top: var(--space-20);
-  margin-bottom: var(--space-6);
+  margin: 0;                               /* Spacing handled by parent gap + heading-group wrapper */
 }
 
 /* No .ds-kr override — sub-headings always render English in Playfair */
+
+/* Heading group: tight pairing of h3 + body (Figma intra-group spec) */
+.ds-research-finding__heading-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);                     /* 12 — Figma intra-group */
+}
+
+/* Sub-section break: +24 margin on top so total gap from previous sibling
+   = parent flex gap (24) + this margin (24) = 48 (Figma sub-section).
+   Applies to direct-child sub-heading or heading-group only, skipping first child. */
+.ds-research-finding > .ds-research-finding__sub-heading:not(:first-child),
+.ds-research-finding > .ds-research-finding__heading-group:not(:first-child) {
+  margin-top: var(--space-6);              /* +24 → 48 total */
+}
 
 .ds-research-finding__list {
   list-style: none;
