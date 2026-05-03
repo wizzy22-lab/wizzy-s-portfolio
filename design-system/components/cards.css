@@ -24,6 +24,13 @@ html[data-lang="ko"] .ds-signature {
   letter-spacing: -0.02em;
 }
 
+/* In Korean locale, never render italic — Pretendard has no true italic and
+   typographic italic feels foreign. Catches counter, quote, em, cite, etc. */
+html[data-lang="ko"] *,
+html[data-lang="ko"] {
+  font-style: normal;
+}
+
 
 /* =============================================================
    Korean heading auto-downscale — applies when .ds-kr is present
