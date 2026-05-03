@@ -934,22 +934,19 @@ html[data-lang="ko"] {
 }
 
 .ds-research-finding__sub-heading {
-  font-family: var(--font-sans);
-  font-size: var(--text-h3-size);
-  line-height: var(--text-h3-line-height);
-  letter-spacing: var(--text-h3-letter-spacing);
-  font-weight: var(--text-h3-weight);
+  font-family: var(--font-serif);          /* Playfair Display */
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: 0;
+  font-weight: 700;                        /* Bold */
+  font-style: normal;
   color: var(--text-primary);
   margin: 0;
   margin-top: var(--space-20);
   margin-bottom: var(--space-6);
 }
 
-.ds-research-finding__sub-heading.ds-kr,
-.ds-research-finding.ds-kr .ds-research-finding__sub-heading {
-  font-family: var(--font-kr);
-  font-size: var(--fs-h3-kr);
-}
+/* No .ds-kr override — sub-headings always render English in Playfair */
 
 .ds-research-finding__list {
   list-style: none;
