@@ -262,6 +262,111 @@
       }
     }
 
+    /* ===== 04 — KEY FEATURES ===== */
+    #features .ds-container {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);                  /* 24 — between rows */
+    }
+    .feature-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-3);                  /* 12 — image to card */
+    }
+    @media (min-width: 768px) {
+      .feature-row {
+        grid-template-columns: 876fr 392fr;
+      }
+    }
+    .feature-row__media {
+      aspect-ratio: 16 / 10;
+      background: var(--bg-muted);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-tertiary);
+      font-family: monospace;
+      font-size: var(--text-caption-size);
+      overflow: hidden;
+    }
+    .feature-row__media > video,
+    .feature-row__media > img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .feature-row__card {
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      border-radius: 24px;
+      padding: var(--space-6);              /* 24 */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-sizing: border-box;
+      min-height: 548px;
+    }
+    .feature-row__top { display: flex; flex-direction: column; gap: var(--space-3); }
+    .feature-row__bottom { display: flex; flex-direction: column; gap: var(--space-4); }
+    .feature-row__eyebrow {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      line-height: 1.2;
+      letter-spacing: 1.16px;
+      font-weight: 500;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+    .feature-row__title {
+      font-family: inherit;
+      font-size: 24px;
+      line-height: 1.47;                    /* 35.27 / 24 */
+      letter-spacing: 0;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 0;
+    }
+    .feature-row__body {
+      font-family: inherit;
+      font-size: 18px;
+      line-height: 1.5;                     /* 27 / 18 */
+      font-weight: 400;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+    .feature-row__divider {
+      border: 0;
+      height: 1px;
+      background: rgba(245, 245, 240, 0.12);
+      margin: 0;
+      width: 100%;
+    }
+    .feature-row__outcome {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-6);                  /* 24 */
+    }
+    .feature-row__outcome-label {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      line-height: 1.2;
+      letter-spacing: 0.6px;
+      font-weight: 500;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      flex-shrink: 0;
+    }
+    .feature-row__outcome-text {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.2;                     /* 19.2 / 16 */
+      font-weight: 400;
+      color: var(--text-primary);
+    }
+
     /* Closing implication line ("→ ..." 18px SemiBold for emphasis after body) */
     .ds-research-finding__closing-implication {
       font-family: inherit;
@@ -1301,6 +1406,107 @@
                 바쁜 매장운영 상황에서도, 빠르게 인지할 수 있도록 사용성 중심으로 설계했습니다.
               </p>
             </figure>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ====================  04 — KEY FEATURES  ==================== -->
+    <section id="features">
+      <div class="ds-container">
+
+        <header class="ds-section-header" data-lang-aware>
+          <p class="ds-section-header__eyebrow">[ 04 — KEY FEATURES ]</p>
+        </header>
+
+        <!-- Feature 01 — Instant decision via pop up -->
+        <article class="feature-row">
+          <div class="feature-row__media" data-aspect="16/10" aria-label="Video placeholder — feature-01.mp4">
+            <span>operator/features/feature-01.mp4</span>
+          </div>
+          <div class="feature-row__card" data-lang-aware>
+            <div class="feature-row__top">
+              <p class="feature-row__eyebrow">FEATURE 01 — INSTANT DECISION VIA POP UP</p>
+              <h3 class="feature-row__title">
+                <span data-lang-content="ko">팝업에서 상태와 추천을<br>확인하고 바로 적용</span>
+                <span data-lang-content="en">Check status & recommendation in the pop-up,<br>and apply immediately</span>
+              </h3>
+              <p class="feature-row__body">
+                <span data-lang-content="ko">바쁜 운영 환경에서 사용자는 팝업 알림을 통해<br>현재 상태와 추천 솔루션을 바로 확인하고 즉시 적용할 수 있습니다</span>
+                <span data-lang-content="en">In busy operations, users can check the current state and recommended solution through pop-up notifications and apply them immediately.</span>
+              </p>
+            </div>
+            <div class="feature-row__bottom">
+              <hr class="feature-row__divider" />
+              <div class="feature-row__outcome">
+                <span class="feature-row__outcome-label">OUTCOME</span>
+                <span class="feature-row__outcome-text">
+                  <span data-lang-content="ko">10초 안에 빠르게 내리는 결정</span>
+                  <span data-lang-content="en">Decisions made within 10 seconds</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Feature 02 — Data log & learning -->
+        <article class="feature-row">
+          <div class="feature-row__media" data-aspect="16/10" aria-label="Video placeholder — feature-02.mp4">
+            <span>operator/features/feature-02.mp4</span>
+          </div>
+          <div class="feature-row__card" data-lang-aware>
+            <div class="feature-row__top">
+              <p class="feature-row__eyebrow">FEATURE 02 — DATA LOG & LEARNING</p>
+              <h3 class="feature-row__title">
+                <span data-lang-content="ko">선택한 결과를 기록하고<br>학습하는 데이터 로그</span>
+                <span data-lang-content="en">A data log that records<br>and learns from each choice's outcome</span>
+              </h3>
+              <p class="feature-row__body">
+                <span data-lang-content="ko">시스템은 냉난방 조절 이력과 그에 따른 결과를<br>함께 기록하고 시각화합니다.<br><br>사용자는 자신의 선택이 비용과 쾌적도에 어떤<br>영향을 주었는지 확인 할 수 있습니다.<br>또한 이 데이터는 누적되어,<br>이후 추천정확도를 높이고 점점 더 쉽고 정확하게<br>결정할 수 있도록 돕습니다.</span>
+                <span data-lang-content="en">The system records HVAC adjustments along with their outcomes,<br>and visualizes the results.<br><br>Users can see how each choice affected cost and comfort.<br>The accumulated data also improves recommendation accuracy over time,<br>helping decisions become easier and more precise.</span>
+              </p>
+            </div>
+            <div class="feature-row__bottom">
+              <hr class="feature-row__divider" />
+              <div class="feature-row__outcome">
+                <span class="feature-row__outcome-label">OUTCOME</span>
+                <span class="feature-row__outcome-text">
+                  <span data-lang-content="ko">비용 변화 + 쾌적도 변화<br>데이터 시각화</span>
+                  <span data-lang-content="en">Cost & comfort change<br>data visualization</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Feature 03 — Mode setting -->
+        <article class="feature-row">
+          <div class="feature-row__media" data-aspect="16/10" aria-label="Video placeholder — feature-03.mp4">
+            <span>operator/features/feature-03.mp4</span>
+          </div>
+          <div class="feature-row__card" data-lang-aware>
+            <div class="feature-row__top">
+              <p class="feature-row__eyebrow">FEATURE 03 — MODE SETTING</p>
+              <h3 class="feature-row__title">
+                <span data-lang-content="ko">사용자가 원하는<br>비용과 쾌적도 기준을 설정하고 운영</span>
+                <span data-lang-content="en">Users set their own cost &amp; comfort criteria<br>and run the system on those terms</span>
+              </h3>
+              <p class="feature-row__body">
+                <span data-lang-content="ko">모드 설정을 통해 사용자가 비용과 쾌적도 기준을<br>함께 설정할 수 있습니다<br><br>시스템은 이 기준을 바탕으로 두 요소를 동시에<br>만족할 수 있는 운영 방식을 제안합니다</span>
+                <span data-lang-content="en">Through mode settings, users can configure cost and comfort criteria together.<br><br>Based on these criteria, the system proposes an operation strategy that satisfies both at once.</span>
+              </p>
+            </div>
+            <div class="feature-row__bottom">
+              <hr class="feature-row__divider" />
+              <div class="feature-row__outcome">
+                <span class="feature-row__outcome-label">OUTCOME</span>
+                <span class="feature-row__outcome-text">
+                  <span data-lang-content="ko">비용 + 쾌적도 균형 운영</span>
+                  <span data-lang-content="en">Balanced cost &amp; comfort operation</span>
+                </span>
+              </div>
+            </div>
           </div>
         </article>
 
