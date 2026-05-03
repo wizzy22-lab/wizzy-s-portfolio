@@ -239,6 +239,61 @@
       }
     }
 
+    /* ===== Apple-style sticky pinned scroll sequence (Overview cards) =====
+       Mobile + reduced-motion: wrappers transparent (display:contents),
+       cards keep original vertical-stack behavior.
+       Desktop + motion-allowed: pinned 500vh stage, one card at a time. */
+    .overview-pinned,
+    .overview-pinned__stage {
+      display: contents;
+    }
+
+    @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+      .overview-pinned {
+        display: block;
+        position: relative;
+        height: 500vh;          /* 5 cards × 100vh of scroll distance */
+      }
+      .overview-pinned__stage {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        overflow: hidden;
+      }
+      .overview-pinned__stage > .ds-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: var(--space-8);
+        height: 100%;
+      }
+      .overview-stack {
+        position: relative;
+        min-height: 360px;
+        gap: 0;
+      }
+      .overview-stack > .ds-numbered-step {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, 40px);
+        opacity: 0;
+        transition:
+          opacity var(--duration-slower) var(--ease-out),
+          transform var(--duration-slower) var(--ease-out);
+        pointer-events: none;
+        will-change: opacity, transform;
+      }
+      .overview-stack > .ds-numbered-step.is-active {
+        opacity: 1;
+        transform: translate(-50%, 0);
+        pointer-events: auto;
+      }
+    }
+
     /* Approach / Define / Ideate / Outcome — flex column with explicit
        vertical gap between cards (cards have varying max-widths and
        margin-inline:auto for centering; flex parent ensures separation). */
@@ -317,7 +372,9 @@
 
     <!-- ====================  OVERVIEW  ==================== -->
     <section id="overview">
-      <div class="ds-container">
+      <div class="overview-pinned">
+        <div class="overview-pinned__stage">
+          <div class="ds-container">
 
         <header class="ds-section-header" data-lang-aware>
           <p class="ds-section-header__eyebrow">[ 01 — OVERVIEW ]</p>
@@ -468,6 +525,8 @@
             </div>
           </article>
 
+        </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1178,6 +1237,54 @@
 
       // Initialize from current data-lang (default = ko)
       setLang(root.dataset.lang || 'ko');
+    })();
+
+    // ===== Overview cards — Apple-style sticky pinned scroll sequence =====
+    (function () {
+      const pinned = document.querySelector('.overview-pinned');
+      if (!pinned) return;
+      const cards = pinned.querySelectorAll('.overview-stack > .ds-numbered-step');
+      if (!cards.length) return;
+
+      const mqDesktop = window.matchMedia('(min-width: 768px)');
+      const mqMotion = window.matchMedia('(prefers-reduced-motion: no-preference)');
+
+      const isActive = () => mqDesktop.matches && mqMotion.matches;
+
+      const setActive = (index) => {
+        cards.forEach((c, i) => c.classList.toggle('is-active', i === index));
+      };
+
+      const clearActive = () => {
+        cards.forEach((c) => c.classList.remove('is-active'));
+      };
+
+      let ticking = false;
+      const onScroll = () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          ticking = false;
+          if (!isActive()) {
+            clearActive();
+            return;
+          }
+          const rect = pinned.getBoundingClientRect();
+          const scrollDistance = pinned.offsetHeight - window.innerHeight;
+          if (scrollDistance <= 0) return;
+          const scrolled = Math.min(scrollDistance, Math.max(0, -rect.top));
+          const progress = scrolled / scrollDistance;
+          const idx = Math.min(cards.length - 1, Math.floor(progress * cards.length));
+          setActive(idx);
+        });
+      };
+
+      if (isActive()) setActive(0);
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+      mqDesktop.addEventListener('change', onScroll);
+      mqMotion.addEventListener('change', onScroll);
     })();
   </script>
 </body>
