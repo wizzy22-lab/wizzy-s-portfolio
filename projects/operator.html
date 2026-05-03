@@ -308,6 +308,39 @@
       margin: 0;
     }
 
+    /* Problem statement — full-bleed cream callout (Figma Frame 12) */
+    .problem-statement {
+      background: var(--card-cream);          /* CAEAFF */
+      color: var(--text-on-cream);
+      width: 100%;
+      padding-block: var(--space-20);         /* 80 — Figma top/bottom */
+    }
+    .problem-statement__inner {
+      max-width: 872px;
+      margin-inline: auto;
+      padding-inline: var(--space-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);                    /* 24 — heading → body */
+      text-align: center;
+    }
+    .problem-statement__heading {
+      font-family: var(--font-serif);         /* Playfair Display */
+      font-size: 20px;
+      line-height: 1.2;
+      font-weight: 700;
+      letter-spacing: 0;
+      margin: 0;
+    }
+    .problem-statement__body {
+      font-family: var(--font-sans);
+      font-size: 32px;
+      line-height: 1.5;                       /* 48 / 32 = 1.5 */
+      font-weight: 600;
+      letter-spacing: 0;
+      margin: 0;
+    }
+
     /* Overview card stack */
     .overview-stack {
       display: flex;
@@ -1050,6 +1083,17 @@
           </div>
         </article>
 
+      </div>
+    </section>
+
+    <!-- ====================  PROBLEM STATEMENT (full-bleed callout)  ==================== -->
+    <section class="problem-statement" data-lang-aware>
+      <div class="problem-statement__inner">
+        <h3 class="problem-statement__heading">Problem statement</h3>
+        <p class="problem-statement__body">
+          <span data-lang-content="ko">냉난방 설정을 바꾸는 선택과 전기요금 변화라는 결과가 연결되지 않아, 사용자는 자신의 조절이 비용에 어떤 영향을 주는지 알 수 없다</span>
+          <span data-lang-content="en">The choice to change HVAC settings and the resulting change in the electricity bill aren't connected, so users can't tell how their adjustments affect cost.</span>
+        </p>
       </div>
     </section>
 
