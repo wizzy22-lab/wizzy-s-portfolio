@@ -1724,7 +1724,9 @@ html[data-lang="ko"] {
   }
 }
 
-/* Per Figma: eyebrow + title both 18px Manrope Medium, body 16/1.4 */
+/* Per Figma: eyebrow + title both 18px Manrope Medium, body 16/1.4.
+   On --dark variant, eyebrow + title both render in accent-blue
+   (matches the Figma "01. 기준 부재로…" all-blue title). */
 .ds-impact-grid--4col .ds-insight__eyebrow {
   font-size: 18px;
   line-height: 1.2;
@@ -1742,6 +1744,17 @@ html[data-lang="ko"] {
 .ds-impact-grid--4col .ds-insight__body {
   font-size: 16px;
   line-height: 1.4;
+}
+.ds-impact-grid--4col .ds-insight--dark {
+  border: var(--border-thin) solid var(--border-hairline);
+}
+.ds-impact-grid--4col .ds-insight--dark .ds-insight__eyebrow,
+.ds-impact-grid--4col .ds-insight--dark .ds-insight__title {
+  color: var(--accent-blue);
+}
+.ds-impact-grid--4col .ds-insight--dark .ds-insight__body {
+  color: var(--text-primary);
+  opacity: 0.85;
 }
 
 
