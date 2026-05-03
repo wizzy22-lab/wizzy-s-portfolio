@@ -250,6 +250,14 @@
       }
     }
 
+    /* Primary Research analysis grid — 2 equal cards (634/634, 12 gap) */
+    @media (min-width: 768px) {
+      .primary-analysis-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-3);                  /* 12 — Figma spec */
+      }
+    }
+
     /* Overview card stack */
     .overview-stack {
       display: flex;
@@ -737,71 +745,75 @@
             </figure>
           </div>
 
-          <!-- Interview Findings — 3-card pattern grid -->
+          <!-- Data Analysis -->
+          <h3 class="ds-research-finding__sub-heading">Data Analysis</h3>
+          <p class="ds-research-finding__paragraph" data-lang-content="en">
+            After organizing the interview data through affinity mapping and thematic coding, similar concerns kept surfacing.
+          </p>
+          <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
+            이 인터뷰 내용을 어피니티 맵핑과 Thematic coding을 통해 데이터를 정리해보니 비슷한 고민들이 이어지고 있었습니다
+          </p>
+
+          <!-- 2-image grid (634/634, 12 gap per Figma) -->
+          <div class="ds-research-finding__media-grid primary-analysis-grid">
+            <figure class="ds-media-figure">
+              <div class="ds-media-placeholder" data-aspect="16/9">
+                <span class="ds-eyebrow ds-eyebrow--accent-blue">FIG. 02.2.4</span>
+                <p class="ds-media-placeholder__meta">operator/approach/affinity-map.jpg</p>
+              </div>
+              <figcaption class="ds-media-figure__caption" data-lang-aware>
+                <span data-lang-content="en">Affinity mapping</span>
+                <span data-lang-content="ko">어피니티 맵핑</span>
+              </figcaption>
+            </figure>
+            <figure class="ds-media-figure">
+              <div class="ds-media-placeholder" data-aspect="16/9">
+                <span class="ds-eyebrow ds-eyebrow--accent-blue">FIG. 02.2.5</span>
+                <p class="ds-media-placeholder__meta">operator/approach/thematic-coding.jpg</p>
+              </div>
+              <figcaption class="ds-media-figure__caption" data-lang-aware>
+                <span data-lang-content="en">Thematic coding</span>
+                <span data-lang-content="ko">Thematic coding</span>
+              </figcaption>
+            </figure>
+          </div>
+
+          <!-- Findings — 3-card pattern grid (combined "01. title" per Figma) -->
+          <h3 class="ds-research-finding__sub-heading">Findings</h3>
           <div class="ds-impact-grid ds-impact-grid--3col-pattern">
             <div class="ds-insight ds-insight--dark" data-lang-aware>
-              <p class="ds-insight__eyebrow">01</p>
               <h4 class="ds-insight__title">
-                <span data-lang-content="ko">결과를 알 수 없어 불안하다</span>
-                <span data-lang-content="en">Anxiety from not knowing the outcome</span>
+                <span data-lang-content="ko">01. 결과를 알 수 없어 불안하다.</span>
+                <span data-lang-content="en">01. Anxiety from not knowing the outcome</span>
               </h4>
               <p class="ds-insight__body">
-                <span data-lang-content="ko">설정을 바꿔도 전기요금이 얼마나 달라지는지 알 수 없어 불안해한다</span>
-                <span data-lang-content="en">Even after changing the settings, they can't tell how much the bill will shift, so anxiety lingers</span>
+                <span data-lang-content="ko">설정을 바꿔도 전기요금이 얼마나 달라지는지<br>알 수 없어 불안해한다.</span>
+                <span data-lang-content="en">Even after changing the settings,<br>they can't tell how much the bill will shift, so anxiety lingers.</span>
               </p>
             </div>
 
             <div class="ds-insight ds-insight--dark" data-lang-aware>
-              <p class="ds-insight__eyebrow">02</p>
               <h4 class="ds-insight__title">
-                <span data-lang-content="ko">상황마다 다르게 대응하지만 기준이 없다</span>
-                <span data-lang-content="en">They adapt to each situation, but without any criteria</span>
+                <span data-lang-content="ko">02. 상황마다 다르게 대응하지만 기준이 없다</span>
+                <span data-lang-content="en">02. They adapt to each situation, but without any criteria</span>
               </h4>
               <p class="ds-insight__body">
-                <span data-lang-content="ko">바쁠 때와 한가할 때 다르게 조절하지만, 어떤 방식이 맞는지는 알지 못한다</span>
-                <span data-lang-content="en">They adjust differently when busy or quiet, yet they don't know which approach is right</span>
+                <span data-lang-content="ko">바쁠 때와 한가할 때 다르게 조절하지만,<br>어떤 방식이 맞는지는 알지 못한다.</span>
+                <span data-lang-content="en">They adjust differently when busy or quiet,<br>yet they don't know which approach is right.</span>
               </p>
             </div>
 
             <div class="ds-insight ds-insight--dark" data-lang-aware>
-              <p class="ds-insight__eyebrow">03</p>
               <h4 class="ds-insight__title">
-                <span data-lang-content="ko">그래서 경험에 의존하게 된다</span>
-                <span data-lang-content="en">So they fall back on experience</span>
+                <span data-lang-content="ko">03. 그래서 직관에 의존하게 된다.</span>
+                <span data-lang-content="en">03. So they fall back on intuition</span>
               </h4>
               <p class="ds-insight__body">
-                <span data-lang-content="ko">결국 느낌이나 경험에 따라 계속 설정을 바꾸게 된다</span>
-                <span data-lang-content="en">In the end, they keep changing settings based on feel or past experience</span>
+                <span data-lang-content="ko">결국 느낌이나 경험에 따라 계속 설정을 바꾸게 된다.</span>
+                <span data-lang-content="en">In the end, they keep changing settings based on feel or past experience.</span>
               </p>
             </div>
           </div>
-
-          <!-- Data Structuring -->
-          <h3 class="ds-research-finding__sub-heading" data-lang-content="en">Data Structuring</h3>
-          <h3 class="ds-research-finding__sub-heading ds-kr" data-lang-content="ko">데이터 구조화</h3>
-          <p class="ds-research-finding__paragraph" data-lang-content="en">
-            We structured interview data using affinity mapping and thematic coding, which surfaced the following recurring patterns.
-          </p>
-          <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
-            이 인터뷰 내용을 어피니티 맵핑과 Thematic coding을 통해 구조화한 결과 다음과 같은 패턴이 도출되었습니다
-          </p>
-
-          <!-- Findings -->
-          <h3 class="ds-research-finding__sub-heading" data-lang-content="en">Findings</h3>
-          <h3 class="ds-research-finding__sub-heading ds-kr" data-lang-content="ko">발견점</h3>
-          <ul class="ds-research-finding__list">
-            <li data-lang-content="en">Adjusting temperature is not the difficult part</li>
-            <li class="ds-kr" data-lang-content="ko">온도를 올리고 내리는 조작 자체에는 어려움이 없다</li>
-
-            <li data-lang-content="en">Cost concerns complicate decisions, but operators can't tell which choice actually reduces cost</li>
-            <li class="ds-kr" data-lang-content="ko">비용이라는 고려사항 때문에 온도를 조작할 때 고민이 많아지지만 어떤 선택이 비용을 줄이는지 불명확하다</li>
-
-            <li data-lang-content="en">Anxiety about post-bill cost drives repeated adjustments</li>
-            <li class="ds-kr" data-lang-content="ko">사후 비용에 대한 불안감 때문에 계속해서 반복 조작을 하게 된다</li>
-
-            <li data-lang-content="en">Without feedback on whether actions actually reduced cost, operators feel stuck</li>
-            <li class="ds-kr" data-lang-content="ko">이러한 행동이 실제 비용 감축으로 이어졌는지는 알 수 없어 답답함을 느끼고 있는 상태이다</li>
-          </ul>
 
           <!-- Insight (pull-quote 컴포넌트 재활용) -->
           <h3 class="ds-research-finding__sub-heading" data-lang-content="en">Insight</h3>

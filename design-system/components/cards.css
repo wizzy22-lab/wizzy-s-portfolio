@@ -1748,7 +1748,7 @@ html[data-lang="ko"] {
 .ds-impact-grid--4col .ds-insight__body,
 .ds-impact-grid--3col-pattern .ds-insight__body {
   font-size: 16px;
-  line-height: 1.4;
+  line-height: 1.7;                     /* 27.2 — Figma spec */
 }
 .ds-impact-grid--4col .ds-insight--dark,
 .ds-impact-grid--3col-pattern .ds-insight--dark {
