@@ -279,7 +279,7 @@
       }
     }
     .feature-row__media {
-      aspect-ratio: 16 / 10;
+      aspect-ratio: 16 / 10;                /* mobile: 16:10 */
       background: var(--bg-surface);        /* dark surface per Figma */
       border-radius: 15px;                  /* Figma 14.92 ≈ 15 */
       display: flex;
@@ -289,6 +289,12 @@
       font-family: monospace;
       font-size: var(--text-caption-size);
       overflow: hidden;
+    }
+    @media (min-width: 768px) {
+      .feature-row__media {
+        aspect-ratio: auto;                 /* desktop: stretch to match card height */
+        height: 100%;
+      }
     }
     .feature-row__media > video,
     .feature-row__media > img {
