@@ -417,6 +417,26 @@
   word-break: break-all;
 }
 
+/* .ds-media-image  ·  rendered image wrapper (replaces .ds-media-placeholder
+   once a real image is plugged in). data-aspect mirrors the placeholder's. */
+.ds-media-image {
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  background: var(--bg-muted);
+}
+.ds-media-image[data-aspect="1/1"]   { aspect-ratio: 1 / 1; }
+.ds-media-image[data-aspect="4/3"]   { aspect-ratio: 4 / 3; }
+.ds-media-image[data-aspect="3/2"]   { aspect-ratio: 3 / 2; }
+.ds-media-image[data-aspect="16/9"]  { aspect-ratio: 16 / 9; }
+.ds-media-image[data-aspect="9/16"]  { aspect-ratio: 9 / 16; }
+.ds-media-image > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 /* .ds-media-figure  ·  image (or placeholder) with a caption beneath.
    Replaces a bare .ds-media-placeholder when a figcaption is needed. */
 .ds-media-figure {
