@@ -393,16 +393,16 @@
       align-items: stretch;
     }
 
-    /* SUS Score callout — wide horizontal card with big number + 2-line text */
+    /* SUS Score callout — wide horizontal card on cream bg with big dark "76" */
     .sus-callout {
-      background: var(--bg-surface);
+      background: var(--card-cream);        /* CAEAFF light blue */
+      color: var(--text-on-cream);          /* dark text */
       border-radius: 31px;
       padding: var(--space-12);             /* 48 */
       display: grid;
       grid-template-columns: 1fr;
       gap: var(--space-12);                 /* 48 */
       align-items: center;
-      color: var(--text-primary);
     }
     @media (min-width: 768px) {
       .sus-callout {
@@ -424,7 +424,8 @@
       letter-spacing: 1.71px;
       font-weight: 500;
       text-transform: uppercase;
-      color: var(--text-secondary);
+      color: var(--text-on-cream);
+      opacity: 0.6;
       margin: 0;
     }
     .sus-callout__number {
@@ -434,7 +435,7 @@
       line-height: 1.2;
       letter-spacing: -7.78px;
       font-weight: 400;
-      color: var(--accent-yellow);
+      color: var(--text-on-cream);          /* dark per Figma */
       margin: 0;
     }
     .sus-callout__text {
@@ -447,11 +448,11 @@
       font-size: 24px;
       line-height: 1.5;                     /* 36 / 24 */
       font-weight: 400;
-      color: var(--text-primary);
+      color: var(--text-on-cream);
       margin: 0;
     }
 
-    /* Impact grid — 3-card grid for User / Business / KPI Result */
+    /* Impact grid — 3 cards alternating colors (cream / dark / yellow) */
     .impact-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -463,20 +464,40 @@
       }
     }
     .impact-card {
-      background: var(--bg-surface);
       border-radius: 24px;
       padding: var(--space-12);             /* 48 */
       min-height: 280px;
+      box-sizing: border-box;
+    }
+    /* Card 1 — User Impact (cream) */
+    .impact-card--user {
+      background: var(--card-cream);        /* CAEAFF */
+      color: var(--text-on-cream);
+    }
+    /* Card 2 — Business Impact (dark, accent-blue title) */
+    .impact-card--business {
+      background: var(--bg-surface);
       color: var(--text-primary);
     }
+    /* Card 3 — KPI Result (yellow) */
+    .impact-card--kpi {
+      background: var(--accent-yellow);
+      color: var(--text-on-cream);
+    }
+
     .impact-card__title {
       font-family: inherit;
       font-size: 18px;
       line-height: 1.2;                     /* 21.6 / 18 */
       font-weight: 600;
       letter-spacing: 0;
-      color: var(--accent-yellow);
+      text-transform: uppercase;
       margin: 0;
+      opacity: 0.6;                         /* slight dim for label feel */
+    }
+    .impact-card--business .impact-card__title {
+      color: var(--accent-blue);
+      opacity: 1;
     }
     .impact-card__subtitle {
       font-family: inherit;
@@ -484,19 +505,31 @@
       line-height: 1.5;                     /* 27.2 / 18 */
       font-weight: 400;
       letter-spacing: 0;
-      color: var(--text-primary);
       margin: 0;
       margin-top: var(--space-2);           /* 8 */
     }
     .impact-card__list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      margin-top: var(--space-6);           /* 24 */
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .impact-card__list li {
       font-family: inherit;
       font-size: 18px;
       line-height: 1.6;                     /* 28.8 / 18 */
       font-weight: 400;
       letter-spacing: 0;
-      color: var(--text-secondary);
-      margin: 0;
-      margin-top: var(--space-6);           /* 24 */
+      padding-left: var(--space-5, 20px);
+      position: relative;
+    }
+    .impact-card__list li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
     }
 
     /* Closing implication line ("→ ..." 18px SemiBold for emphasis after body) */
@@ -1785,42 +1818,44 @@
             </div>
           </div>
 
-          <!-- 3-card impact grid -->
+          <!-- 3-card impact grid (cream / dark / yellow per Figma) -->
           <div class="impact-grid">
-            <article class="impact-card" data-lang-aware>
-              <p class="impact-card__title">User Impact</p>
+            <article class="impact-card impact-card--user" data-lang-aware>
+              <p class="impact-card__title">USER IMPACT</p>
               <p class="impact-card__subtitle">
                 <span data-lang-content="ko">더 빠르게 판단하고, 불안 없이 운영</span>
                 <span data-lang-content="en">Faster decisions, operation without anxiety</span>
               </p>
-              <p class="impact-card__list">
-                <span data-lang-content="ko">비용에 대한 불안 감소<br>의사결정 시간 단축<br>운영에 더 집중 가능</span>
-                <span data-lang-content="en">Reduced cost anxiety<br>Shortened decision time<br>More focus on operations</span>
-              </p>
+              <ul class="impact-card__list" data-lang-aware>
+                <li><span data-lang-content="ko">비용에 대한 불안 감소</span><span data-lang-content="en">Reduced cost anxiety</span></li>
+                <li><span data-lang-content="ko">의사결정 시간 단축</span><span data-lang-content="en">Shortened decision time</span></li>
+                <li><span data-lang-content="ko">운영에 더 집중 가능</span><span data-lang-content="en">More focus on operations</span></li>
+              </ul>
             </article>
 
-            <article class="impact-card" data-lang-aware>
-              <p class="impact-card__title">Business Impact</p>
+            <article class="impact-card impact-card--business" data-lang-aware>
+              <p class="impact-card__title">BUSINESS IMPACT</p>
               <p class="impact-card__subtitle">
                 <span data-lang-content="ko">비용은 줄이고, 매장환경은 더 안정적으로 유지</span>
                 <span data-lang-content="en">Lower costs, more stable store environment</span>
               </p>
-              <p class="impact-card__list">
-                <span data-lang-content="ko">불필요한 냉난방 비용 감소<br>매장 쾌적도 일관성 향상</span>
-                <span data-lang-content="en">Reduced unnecessary HVAC cost<br>Improved consistency in store comfort</span>
-              </p>
+              <ul class="impact-card__list" data-lang-aware>
+                <li><span data-lang-content="ko">불필요한 냉난방 비용 감소</span><span data-lang-content="en">Reduced unnecessary HVAC cost</span></li>
+                <li><span data-lang-content="ko">매장 쾌적도 일관성 향상</span><span data-lang-content="en">Improved consistency in store comfort</span></li>
+              </ul>
             </article>
 
-            <article class="impact-card" data-lang-aware>
-              <p class="impact-card__title">KPI Result</p>
+            <article class="impact-card impact-card--kpi" data-lang-aware>
+              <p class="impact-card__title">KPI RESULT</p>
               <p class="impact-card__subtitle">
                 <span data-lang-content="ko">반복 조작은 줄고, 비용효율은 개선</span>
                 <span data-lang-content="en">Less repeated tweaking, better cost efficiency</span>
               </p>
-              <p class="impact-card__list">
-                <span data-lang-content="ko">판단시간 약 10% 단축<br>반복조작 약 40% 감소<br>에너지 비용 약 15% 절감가능</span>
-                <span data-lang-content="en">~10% shorter decision time<br>~40% fewer repeated adjustments<br>~15% potential energy cost savings</span>
-              </p>
+              <ul class="impact-card__list" data-lang-aware>
+                <li><span data-lang-content="ko">판단시간 약 10% 단축</span><span data-lang-content="en">~10% shorter decision time</span></li>
+                <li><span data-lang-content="ko">반복조작 약 40% 감소</span><span data-lang-content="en">~40% fewer repeated adjustments</span></li>
+                <li><span data-lang-content="ko">에너지 비용 약 15% 절감가능</span><span data-lang-content="en">~15% potential energy cost savings</span></li>
+              </ul>
             </article>
           </div>
         </article>
