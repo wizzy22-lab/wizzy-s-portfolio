@@ -258,71 +258,6 @@
       }
     }
 
-    /* Pain point grid — 2 cards: 392 (User Need cream) / 876 (Pain Point dark) */
-    .painpoint-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: var(--space-3);                    /* 12 — Figma spec */
-    }
-    @media (min-width: 768px) {
-      .painpoint-grid {
-        grid-template-columns: 392fr 876fr;
-      }
-    }
-    .painpoint-card {
-      border-radius: var(--radius-card-lg);   /* 24 */
-      padding: var(--space-12);               /* 48 */
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      gap: var(--space-3);                    /* 12 between eyebrow and title */
-      min-height: 172px;
-      box-sizing: border-box;
-    }
-    .painpoint-card--need {
-      background: var(--card-white);                /* white card on cream bg */
-      color: var(--text-on-cream);
-    }
-    .painpoint-card--pain {
-      background: var(--bg-surface);
-      color: var(--text-primary);
-      border: var(--border-thin) solid var(--border-hairline);
-    }
-
-    /* Pain point full-bleed section (cream bg, sits between articles in #approach) */
-    .painpoint-section {
-      background: var(--card-cream);                /* CAEAFF — section bg */
-      padding-block: var(--space-12);               /* 48 — Figma vertical padding */
-      width: 100vw;
-      margin-left: calc(50% - 50vw);                /* break out of parent .ds-container */
-    }
-    .painpoint-section .ds-container {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-6);                          /* 24 — heading → grid */
-    }
-    .painpoint-section__heading {
-      color: var(--text-on-cream);                  /* dark heading on cream bg */
-    }
-    .painpoint-card__eyebrow {
-      font-family: var(--font-sans);
-      font-size: 16px;
-      line-height: 1.2;
-      font-weight: 500;
-      letter-spacing: 0;
-      margin: 0;
-      opacity: 0.7;
-    }
-    .painpoint-card__title {
-      font-family: var(--font-sans);
-      font-size: 24px;
-      line-height: 1.2;
-      font-weight: 600;
-      letter-spacing: 0;
-      margin: 0;
-    }
 
     /* Problem statement — full-bleed cream callout (Figma Frame 12) */
     .problem-statement {
@@ -932,35 +867,6 @@
           </div>
 
         </article>
-
-        <!-- Pain point — full-bleed cream section with User Need + Pain Point cards -->
-        <section class="painpoint-section">
-          <div class="ds-container">
-            <h3 class="ds-research-finding__sub-heading pattern-heading painpoint-section__heading">Pain point</h3>
-            <div class="painpoint-grid">
-              <div class="painpoint-card painpoint-card--need" data-lang-aware>
-                <p class="painpoint-card__eyebrow">
-                  <span data-lang-content="ko">사용자의 니즈</span>
-                  <span data-lang-content="en">User Need</span>
-                </p>
-                <p class="painpoint-card__title">
-                  <span data-lang-content="ko">쾌적하면서도 비용은 절감하고 싶다</span>
-                  <span data-lang-content="en">Stay comfortable while cutting costs</span>
-                </p>
-              </div>
-              <div class="painpoint-card painpoint-card--pain" data-lang-aware>
-                <p class="painpoint-card__eyebrow">
-                  <span data-lang-content="ko">페인포인트</span>
-                  <span data-lang-content="en">Pain Point</span>
-                </p>
-                <p class="painpoint-card__title">
-                  <span data-lang-content="ko">설정을 바꿔도 비용이 어떻게 달라지는지 알 수 없어 불안하다</span>
-                  <span data-lang-content="en">Even after changing the settings, the cost impact is invisible — and that creates anxiety</span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
 
         <!-- ===== 02.x — USER NEED & PAIN POINT ===== -->
         <article class="ds-research-finding">
