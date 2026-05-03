@@ -1701,6 +1701,33 @@ html[data-lang="ko"] {
   }
 }
 
+/* 4-col variant — used by Secondary Research pattern grid.
+   Mobile 1 → Tablet 2 → Desktop 4. All rows force-equal height
+   so every card is the same size regardless of body length. */
+.ds-impact-grid--4col {
+  grid-auto-rows: 1fr;
+}
+@media (min-width: 1440px) {
+  .ds-impact-grid--4col {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.ds-impact-grid--4col .ds-insight {
+  height: 100%;
+  padding: var(--space-6);              /* 24 — mobile */
+}
+@media (min-width: 768px) {
+  .ds-impact-grid--4col .ds-insight {
+    padding: var(--space-8);            /* 32 — tablet */
+  }
+}
+@media (min-width: 1440px) {
+  .ds-impact-grid--4col .ds-insight {
+    padding: var(--space-10);           /* 40 — desktop */
+  }
+}
+
 
 /* =============================================================
    7.10 media  ·  --full | --two-up | --inline width variants
