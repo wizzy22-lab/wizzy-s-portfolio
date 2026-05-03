@@ -262,6 +262,16 @@
       }
     }
 
+    /* Closing implication line ("→ ..." 18px SemiBold for emphasis after body) */
+    .ds-research-finding__closing-implication {
+      font-family: inherit;
+      font-size: 18px;
+      line-height: 1.5;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
     /* Context Research block — 2-col layout (image left + text right) */
     .context-block {
       display: grid;
@@ -1060,6 +1070,94 @@
           <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
             기존 시스템은 조작을 쉽게 만드는데 쾌적이라는 한 축을 중심으로 설계되었습니다.<br>하지만 우리는 유저가 비용이라는 페인포인트를 해결하지 못하고 있다는 점에 집중해<br>비용과 쾌적도를 함께 판단할 수 있는 방식으로 접근했습니다.
           </p>
+        </article>
+
+        <!-- ===== 03.2 — UNDERSTANDING THE CONTEXT ===== -->
+        <article class="ds-research-finding ds-research-finding--align-left">
+          <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 03.2 — UNDERSTANDING THE CONTEXT ]</p>
+
+          <h2 class="ds-h2" data-lang-content="en">Operators had to make decisions fast, in the middle of busy operations.</h2>
+          <h2 class="ds-h2 ds-kr" data-lang-content="ko">자영업자는 바쁜 상황속에서, 빠르게 판단해야했습니다.</h2>
+
+          <!-- 2-image grid (628/628, 16:10) -->
+          <div class="ds-research-finding__media-grid">
+            <figure class="ds-media-figure">
+              <div class="ds-media-placeholder" data-aspect="16/10">
+                <span class="ds-eyebrow ds-eyebrow--accent-blue">FIG. 03.2.1</span>
+                <p class="ds-media-placeholder__meta">operator/approach/persona.jpg</p>
+              </div>
+              <figcaption class="ds-media-figure__caption" data-lang-aware>
+                <span data-lang-content="en">Persona</span>
+                <span data-lang-content="ko">퍼소나</span>
+              </figcaption>
+            </figure>
+            <figure class="ds-media-figure">
+              <div class="ds-media-placeholder" data-aspect="16/10">
+                <span class="ds-eyebrow ds-eyebrow--accent-blue">FIG. 03.2.2</span>
+                <p class="ds-media-placeholder__meta">operator/approach/user-journey.jpg</p>
+              </div>
+              <figcaption class="ds-media-figure__caption" data-lang-aware>
+                <span data-lang-content="en">User Journey</span>
+                <span data-lang-content="ko">유저저니</span>
+              </figcaption>
+            </figure>
+          </div>
+
+          <p class="ds-research-finding__paragraph" data-lang-content="en">
+            To build a product that could realistically be adopted in store operations,<br>we set up user personas and walked through the operator's journey.
+            <br><br>
+            Operators were repeatedly adjusting HVAC at three main moments — open / peak / close.<br>HVAC mattered in real-store operations, yet operators couldn't afford to spend much time on it.
+          </p>
+          <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
+            실제 매장 운영 상황에서 도입 가능한 프로덕트를 만들기 위해<br>유저 퍼소나를 설정하고 유저 저니를 통해 운영자의 상황을 살펴보았습니다
+            <br><br>
+            운영자는 크게 오픈 / 피크 / 마감 시점에서 냉난방을 반복적으로 조절하고 있었습니다<br>또한 실제 매장 운영 환경에서는 냉난방이 중요하지만 운영자가 이에 많은 시간을 쓰기 어려운 상황이었습니다
+          </p>
+
+          <p class="ds-research-finding__closing-implication" data-lang-content="en">
+            → Small business owners needed a structure that's simple and fast to use.
+          </p>
+          <p class="ds-research-finding__closing-implication ds-kr" data-lang-content="ko">
+            → 자영업자에게는 간단하고 빠르게 사용할 수 있는 구조가 필요했습니다
+          </p>
+        </article>
+
+        <!-- ===== 03.3 — SOLUTION DIRECTION ===== -->
+        <article class="ds-research-finding ds-research-finding--align-left">
+          <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 03.3 — SOLUTION DIRECTION ]</p>
+
+          <h2 class="ds-h2" data-lang-content="en">We shifted to a model that pre-calculates each choice's outcome<br>and recommends the most appropriate one.</h2>
+          <h2 class="ds-h2 ds-kr" data-lang-content="ko">각 선택의 결과를 미리 계산해,<br>가장 적절한 선택을 제안하는 방식으로 전환했습니다.</h2>
+
+          <!-- Block: image (left) + text (right) -->
+          <div class="context-block">
+            <figure class="ds-media-figure">
+              <div class="ds-media-placeholder" data-aspect="4/3">
+                <span class="ds-eyebrow ds-eyebrow--accent-blue">FIG. 03.3.1</span>
+                <p class="ds-media-placeholder__meta">operator/approach/system-flow.jpg</p>
+              </div>
+              <figcaption class="ds-media-figure__caption" data-lang-aware>
+                <span data-lang-content="en">System flow</span>
+                <span data-lang-content="ko">시스템 플로우</span>
+              </figcaption>
+            </figure>
+            <div class="context-block__text">
+              <p class="ds-research-finding__paragraph" data-lang-content="en">
+                Based on the current state, the system predicts the outcome of each choice<br>and compares cost and comfort to recommend the most appropriate one.
+              </p>
+              <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
+                시스템은 현재 상태를 기반으로 각 선택의 결과를 예측하고<br>비용과 쾌적도를 비교해 가장 적절한 선택을 제안합니다.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- ===== 03.4 — IDEATION PROCESS ===== -->
+        <article class="ds-research-finding ds-research-finding--align-left">
+          <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 03.4 — IDEATION PROCESS ]</p>
+
+          <h2 class="ds-h2" data-lang-content="en">We derived features from user stories<br>and structured them by category.</h2>
+          <h2 class="ds-h2 ds-kr" data-lang-content="ko">유저 스토리를 기반으로 기능을 도출하고,<br>기능별로 카테고리화해 구조화했습니다</h2>
         </article>
 
       </div>
