@@ -1698,33 +1698,39 @@ html[data-lang="ko"] {
   }
 }
 
-/* 4-col variant — used by Secondary Research pattern grid.
-   Sizing per Figma: 311×217-ish cards, 24 radius, 32 padding,
-   12 grid gap. Mobile 1 → Tablet 2 → Desktop 4. */
-.ds-impact-grid--4col {
+/* Pattern-style grid variants: --4col (Secondary Research) and
+   --3col-pattern (Primary Research). Both share the same Figma card
+   design (24 radius, 32 padding, dark + accent-blue title, 12 gap). */
+.ds-impact-grid--4col,
+.ds-impact-grid--3col-pattern {
   grid-auto-rows: 1fr;
-  gap: var(--space-3);                  /* 12 — Figma spec for this grid */
+  gap: var(--space-3);                  /* 12 — Figma spec */
 }
 @media (min-width: 1440px) {
   .ds-impact-grid--4col {
     grid-template-columns: repeat(4, 1fr);
   }
+  .ds-impact-grid--3col-pattern {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
-.ds-impact-grid--4col .ds-insight {
+.ds-impact-grid--4col .ds-insight,
+.ds-impact-grid--3col-pattern .ds-insight {
   height: 100%;
   padding: var(--space-6);              /* 24 — mobile */
 }
 @media (min-width: 768px) {
-  .ds-impact-grid--4col .ds-insight {
-    padding: var(--space-8);            /* 32 — tablet & desktop (Figma) */
+  .ds-impact-grid--4col .ds-insight,
+  .ds-impact-grid--3col-pattern .ds-insight {
+    padding: var(--space-8);            /* 32 — tablet & desktop */
   }
 }
 
 /* Per Figma: eyebrow + title both 18px Manrope Medium, body 16/1.4.
-   On --dark variant, eyebrow + title both render in accent-blue
-   (matches the Figma "01. 기준 부재로…" all-blue title). */
-.ds-impact-grid--4col .ds-insight__eyebrow {
+   On --dark variant, eyebrow + title render in accent-blue. */
+.ds-impact-grid--4col .ds-insight__eyebrow,
+.ds-impact-grid--3col-pattern .ds-insight__eyebrow {
   font-size: 18px;
   line-height: 1.2;
   letter-spacing: 0;
@@ -1732,24 +1738,30 @@ html[data-lang="ko"] {
   text-transform: none;
   opacity: 1;
 }
-.ds-impact-grid--4col .ds-insight__title {
+.ds-impact-grid--4col .ds-insight__title,
+.ds-impact-grid--3col-pattern .ds-insight__title {
   font-size: 18px;
   line-height: 1.4;
   letter-spacing: 0;
   font-weight: 500;
 }
-.ds-impact-grid--4col .ds-insight__body {
+.ds-impact-grid--4col .ds-insight__body,
+.ds-impact-grid--3col-pattern .ds-insight__body {
   font-size: 16px;
   line-height: 1.4;
 }
-.ds-impact-grid--4col .ds-insight--dark {
+.ds-impact-grid--4col .ds-insight--dark,
+.ds-impact-grid--3col-pattern .ds-insight--dark {
   border: var(--border-thin) solid var(--border-hairline);
 }
 .ds-impact-grid--4col .ds-insight--dark .ds-insight__eyebrow,
-.ds-impact-grid--4col .ds-insight--dark .ds-insight__title {
+.ds-impact-grid--4col .ds-insight--dark .ds-insight__title,
+.ds-impact-grid--3col-pattern .ds-insight--dark .ds-insight__eyebrow,
+.ds-impact-grid--3col-pattern .ds-insight--dark .ds-insight__title {
   color: var(--accent-blue);
 }
-.ds-impact-grid--4col .ds-insight--dark .ds-insight__body {
+.ds-impact-grid--4col .ds-insight--dark .ds-insight__body,
+.ds-impact-grid--3col-pattern .ds-insight--dark .ds-insight__body {
   color: var(--text-primary);
   opacity: 0.85;
 }
