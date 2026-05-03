@@ -258,6 +258,56 @@
       }
     }
 
+    /* Pain point grid — 2 cards: 392 (User Need cream) / 876 (Pain Point dark) */
+    .painpoint-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-3);                    /* 12 — Figma spec */
+    }
+    @media (min-width: 768px) {
+      .painpoint-grid {
+        grid-template-columns: 392fr 876fr;
+      }
+    }
+    .painpoint-card {
+      border-radius: var(--radius-card-lg);   /* 24 */
+      padding: var(--space-12);               /* 48 */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: var(--space-3);                    /* 12 between eyebrow and title */
+      min-height: 172px;
+      box-sizing: border-box;
+    }
+    .painpoint-card--need {
+      background: var(--card-cream);
+      color: var(--text-on-cream);
+    }
+    .painpoint-card--pain {
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      border: var(--border-thin) solid var(--border-hairline);
+    }
+    .painpoint-card__eyebrow {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.2;
+      font-weight: 500;
+      letter-spacing: 0;
+      margin: 0;
+      opacity: 0.7;
+    }
+    .painpoint-card__title {
+      font-family: var(--font-sans);
+      font-size: 24px;
+      line-height: 1.2;
+      font-weight: 600;
+      letter-spacing: 0;
+      margin: 0;
+    }
+
     /* Overview card stack */
     .overview-stack {
       display: flex;
@@ -828,6 +878,31 @@
               </p>
               <p class="ds-body-lg ds-kr" data-lang-content="ko">
                 아무리 설정을 바꿔도 결과는 바로 확인할 수 없고,<br>고지서는 한 달 뒤에 나오기 때문에 자영업자는 <strong>불안</strong>을 안고 계속 바꾸게 된다
+              </p>
+            </div>
+          </div>
+
+          <!-- Pain point — User Need (cream, narrow) + Pain Point (dark, wide) -->
+          <h3 class="ds-research-finding__sub-heading pattern-heading">Pain point</h3>
+          <div class="painpoint-grid">
+            <div class="painpoint-card painpoint-card--need" data-lang-aware>
+              <p class="painpoint-card__eyebrow">
+                <span data-lang-content="ko">사용자의 니즈</span>
+                <span data-lang-content="en">User Need</span>
+              </p>
+              <p class="painpoint-card__title">
+                <span data-lang-content="ko">쾌적하면서도 비용은 절감하고 싶다</span>
+                <span data-lang-content="en">Stay comfortable while cutting costs</span>
+              </p>
+            </div>
+            <div class="painpoint-card painpoint-card--pain" data-lang-aware>
+              <p class="painpoint-card__eyebrow">
+                <span data-lang-content="ko">페인포인트</span>
+                <span data-lang-content="en">Pain Point</span>
+              </p>
+              <p class="painpoint-card__title">
+                <span data-lang-content="ko">설정을 바꿔도 비용이 어떻게 달라지는지 알 수 없어 불안하다</span>
+                <span data-lang-content="en">Even after changing the settings, the cost impact is invisible — and that creates anxiety</span>
               </p>
             </div>
           </div>
