@@ -417,6 +417,26 @@
   word-break: break-all;
 }
 
+/* .ds-media-figure  ·  image (or placeholder) with a caption beneath.
+   Replaces a bare .ds-media-placeholder when a figcaption is needed. */
+.ds-media-figure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);            /* 16 — image to caption */
+  margin: 0;
+}
+
+.ds-media-figure__caption {
+  font-family: var(--font-sans);
+  font-size: var(--text-eyebrow-size);          /* 12 */
+  line-height: var(--text-eyebrow-line-height); /* 14.4 */
+  letter-spacing: var(--text-eyebrow-letter-spacing);
+  font-weight: var(--text-eyebrow-weight);
+  color: var(--text-secondary);
+  text-align: center;
+  margin: 0;
+}
+
 
 /* =============================================================
    .ds-implication-arrow  ·  inline arrow marker for conclusion
