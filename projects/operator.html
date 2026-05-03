@@ -205,11 +205,15 @@
 
     /* Approach eyebrow — centered (title stays left-aligned beneath) */
     #approach .ds-section-header__eyebrow,
-    #approach-response .ds-section-header__eyebrow {
+    #approach-response .ds-section-header__eyebrow,
+    #features .ds-section-header__eyebrow,
+    #outcome .ds-section-header__eyebrow {
       text-align: center;
     }
     #approach .ds-section-header,
-    #approach-response .ds-section-header {
+    #approach-response .ds-section-header,
+    #features .ds-section-header,
+    #outcome .ds-section-header {
       max-width: none;
     }
 
@@ -379,6 +383,120 @@
       line-height: 1.2;                     /* 19.2 / 16 */
       font-weight: 400;
       color: var(--text-primary);
+    }
+
+    /* ===== 05 — RESULT & IMPACT ===== */
+    #outcome .ds-container {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-20);                 /* 80 — between articles */
+      align-items: stretch;
+    }
+
+    /* SUS Score callout — wide horizontal card with big number + 2-line text */
+    .sus-callout {
+      background: var(--bg-surface);
+      border-radius: 31px;
+      padding: var(--space-12);             /* 48 */
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-12);                 /* 48 */
+      align-items: center;
+      color: var(--text-primary);
+    }
+    @media (min-width: 768px) {
+      .sus-callout {
+        grid-template-columns: auto 1fr;
+        gap: var(--space-20);               /* 80 */
+        padding: 48px 56px;
+      }
+    }
+    .sus-callout__score {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .sus-callout__label {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.2;
+      letter-spacing: 1.71px;
+      font-weight: 500;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+    .sus-callout__number {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 140px;
+      line-height: 1.2;
+      letter-spacing: -7.78px;
+      font-weight: 400;
+      color: var(--accent-yellow);
+      margin: 0;
+    }
+    .sus-callout__text {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);                  /* 12 */
+    }
+    .sus-callout__text > p {
+      font-family: inherit;
+      font-size: 24px;
+      line-height: 1.5;                     /* 36 / 24 */
+      font-weight: 400;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    /* Impact grid — 3-card grid for User / Business / KPI Result */
+    .impact-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-3);                  /* 12 */
+    }
+    @media (min-width: 768px) {
+      .impact-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    .impact-card {
+      background: var(--bg-surface);
+      border-radius: 24px;
+      padding: var(--space-12);             /* 48 */
+      min-height: 280px;
+      color: var(--text-primary);
+    }
+    .impact-card__title {
+      font-family: inherit;
+      font-size: 18px;
+      line-height: 1.2;                     /* 21.6 / 18 */
+      font-weight: 600;
+      letter-spacing: 0;
+      color: var(--accent-yellow);
+      margin: 0;
+    }
+    .impact-card__subtitle {
+      font-family: inherit;
+      font-size: 18px;
+      line-height: 1.5;                     /* 27.2 / 18 */
+      font-weight: 400;
+      letter-spacing: 0;
+      color: var(--text-primary);
+      margin: 0;
+      margin-top: var(--space-2);           /* 8 */
+    }
+    .impact-card__list {
+      font-family: inherit;
+      font-size: 18px;
+      line-height: 1.6;                     /* 28.8 / 18 */
+      font-weight: 400;
+      letter-spacing: 0;
+      color: var(--text-secondary);
+      margin: 0;
+      margin-top: var(--space-6);           /* 24 */
     }
 
     /* Closing implication line ("→ ..." 18px SemiBold for emphasis after body) */
@@ -1542,123 +1660,169 @@
       </div>
     </section>
 
-    <!-- ====================  OUTCOME (Result & Impact)  ==================== -->
+    <!-- ====================  05 — RESULT & IMPACT  ==================== -->
     <section id="outcome">
       <div class="ds-container">
 
         <header class="ds-section-header" data-lang-aware>
-          <p class="ds-section-header__eyebrow">[ 06 — RESULT & IMPACT ]</p>
-          <h2 class="ds-section-header__title ds-h1">
-            <span data-lang-content="ko"><em class="ds-signature">사용성</em> 기준을 상회하다</span>
-            <span data-lang-content="en">Validated against <em class="ds-signature">usability</em> standards</span>
-          </h2>
+          <p class="ds-section-header__eyebrow">[ 05 — RESULT & IMPACT ]</p>
         </header>
 
-        <!-- ===== SUS Score (stat-standalone) ===== -->
-        <article class="ds-stat-standalone">
-          <p class="ds-eyebrow">SUS SCORE</p>
-          <div class="ds-stat-standalone__number">76</div>
-          <hr class="ds-divider ds-divider--accent-thin" />
-          <p class="ds-body">
-            <span data-lang-content="ko">사용성 기준을 상회하는 결과를 확인했습니다</span>
-            <span data-lang-content="en">Above the usability benchmark for B2B productivity tools</span>
+        <!-- ===== 05.1 — USABILITY TESTING ===== -->
+        <article class="ds-research-finding ds-research-finding--align-left">
+          <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 05.1 — USABILITY TESTING ]</p>
+
+          <h2 class="ds-h2" data-lang-content="en">Through user testing,<br>we identified real usage problems.</h2>
+          <h2 class="ds-h2 ds-kr" data-lang-content="ko">유저테스트를 통해<br>실제 사용과정에서의 문제를 확인했습니다</h2>
+
+          <p class="ds-research-finding__paragraph" data-lang-content="en">
+            We ran usability tests grounded in real store operation contexts.
           </p>
+          <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
+            실제 매장 운영 상황을 기준으로 사용성 테스트를 진행했습니다
+          </p>
+
+          <figure class="ds-media-figure">
+            <div class="ds-media-placeholder" data-aspect="16/10">
+              <span class="ds-eyebrow ds-eyebrow--accent-blue">FIG. 05.1.1</span>
+              <p class="ds-media-placeholder__meta">operator/outcome/user-test.jpg</p>
+            </div>
+            <figcaption class="ds-media-figure__caption" data-lang-aware>
+              <span data-lang-content="en">User Test protocol</span>
+              <span data-lang-content="ko">유저테스트</span>
+            </figcaption>
+          </figure>
+
+          <!-- SUS Score callout -->
+          <div class="sus-callout" data-lang-aware>
+            <div class="sus-callout__score">
+              <p class="sus-callout__label">SUS SCORE</p>
+              <p class="sus-callout__number">76</p>
+            </div>
+            <div class="sus-callout__text">
+              <p>
+                <span data-lang-content="ko">사용성 기준을 상회하는 결과를 확인했습니다</span>
+                <span data-lang-content="en">We saw results that exceeded the usability benchmark.</span>
+              </p>
+              <p>
+                <span data-lang-content="ko">하지만 테스트 과정에서 초기 진입과 설정 과정이 어렵다는 피드백이 있었습니다</span>
+                <span data-lang-content="en">However, testing surfaced feedback that initial entry and setup were difficult.</span>
+              </p>
+            </div>
+          </div>
         </article>
 
-        <!-- ===== Iteration from SUS (numbered-step --dark, no counter — breaks cream/cream sequence) ===== -->
-        <article class="ds-numbered-step ds-kr" data-lang-aware>
-          <p class="ds-numbered-step__caption">
-            <span data-lang-content="ko">— SUS 기반 개선</span>
-            <span data-lang-content="en">— Iteration from SUS</span>
-          </p>
-          <div class="ds-numbered-step__divider"></div>
-          <h3 class="ds-numbered-step__title">
-            <span data-lang-content="ko"><em class="ds-signature">온보딩</em>으로 진입 마찰을 해소하다</span>
-            <span data-lang-content="en">Adding <em class="ds-signature">onboarding</em> closed the entry-friction gap</span>
-          </h3>
-          <p class="ds-numbered-step__body">
-            <span data-lang-content="ko">SUS 평가에서 초기 진입과 설정 과정이 어렵다는 피드백이 존재했습니다. 이를 개선하기 위해 매장을 보다 쉽게 설정할 수 있는 온보딩을 추가했습니다.</span>
-            <span data-lang-content="en">SUS evaluation surfaced feedback that initial entry and setup were difficult. We added an onboarding flow that helps users set up their store more easily.</span>
-          </p>
-          <ul class="ds-research-finding__implication-list">
-            <li data-lang-content="en"><span class="ds-implication-arrow">→</span>After the new onboarding, scores on this item <em class="ds-signature">improved significantly</em></li>
-            <li class="ds-kr" data-lang-content="ko"><span class="ds-implication-arrow">→</span>신규 온보딩 도입 이후 해당 항목의 평가 점수가 <em class="ds-signature">유의미하게</em> 향상되었습니다</li>
-          </ul>
+        <!-- ===== 05.2 — ITERATION ===== -->
+        <article class="ds-research-finding ds-research-finding--align-left">
+          <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 05.2 — ITERATION ]</p>
+
+          <h2 class="ds-h2" data-lang-content="en">We improved the initial setup flow,<br>lowering the entry barrier.</h2>
+          <h2 class="ds-h2 ds-kr" data-lang-content="ko">초기 설정과정을 개선해, 진입 부담을 낮췄습니다.</h2>
+
+          <!-- Feature row: media + card (reuse 04 pattern) -->
+          <article class="feature-row">
+            <div class="feature-row__media" data-aspect="16/10" aria-label="Media placeholder — onboarding.mp4">
+              <span>operator/outcome/onboarding.mp4</span>
+            </div>
+            <div class="feature-row__card" data-lang-aware>
+              <div class="feature-row__top">
+                <p class="feature-row__eyebrow">ADD SPECIFIC ONBOARDING</p>
+                <h3 class="feature-row__title">
+                  <span data-lang-content="ko">쉽게 설정할 수 있는<br>온보딩 추가</span>
+                  <span data-lang-content="en">Onboarding flow added<br>for easier setup</span>
+                </h3>
+                <p class="feature-row__body">
+                  <span data-lang-content="ko">매장을 쉽게 설정할 수 있는 온보딩을 추가했습니다<br><br>온보딩 도입 이후, 관련 항목의 평가 점수가<br>유의미하게 향상되었습니다.</span>
+                  <span data-lang-content="en">We added an onboarding flow that makes store setup easier.<br><br>After introducing onboarding, scores on the related items<br>improved significantly.</span>
+                </p>
+              </div>
+              <div class="feature-row__bottom">
+                <hr class="feature-row__divider" />
+                <div class="feature-row__outcome">
+                  <span class="feature-row__outcome-label">OUTCOME</span>
+                  <span class="feature-row__outcome-text">
+                    <span data-lang-content="ko">초기진입 난이도 감소</span>
+                    <span data-lang-content="en">Reduced entry friction</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </article>
         </article>
 
-        <!-- ===== Impact Grid (3-column: User / Business / Expected KPI) ===== -->
-        <div class="ds-impact-grid">
+        <!-- ===== 05.3 — IMPACT ===== -->
+        <article class="ds-research-finding ds-research-finding--align-left">
+          <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 05.3 — IMPACT ]</p>
 
-          <article class="ds-insight">
-            <p class="ds-eyebrow">USER IMPACT</p>
-            <ul class="ds-numbered-step__list">
-              <li>
-                <span data-lang-content="ko">비용에 대한 불안감 감소</span>
-                <span data-lang-content="en">Reduced anxiety about cost</span>
-              </li>
-              <li>
-                <span data-lang-content="ko">의사결정 시간 감소</span>
-                <span data-lang-content="en">Faster decision-making</span>
-              </li>
-              <li>
-                <span data-lang-content="ko">중요한 매장 운영 요소에 집중 가능</span>
-                <span data-lang-content="en">Focus on what matters most for the store</span>
-              </li>
-            </ul>
-          </article>
+          <h2 class="ds-h2" data-lang-content="en">We confirmed outcomes that improved<br>both user behavior and cost efficiency.</h2>
+          <h2 class="ds-h2 ds-kr" data-lang-content="ko">사용자 행동과 비용 효율을<br>함께 개선하는 성과를 확인했습니다</h2>
 
-          <article class="ds-insight ds-insight--dark">
-            <p class="ds-eyebrow">BUSINESS IMPACT</p>
-            <ul class="ds-numbered-step__list">
-              <li>
-                <span data-lang-content="ko">불필요한 냉난방 비용 감축</span>
-                <span data-lang-content="en">Reduced unnecessary HVAC cost</span>
-              </li>
-              <li>
-                <span data-lang-content="ko">매장 쾌적도 일관성 향상</span>
-                <span data-lang-content="en">Improved consistency in store comfort</span>
-              </li>
-            </ul>
-          </article>
+          <!-- Image + body -->
+          <div class="context-block">
+            <figure class="ds-media-figure">
+              <div class="ds-media-placeholder" data-aspect="4/3">
+                <span class="ds-eyebrow ds-eyebrow--accent-blue">FIG. 05.3.1</span>
+                <p class="ds-media-placeholder__meta">operator/outcome/kpi-overview.jpg</p>
+              </div>
+              <figcaption class="ds-media-figure__caption" data-lang-aware>
+                <span data-lang-content="en">User Test</span>
+                <span data-lang-content="ko">유저테스트</span>
+              </figcaption>
+            </figure>
+            <div class="context-block__text">
+              <p class="ds-research-finding__paragraph" data-lang-content="en">
+                To validate the system's effect, we defined KPIs that measure user behavior and business outcomes together.<br>From the user perspective, we tracked how quickly they decide and how often they actually follow recommendations.<br>From the business perspective, we set criteria around energy cost and operational efficiency improvements.
+                <br><br>
+                → We measured success along the dual axis of usability and cost efficiency.
+              </p>
+              <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
+                시스템의 효과를 검증하기 위해 사용자 행동과 비즈니스 성과를<br>함께 측정할 수 있는 KPI를 정의했습니다.
+                <br><br>
+                사용자 관점에서는 얼마나 빠르게 판단하고, 추천을 실제로 따르는지를 확인했고<br>비즈니스 관점에서는 에너지 비용과 운영 효율이 어떻게 개선되는지를 기준으로 설정했습니다
+                <br><br>
+                → 사용성과 비용 효율을 함께 개선하는 방향으로 성과를 측정했습니다
+              </p>
+            </div>
+          </div>
 
-          <article class="ds-insight ds-insight--yellow">
-            <p class="ds-eyebrow">EXPECTED KPI</p>
-            <p class="ds-caption">
-              <span data-lang-content="ko">인터뷰 기반 평균값과 시나리오 계산을 기반으로 산출</span>
-              <span data-lang-content="en">Calculated from interview averages and scenario-based modeling</span>
-            </p>
-            <ul class="ds-numbered-step__list">
-              <li>
-                <span data-lang-content="ko">판단 시간 약 10% 단축</span>
-                <span data-lang-content="en">Decision time reduced by ~10%</span>
-              </li>
-              <li>
-                <span data-lang-content="ko">반복 조작 빈도 약 40% 감소</span>
-                <span data-lang-content="en">Repeated adjustments reduced by ~40%</span>
-              </li>
-              <li>
-                <span data-lang-content="ko">에너지 비용 절감 가능성 약 15%</span>
-                <span data-lang-content="en">Energy cost savings potential ~15%</span>
-              </li>
-            </ul>
-          </article>
+          <!-- 3-card impact grid -->
+          <div class="impact-grid">
+            <article class="impact-card" data-lang-aware>
+              <p class="impact-card__title">User Impact</p>
+              <p class="impact-card__subtitle">
+                <span data-lang-content="ko">더 빠르게 판단하고, 불안 없이 운영</span>
+                <span data-lang-content="en">Faster decisions, operation without anxiety</span>
+              </p>
+              <p class="impact-card__list">
+                <span data-lang-content="ko">비용에 대한 불안 감소<br>의사결정 시간 단축<br>운영에 더 집중 가능</span>
+                <span data-lang-content="en">Reduced cost anxiety<br>Shortened decision time<br>More focus on operations</span>
+              </p>
+            </article>
 
-        </div>
+            <article class="impact-card" data-lang-aware>
+              <p class="impact-card__title">Business Impact</p>
+              <p class="impact-card__subtitle">
+                <span data-lang-content="ko">비용은 줄이고, 매장환경은 더 안정적으로 유지</span>
+                <span data-lang-content="en">Lower costs, more stable store environment</span>
+              </p>
+              <p class="impact-card__list">
+                <span data-lang-content="ko">불필요한 냉난방 비용 감소<br>매장 쾌적도 일관성 향상</span>
+                <span data-lang-content="en">Reduced unnecessary HVAC cost<br>Improved consistency in store comfort</span>
+              </p>
+            </article>
 
-        <!-- ===== Scalability (pull-quote --cream) ===== -->
-        <article class="ds-pull-quote ds-pull-quote--cream">
-          <p class="ds-eyebrow">SCALABILITY</p>
-          <p class="ds-h2">
-            <span data-lang-content="ko">서울 내 전 매장에 적용할 경우 —</span>
-            <span data-lang-content="en">Applied across all Seoul stores —</span>
-          </p>
-          <ul class="ds-research-finding__implication-list">
-            <li data-lang-content="en"><span class="ds-implication-arrow">→</span>On a monthly basis</li>
-            <li class="ds-kr" data-lang-content="ko"><span class="ds-implication-arrow">→</span>월 단위 기준</li>
-
-            <li data-lang-content="en"><span class="ds-implication-arrow">→</span>Expected cost savings of approximately <em class="ds-signature">₩1.6 billion</em></li>
-            <li class="ds-kr" data-lang-content="ko"><span class="ds-implication-arrow">→</span>약 <em class="ds-signature">16억 원</em> 수준의 비용 절감 효과를 기대할 수 있습니다</li>
-          </ul>
+            <article class="impact-card" data-lang-aware>
+              <p class="impact-card__title">KPI Result</p>
+              <p class="impact-card__subtitle">
+                <span data-lang-content="ko">반복 조작은 줄고, 비용효율은 개선</span>
+                <span data-lang-content="en">Less repeated tweaking, better cost efficiency</span>
+              </p>
+              <p class="impact-card__list">
+                <span data-lang-content="ko">판단시간 약 10% 단축<br>반복조작 약 40% 감소<br>에너지 비용 약 15% 절감가능</span>
+                <span data-lang-content="en">~10% shorter decision time<br>~40% fewer repeated adjustments<br>~15% potential energy cost savings</span>
+              </p>
+            </article>
+          </div>
         </article>
 
       </div>
