@@ -242,6 +242,14 @@
       font-weight: 700;
     }
 
+    /* Primary Research interview grid — 3 cards uneven (392/392/470 per Figma) */
+    @media (min-width: 768px) {
+      .primary-interview-grid {
+        grid-template-columns: 392fr 392fr 470fr;
+        gap: var(--space-3);                  /* 12 — Figma spec */
+      }
+    }
+
     /* Overview card stack */
     .overview-stack {
       display: flex;
@@ -686,37 +694,49 @@
           <h2 class="ds-h2" data-lang-content="en">Behind the constant setting changes,<br>lay <em class="ds-signature ds-signature--accent-yellow">anxiety over cost and the absence of judgment criteria</em></h2>
           <h2 class="ds-h2 ds-kr" data-lang-content="ko">기준이 없어 계속 설정을 바꾸는 문제 뒤에는,<br><em class="ds-signature ds-signature--accent-yellow">비용에 대한 불안과 판단 기준의 부재</em>가 있었다</h2>
 
-          <!-- 3-column media grid -->
-          <div class="ds-research-finding__media-grid ds-research-finding__media-grid--3col">
-            <div class="ds-media-placeholder" data-aspect="4/3">
-              <span class="ds-eyebrow ds-eyebrow--accent-blue">FIG. 02.2.1</span>
-              <p class="ds-media-placeholder__label" data-lang-content="en">Interview session 1</p>
-              <p class="ds-media-placeholder__label ds-kr" data-lang-content="ko">인터뷰 세션 1</p>
-              <p class="ds-media-placeholder__meta">operator/approach/interview-01.jpg</p>
-            </div>
-            <div class="ds-media-placeholder" data-aspect="4/3">
-              <span class="ds-eyebrow ds-eyebrow--accent-blue">FIG. 02.2.2</span>
-              <p class="ds-media-placeholder__label" data-lang-content="en">Interview session 2</p>
-              <p class="ds-media-placeholder__label ds-kr" data-lang-content="ko">인터뷰 세션 2</p>
-              <p class="ds-media-placeholder__meta">operator/approach/interview-02.jpg</p>
-            </div>
-            <div class="ds-media-placeholder" data-aspect="4/3">
-              <span class="ds-eyebrow ds-eyebrow--accent-blue">FIG. 02.2.3</span>
-              <p class="ds-media-placeholder__label" data-lang-content="en">Interview protocol</p>
-              <p class="ds-media-placeholder__label ds-kr" data-lang-content="ko">인터뷰 프로토콜</p>
-              <p class="ds-media-placeholder__meta">operator/approach/interview-protocol.jpg</p>
-            </div>
-          </div>
-
-          <!-- Interview & Analysis -->
-          <h3 class="ds-research-finding__sub-heading" data-lang-content="en">Interview & Analysis</h3>
-          <h3 class="ds-research-finding__sub-heading ds-kr" data-lang-content="ko">인터뷰 & 분석</h3>
+          <!-- Interview heading + body (precedes the 3 image cards per Figma) -->
+          <h3 class="ds-research-finding__sub-heading" data-lang-content="en">Interview</h3>
+          <h3 class="ds-research-finding__sub-heading ds-kr" data-lang-content="ko">인터뷰</h3>
           <p class="ds-research-finding__paragraph" data-lang-content="en">
             To understand how prevalent these struggles are in real-store contexts — when stress peaks, how often operators adjust controls, and what specifically drives those decisions — we conducted interviews with 5 small business owners.
           </p>
           <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
             실제 매장 운영 상황에서 자영업자들이 이런 고민을 하는 비중은 얼마나 되는지, 언제 가장 스트레스를 받는지, 몇 번이나 조작하는지 등 좀 더 구체적인 이유를 알아보기 위해 5인의 인터뷰를 진행했습니다
           </p>
+
+          <!-- 3-column media grid (uneven 392/392/470 per Figma) -->
+          <div class="ds-research-finding__media-grid ds-research-finding__media-grid--3col primary-interview-grid">
+            <figure class="ds-media-figure">
+              <div class="ds-media-placeholder" data-aspect="4/3">
+                <span class="ds-eyebrow ds-eyebrow--accent-blue">FIG. 02.2.1</span>
+                <p class="ds-media-placeholder__meta">operator/approach/interview-01.jpg</p>
+              </div>
+              <figcaption class="ds-media-figure__caption" data-lang-aware>
+                <span data-lang-content="en">Interview session 1</span>
+                <span data-lang-content="ko">인터뷰 세션 1</span>
+              </figcaption>
+            </figure>
+            <figure class="ds-media-figure">
+              <div class="ds-media-placeholder" data-aspect="4/3">
+                <span class="ds-eyebrow ds-eyebrow--accent-blue">FIG. 02.2.2</span>
+                <p class="ds-media-placeholder__meta">operator/approach/interview-02.jpg</p>
+              </div>
+              <figcaption class="ds-media-figure__caption" data-lang-aware>
+                <span data-lang-content="en">Interview session 2</span>
+                <span data-lang-content="ko">인터뷰 세션 2</span>
+              </figcaption>
+            </figure>
+            <figure class="ds-media-figure">
+              <div class="ds-media-placeholder" data-aspect="16/10">
+                <span class="ds-eyebrow ds-eyebrow--accent-blue">FIG. 02.2.3</span>
+                <p class="ds-media-placeholder__meta">operator/approach/interview-protocol.jpg</p>
+              </div>
+              <figcaption class="ds-media-figure__caption" data-lang-aware>
+                <span data-lang-content="en">Interview protocol</span>
+                <span data-lang-content="ko">인터뷰 프로토콜</span>
+              </figcaption>
+            </figure>
+          </div>
 
           <!-- Data Structuring -->
           <h3 class="ds-research-finding__sub-heading" data-lang-content="en">Data Structuring</h3>
