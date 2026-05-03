@@ -221,6 +221,15 @@
     /* Yellow-accent emphasis (for use inside headings) */
     .ds-signature--accent-yellow { color: var(--accent-yellow); }
 
+    /* Pattern sub-heading — centered, 48px gap to the grid below
+       (parent .ds-research-finding has gap: 24, +24 margin = 48 total) */
+    .pattern-heading {
+      text-align: center;
+    }
+    .pattern-heading + .ds-impact-grid {
+      margin-top: var(--space-6);    /* +24 to parent's 24 gap = 48 */
+    }
+
     /* Overview card stack */
     .overview-stack {
       display: flex;
@@ -597,8 +606,7 @@
           </div>
 
           <!-- Pattern -->
-          <h3 class="ds-research-finding__sub-heading" data-lang-content="en">Pattern</h3>
-          <h3 class="ds-research-finding__sub-heading ds-kr" data-lang-content="ko">패턴</h3>
+          <h3 class="ds-research-finding__sub-heading pattern-heading">Pattern</h3>
           <div class="ds-impact-grid ds-impact-grid--4col">
             <div class="ds-insight" data-lang-aware>
               <h4 class="ds-insight__title">
