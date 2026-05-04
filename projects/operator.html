@@ -19,12 +19,10 @@
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      text-rendering: optimizeLegibility;
-      font-feature-settings: "kern" 1, "liga" 1;
     }
-    img, video {
-      image-rendering: -webkit-optimize-contrast;
-    }
+    /* image-rendering removed — was sharpening 1:1-mapped images at 1920
+       and causing visible pixel grain. Browser default does subpixel
+       smoothing which looks cleaner across viewports. */
 
     html[data-lang="ko"] body {
       font-family: var(--font-kr);
