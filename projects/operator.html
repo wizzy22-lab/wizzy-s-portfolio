@@ -139,6 +139,20 @@
       padding-block: var(--space-30);
       border-bottom: var(--border-thin) solid var(--border-hairline);
     }
+    /* Hero video — autoplay loop, pauses on hover (freeze frame) */
+    .hero-video {
+      display: block;
+      width: 100%;
+      border-radius: var(--radius-card-lg);
+      background: var(--bg-surface);
+      cursor: pointer;
+      transition: transform var(--duration-slow) var(--ease-default);
+    }
+    .hero-video[data-paused="true"] {
+      /* Subtle visual hint that video is paused */
+      filter: brightness(1.05);
+    }
+
     .hero-placeholder {
       background: var(--bg-muted);
       border: var(--border-thin) dashed var(--border-hairline);
@@ -827,7 +841,9 @@
     <!-- ====================  HERO (placeholder)  ==================== -->
     <section id="hero">
       <div class="ds-container">
-        <div class="hero-placeholder">Hero — to be designed in Figma</div>
+        <video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-label="Operator product demo">
+          <source src="operator/hero/hero.mp4" type="video/mp4" />
+        </video>
       </div>
     </section>
 
@@ -2011,6 +2027,30 @@
       window.addEventListener('resize', onScroll, { passive: true });
       mqDesktop.addEventListener('change', onScroll);
       mqMotion.addEventListener('change', onScroll);
+    })();
+
+    // ===== Hero video — pause on hover (freeze frame as still image) =====
+    (function () {
+      const heroVideo = document.querySelector('.hero-video');
+      if (!heroVideo) return;
+
+      heroVideo.addEventListener('mouseenter', () => {
+        heroVideo.pause();
+        heroVideo.dataset.paused = 'true';
+      });
+      heroVideo.addEventListener('mouseleave', () => {
+        heroVideo.dataset.paused = 'false';
+        heroVideo.play().catch(() => {});  // ignore autoplay block silently
+      });
+      // Keyboard parity for accessibility
+      heroVideo.addEventListener('focus', () => {
+        heroVideo.pause();
+        heroVideo.dataset.paused = 'true';
+      });
+      heroVideo.addEventListener('blur', () => {
+        heroVideo.dataset.paused = 'false';
+        heroVideo.play().catch(() => {});
+      });
     })();
   </script>
 </body>
