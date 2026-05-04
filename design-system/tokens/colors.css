@@ -1,9 +1,9 @@
 :root {
-  --bg-page: #0A0E0F;
-  --bg-surface: #12171A;
-  --bg-muted: #1A2024;
+  --bg-page: #14181A;
+  --bg-surface: #1E2225;
+  --bg-muted: #262B2E;
 
-  --text-primary: #F5F5F0;
+  --text-primary: #E8E8E5;
   --text-secondary: #E0E2E2;
   --text-tertiary: #6A7075;
   --text-accent-warm: #FDF89C;
