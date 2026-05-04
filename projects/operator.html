@@ -532,6 +532,42 @@
       left: 0;
     }
 
+    /* Insight callout — cream rounded box with heading + body all centered (per Figma) */
+    .insight-callout {
+      background: var(--card-cream);
+      color: var(--text-on-cream);
+      border-radius: 24px;
+      padding: var(--space-8);                /* 32 mobile */
+      max-width: 796px;
+      margin-inline: auto;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);                    /* 12 — heading → body */
+    }
+    @media (min-width: 768px) {
+      .insight-callout {
+        padding: 30px 60px;                   /* Figma: 30 vertical + ~60 horizontal */
+      }
+    }
+    .insight-callout__heading {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      line-height: 1.2;
+      letter-spacing: 0.5px;
+      font-weight: 700;
+      color: var(--text-on-cream);
+      margin: 0;
+    }
+    .insight-callout__body {
+      font-family: inherit;
+      font-size: 18px;
+      line-height: 1.4;                       /* 25.2 / 18 */
+      font-weight: 400;
+      color: var(--text-on-cream);
+      margin: 0;
+    }
+
     /* Closing implication line ("→ ..." 18px SemiBold for emphasis after body) */
     .ds-research-finding__closing-implication {
       font-family: inherit;
@@ -1151,17 +1187,13 @@
             </div>
           </div>
 
-          <!-- Insight (pull-quote 컴포넌트 재활용) -->
-          <div class="ds-research-finding__heading-group">
-            <h3 class="ds-research-finding__sub-heading pattern-heading">Insight</h3>
-            <div class="ds-pull-quote ds-pull-quote--cream" style="text-align: center;">
-              <p class="ds-body-lg" data-lang-content="en">
-                No matter how often they change the settings, results aren't visible right away,<br>and the bill only arrives a month later — so operators keep adjusting with constant <strong>anxiety</strong>.
-              </p>
-              <p class="ds-body-lg ds-kr" data-lang-content="ko">
-                아무리 설정을 바꿔도 결과는 바로 확인할 수 없고,<br>고지서는 한 달 뒤에 나오기 때문에 자영업자는 <strong>불안</strong>을 안고 계속 바꾸게 된다
-              </p>
-            </div>
+          <!-- Insight callout (heading + body combined inside one cream box) -->
+          <div class="insight-callout">
+            <h3 class="insight-callout__heading">Insight</h3>
+            <p class="insight-callout__body" data-lang-aware>
+              <span data-lang-content="en">No matter how often they change the settings, results aren't visible right away,<br>and the bill only arrives a month later — so operators keep adjusting with constant <strong>anxiety</strong>.</span>
+              <span data-lang-content="ko">아무리 설정을 바꿔도 결과는 바로 확인할 수 없고,<br>고지서는 한 달 뒤에 나오기 때문에 자영업자는 <strong>불안</strong>을 안고 계속 바꾸게 된다</span>
+            </p>
           </div>
 
         </article>
