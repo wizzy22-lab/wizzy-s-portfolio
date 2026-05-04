@@ -17,10 +17,16 @@
       font-size: var(--text-body-size);
       line-height: var(--text-body-line-height);
       min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+      /* font-smoothing intentionally NOT set on body — browser default
+         (subpixel-antialiased on macOS) renders Pretendard Regular
+         body text fuller/crisper than forced grayscale antialiased */
       text-rendering: optimizeLegibility;
       font-feature-settings: "kern" 1, "liga" 1;
+    }
+    /* Apply antialiased only to display/heading text where thinner look is OK */
+    h1, h2, h3, h4, .ds-h1, .ds-h2, .ds-h3 {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
     img, video {
       image-rendering: -webkit-optimize-contrast;
