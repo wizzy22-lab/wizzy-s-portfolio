@@ -414,7 +414,8 @@
       justify-content: space-between;       /* body top, protocol image bottom */
       gap: var(--space-6);
     }
-    .ut-grid__protocol .ds-media-placeholder[data-aspect="628/220"] {
+    .ut-grid__protocol .ds-media-placeholder[data-aspect="628/220"],
+    .ut-grid__protocol .ds-media-image[data-aspect="628/220"] {
       aspect-ratio: 628 / 220;              /* wide cinematic ratio per Figma */
     }
 
@@ -1772,13 +1773,12 @@
               </p>
 
               <figure class="ds-media-figure ut-grid__protocol">
-                <div class="ds-media-placeholder" data-aspect="628/220">
-                  <span class="ds-eyebrow ds-eyebrow--accent-blue">FIG. 05.1.2</span>
-                  <p class="ds-media-placeholder__meta">operator/outcome/protocol.jpg</p>
+                <div class="ds-media-image" data-aspect="628/220">
+                  <img src="operator/outcome/protocol.png" alt="UT protocol" loading="lazy" />
                 </div>
                 <figcaption class="ds-media-figure__caption" data-lang-aware>
-                  <span data-lang-content="en">Protocol image</span>
-                  <span data-lang-content="ko">프로토콜 이미지</span>
+                  <span data-lang-content="en">UT protocol</span>
+                  <span data-lang-content="ko">UT 프로토콜</span>
                 </figcaption>
               </figure>
             </div>
