@@ -397,7 +397,28 @@
       align-items: stretch;
     }
 
-    /* SUS Score callout — wide horizontal card on cream bg with big dark "76" */
+    /* 05.1 UT layout — 2-col: full image (left) + body+protocol (right) */
+    .ut-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-6);                  /* 24 */
+    }
+    @media (min-width: 768px) {
+      .ut-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    .ut-grid__right {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;       /* body top, protocol image bottom */
+      gap: var(--space-6);
+    }
+    .ut-grid__protocol .ds-media-placeholder[data-aspect="628/220"] {
+      aspect-ratio: 628 / 220;              /* wide cinematic ratio per Figma */
+    }
+
+    /* SUS Score callout — wide horizontal cream card with big dark "76" */
     .sus-callout {
       background: var(--card-cream);        /* CAEAFF light blue */
       color: var(--text-on-cream);          /* dark text */
@@ -407,12 +428,14 @@
       grid-template-columns: 1fr;
       gap: var(--space-12);                 /* 48 */
       align-items: center;
+      max-width: 1119px;                    /* Figma spec — sits with ~80 margin each side at 1920 */
+      margin-inline: auto;
     }
     @media (min-width: 768px) {
       .sus-callout {
         grid-template-columns: auto 1fr;
         gap: var(--space-20);               /* 80 */
-        padding: 48px 56px;
+        padding: 56px 80px;                  /* match Figma vertical+horizontal padding */
       }
     }
     .sus-callout__score {
@@ -1742,23 +1765,39 @@
           <h2 class="ds-h2" data-lang-content="en">Through user testing,<br>we identified real usage problems.</h2>
           <h2 class="ds-h2 ds-kr" data-lang-content="ko">유저테스트를 통해<br>실제 사용과정에서의 문제를 확인했습니다</h2>
 
-          <p class="ds-research-finding__paragraph" data-lang-content="en">
-            We ran usability tests grounded in real store operation contexts.
-          </p>
-          <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
-            실제 매장 운영 상황을 기준으로 사용성 테스트를 진행했습니다
-          </p>
+          <!-- 2-col: UT photo (left, full height) + body text + protocol image (right) -->
+          <div class="ut-grid">
+            <figure class="ds-media-figure ut-grid__left">
+              <div class="ds-media-placeholder" data-aspect="16/10">
+                <span class="ds-eyebrow ds-eyebrow--accent-blue">FIG. 05.1.1</span>
+                <p class="ds-media-placeholder__meta">operator/outcome/ut-photo.jpg</p>
+              </div>
+              <figcaption class="ds-media-figure__caption" data-lang-aware>
+                <span data-lang-content="en">UT photo</span>
+                <span data-lang-content="ko">UT사진</span>
+              </figcaption>
+            </figure>
 
-          <figure class="ds-media-figure">
-            <div class="ds-media-placeholder" data-aspect="16/10">
-              <span class="ds-eyebrow ds-eyebrow--accent-blue">FIG. 05.1.1</span>
-              <p class="ds-media-placeholder__meta">operator/outcome/user-test.jpg</p>
+            <div class="ut-grid__right">
+              <p class="ds-research-finding__paragraph" data-lang-content="en">
+                We ran usability tests grounded in real store operation contexts.
+              </p>
+              <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
+                실제 매장 운영 상황을 기준으로 사용성 테스트를 진행했습니다
+              </p>
+
+              <figure class="ds-media-figure ut-grid__protocol">
+                <div class="ds-media-placeholder" data-aspect="628/220">
+                  <span class="ds-eyebrow ds-eyebrow--accent-blue">FIG. 05.1.2</span>
+                  <p class="ds-media-placeholder__meta">operator/outcome/protocol.jpg</p>
+                </div>
+                <figcaption class="ds-media-figure__caption" data-lang-aware>
+                  <span data-lang-content="en">Protocol image</span>
+                  <span data-lang-content="ko">프로토콜 이미지</span>
+                </figcaption>
+              </figure>
             </div>
-            <figcaption class="ds-media-figure__caption" data-lang-aware>
-              <span data-lang-content="en">User Test protocol</span>
-              <span data-lang-content="ko">유저테스트</span>
-            </figcaption>
-          </figure>
+          </div>
 
           <!-- SUS Score callout -->
           <div class="sus-callout" data-lang-aware>
