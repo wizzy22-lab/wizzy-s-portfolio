@@ -139,18 +139,31 @@
       padding-block: var(--space-30);
       border-bottom: var(--border-thin) solid var(--border-hairline);
     }
-    /* Hero video — autoplay loop, pauses on hover (freeze frame) */
-    .hero-video {
-      display: block;
+    /* Hero media — video plays by default, swaps to hover image on pointer over */
+    .hero-media {
+      position: relative;
       width: 100%;
       border-radius: var(--radius-card-lg);
+      overflow: hidden;
       background: var(--bg-surface);
       cursor: pointer;
-      transition: transform var(--duration-slow) var(--ease-default);
     }
-    .hero-video[data-paused="true"] {
-      /* Subtle visual hint that video is paused */
-      filter: brightness(1.05);
+    .hero-media__video,
+    .hero-media__hover {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .hero-media__hover {
+      position: absolute;
+      inset: 0;
+      object-fit: cover;
+      opacity: 0;                                /* hidden by default */
+      transition: opacity var(--duration-base) var(--ease-default);
+      pointer-events: none;
+    }
+    .hero-media[data-hover="true"] .hero-media__hover {
+      opacity: 1;                                /* fade in on hover */
     }
 
     .hero-placeholder {
@@ -841,9 +854,12 @@
     <!-- ====================  HERO (placeholder)  ==================== -->
     <section id="hero">
       <div class="ds-container">
-        <video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-label="Operator product demo">
-          <source src="operator/hero/hero.mp4" type="video/mp4" />
-        </video>
+        <div class="hero-media">
+          <video class="hero-media__video" autoplay muted loop playsinline preload="metadata" aria-label="Operator product demo">
+            <source src="operator/hero/hero.mp4" type="video/mp4" />
+          </video>
+          <img class="hero-media__hover" src="operator/hero/hero-hover.png" alt="" loading="lazy" aria-hidden="true" />
+        </div>
       </div>
     </section>
 
@@ -2029,28 +2045,25 @@
       mqMotion.addEventListener('change', onScroll);
     })();
 
-    // ===== Hero video — pause on hover (freeze frame as still image) =====
+    // ===== Hero — swap video → image on hover =====
     (function () {
-      const heroVideo = document.querySelector('.hero-video');
-      if (!heroVideo) return;
+      const heroMedia = document.querySelector('.hero-media');
+      if (!heroMedia) return;
+      const video = heroMedia.querySelector('.hero-media__video');
 
-      heroVideo.addEventListener('mouseenter', () => {
-        heroVideo.pause();
-        heroVideo.dataset.paused = 'true';
-      });
-      heroVideo.addEventListener('mouseleave', () => {
-        heroVideo.dataset.paused = 'false';
-        heroVideo.play().catch(() => {});  // ignore autoplay block silently
-      });
-      // Keyboard parity for accessibility
-      heroVideo.addEventListener('focus', () => {
-        heroVideo.pause();
-        heroVideo.dataset.paused = 'true';
-      });
-      heroVideo.addEventListener('blur', () => {
-        heroVideo.dataset.paused = 'false';
-        heroVideo.play().catch(() => {});
-      });
+      const enter = () => {
+        heroMedia.dataset.hover = 'true';
+        if (video) video.pause();
+      };
+      const leave = () => {
+        heroMedia.dataset.hover = 'false';
+        if (video) video.play().catch(() => {});
+      };
+
+      heroMedia.addEventListener('mouseenter', enter);
+      heroMedia.addEventListener('mouseleave', leave);
+      heroMedia.addEventListener('focusin', enter);
+      heroMedia.addEventListener('focusout', leave);
     })();
   </script>
 </body>
