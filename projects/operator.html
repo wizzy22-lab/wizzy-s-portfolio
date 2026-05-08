@@ -1035,6 +1035,35 @@
       gap: var(--space-3);
     }
 
+    /* =============================================================
+       Zoomable analysis images — opt-in via data-zoomable="true"
+       Used on diagrams/charts/matrices that contain readable text.
+       Hover scales in-place using transform (no reflow). Disabled on
+       mobile (touch — pinch-zoom suffices) and reduced-motion users.
+       ============================================================= */
+    .ds-media-image[data-zoomable="true"] {
+      cursor: zoom-in;
+      transition: transform var(--duration-base) var(--ease-default),
+                  box-shadow var(--duration-base) var(--ease-default);
+      will-change: transform;
+    }
+    @media (min-width: 768px) and (hover: hover) {
+      .ds-media-image[data-zoomable="true"]:hover {
+        transform: scale(1.4);
+        z-index: 10;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+        position: relative;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .ds-media-image[data-zoomable="true"] {
+        transition: none;
+      }
+      .ds-media-image[data-zoomable="true"]:hover {
+        transform: none;
+        box-shadow: none;
+      }
+    }
 
     /* =============================================================
        Tradeoff diagrams — cost (blue) vs comfort (yellow)
@@ -1659,7 +1688,7 @@
               </figcaption>
             </figure>
             <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="16/10">
+              <div class="ds-media-image" data-aspect="16/10" data-zoomable="true">
                 <img src="operator/approach/interview-protocol.png" alt="Interview protocol" loading="lazy" />
               </div>
               <figcaption class="ds-media-figure__caption" data-lang-aware>
@@ -1683,7 +1712,7 @@
           <!-- 2-image grid (634/634, 12 gap per Figma) -->
           <div class="ds-research-finding__media-grid primary-analysis-grid">
             <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="16/9">
+              <div class="ds-media-image" data-aspect="16/9" data-zoomable="true">
                 <img src="operator/approach/affinity-map.png" alt="Affinity mapping" loading="lazy" />
               </div>
               <figcaption class="ds-media-figure__caption" data-lang-aware>
@@ -1692,7 +1721,7 @@
               </figcaption>
             </figure>
             <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="16/9">
+              <div class="ds-media-image" data-aspect="16/9" data-zoomable="true">
                 <img src="operator/approach/thematic-coding.png" alt="Thematic coding" loading="lazy" />
               </div>
               <figcaption class="ds-media-figure__caption" data-lang-aware>
@@ -1760,7 +1789,7 @@
           <!-- Block 1: image (left) + Energy Pricing Structure text (right) -->
           <div class="context-block">
             <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="4/3">
+              <div class="ds-media-image" data-aspect="4/3" data-zoomable="true">
                 <img src="operator/approach/pricing-structure.png" alt="Pricing structure analysis" loading="lazy" />
               </div>
               <figcaption class="ds-media-figure__caption" data-lang-aware>
@@ -1788,7 +1817,7 @@
           <!-- Block 2: image (left) + Scenario Test Try + Result text (right) -->
           <div class="context-block">
             <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="4/3">
+              <div class="ds-media-image" data-aspect="4/3" data-zoomable="true">
                 <img src="operator/approach/scenario.png" alt="Scenario diagram" loading="lazy" />
               </div>
               <figcaption class="ds-media-figure__caption" data-lang-aware>
@@ -1890,7 +1919,7 @@
           <!-- Block: image (left) + body text (right) -->
           <div class="context-block">
             <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="4/3">
+              <div class="ds-media-image" data-aspect="4/3" data-zoomable="true">
                 <img src="operator/approach/competitor-analysis.png" alt="Competitor analysis spreadsheet" loading="lazy" />
               </div>
               <figcaption class="ds-media-figure__caption" data-lang-aware>
@@ -2030,7 +2059,7 @@
           <!-- 2-image grid (628/628, 16:10) -->
           <div class="ds-research-finding__media-grid">
             <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="16/10">
+              <div class="ds-media-image" data-aspect="16/10" data-zoomable="true">
                 <img src="operator/approach/persona.png" alt="Persona" loading="lazy" />
               </div>
               <figcaption class="ds-media-figure__caption" data-lang-aware>
@@ -2039,7 +2068,7 @@
               </figcaption>
             </figure>
             <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="16/10">
+              <div class="ds-media-image" data-aspect="16/10" data-zoomable="true">
                 <img src="operator/approach/user-journey.png" alt="User Journey" loading="lazy" />
               </div>
               <figcaption class="ds-media-figure__caption" data-lang-aware>
@@ -2176,7 +2205,7 @@
 
           <div class="ds-research-finding__media-grid">
             <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="16/10">
+              <div class="ds-media-image" data-aspect="16/10" data-zoomable="true">
                 <img src="operator/approach/user-story.png" alt="User stories" loading="lazy" />
               </div>
               <figcaption class="ds-media-figure__caption" data-lang-aware>
@@ -2185,7 +2214,7 @@
               </figcaption>
             </figure>
             <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="16/10">
+              <div class="ds-media-image" data-aspect="16/10" data-zoomable="true">
                 <img src="operator/approach/feature-categorization.png" alt="Feature categorization" loading="lazy" />
               </div>
               <figcaption class="ds-media-figure__caption" data-lang-aware>
@@ -2207,7 +2236,7 @@
 
           <div class="ds-research-finding__media-grid">
             <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="16/10">
+              <div class="ds-media-image" data-aspect="16/10" data-zoomable="true">
                 <img src="operator/approach/moscow.png" alt="MoSCoW" loading="lazy" />
               </div>
               <figcaption class="ds-media-figure__caption" data-lang-aware>
@@ -2216,7 +2245,7 @@
               </figcaption>
             </figure>
             <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="16/10">
+              <div class="ds-media-image" data-aspect="16/10" data-zoomable="true">
                 <img src="operator/approach/2x2-matrix.png" alt="2×2 Matrix" loading="lazy" />
               </div>
               <figcaption class="ds-media-figure__caption" data-lang-aware>
@@ -2244,7 +2273,7 @@
           <!-- Block 1: IA image (left) + body + closing → (right) -->
           <div class="context-block">
             <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="4/3">
+              <div class="ds-media-image" data-aspect="4/3" data-zoomable="true">
                 <img src="operator/approach/ia.png" alt="Information Architecture" loading="lazy" />
               </div>
               <figcaption class="ds-media-figure__caption" data-lang-aware>
@@ -2307,7 +2336,7 @@
           <!-- Block 2: 2-col grid — Wireframe + Design system, each with body caption -->
           <div class="ds-research-finding__media-grid">
             <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="16/10">
+              <div class="ds-media-image" data-aspect="16/10" data-zoomable="true">
                 <img src="operator/approach/wireframe.png" alt="Wireframe" loading="lazy" />
               </div>
               <figcaption class="ds-media-figure__caption" data-lang-aware>
@@ -2322,7 +2351,7 @@
               </p>
             </figure>
             <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="16/10">
+              <div class="ds-media-image" data-aspect="16/10" data-zoomable="true">
                 <img src="operator/approach/design-system.png" alt="Design system" loading="lazy" />
               </div>
               <figcaption class="ds-media-figure__caption" data-lang-aware>
@@ -2479,7 +2508,7 @@
               </p>
 
               <figure class="ds-media-figure ut-grid__protocol">
-                <div class="ds-media-image" data-aspect="628/220">
+                <div class="ds-media-image" data-aspect="628/220" data-zoomable="true">
                   <img src="operator/outcome/protocol.png" alt="UT protocol" loading="lazy" />
                 </div>
                 <figcaption class="ds-media-figure__caption" data-lang-aware>
@@ -2635,7 +2664,7 @@
           <!-- Image + body -->
           <div class="context-block">
             <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="4/3">
+              <div class="ds-media-image" data-aspect="4/3" data-zoomable="true">
                 <img src="operator/outcome/kpi-overview.png" alt="KPI definition" loading="lazy" />
               </div>
               <figcaption class="ds-media-figure__caption" data-lang-aware>
