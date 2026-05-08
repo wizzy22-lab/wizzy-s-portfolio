@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Operator — Hajiwi</title>
-  <meta name="description" content="Operator — a tool for small business owners to make HVAC decisions with judgment criteria, not by feel." />
+  <meta name="description" content="Operator — an AI-powered HVAC decision system that helps small business owners judge cost and comfort together, instead of adjusting by feel." />
   <link rel="stylesheet" href="../design-system/index.css" />
   <style>
     /* Page-level reset & layout (uses tokens only) */
@@ -416,6 +416,50 @@
       color: var(--text-primary);
     }
 
+    /* ----- feature-row body: 3-block variant (STUCK / WHY / FIX) -----
+       Used by 05.2 onboarding card. Body is rendered as a div with
+       block children separated by hairline rules. Tighter rhythm so
+       three blocks fit inside the 548px fixed card height on desktop. */
+    .feature-row__body--blocks {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);                  /* 12 between blocks */
+      margin-top: var(--space-5);           /* 20 — tightened from 48 */
+      padding: 0;
+    }
+    .feature-row__block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding-top: var(--space-3);          /* 12 */
+      border-top: 1px solid var(--border-hairline);
+    }
+    .feature-row__block:first-child {
+      padding-top: 0;
+      border-top: 0;
+    }
+    .feature-row__block-label {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      line-height: 1.2;
+      letter-spacing: 1.16px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--accent-yellow);
+      margin: 0;
+    }
+    .feature-row__block-text {
+      font-family: inherit;
+      font-size: 13px;
+      line-height: 1.5;                     /* 19.5 / 13 */
+      font-weight: 400;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+    .feature-row__card.ds-kr .feature-row__block-text {
+      font-family: var(--font-kr);
+    }
+
     /* ===== 05 — RESULT & IMPACT ===== */
     #outcome .ds-container {
       display: flex;
@@ -505,6 +549,112 @@
       font-weight: 400;
       color: var(--text-on-cream);
       margin: 0;
+    }
+
+    /* ---------------------------------------------------------------
+       SUS callout — 4-step UT flow variant
+       Outer .sus-callout--4step keeps cream chrome but switches to a
+       block layout so .ut-4step grid drives the 4-column flow inside.
+       Stuck → Why → Fix → Result, with SUS 76 nested in step 4.
+       --------------------------------------------------------------- */
+    .sus-callout--4step {
+      display: block;
+    }
+
+    .ut-4step {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+      align-items: stretch;
+    }
+    @media (min-width: 768px) {
+      .ut-4step {
+        grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+        gap: var(--space-4);
+      }
+    }
+
+    .ut-4step__item {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      padding-top: var(--space-3);
+      border-top: var(--border-thin) solid rgba(10, 14, 15, 0.18);
+      box-sizing: border-box;
+    }
+    .ut-4step__item--result {
+      border-top: 2px solid var(--accent-yellow);
+    }
+
+    .ut-4step__counter {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 24px;
+      line-height: 1;
+      font-weight: 400;
+      color: var(--text-on-cream);
+      opacity: 0.4;
+      margin: 0;
+    }
+    .ut-4step__item--result .ut-4step__counter {
+      opacity: 0.7;
+    }
+
+    .ut-4step__label {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      line-height: 1.2;
+      letter-spacing: 1.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--text-on-cream);
+      margin: 0;
+    }
+
+    .ut-4step__body {
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 1.5;
+      font-weight: 400;
+      color: var(--text-on-cream);
+      opacity: 0.78;
+      margin: var(--space-1) 0 0 0;
+    }
+    .ut-4step.ds-kr .ut-4step__body {
+      font-family: var(--font-kr);
+    }
+
+    .ut-4step__score {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: var(--space-3);
+    }
+
+    /* 76 number — keeps .sus-callout__number font stack at column scale */
+    .sus-callout__number--inline {
+      font-size: 72px;
+      line-height: 1;
+      letter-spacing: -2px;
+    }
+
+    .ut-4step__arrow {
+      font-family: var(--font-serif);
+      font-size: 24px;
+      line-height: 1;
+      color: var(--text-on-cream);
+      opacity: 0.35;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(90deg);
+    }
+    @media (min-width: 768px) {
+      .ut-4step__arrow {
+        transform: none;
+        align-items: flex-start;
+        padding-top: calc(var(--space-3) + 8px);
+      }
     }
 
     /* Impact grid — 3 cards alternating colors (cream / dark / yellow) */
@@ -704,6 +854,66 @@
       margin-left: auto;
       margin-bottom: var(--space-6);
     }
+
+    /* Overview Card 03 — 3-column target comparison grid */
+    .overview-target-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-3);
+      margin-top: var(--space-6);
+      width: 100%;
+    }
+    @media (min-width: 768px) {
+      .overview-target-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-4);
+      }
+    }
+    .overview-target-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: var(--space-5);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      transition: background var(--duration-base) var(--ease-default),
+                  border-color var(--duration-base) var(--ease-default);
+    }
+    .overview-target-card--highlight {
+      background: rgba(255, 222, 89, 0.08);
+      border-color: rgba(255, 222, 89, 0.4);
+    }
+    .overview-target-card__title {
+      font-family: var(--font-sans);
+      font-size: 18px;
+      line-height: 1.2;
+      letter-spacing: 0;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin: 0;
+    }
+    .overview-target-card--highlight .overview-target-card__title {
+      color: var(--accent-yellow);
+    }
+    .overview-target-card__list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .overview-target-card__list li {
+      font-family: var(--font-sans);
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text-secondary);
+    }
+    .overview-target-card--highlight .overview-target-card__list li {
+      color: var(--text-primary);
+      opacity: 0.85;
+    }
     @media (min-width: 768px) {
       .overview-stack .ds-numbered-step--with-media .ds-numbered-step__media {
         width: 120px;
@@ -824,6 +1034,242 @@
       flex-wrap: wrap;
       gap: var(--space-3);
     }
+
+
+    /* =============================================================
+       Tradeoff diagrams — cost (blue) vs comfort (yellow)
+       Used in Pattern 02 (mini, dark) and Insight callout (cream)
+       ============================================================= */
+
+    /* Language toggle for inline SVG <text> labels */
+    html[data-lang="ko"] .tradeoff-svg__label--en,
+    html[data-lang="ko"] .direction-shift__svg-label--en { display: none; }
+    html[data-lang="en"] .tradeoff-svg__label--ko,
+    html[data-lang="en"] .direction-shift__svg-label--ko { display: none; }
+
+    /* ----- Mini balance (Pattern 02 card, dark background) ----- */
+    .tradeoff-mini {
+      display: block;
+      width: 100%;
+      max-width: 180px;
+      height: auto;
+      margin: 0 auto var(--space-4) auto;
+      color: var(--text-tertiary);
+    }
+
+    /* ----- Main conflict balance (Insight callout, cream background) ----- */
+    .tradeoff-balance {
+      display: block;
+      width: 100%;
+      max-width: 520px;
+      height: auto;
+      margin: var(--space-2) auto var(--space-5) auto;
+      color: var(--text-on-cream);
+    }
+    .tradeoff-balance__caption {
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .tradeoff-balance__caption--cost { fill: #0098FF; }
+    .tradeoff-balance__caption--comfort { fill: var(--text-on-cream); }
+
+    /* ----- Direction shift before/after axes diagram ----- */
+    .direction-shift {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+      margin-top: var(--space-8);
+      align-items: center;
+      justify-items: center;
+    }
+    @media (min-width: 768px) {
+      .direction-shift {
+        grid-template-columns: 1fr auto 1fr;
+        gap: var(--space-8);
+      }
+    }
+    .direction-shift__panel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-3);
+      width: 100%;
+      max-width: 280px;
+    }
+    .direction-shift__eyebrow {
+      font-family: var(--font-sans);
+      font-size: var(--text-eyebrow-size);
+      line-height: var(--text-eyebrow-line-height);
+      letter-spacing: var(--text-eyebrow-letter-spacing);
+      font-weight: var(--text-eyebrow-weight);
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin: 0;
+    }
+    .direction-shift__svg {
+      width: 100%;
+      height: auto;
+      color: var(--text-tertiary);
+    }
+    .direction-shift__caption {
+      font-family: var(--font-sans);
+      font-size: 14px;
+      line-height: 1.4;
+      color: var(--text-secondary);
+      text-align: center;
+      margin: 0;
+    }
+    .direction-shift__arrow {
+      font-family: var(--font-serif);
+      font-size: 28px;
+      line-height: 1;
+      color: var(--text-tertiary);
+      transform: rotate(90deg);
+    }
+    @media (min-width: 768px) {
+      .direction-shift__arrow { transform: none; }
+    }
+
+    /* =============================================================
+       AI decision flow — 3-stage diagram (Input → Judgment → Output)
+       Used in 03.3 Solution Direction
+       ============================================================= */
+    .ai-decision-flow {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+      margin-top: var(--space-8);
+      align-items: stretch;
+    }
+    @media (min-width: 768px) {
+      .ai-decision-flow {
+        grid-template-columns: 1fr auto 1fr auto 1fr;
+        gap: var(--space-3);
+        align-items: stretch;
+      }
+    }
+
+    .ai-decision-flow__step {
+      border-radius: var(--radius-card);
+      padding: var(--space-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      box-sizing: border-box;
+      height: 100%;
+    }
+    @media (min-width: 768px) {
+      .ai-decision-flow__step { padding: var(--space-7); }
+    }
+
+    .ai-decision-flow__step--input {
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      border: var(--border-thin) solid rgba(255, 255, 255, 0.08);
+    }
+    .ai-decision-flow__step--judgment {
+      background: var(--card-cream);
+      color: var(--text-on-cream);
+    }
+    .ai-decision-flow__step--output {
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      border: var(--border-thin) solid var(--accent-yellow);
+    }
+
+    .ai-decision-flow__counter {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 32px;
+      line-height: 1;
+      font-weight: 400;
+      color: var(--accent-yellow);
+      margin: 0;
+    }
+    .ai-decision-flow__step--judgment .ai-decision-flow__counter {
+      color: var(--text-on-cream);
+    }
+
+    .ai-decision-flow__label {
+      font-family: var(--font-sans);
+      font-size: var(--text-eyebrow-size);
+      line-height: var(--text-eyebrow-line-height);
+      letter-spacing: var(--text-eyebrow-letter-spacing);
+      font-weight: var(--text-eyebrow-weight);
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin: 0;
+    }
+    .ai-decision-flow__step--judgment .ai-decision-flow__label {
+      color: var(--text-on-cream);
+      opacity: 0.6;
+    }
+    .ai-decision-flow__step--output .ai-decision-flow__label {
+      color: var(--accent-yellow);
+    }
+
+    .ai-decision-flow__title {
+      font-family: var(--font-sans);
+      font-size: 18px;
+      line-height: 1.3;
+      font-weight: 600;
+      color: inherit;
+      margin: 0;
+    }
+    .ai-decision-flow.ds-kr .ai-decision-flow__title {
+      font-family: var(--font-kr);
+    }
+
+    .ai-decision-flow__list {
+      list-style: none;
+      padding: 0;
+      margin: var(--space-1) 0 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .ai-decision-flow__list li {
+      font-family: var(--font-sans);
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text-secondary);
+      padding-left: var(--space-4);
+      position: relative;
+    }
+    .ai-decision-flow__list li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--text-tertiary);
+    }
+    .ai-decision-flow__step--judgment .ai-decision-flow__list li {
+      color: var(--text-on-cream);
+      opacity: 0.85;
+    }
+    .ai-decision-flow__step--judgment .ai-decision-flow__list li::before {
+      color: var(--text-on-cream);
+      opacity: 0.6;
+    }
+    .ai-decision-flow__step--output .ai-decision-flow__list li::before {
+      color: var(--accent-yellow);
+    }
+
+    .ai-decision-flow__arrow {
+      font-family: var(--font-serif);
+      font-size: 28px;
+      line-height: 1;
+      color: var(--text-tertiary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(90deg);
+    }
+    @media (min-width: 768px) {
+      .ai-decision-flow__arrow { transform: none; }
+    }
   </style>
 </head>
 <body>
@@ -863,6 +1309,17 @@
       </div>
     </section>
 
+    <!-- ====================  PROJECT TAGLINE  ==================== -->
+    <section id="project-tagline">
+      <div class="ds-container">
+        <header class="ds-section-header" data-lang-aware>
+          <p class="ds-section-header__eyebrow">[ PROJECT ]</p>
+          <h2 class="ds-h2" data-lang-content="en"><em class="ds-signature ds-signature--accent-yellow">AI-powered HVAC decision system</em><br>for small business owners</h2>
+          <h2 class="ds-h2 ds-kr" data-lang-content="ko">자영업자를 위한<br><em class="ds-signature ds-signature--accent-yellow">AI 기반 HVAC 의사결정 시스템</em></h2>
+        </header>
+      </div>
+    </section>
+
     <!-- ====================  OVERVIEW  ==================== -->
     <section id="overview">
       <div class="overview-pinned">
@@ -875,130 +1332,160 @@
 
         <div class="overview-stack">
 
-          <!-- ===== CARD 01 — dark + quote + media ===== -->
+          <!-- ===== CARD 01 — Start point ===== -->
           <article class="ds-numbered-step ds-kr" data-lang-aware>
             <div class="ds-numbered-step__content">
               <p class="ds-numbered-step__counter">01</p>
               <p class="ds-numbered-step__caption">
-                <span data-lang-content="ko">— 시작 질문</span>
-                <span data-lang-content="en">— Question</span>
+                <span data-lang-content="ko">— 시작점</span>
+                <span data-lang-content="en">— Start point</span>
               </p>
               <div class="ds-numbered-step__divider"></div>
               <h3 class="ds-numbered-step__title">
-                <span data-lang-content="ko">이 프로젝트는 한 가지 질문에서 시작되었습니다</span>
-                <span data-lang-content="en">It started with one <em class="ds-signature">question</em></span>
+                <span data-lang-content="ko">여름철만 되면 냉방비에 대한 이슈가 반복됩니다.</span>
+                <span data-lang-content="en">Every summer, the same cooling-cost issue keeps coming back.</span>
               </h3>
-              <blockquote class="ds-numbered-step__quote">
-                <span data-lang-content="ko">왜 사람들은 냉난방을 명확한 기준 없이 감으로 조절하고 있을까?</span>
-                <span data-lang-content="en">Why do people adjust HVAC by feel, with no clear criteria?</span>
-              </blockquote>
+              <p class="ds-numbered-step__body">
+                <span data-lang-content="ko">전기요금을 줄이기 위한 다양한 방법들이 공유되지만,<br>실제 환경에서는 이를 어떻게 적용해야 할지 명확하지 않습니다</span>
+                <span data-lang-content="en">Plenty of tips for cutting bills get shared, but in real environments<br>it's never clear how to actually apply them.</span>
+              </p>
             </div>
           </article>
 
-          <!-- ===== CARD 02 — cream + quote + closing + media ===== -->
+          <!-- ===== CARD 02 — Start point (question) ===== -->
           <article class="ds-numbered-step ds-kr" data-lang-aware>
             <div class="ds-numbered-step__content">
               <p class="ds-numbered-step__counter">02</p>
               <p class="ds-numbered-step__caption">
-                <span data-lang-content="ko">— 개인 맥락</span>
-                <span data-lang-content="en">— Personal Context</span>
+                <span data-lang-content="ko">— 시작점</span>
+                <span data-lang-content="en">— Start point</span>
               </p>
               <div class="ds-numbered-step__divider"></div>
               <h3 class="ds-numbered-step__title">
-                <span data-lang-content="ko">저 역시 같은 문제를 겪은 경험이 있었습니다</span>
-                <span data-lang-content="en">I had the same problem myself</span>
+                <span data-lang-content="ko">그렇다면, 왜 사람들은 냉난방을 <em class="ds-signature">명확한 기준 없이</em> 조절하고 있을까요?</span>
+                <span data-lang-content="en">So why do people adjust HVAC <em class="ds-signature">without any clear criteria</em>?</span>
               </h3>
-              <blockquote class="ds-numbered-step__quote">
-                <span data-lang-content="ko">실제로 매장을 운영했을 때, 냉난방을 계속 조절하고 있었지만 명확한 기준 없이 반복하고 있었습니다</span>
-                <span data-lang-content="en">While running my own shop, I kept adjusting heating and cooling without any clear criteria.</span>
-              </blockquote>
-              <p class="ds-numbered-step__closing">
-                <span data-lang-content="ko">이 경험에서 문제 의식을 발견했습니다</span>
-                <span data-lang-content="en">That lived experience is where the problem became visible.</span>
-              </p>
             </div>
           </article>
 
-          <!-- ===== CARD 03 — dark + quote + media ===== -->
+          <!-- ===== CARD 03 — Target (3-up comparison) ===== -->
           <article class="ds-numbered-step ds-kr" data-lang-aware>
             <div class="ds-numbered-step__content">
               <p class="ds-numbered-step__counter">03</p>
               <p class="ds-numbered-step__caption">
-                <span data-lang-content="ko">— 접근</span>
-                <span data-lang-content="en">— Approach</span>
+                <span data-lang-content="ko">— 타깃</span>
+                <span data-lang-content="en">— Target</span>
               </p>
               <div class="ds-numbered-step__divider"></div>
-              <h3 class="ds-numbered-step__title">
-                <span data-lang-content="ko">문제를 해결하기 위해 타겟을 먼저 정의했습니다</span>
-                <span data-lang-content="en">To solve the problem, I defined the target first</span>
-              </h3>
-              <blockquote class="ds-numbered-step__quote">
-                <span data-lang-content="ko">모든 사용자가 아닌 문제의 효과가 가장 명확하게 드러나는 집단에 집중했습니다.</span>
-                <span data-lang-content="en">Rather than scoping to all users, I focused on the group where the problem and the impact would show up most clearly.</span>
-              </blockquote>
+              <p class="ds-numbered-step__body">
+                <span data-lang-content="ko">타겟 선정을 위해 비용 영향과 현재 해결 여부를 기준으로 세 가지 후보를 비교했습니다.</span>
+                <span data-lang-content="en">To choose a target, I compared three candidates by cost impact and whether the problem is already solved today.</span>
+              </p>
+              <div class="overview-target-grid">
+                <div class="overview-target-card">
+                  <h4 class="overview-target-card__title">
+                    <span data-lang-content="ko">가정</span>
+                    <span data-lang-content="en">Households</span>
+                  </h4>
+                  <ul class="overview-target-card__list">
+                    <li>
+                      <span data-lang-content="ko">낮은 사용량</span>
+                      <span data-lang-content="en">Low consumption</span>
+                    </li>
+                    <li>
+                      <span data-lang-content="ko">비용 영향 낮음</span>
+                      <span data-lang-content="en">Low cost impact</span>
+                    </li>
+                    <li>
+                      <span data-lang-content="ko">별도 관리 시스템 없음</span>
+                      <span data-lang-content="en">No dedicated management system</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="overview-target-card">
+                  <h4 class="overview-target-card__title">
+                    <span data-lang-content="ko">대형건물</span>
+                    <span data-lang-content="en">Large buildings</span>
+                  </h4>
+                  <ul class="overview-target-card__list">
+                    <li>
+                      <span data-lang-content="ko">높은 사용량</span>
+                      <span data-lang-content="en">High consumption</span>
+                    </li>
+                    <li>
+                      <span data-lang-content="ko">비용 영향 큼</span>
+                      <span data-lang-content="en">High cost impact</span>
+                    </li>
+                    <li>
+                      <span data-lang-content="ko">EMS 관리시스템 존재</span>
+                      <span data-lang-content="en">EMS in place</span>
+                    </li>
+                    <li>
+                      <span data-lang-content="ko">이미 관리 및 최적화가 이뤄지는 영역</span>
+                      <span data-lang-content="en">Already managed and optimized</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="overview-target-card overview-target-card--highlight">
+                  <h4 class="overview-target-card__title">
+                    <span data-lang-content="ko">자영업자 매장</span>
+                    <span data-lang-content="en">Small business stores</span>
+                  </h4>
+                  <ul class="overview-target-card__list">
+                    <li>
+                      <span data-lang-content="ko">높은 사용량</span>
+                      <span data-lang-content="en">High consumption</span>
+                    </li>
+                    <li>
+                      <span data-lang-content="ko">비용 영향 큼</span>
+                      <span data-lang-content="en">High cost impact</span>
+                    </li>
+                    <li>
+                      <span data-lang-content="ko">별도 에너지관리 시스템 없음</span>
+                      <span data-lang-content="en">No dedicated energy management system</span>
+                    </li>
+                    <li>
+                      <span data-lang-content="ko">개별 판단에 의존</span>
+                      <span data-lang-content="en">Reliant on individual judgment</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </article>
 
-          <!-- ===== CARD 04 — cream + list + media ===== -->
+          <!-- ===== CARD 04 — Target (chosen) ===== -->
           <article class="ds-numbered-step ds-kr" data-lang-aware>
             <div class="ds-numbered-step__content">
               <p class="ds-numbered-step__counter">04</p>
               <p class="ds-numbered-step__caption">
-                <span data-lang-content="ko">— 타겟 선정 로직</span>
-                <span data-lang-content="en">— Target Selection Logic</span>
+                <span data-lang-content="ko">— 타깃</span>
+                <span data-lang-content="en">— Target</span>
               </p>
               <div class="ds-numbered-step__divider"></div>
               <h3 class="ds-numbered-step__title">
-                <span data-lang-content="ko">사용자 그룹별 구조는 다음과 같았습니다</span>
-                <span data-lang-content="en">The user-group landscape looked like this</span>
+                <span data-lang-content="ko"><em class="ds-signature">자영업자 매장</em>을 타깃으로 설정했습니다.</span>
+                <span data-lang-content="en">I set <em class="ds-signature">small business stores</em> as the target.</span>
               </h3>
-              <ul class="ds-numbered-step__list">
-                <li>
-                  <span data-lang-content="ko"><strong>가정</strong>: 비용 영향이 상대적으로 적음</span>
-                  <span data-lang-content="en"><strong>Households</strong> — relatively low cost sensitivity</span>
-                </li>
-                <li>
-                  <span data-lang-content="ko"><strong>프랜차이즈</strong>: 고정비 구조로 관리됨</span>
-                  <span data-lang-content="en"><strong>Franchises</strong> — managed under fixed-cost structures</span>
-                </li>
-                <li>
-                  <span data-lang-content="ko"><strong>자영업자</strong>: 조절 결과가 매장 운영에 직접적인 영향을 줌</span>
-                  <span data-lang-content="en"><strong>Small business owners</strong> — adjustment outcomes hit the shop directly</span>
-                </li>
-              </ul>
+              <p class="ds-numbered-step__body">
+                <span data-lang-content="ko">가정과 비교해 비용 기준에서 차이가 크게 발생하며, 아직 명확한 해결 기준이 없는 영역이기 때문입니다.</span>
+                <span data-lang-content="en">The cost gap versus households is significant, and there's still no clear solution baseline in this space.</span>
+              </p>
             </div>
           </article>
 
-          <!-- ===== CARD 05 — dark + list + closing + media ===== -->
+          <!-- ===== CARD 05 — Validation ===== -->
           <article class="ds-numbered-step ds-kr" data-lang-aware>
             <div class="ds-numbered-step__content">
               <p class="ds-numbered-step__counter">05</p>
               <p class="ds-numbered-step__caption">
-                <span data-lang-content="ko">— 타겟 정의</span>
-                <span data-lang-content="en">— Target Definition</span>
+                <span data-lang-content="ko">— 검증</span>
+                <span data-lang-content="en">— Validation</span>
               </p>
               <div class="ds-numbered-step__divider"></div>
-              <h3 class="ds-numbered-step__title">
-                <span data-lang-content="ko"><em class="ds-signature">Small business owner</em>를 핵심 타겟으로 정의했습니다</span>
-                <span data-lang-content="en">I defined <em class="ds-signature">small business owners</em> as the core target</span>
-              </h3>
-              <ul class="ds-numbered-step__list">
-                <li>
-                  <span data-lang-content="ko">냉난방 조절의 영향이 가장 크게 나타나고</span>
-                  <span data-lang-content="en">The impact of HVAC adjustment shows up most clearly,</span>
-                </li>
-                <li>
-                  <span data-lang-content="ko">비용 변화가 직접적으로 체감되며</span>
-                  <span data-lang-content="en">cost change is directly felt,</span>
-                </li>
-                <li>
-                  <span data-lang-content="ko">의사결정이 반복적으로 이루어지는 환경이기 때문입니다</span>
-                  <span data-lang-content="en">and decisions are made repeatedly in this environment.</span>
-                </li>
-              </ul>
-              <p class="ds-numbered-step__closing">
-                <span data-lang-content="ko">비즈니스 임팩트와 도입 가능성을 고려한 선택이었습니다</span>
-                <span data-lang-content="en">It's a choice grounded in business impact and adoption likelihood.</span>
+              <p class="ds-numbered-step__body">
+                <span data-lang-content="ko">저 역시 매장을 운영하며 이 문제를 직접 겪고 있었습니다.<br><br>이 문제가 개인적인 사례에 그치지 않는지 확인하기 위해, 사용자 리서치를 진행했습니다.</span>
+                <span data-lang-content="en">I'd been living this problem myself while running a store.<br><br>To check that it wasn't just my personal case, I ran user research.</span>
               </p>
             </div>
           </article>
@@ -1070,6 +1557,26 @@
                 <span data-lang-content="ko">쾌적함 vs 비용 사이의 고민</span>
                 <span data-lang-content="en">Caught between comfort and cost</span>
               </h4>
+              <svg class="tradeoff-mini" viewBox="0 0 200 80" role="img" aria-hidden="true" focusable="false">
+                <!-- tilted beam -->
+                <line x1="22" y1="32" x2="178" y2="48" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.55"/>
+                <!-- fulcrum + base -->
+                <polygon points="100,40 90,62 110,62" fill="currentColor" opacity="0.4"/>
+                <line x1="78" y1="62" x2="122" y2="62" stroke="currentColor" stroke-width="1.5" opacity="0.5" stroke-linecap="round"/>
+                <!-- left weight (cost, blue) -->
+                <circle cx="22" cy="32" r="9" fill="#0098FF"/>
+                <!-- right weight (comfort, yellow) -->
+                <circle cx="178" cy="48" r="9" fill="#FDF89C"/>
+                <!-- tension arrows -->
+                <g stroke="#0098FF" stroke-width="1.4" fill="none" stroke-linecap="round" opacity="0.75">
+                  <line x1="14" y1="20" x2="6" y2="12"/>
+                  <polyline points="6,12 12,12 6,12 6,18"/>
+                </g>
+                <g stroke="#FDF89C" stroke-width="1.4" fill="none" stroke-linecap="round" opacity="0.85">
+                  <line x1="186" y1="36" x2="194" y2="28"/>
+                  <polyline points="194,28 188,28 194,28 194,34"/>
+                </g>
+              </svg>
               <p class="ds-insight__body">
                 <span data-lang-content="ko">쾌적하게 유지하고 싶지만, 비용이 걱정돼 계속 고민하게 된다</span>
                 <span data-lang-content="en">Wanting comfort but worried about cost, the deliberation never stops</span>
@@ -1326,6 +1833,46 @@
           <!-- Insight callout (heading + body combined inside one cream box) -->
           <div class="insight-callout">
             <h3 class="insight-callout__heading">Insight</h3>
+            <svg class="tradeoff-balance" viewBox="0 0 600 240" role="img" aria-hidden="true" focusable="false">
+              <!-- Outward tension arrows on each side -->
+              <g stroke="#0098FF" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="68" y1="120" x2="20" y2="120"/>
+                <polyline points="34,108 20,120 34,132"/>
+              </g>
+              <g stroke="#C5A800" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="532" y1="120" x2="580" y2="120"/>
+                <polyline points="566,108 580,120 566,132"/>
+              </g>
+
+              <!-- Tilted beam -->
+              <g transform="rotate(-6 300 120)">
+                <rect x="100" y="116" width="400" height="6" rx="3" fill="currentColor" opacity="0.45"/>
+              </g>
+
+              <!-- Cost pan (left, raised) -->
+              <g transform="translate(120 78)">
+                <circle r="46" fill="#0098FF" fill-opacity="0.12" stroke="#0098FF" stroke-width="2"/>
+                <text class="tradeoff-balance__caption tradeoff-balance__caption--cost tradeoff-svg__label--ko" y="0" text-anchor="middle" dominant-baseline="middle">비용 절감</text>
+                <text class="tradeoff-balance__caption tradeoff-balance__caption--cost tradeoff-svg__label--en" y="0" text-anchor="middle" dominant-baseline="middle">Cost saving</text>
+              </g>
+
+              <!-- Comfort pan (right, lowered) -->
+              <g transform="translate(480 162)">
+                <circle r="46" fill="#FDF89C" fill-opacity="0.4" stroke="#C5A800" stroke-width="2"/>
+                <text class="tradeoff-balance__caption tradeoff-balance__caption--comfort tradeoff-svg__label--ko" y="0" text-anchor="middle" dominant-baseline="middle">쾌적도 유지</text>
+                <text class="tradeoff-balance__caption tradeoff-balance__caption--comfort tradeoff-svg__label--en" y="0" text-anchor="middle" dominant-baseline="middle">Comfort</text>
+              </g>
+
+              <!-- Conflict X mark above fulcrum -->
+              <g stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.8">
+                <line x1="288" y1="40" x2="312" y2="64"/>
+                <line x1="312" y1="40" x2="288" y2="64"/>
+              </g>
+
+              <!-- Fulcrum triangle + base -->
+              <polygon points="300,120 278,200 322,200" fill="currentColor" opacity="0.55"/>
+              <line x1="260" y1="200" x2="340" y2="200" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+            </svg>
             <p class="insight-callout__body" data-lang-aware>
               <span data-lang-content="ko">비용만 기준으로는 실제 운영 문제를 해결할 수 없다는 것을 확인했습니다.<br>그래서 비용과 쾌적도를 함께 고려할 수 있는 기준이 필요했습니다.</span>
               <span data-lang-content="en">We confirmed that cost alone can't solve real operation problems.<br>That's why we needed a criterion combining both cost and comfort.</span>
@@ -1397,8 +1944,8 @@
         <article class="ds-research-finding ds-research-finding--align-left">
           <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 03.1 — DIRECTION SHIFT ]</p>
 
-          <h2 class="ds-h2" data-lang-content="en">So we shifted our approach to one that judges<br>both cost and comfort together.</h2>
-          <h2 class="ds-h2 ds-kr" data-lang-content="ko">그래서, 우리는 비용과 쾌적도를<br>함께 판단할 수 있는 방식으로 접근 방식을 바꿨습니다</h2>
+          <h2 class="ds-h2" data-lang-content="en">So we shifted to an approach where <em class="ds-signature ds-signature--accent-yellow">AI judges</em><br>both cost and comfort together.</h2>
+          <h2 class="ds-h2 ds-kr" data-lang-content="ko"><em class="ds-signature ds-signature--accent-yellow">AI가 비용과 쾌적도를</em><br>함께 판단하는 방식으로 접근 방식을 바꿨습니다</h2>
 
           <p class="ds-research-finding__paragraph" data-lang-content="en">
             Existing systems were designed around a single axis — comfort — making controls easier to operate.<br>But we focused on the fact that users still couldn't resolve the cost pain point,<br>so we approached the problem in a way that lets them judge cost and comfort together.
@@ -1406,6 +1953,71 @@
           <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
             기존 시스템은 조작을 쉽게 만드는데 쾌적이라는 한 축을 중심으로 설계되었습니다.<br>하지만 우리는 유저가 비용이라는 페인포인트를 해결하지 못하고 있다는 점에 집중해<br>비용과 쾌적도를 함께 판단할 수 있는 방식으로 접근했습니다.
           </p>
+
+          <!-- Before / After axes diagram -->
+          <div class="direction-shift" data-lang-aware>
+            <div class="direction-shift__panel">
+              <p class="direction-shift__eyebrow">
+                <span data-lang-content="ko">기존</span>
+                <span data-lang-content="en">Before</span>
+              </p>
+              <svg class="direction-shift__svg" viewBox="0 0 240 200" role="img" aria-hidden="true" focusable="false">
+                <!-- single horizontal axis (comfort only) -->
+                <line x1="20" y1="100" x2="220" y2="100" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+                <!-- arrow tip -->
+                <polyline points="210,92 220,100 210,108" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+                <!-- ticks -->
+                <line x1="60" y1="96" x2="60" y2="104" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+                <line x1="120" y1="96" x2="120" y2="104" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+                <line x1="180" y1="96" x2="180" y2="104" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+                <!-- comfort marker -->
+                <circle cx="160" cy="100" r="8" fill="#FDF89C"/>
+                <!-- axis label -->
+                <text class="direction-shift__svg-label--ko" x="220" y="128" text-anchor="end" fill="#FDF89C" font-family="Manrope, -apple-system, system-ui, sans-serif" font-size="13" font-weight="600">쾌적도</text>
+                <text class="direction-shift__svg-label--en" x="220" y="128" text-anchor="end" fill="#FDF89C" font-family="Manrope, -apple-system, system-ui, sans-serif" font-size="13" font-weight="600">Comfort</text>
+                <!-- missing dimension hint -->
+                <g opacity="0.35" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4" fill="none" stroke-linecap="round">
+                  <line x1="120" y1="40" x2="120" y2="80"/>
+                </g>
+                <text class="direction-shift__svg-label--ko" x="120" y="32" text-anchor="middle" fill="currentColor" opacity="0.6" font-family="Manrope, -apple-system, system-ui, sans-serif" font-size="11" font-style="italic">비용 축 부재</text>
+                <text class="direction-shift__svg-label--en" x="120" y="32" text-anchor="middle" fill="currentColor" opacity="0.6" font-family="Manrope, -apple-system, system-ui, sans-serif" font-size="11" font-style="italic">No cost axis</text>
+              </svg>
+              <p class="direction-shift__caption">
+                <span data-lang-content="ko">쾌적 1축 중심</span>
+                <span data-lang-content="en">Single axis — comfort only</span>
+              </p>
+            </div>
+
+            <span class="direction-shift__arrow" aria-hidden="true">→</span>
+
+            <div class="direction-shift__panel">
+              <p class="direction-shift__eyebrow">
+                <span data-lang-content="ko">Operator</span>
+                <span data-lang-content="en">Operator</span>
+              </p>
+              <svg class="direction-shift__svg" viewBox="0 0 240 200" role="img" aria-hidden="true" focusable="false">
+                <!-- Y axis (comfort) -->
+                <line x1="60" y1="180" x2="60" y2="20" stroke="#FDF89C" stroke-width="2" stroke-linecap="round"/>
+                <polyline points="52,30 60,20 68,30" fill="none" stroke="#FDF89C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <!-- X axis (cost) -->
+                <line x1="60" y1="180" x2="220" y2="180" stroke="#0098FF" stroke-width="2" stroke-linecap="round"/>
+                <polyline points="210,172 220,180 210,188" fill="none" stroke="#0098FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <!-- target zone (upper-right quadrant: low cost, high comfort) -->
+                <rect x="140" y="50" width="60" height="60" rx="6" fill="#FDF89C" fill-opacity="0.18" stroke="#FDF89C" stroke-width="1.5" stroke-dasharray="4 3"/>
+                <!-- target dot -->
+                <circle cx="170" cy="80" r="6" fill="#FDF89C" stroke="#0098FF" stroke-width="2"/>
+                <!-- axis labels -->
+                <text class="direction-shift__svg-label--ko" x="220" y="198" text-anchor="end" fill="#0098FF" font-family="Manrope, -apple-system, system-ui, sans-serif" font-size="13" font-weight="600">비용</text>
+                <text class="direction-shift__svg-label--en" x="220" y="198" text-anchor="end" fill="#0098FF" font-family="Manrope, -apple-system, system-ui, sans-serif" font-size="13" font-weight="600">Cost</text>
+                <text class="direction-shift__svg-label--ko" x="50" y="28" text-anchor="end" fill="#FDF89C" font-family="Manrope, -apple-system, system-ui, sans-serif" font-size="13" font-weight="600">쾌적</text>
+                <text class="direction-shift__svg-label--en" x="50" y="28" text-anchor="end" fill="#FDF89C" font-family="Manrope, -apple-system, system-ui, sans-serif" font-size="13" font-weight="600">Comfort</text>
+              </svg>
+              <p class="direction-shift__caption">
+                <span data-lang-content="ko">비용 + 쾌적 2축 통합 판단</span>
+                <span data-lang-content="en">Both axes — judged together</span>
+              </p>
+            </div>
+          </div>
         </article>
 
         <!-- ===== 03.2 — UNDERSTANDING THE CONTEXT ===== -->
@@ -1460,27 +2072,94 @@
         <article class="ds-research-finding ds-research-finding--align-left">
           <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 03.3 — SOLUTION DIRECTION ]</p>
 
-          <h2 class="ds-h2" data-lang-content="en">We shifted to a model that pre-calculates each choice's outcome<br>and <em class="ds-signature ds-signature--accent-yellow">recommends the most appropriate one</em>.</h2>
-          <h2 class="ds-h2 ds-kr" data-lang-content="ko">각 선택의 결과를 미리 계산해,<br><em class="ds-signature ds-signature--accent-yellow">가장 적절한 선택을 제안</em>하는 방식으로 전환했습니다.</h2>
+          <h2 class="ds-h2" data-lang-content="en">AI now pre-calculates each choice's outcome<br>and <em class="ds-signature ds-signature--accent-yellow">recommends the most appropriate one</em>.</h2>
+          <h2 class="ds-h2 ds-kr" data-lang-content="ko">AI가 각 선택의 결과를 미리 계산해,<br><em class="ds-signature ds-signature--accent-yellow">가장 적절한 선택을 제안</em>하는 방식으로 전환했습니다.</h2>
 
-          <!-- Block: image (left) + text (right) -->
-          <div class="context-block">
-            <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="4/3">
-                <img src="operator/approach/system-flow.png" alt="System flow" loading="lazy" />
-              </div>
-              <figcaption class="ds-media-figure__caption" data-lang-aware>
-                <span data-lang-content="en">System flow</span>
-                <span data-lang-content="ko">시스템 플로우</span>
-              </figcaption>
-            </figure>
-            <div class="context-block__text">
-              <p class="ds-research-finding__paragraph" data-lang-content="en">
-                Based on the current state, the system predicts the outcome of each choice<br>and compares cost and comfort to recommend the most appropriate one.
+          <p class="ds-research-finding__paragraph" data-lang-content="en">
+            Based on the current state, AI predicts the outcome of each choice,<br>compares cost and comfort, and recommends the most appropriate one.
+          </p>
+          <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
+            AI는 현재 상태를 기반으로 각 선택의 결과를 예측하고<br>비용과 쾌적도를 비교해 가장 적절한 선택을 제안합니다.
+          </p>
+
+          <!-- AI 3-stage decision diagram (Input → Judgment → Output) -->
+          <div class="ai-decision-flow ds-kr" data-lang-aware>
+            <div class="ai-decision-flow__step ai-decision-flow__step--input">
+              <p class="ai-decision-flow__counter">01</p>
+              <p class="ai-decision-flow__label">
+                <span data-lang-content="ko">입력</span>
+                <span data-lang-content="en">Input</span>
               </p>
-              <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
-                시스템은 현재 상태를 기반으로 각 선택의 결과를 예측하고<br>비용과 쾌적도를 비교해 가장 적절한 선택을 제안합니다.
+              <h4 class="ai-decision-flow__title">
+                <span data-lang-content="ko">어떤 데이터를 받는가</span>
+                <span data-lang-content="en">What data is received</span>
+              </h4>
+              <ul class="ai-decision-flow__list">
+                <li>
+                  <span data-lang-content="ko">매장의 현재 온도/습도, 외부 기온, 시간대</span>
+                  <span data-lang-content="en">Real-time store temp/humidity, outdoor temp, time of day</span>
+                </li>
+                <li>
+                  <span data-lang-content="ko">사용자 누적 조작 이력</span>
+                  <span data-lang-content="en">User adjustment history</span>
+                </li>
+                <li>
+                  <span data-lang-content="ko">전기 요금 구조 (시간대별 단가)</span>
+                  <span data-lang-content="en">Time-of-use pricing structure</span>
+                </li>
+              </ul>
+            </div>
+
+            <span class="ai-decision-flow__arrow" aria-hidden="true">→</span>
+
+            <div class="ai-decision-flow__step ai-decision-flow__step--judgment">
+              <p class="ai-decision-flow__counter">02</p>
+              <p class="ai-decision-flow__label">
+                <span data-lang-content="ko">판단</span>
+                <span data-lang-content="en">Judgment</span>
               </p>
+              <h4 class="ai-decision-flow__title">
+                <span data-lang-content="ko">어떤 기준으로 판단하는가</span>
+                <span data-lang-content="en">What criteria drive the judgment</span>
+              </h4>
+              <ul class="ai-decision-flow__list">
+                <li>
+                  <span data-lang-content="ko">비용 가중치 × 쾌적도 가중치 (사용자 모드 설정값)</span>
+                  <span data-lang-content="en">Cost weight × comfort weight (from user mode)</span>
+                </li>
+                <li>
+                  <span data-lang-content="ko">예상 누적 비용 vs 쾌적도 변화 폭</span>
+                  <span data-lang-content="en">Predicted cumulative cost vs comfort delta</span>
+                </li>
+                <li>
+                  <span data-lang-content="ko">과거 유사 상황의 성공률</span>
+                  <span data-lang-content="en">Historical success rate in similar contexts</span>
+                </li>
+              </ul>
+            </div>
+
+            <span class="ai-decision-flow__arrow" aria-hidden="true">→</span>
+
+            <div class="ai-decision-flow__step ai-decision-flow__step--output">
+              <p class="ai-decision-flow__counter">03</p>
+              <p class="ai-decision-flow__label">
+                <span data-lang-content="ko">출력</span>
+                <span data-lang-content="en">Output</span>
+              </p>
+              <h4 class="ai-decision-flow__title">
+                <span data-lang-content="ko">어떤 결과를 제공하는가</span>
+                <span data-lang-content="en">What output is delivered</span>
+              </h4>
+              <ul class="ai-decision-flow__list">
+                <li>
+                  <span data-lang-content="ko">3가지 후보 옵션 + 각각의 예상 결과 수치</span>
+                  <span data-lang-content="en">3 candidate options with predicted outcomes</span>
+                </li>
+                <li>
+                  <span data-lang-content="ko">추천 1순위 + 그 근거</span>
+                  <span data-lang-content="en">Top recommendation with rationale</span>
+                </li>
+              </ul>
             </div>
           </div>
         </article>
@@ -1517,10 +2196,10 @@
           </div>
 
           <p class="ds-research-finding__paragraph" data-lang-content="en">
-            Based on user stories, we defined what users should do in each situation,<br>and organized those into discrete feature units.
+            We identified each decision point users face during operation,<br>then split functions into what AI handles automatically versus what stays under user control.
           </p>
           <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
-            유저 스토리를 기반으로 사용자가 어떤 상황에서 무엇을 해야 하는지 정의했고,<br>이를 기능 단위로 정리해 구조화했습니다
+            사용자가 매 순간 판단해야 할 결정 지점을 식별하고,<br>AI가 자동으로 처리할 부분과 사용자가 통제할 부분을 분리해 기능을 정의했습니다
           </p>
 
           <!-- Feature Prioritization -->
@@ -1575,18 +2254,14 @@
             </figure>
             <div class="context-block__text">
               <p class="ds-research-finding__paragraph" data-lang-content="en">
-                Based on the selected features, we designed the information architecture and system flow.<br>The main screen shows the current state along with
+                To let operators compare without navigating away — critical in busy store contexts —<br>we placed these four data points together on the main screen:
                 <br><br>
                 Predicted cost<br>Cumulative cost<br>Comfort change<br>Recommended solution
-                <br><br>
-                all on a single screen.
               </p>
               <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
-                선별한 기능을 기반으로 정보 구조와 시스템 흐름을 설계했습니다<br>메인 화면에서는 현재 상태와 함께
+                바쁜 매장에서 화면 전환 없이 동시에 비교할 수 있도록,<br>아래 4가지 정보를 메인 화면에 함께 배치했습니다
                 <br><br>
                 예상 비용<br>누적 비용<br>쾌적도 변화<br>추천 솔루션
-                <br><br>
-                을 한 화면에서 확인할 수 있도록 구성했습니다
               </p>
 
               <p class="ds-research-finding__closing-implication" data-lang-content="en">
@@ -1655,10 +2330,10 @@
                 <span data-lang-content="ko">Design system</span>
               </figcaption>
               <p class="ds-research-finding__paragraph" data-lang-content="en">
-                Designed with usability in mind so operators can recognize information quickly,<br>even in busy store-operation contexts.
+                We built a visual hierarchy: information that demands recognition within 3 seconds (current cost, comfort)<br>gets large typography, while supporting data sits smaller beneath it.
               </p>
               <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
-                바쁜 매장운영 상황에서도, 빠르게 인지할 수 있도록 사용성 중심으로 설계했습니다.
+                3초 안에 인지가 필요한 정보(현재 비용·쾌적도)는 큰 타이포로,<br>보조 정보는 작게 배치하는 시각적 위계를 설계했습니다
               </p>
             </figure>
           </div>
@@ -1688,8 +2363,8 @@
                 <span data-lang-content="en">Check status & recommendation in the pop-up,<br>and apply immediately</span>
               </h3>
               <p class="feature-row__body">
-                <span data-lang-content="ko">바쁜 운영 환경에서 사용자는 팝업 알림을 통해<br>현재 상태와 추천 솔루션을 바로 확인하고 즉시 적용할 수 있습니다</span>
-                <span data-lang-content="en">In busy operations, users can check the current state and recommended solution<br>through pop-up notifications and apply them immediately.</span>
+                <span data-lang-content="ko">바쁜 운영 환경에서 사용자는 팝업 알림을 통해<br>현재 상태와 AI가 제안한 솔루션을 바로 확인하고 즉시 적용할 수 있습니다</span>
+                <span data-lang-content="en">In busy operations, users can check the current state and AI's recommendation<br>through pop-up notifications and apply them immediately.</span>
               </p>
             </div>
             <div class="feature-row__bottom">
@@ -1718,8 +2393,8 @@
                 <span data-lang-content="en">A data log that records<br>and learns from each choice's outcome</span>
               </h3>
               <p class="feature-row__body">
-                <span data-lang-content="ko">시스템은 냉난방 조절 이력과 그에 따른 결과를<br>함께 기록하고 시각화합니다.<br><br>사용자는 자신의 선택이 비용과 쾌적도에 어떤<br>영향을 주었는지 확인 할 수 있습니다.<br>또한 이 데이터는 누적되어,<br>이후 추천정확도를 높이고 점점 더 쉽고 정확하게<br>결정할 수 있도록 돕습니다.</span>
-                <span data-lang-content="en">The system records HVAC adjustments along with their outcomes<br>and visualizes the results.<br><br>Users can see how each choice affected<br>both cost and comfort.<br>The accumulated data is also reused,<br>improving recommendation accuracy over time<br>so decisions become easier and more precise.</span>
+                <span data-lang-content="ko">AI는 냉난방 조절 이력과 그에 따른 결과를<br>함께 기록하고 시각화합니다.<br><br>사용자는 자신의 선택이 비용과 쾌적도에 어떤<br>영향을 주었는지 확인 할 수 있습니다.<br><br>AI는 누적된 데이터를 학습해<br>추천 정확도를 점차 개선하고, 이후 결정이<br>점점 더 쉽고 정확해지도록 돕습니다.</span>
+                <span data-lang-content="en">AI records HVAC adjustments along with their outcomes<br>and visualizes the results.<br><br>Users can see how each choice affected<br>both cost and comfort.<br><br>AI learns from the accumulated data to improve<br>recommendation accuracy over time, so decisions<br>become easier and more precise.</span>
               </p>
             </div>
             <div class="feature-row__bottom">
@@ -1745,11 +2420,11 @@
               <p class="feature-row__eyebrow">FEATURE 03 — MODE SETTING</p>
               <h3 class="feature-row__title">
                 <span data-lang-content="ko">사용자가 원하는<br>비용과 쾌적도 기준을 설정하고 운영</span>
-                <span data-lang-content="en">Users set their own cost &amp; comfort criteria<br>and run the system on those terms</span>
+                <span data-lang-content="en">Users set their own cost &amp; comfort criteria<br>and let AI operate within those bounds</span>
               </h3>
               <p class="feature-row__body">
-                <span data-lang-content="ko">모드 설정을 통해 사용자가 비용과 쾌적도 기준을<br>함께 설정할 수 있습니다<br><br>시스템은 이 기준을 바탕으로 두 요소를 동시에<br>만족할 수 있는 운영 방식을 제안합니다</span>
-                <span data-lang-content="en">Through mode settings, users can configure<br>cost and comfort criteria together.<br><br>Based on these criteria, the system proposes<br>an operation strategy that satisfies both at once.</span>
+                <span data-lang-content="ko">모드 설정을 통해 사용자가 비용과 쾌적도 기준을<br>함께 설정할 수 있습니다<br><br>AI는 이 기준을 바탕으로 두 요소를 동시에<br>만족할 수 있는 운영 방식을 제안합니다</span>
+                <span data-lang-content="en">Through mode settings, users can configure<br>cost and comfort criteria together.<br><br>Based on these criteria, AI proposes<br>an operation strategy that satisfies both at once.</span>
               </p>
             </div>
             <div class="feature-row__bottom">
@@ -1815,21 +2490,70 @@
             </div>
           </div>
 
-          <!-- SUS Score callout -->
-          <div class="sus-callout" data-lang-aware>
-            <div class="sus-callout__score">
-              <p class="sus-callout__label">SUS SCORE</p>
-              <p class="sus-callout__number">76</p>
-            </div>
-            <div class="sus-callout__text">
-              <p>
-                <span data-lang-content="ko">사용성 기준을 상회하는 결과를 확인했습니다</span>
-                <span data-lang-content="en">We saw results that exceeded the usability benchmark.</span>
-              </p>
-              <p>
-                <span data-lang-content="ko">하지만 테스트 과정에서 초기 진입과 설정 과정이 어렵다는 피드백이 있었습니다</span>
-                <span data-lang-content="en">However, testing surfaced feedback that initial entry and setup were difficult.</span>
-              </p>
+          <!-- SUS Score callout — 4-step UT flow (Stuck → Why → Fix → Result) -->
+          <div class="sus-callout sus-callout--4step ds-kr" data-lang-aware>
+            <div class="ut-4step">
+
+              <div class="ut-4step__item">
+                <p class="ut-4step__counter">01</p>
+                <p class="ut-4step__label">
+                  <span data-lang-content="ko">문제 발생</span>
+                  <span data-lang-content="en">What went wrong</span>
+                </p>
+                <p class="ut-4step__body">
+                  <!-- TBD: 실제 수치 입력 -->
+                  <span data-lang-content="ko">신규 사용자 N명 중 N명이 첫 매장 등록 단계에서 멈췄고, 평균 진입 소요 시간이 목표보다 길었습니다.</span>
+                  <span data-lang-content="en">N out of N first-time users got stuck at store registration. Average onboarding time exceeded the target.</span>
+                </p>
+              </div>
+
+              <span class="ut-4step__arrow" aria-hidden="true">→</span>
+
+              <div class="ut-4step__item">
+                <p class="ut-4step__counter">02</p>
+                <p class="ut-4step__label">
+                  <span data-lang-content="ko">원인</span>
+                  <span data-lang-content="en">Why it happened</span>
+                </p>
+                <p class="ut-4step__body">
+                  <span data-lang-content="ko">첫 화면에서 입력해야 할 항목이 7가지로 인지 부담이 컸고, '비용 모드 / 쾌적 모드' 용어가 직관적이지 않았습니다.</span>
+                  <span data-lang-content="en">Initial screen demanded 7 input fields, causing cognitive overload. Mode terminology ('cost mode' / 'comfort mode') was non-intuitive.</span>
+                </p>
+              </div>
+
+              <span class="ut-4step__arrow" aria-hidden="true">→</span>
+
+              <div class="ut-4step__item">
+                <p class="ut-4step__counter">03</p>
+                <p class="ut-4step__label">
+                  <span data-lang-content="ko">개선</span>
+                  <span data-lang-content="en">What was improved</span>
+                </p>
+                <p class="ut-4step__body">
+                  <span data-lang-content="ko">입력 항목을 3단계로 분할한 온보딩 플로우를 신설하고, 모드 설정에 비용·쾌적 시각적 슬라이더를 도입했습니다.</span>
+                  <span data-lang-content="en">Split input into a 3-step onboarding flow. Replaced abstract mode terms with a visual cost-comfort slider.</span>
+                </p>
+              </div>
+
+              <span class="ut-4step__arrow" aria-hidden="true">→</span>
+
+              <div class="ut-4step__item ut-4step__item--result">
+                <p class="ut-4step__counter">04</p>
+                <p class="ut-4step__label">
+                  <span data-lang-content="ko">개선 후 변화</span>
+                  <span data-lang-content="en">What changed after</span>
+                </p>
+                <p class="ut-4step__body">
+                  <!-- TBD: 실제 수치 입력 -->
+                  <span data-lang-content="ko">첫 매장 등록 완료율 OO% → OO%, 진입 시 이탈률 OO% 감소</span>
+                  <span data-lang-content="en">Store registration completion rate: OO% → OO%. Drop-off reduced by OO%.</span>
+                </p>
+                <div class="ut-4step__score">
+                  <p class="sus-callout__label">SUS SCORE</p>
+                  <p class="sus-callout__number sus-callout__number--inline">76</p>
+                </div>
+              </div>
+
             </div>
           </div>
         </article>
@@ -1838,8 +2562,8 @@
         <article class="ds-research-finding ds-research-finding--align-left">
           <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 05.2 — ITERATION ]</p>
 
-          <h2 class="ds-h2" data-lang-content="en">We improved the initial setup flow,<br>lowering the entry barrier.</h2>
-          <h2 class="ds-h2 ds-kr" data-lang-content="ko">초기 설정과정을 개선해, 진입 부담을 낮췄습니다.</h2>
+          <h2 class="ds-h2" data-lang-content="en">We cut required fields to three and added a step-by-step guide,<br>so first-time setup finishes in under a minute.</h2>
+          <h2 class="ds-h2 ds-kr" data-lang-content="ko">필수 입력을 3개로 줄이고 단계별 가이드를 더해,<br>첫 매장 등록을 1분 안에 끝낼 수 있도록 했습니다</h2>
 
           <!-- Feature row: media + card (reuse 04 pattern) -->
           <article class="feature-row">
@@ -1853,18 +2577,47 @@
                   <span data-lang-content="ko">쉽게 설정할 수 있는<br>온보딩 추가</span>
                   <span data-lang-content="en">Onboarding flow added<br>for easier setup</span>
                 </h3>
-                <p class="feature-row__body">
-                  <span data-lang-content="ko">매장을 쉽게 설정할 수 있는 온보딩을 추가했습니다<br><br>온보딩 도입 이후, 관련 항목의 평가 점수가<br>유의미하게 향상되었습니다.</span>
-                  <span data-lang-content="en">We added an onboarding flow that makes store setup easier.<br><br>After introducing onboarding, scores on the related items<br>improved significantly.</span>
-                </p>
+                <div class="feature-row__body feature-row__body--blocks">
+                  <div class="feature-row__block">
+                    <p class="feature-row__block-label">
+                      <span data-lang-content="ko">막힌 지점</span>
+                      <span data-lang-content="en">Stuck</span>
+                    </p>
+                    <p class="feature-row__block-text">
+                      <span data-lang-content="ko">초기 메인 화면에서 '내 매장을 어떻게 등록하지?' 단계에서 멈춤. 설정 진입점이 메뉴 깊은 곳에 있어 5명 중 4명이 발견하지 못했습니다.</span>
+                      <span data-lang-content="en">Users got stuck at "how do I register my store?" on the main screen. The setup entry was buried deep in the menu — 4 out of 5 testers couldn't find it.</span>
+                    </p>
+                  </div>
+                  <div class="feature-row__block">
+                    <p class="feature-row__block-label">
+                      <span data-lang-content="ko">원인</span>
+                      <span data-lang-content="en">Why</span>
+                    </p>
+                    <p class="feature-row__block-text">
+                      <span data-lang-content="ko">한 번에 입력해야 할 정보가 7가지(매장 면적·업종·운영시간·기준 온도 등)였고, "이걸 다 알아야 시작 가능한가?"라는 인지 부담과 거부감이 발생했습니다.</span>
+                      <span data-lang-content="en">Setup demanded 7 inputs at once (area, business type, operating hours, target temp...). The cognitive load made users feel they had to know everything before they could begin.</span>
+                    </p>
+                  </div>
+                  <div class="feature-row__block">
+                    <p class="feature-row__block-label">
+                      <span data-lang-content="ko">해결</span>
+                      <span data-lang-content="en">Fix</span>
+                    </p>
+                    <p class="feature-row__block-text">
+                      <span data-lang-content="ko">필수 3개 항목(업종·면적·운영시간)만 받는 3단계 온보딩으로 분할하고, 나머지 4개는 사용 중 누적 데이터로 AI가 자동 보정하도록 설계했습니다.</span>
+                      <span data-lang-content="en">We split it into a 3-step onboarding that asks only 3 essential items (business type, area, hours). The remaining 4 are auto-tuned by AI from accumulated usage data.</span>
+                    </p>
+                  </div>
+                </div>
               </div>
               <div class="feature-row__bottom">
                 <hr class="feature-row__divider" />
                 <div class="feature-row__outcome">
                   <span class="feature-row__outcome-label">OUTCOME</span>
                   <span class="feature-row__outcome-text">
-                    <span data-lang-content="ko">초기진입 난이도 감소</span>
-                    <span data-lang-content="en">Reduced entry friction</span>
+                    <!-- TBD: 실제 수치 입력 -->
+                    <span data-lang-content="ko">매장 등록 완료율 OO% → OO%</span>
+                    <span data-lang-content="en">Store registration completion: OO% → OO%</span>
                   </span>
                 </div>
               </div>
@@ -1892,12 +2645,12 @@
             </figure>
             <div class="context-block__text">
               <p class="ds-research-finding__paragraph" data-lang-content="en">
-                To validate the system's effect, we defined KPIs that measure user behavior and business outcomes together.<br>From the user perspective, we tracked how quickly they decide and how often they actually follow recommendations.<br>From the business perspective, we set criteria around energy cost and operational efficiency improvements.
+                To validate the AI's effect, we defined KPIs that measure user behavior and business outcomes together.<br>From the user perspective, we tracked how quickly they decide and how often they actually follow recommendations.<br>From the business perspective, we set criteria around energy cost and operational efficiency improvements.
                 <br><br>
                 → We measured success along the dual axis of usability and cost efficiency.
               </p>
               <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
-                시스템의 효과를 검증하기 위해 사용자 행동과 비즈니스 성과를<br>함께 측정할 수 있는 KPI를 정의했습니다.
+                AI의 효과를 검증하기 위해 사용자 행동과 비즈니스 성과를<br>함께 측정할 수 있는 KPI를 정의했습니다.
                 <br><br>
                 사용자 관점에서는 얼마나 빠르게 판단하고, 추천을 실제로 따르는지를 확인했고<br>비즈니스 관점에서는 에너지 비용과 운영 효율이 어떻게 개선되는지를 기준으로 설정했습니다
                 <br><br>
