@@ -134,6 +134,59 @@
     .ds-lang-toggle__btn:hover { color: var(--text-primary); }
     .ds-lang-toggle__btn--active { color: var(--text-primary); }
 
+    /* ---------------------------------------------------------------
+       Section navigation — second row inside the sticky header.
+       Scroll-spy sets .is-active; --nav-offset keeps anchor targets
+       clear of the (two-row) sticky header.
+       --------------------------------------------------------------- */
+    :root { --nav-offset: 112px; }
+    @media (min-width: 768px) { :root { --nav-offset: 128px; } }
+
+    .section-nav__wrap {
+      border-top: var(--border-thin) solid var(--border-hairline);
+    }
+    .section-nav {
+      display: flex;
+      gap: var(--space-6);
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .section-nav::-webkit-scrollbar { display: none; }
+    @media (min-width: 768px) {
+      .section-nav { gap: var(--space-8); overflow-x: visible; }
+    }
+    .section-nav__link {
+      flex: 0 0 auto;
+      font-family: var(--font-sans);
+      font-size: var(--text-caption-size);
+      line-height: 1.2;
+      letter-spacing: var(--text-eyebrow-letter-spacing);
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      text-decoration: none;
+      padding-block: var(--space-3);
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+      transition: color var(--duration-base) var(--ease-default);
+    }
+    .section-nav.ds-kr .section-nav__link {
+      font-family: var(--font-kr);
+      letter-spacing: 0;
+    }
+    .section-nav__link:hover { color: var(--text-primary); }
+    .section-nav__link.is-active {
+      color: var(--accent-yellow);
+      border-bottom-color: currentColor;
+    }
+
+    /* Anchor targets clear the sticky header */
+    main > section[id] { scroll-margin-top: var(--nav-offset); }
+
+    @media (prefers-reduced-motion: no-preference) {
+      html { scroll-behavior: smooth; }
+    }
+
     /* Hero placeholder */
     #hero {
       padding-block: var(--space-30);
@@ -164,6 +217,56 @@
     }
     .hero-media[data-hover="true"] .hero-media__hover {
       opacity: 1;                                /* fade in on hover */
+    }
+
+    /* Project type chip — "CONCEPT PROJECT" under the tagline */
+    .project-tag {
+      display: inline-block;
+      font-family: var(--font-sans);
+      font-size: var(--text-eyebrow-size);
+      line-height: var(--text-eyebrow-line-height);
+      letter-spacing: var(--text-eyebrow-letter-spacing);
+      font-weight: var(--text-eyebrow-weight);
+      text-transform: uppercase;
+      border: var(--border-thin) solid var(--border-hairline);
+      border-radius: var(--radius-xl);
+      padding: var(--space-2) var(--space-4);
+      margin: 0;
+    }
+    .project-tag--concept {
+      color: var(--accent-yellow);
+      border-color: var(--accent-yellow);
+    }
+
+    /* Hero meta row — mirrors the BingX case-study meta block */
+    .hero-meta {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-6);
+      margin-top: var(--space-12);
+      padding-top: var(--space-8);
+      border-top: var(--border-thin) solid var(--border-hairline);
+    }
+    @media (min-width: 768px) {
+      .hero-meta {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-8);
+        margin-top: var(--space-16);
+      }
+    }
+    .hero-meta__label {
+      margin: 0 0 var(--space-3) 0;
+      color: var(--text-tertiary);
+      display: block;
+    }
+    .hero-meta__value p {
+      margin: 0;
+      font-size: var(--text-body-size);
+      line-height: 1.5;
+      color: var(--text-primary);
+    }
+    .hero-meta.ds-kr .hero-meta__value p {
+      font-family: var(--font-kr);
     }
 
     .hero-placeholder {
@@ -235,14 +338,14 @@
     }
 
     /* Approach eyebrow — centered (title stays left-aligned beneath) */
+    #research .ds-section-header__eyebrow,
     #approach .ds-section-header__eyebrow,
-    #approach-response .ds-section-header__eyebrow,
     #features .ds-section-header__eyebrow,
     #outcome .ds-section-header__eyebrow {
       text-align: center;
     }
+    #research .ds-section-header,
     #approach .ds-section-header,
-    #approach-response .ds-section-header,
     #features .ds-section-header,
     #outcome .ds-section-header {
       max-width: none;
@@ -281,11 +384,15 @@
       font-weight: 700;
     }
 
-    /* Primary Research interview grid — 3 cards uneven (392/392/470 per Figma) */
+    /* Primary Research interview grid — protocol only.
+       Was 3-up (392/392/470); the two session photos were removed because
+       interview-01.jpg / interview-02.jpg never shipped (404). Single card
+       is held to half width so it keeps the 2-up rhythm of the grid below. */
     @media (min-width: 768px) {
       .primary-interview-grid {
-        grid-template-columns: 392fr 392fr 470fr;
-        gap: var(--space-3);                  /* 12 — Figma spec */
+        grid-template-columns: 1fr;
+        max-width: 634px;
+        margin-inline: auto;
       }
     }
 
@@ -624,11 +731,40 @@
       font-family: var(--font-kr);
     }
 
-    .ut-4step__score {
+    /* SUS score + interpretation — sits under the 4-step flow inside the
+       cream callout. Split out of step 04 so the number reads as a caveated
+       reference value, not as the step's outcome. */
+    .sus-note {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+      align-items: center;
+      margin-top: var(--space-10);
+      padding-top: var(--space-6);
+      border-top: var(--border-thin) solid rgba(10, 14, 15, 0.18);
+    }
+    @media (min-width: 768px) {
+      .sus-note {
+        grid-template-columns: auto 1fr;
+        gap: var(--space-12);
+      }
+    }
+    .sus-note__score {
       display: flex;
       flex-direction: column;
       gap: 4px;
-      margin-top: var(--space-3);
+    }
+    .sus-note__text {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.6;
+      font-weight: 400;
+      color: var(--text-on-cream);
+      opacity: 0.78;
+      margin: 0;
+    }
+    .sus-callout.ds-kr .sus-note__text {
+      font-family: var(--font-kr);
     }
 
     /* 76 number — keeps .sus-callout__number font stack at column scale */
@@ -737,6 +873,108 @@
       left: 0;
     }
 
+    /* KPI definition variant — 2 cards (USER / BUSINESS), each listing
+       metric + what it tells us. Wider cards than the old 3-up impact grid. */
+    @media (min-width: 768px) {
+      .impact-grid--kpi-def {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-6);
+      }
+    }
+    .impact-grid--kpi-def + .insight-callout {
+      margin-top: var(--space-10);
+    }
+    .kpi-list {
+      gap: var(--space-6);
+    }
+    .kpi-list li {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    .kpi-list li strong {
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 1.4;
+    }
+    .kpi-list li::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.5;
+      top: 0.62em;
+    }
+
+    /* ===== 06 — REFLECTION ===== */
+    .reflection-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-3);
+    }
+    .reflection-item {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      background: var(--bg-surface);
+      border-radius: 24px;
+      padding: var(--space-8);
+      box-sizing: border-box;
+    }
+    /* Desktop: counter + title on the left, prose on the right, so the body
+       keeps a readable measure instead of spanning the full 1080 card. */
+    @media (min-width: 768px) {
+      .reflection-item {
+        display: grid;
+        grid-template-columns: 420fr 560fr;
+        column-gap: var(--space-12);
+        row-gap: var(--space-3);
+        align-items: start;
+        padding: var(--space-12);
+      }
+      .reflection-item__counter { grid-column: 1; grid-row: 1; }
+      .reflection-item__title   { grid-column: 1; grid-row: 2; }
+      .reflection-item__body    { grid-column: 2; grid-row: 1 / span 2; }
+    }
+    .reflection-item__counter {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 24px;
+      line-height: 1;
+      font-weight: 400;
+      color: var(--accent-yellow);
+      margin: 0;
+    }
+    .reflection-item__title {
+      font-family: inherit;
+      font-size: 20px;
+      line-height: 1.4;
+      font-weight: 600;
+      letter-spacing: 0;
+      color: var(--text-primary);
+      margin: 0;
+    }
+    .reflection-item__body {
+      font-family: inherit;
+      font-size: 16px;
+      line-height: 1.7;
+      font-weight: 400;
+      color: var(--text-secondary);
+      opacity: 0.82;
+      margin: 0;
+    }
+    .reflection-limitation {
+      font-family: inherit;
+      font-size: var(--text-caption-size);
+      line-height: 1.6;
+      color: var(--text-tertiary);
+      margin: 0;
+      padding-top: var(--space-6);
+      border-top: var(--border-thin) solid var(--border-hairline);
+    }
+    #reflection .ds-section-header__eyebrow { text-align: center; }
+    #reflection .ds-section-header { max-width: none; }
+
     /* Insight callout — cream rounded box with heading + body all centered (per Figma) */
     .insight-callout {
       background: var(--card-cream);
@@ -816,6 +1054,19 @@
       flex-direction: column;
       gap: var(--space-6);                    /* 24 — heading → body */
       text-align: center;
+    }
+    /* Reframe line — sits above the Problem statement heading */
+    .problem-statement__reframe {
+      font-family: inherit;
+      font-size: 20px;
+      line-height: 1.4;
+      font-weight: 600;
+      letter-spacing: 0;
+      margin: 0;
+      opacity: 0.72;
+    }
+    @media (min-width: 768px) {
+      .problem-statement__reframe { font-size: 22px; }
     }
     .problem-statement__heading {
       font-family: var(--font-serif);         /* Playfair Display */
@@ -967,35 +1218,44 @@
       }
       .overview-stack {
         position: relative;
-        min-height: 360px;
+        min-height: 400px;      /* tallest card is 399px — keeps card 03 unclipped */
         gap: 0;
       }
+      /* Cards are centred on the stack, not top-aligned, so a taller card
+         can't leave a tail sticking out past a shorter one during the swap. */
       .overview-stack > .ds-numbered-step {
         position: absolute;
-        top: 0;
+        top: 50%;
         left: 50%;
-        transform: translate(-50%, 40px);
+        transform: translate(-50%, calc(-50% + 40px));
         opacity: 0;
+        /* Leaving: fade out fast, no delay. */
         transition:
-          opacity var(--duration-slower) var(--ease-out),
-          transform var(--duration-slower) var(--ease-out);
+          opacity var(--duration-base) var(--ease-out),
+          transform var(--duration-base) var(--ease-out);
         pointer-events: none;
         will-change: opacity, transform;
       }
       .overview-stack > .ds-numbered-step.is-active {
         opacity: 1;
-        transform: translate(-50%, 0);
+        transform: translate(-50%, -50%);
         pointer-events: auto;
+        /* Entering: wait for the outgoing card to clear, then fade in.
+           Staggering the two halves is what removes the ghosted overlap. */
+        transition:
+          opacity var(--duration-slow) var(--ease-out) var(--duration-base),
+          transform var(--duration-slow) var(--ease-out) var(--duration-base);
       }
     }
 
     /* Approach / Define / Ideate / Outcome — flex column with explicit
        vertical gap between cards (cards have varying max-widths and
        margin-inline:auto for centering; flex parent ensures separation). */
+    #research .ds-container,
     #approach .ds-container,
-    #approach-response .ds-container,
     #define .ds-container,
     #ideate .ds-container,
+    #reflection .ds-container,
     #outcome .ds-container {
       display: flex;
       flex-direction: column;
@@ -1003,19 +1263,21 @@
       align-items: center;
     }
     @media (max-width: 767px) {
+      #research .ds-container,
       #approach .ds-container,
-      #approach-response .ds-container,
       #define .ds-container,
       #ideate .ds-container,
+      #reflection .ds-container,
       #outcome .ds-container {
         gap: var(--space-10);
       }
     }
     /* Section header occupies full container width (don't constrain) */
+    #research .ds-section-header,
     #approach .ds-section-header,
-    #approach-response .ds-section-header,
     #define .ds-section-header,
     #ideate .ds-section-header,
+    #reflection .ds-section-header,
     #outcome .ds-section-header {
       align-self: stretch;
     }
@@ -1312,14 +1574,44 @@
       </a>
 
       <nav class="ds-nav__menu" aria-label="Primary">
-        <a class="ds-nav-link is-active" href="#">PROJECT</a>
-        <a class="ds-nav-link" href="#">ABOUT</a>
-        <a class="ds-nav-link" href="#">RESUME</a>
+        <a class="ds-nav-link is-active" href="./operator.html" aria-current="page">PROJECT</a>
+        <!-- ABOUT / RESUME hidden until their destination pages exist —
+             restore these links once /about and /resume ship. -->
 
         <div class="ds-lang-toggle" role="group" aria-label="Language">
           <button type="button" class="ds-lang-toggle__btn" data-lang="en" aria-label="English">EN</button>
           <button type="button" class="ds-lang-toggle__btn ds-lang-toggle__btn--active" data-lang="ko" aria-label="Korean">KO</button>
         </div>
+      </nav>
+    </div>
+
+    <!-- Section navigation — in-page anchors, scroll-spy driven -->
+    <div class="ds-container section-nav__wrap">
+      <nav class="section-nav" aria-label="Section navigation" data-lang-aware>
+        <a href="#overview" class="section-nav__link is-active">
+          <span data-lang-content="en">Overview</span>
+          <span data-lang-content="ko">개요</span>
+        </a>
+        <a href="#research" class="section-nav__link">
+          <span data-lang-content="en">Research</span>
+          <span data-lang-content="ko">리서치</span>
+        </a>
+        <a href="#approach" class="section-nav__link">
+          <span data-lang-content="en">Approach</span>
+          <span data-lang-content="ko">접근</span>
+        </a>
+        <a href="#features" class="section-nav__link">
+          <span data-lang-content="en">Features</span>
+          <span data-lang-content="ko">핵심 기능</span>
+        </a>
+        <a href="#outcome" class="section-nav__link">
+          <span data-lang-content="en">Outcome</span>
+          <span data-lang-content="ko">결과</span>
+        </a>
+        <a href="#reflection" class="section-nav__link">
+          <span data-lang-content="en">Reflection</span>
+          <span data-lang-content="ko">회고</span>
+        </a>
       </nav>
     </div>
   </header>
@@ -1346,6 +1638,78 @@
           <h2 class="ds-h2" data-lang-content="en"><em class="ds-signature ds-signature--accent-yellow">AI-powered HVAC decision system</em><br>for small business owners</h2>
           <h2 class="ds-h2 ds-kr" data-lang-content="ko">자영업자를 위한<br><em class="ds-signature ds-signature--accent-yellow">AI 기반 HVAC 의사결정 시스템</em></h2>
         </header>
+
+        <!-- Project type chip — language-agnostic, same as nav -->
+        <p class="project-tag project-tag--concept">CONCEPT PROJECT</p>
+
+        <!-- Hero meta row — role / contribution / skills / duration / team / type -->
+        <div class="hero-meta" data-lang-aware>
+          <div class="hero-meta__row">
+            <p class="ds-eyebrow hero-meta__label">
+              <span data-lang-content="en">ROLE</span>
+              <span data-lang-content="ko">역할</span>
+            </p>
+            <div class="hero-meta__value">
+              <p data-lang-content="en">Product Designer</p>
+              <p data-lang-content="ko">프로덕트 디자이너</p>
+            </div>
+          </div>
+
+          <div class="hero-meta__row">
+            <p class="ds-eyebrow hero-meta__label">
+              <span data-lang-content="en">MY ROLE</span>
+              <span data-lang-content="ko">기여</span>
+            </p>
+            <div class="hero-meta__value">
+              <p data-lang-content="en">Pricing-structure &amp; context analysis (lead) · Usability test moderation · System design (co-led) · User research (support)</p>
+              <p data-lang-content="ko">요금구조·맥락 분석 리드 · 사용성 테스트 진행 · 시스템 설계(공동) · 리서치 참여</p>
+            </div>
+          </div>
+
+          <div class="hero-meta__row">
+            <p class="ds-eyebrow hero-meta__label">
+              <span data-lang-content="en">SKILLS</span>
+              <span data-lang-content="ko">스킬</span>
+            </p>
+            <div class="hero-meta__value">
+              <p data-lang-content="en">Cost-structure analysis · UT moderation · Data-informed design · AI-assisted visualization</p>
+              <p data-lang-content="ko">비용 구조 분석 · UT 모더레이션 · 데이터 기반 디자인 · AI 이미지 생성 비주얼라이제이션</p>
+            </div>
+          </div>
+
+          <div class="hero-meta__row">
+            <p class="ds-eyebrow hero-meta__label">
+              <span data-lang-content="en">DURATION</span>
+              <span data-lang-content="ko">기간</span>
+            </p>
+            <div class="hero-meta__value">
+              <p data-lang-content="en">7 weeks</p>
+              <p data-lang-content="ko">7주</p>
+            </div>
+          </div>
+
+          <div class="hero-meta__row">
+            <p class="ds-eyebrow hero-meta__label">
+              <span data-lang-content="en">TEAM</span>
+              <span data-lang-content="ko">팀</span>
+            </p>
+            <div class="hero-meta__value">
+              <p data-lang-content="en">2 designers</p>
+              <p data-lang-content="ko">디자이너 2명</p>
+            </div>
+          </div>
+
+          <div class="hero-meta__row">
+            <p class="ds-eyebrow hero-meta__label">
+              <span data-lang-content="en">TYPE</span>
+              <span data-lang-content="ko">성격</span>
+            </p>
+            <div class="hero-meta__value">
+              <p data-lang-content="en">Concept project</p>
+              <p data-lang-content="ko">컨셉 프로젝트</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -1526,11 +1890,11 @@
     </section>
 
     <!-- ====================  APPROACH  ==================== -->
-    <section id="approach">
+    <section id="research">
       <div class="ds-container">
 
         <header class="ds-section-header" data-lang-aware>
-          <p class="ds-section-header__eyebrow">[ 02 — APPROACH ]</p>
+          <p class="ds-section-header__eyebrow">[ 02 — RESEARCH ]</p>
         </header>
 
         <!-- ===== 02.1 — SECONDARY RESEARCH ===== -->
@@ -1658,35 +2022,15 @@
           <div class="ds-research-finding__heading-group">
             <h3 class="ds-research-finding__sub-heading">Interview</h3>
             <p class="ds-research-finding__paragraph" data-lang-content="en">
-              To understand how prevalent these struggles are in real-store contexts — when stress peaks, how often operators adjust controls, and what specifically drives those decisions —<br>we conducted interviews with 5 small business owners.
+              To understand when stress peaks in real store operations and what actually drives HVAC decisions,<br>we interviewed 5 small business owners.
             </p>
             <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
-              실제 매장 운영 상황에서 자영업자들이 이런 고민을 하는 비중은 얼마나 되는지, 언제 가장 스트레스를 받는지, 몇 번<br>이나 조작하는지 등 좀 더 구체적인 이유를 알아보기 위해 5인의 인터뷰를 진행했습니다
+              실제 매장 운영 상황에서 언제 스트레스가 커지는지, 무엇을 기준으로 냉난방을 조절하는지<br>구체적으로 알아보기 위해 자영업자 5인을 인터뷰했습니다
             </p>
           </div>
 
-          <!-- 3-column media grid (uneven 392/392/470 per Figma) -->
-          <div class="ds-research-finding__media-grid ds-research-finding__media-grid--3col primary-interview-grid">
-            <figure class="ds-media-figure">
-              <div class="ds-media-placeholder" data-aspect="4/3">
-                <span class="ds-eyebrow ds-eyebrow--accent-blue">FIG. 02.2.1</span>
-                <p class="ds-media-placeholder__meta">operator/approach/interview-01.jpg</p>
-              </div>
-              <figcaption class="ds-media-figure__caption" data-lang-aware>
-                <span data-lang-content="en">Interview session 1</span>
-                <span data-lang-content="ko">인터뷰 세션 1</span>
-              </figcaption>
-            </figure>
-            <figure class="ds-media-figure">
-              <div class="ds-media-placeholder" data-aspect="4/3">
-                <span class="ds-eyebrow ds-eyebrow--accent-blue">FIG. 02.2.2</span>
-                <p class="ds-media-placeholder__meta">operator/approach/interview-02.jpg</p>
-              </div>
-              <figcaption class="ds-media-figure__caption" data-lang-aware>
-                <span data-lang-content="en">Interview session 2</span>
-                <span data-lang-content="ko">인터뷰 세션 2</span>
-              </figcaption>
-            </figure>
+          <!-- Interview protocol — FIG. 02.2.1 / 02.2.2 session photos removed (files 404) -->
+          <div class="ds-research-finding__media-grid primary-interview-grid">
             <figure class="ds-media-figure">
               <div class="ds-media-image" data-aspect="16/10" data-zoomable="true">
                 <img src="operator/approach/interview-protocol.png" alt="Interview protocol" loading="lazy" />
@@ -1954,6 +2298,10 @@
     <!-- ====================  PROBLEM STATEMENT (full-bleed callout)  ==================== -->
     <section class="problem-statement" data-lang-aware>
       <div class="problem-statement__inner">
+        <p class="problem-statement__reframe">
+          <span data-lang-content="ko">냉난방 관리는 기기 제어의 문제가 아니라, 판단의 문제였습니다.</span>
+          <span data-lang-content="en">Managing HVAC wasn't a control problem — it was a decision problem.</span>
+        </p>
         <h3 class="problem-statement__heading">Problem statement</h3>
         <p class="problem-statement__body">
           <span data-lang-content="ko">냉난방 <span class="problem-statement__highlight">설정을 바꾸는 선택</span>과 <span class="problem-statement__highlight">전기요금 변화라는 결과</span>가 연결되지 않아,<br>사용자는 자신의 조절이 비용에 어떤 영향을 주는지 알 수 없다</span>
@@ -1963,7 +2311,7 @@
     </section>
 
     <!-- ====================  03 — APPROACH (response / direction shift)  ==================== -->
-    <section id="approach-response">
+    <section id="approach">
       <div class="ds-container">
 
         <header class="ds-section-header" data-lang-aware>
@@ -2343,12 +2691,7 @@
                 <span data-lang-content="en">Wireframe</span>
                 <span data-lang-content="ko">Wireframe</span>
               </figcaption>
-              <p class="ds-research-finding__paragraph" data-lang-content="en">
-                Among the many features, we selected only those required for the MVP based on priority.
-              </p>
-              <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
-                다양한 기능 중, 우선순위를 기준으로 MVP에 필요한 기능만 선별했습니다.
-              </p>
+              <!-- MVP-prioritization sentence removed — duplicated 03.4 Feature Prioritization -->
             </figure>
             <figure class="ds-media-figure">
               <div class="ds-media-image" data-aspect="16/10" data-zoomable="true">
@@ -2484,8 +2827,8 @@
         <article class="ds-research-finding ds-research-finding--align-left">
           <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 05.1 — USABILITY TESTING ]</p>
 
-          <h2 class="ds-h2" data-lang-content="en">Through user testing,<br>we identified real usage problems.</h2>
-          <h2 class="ds-h2 ds-kr" data-lang-content="ko">유저테스트를 통해<br>실제 사용과정에서의 문제를 확인했습니다</h2>
+          <h2 class="ds-h2" data-lang-content="en">We tested the decision process in real operating contexts<br>— 5 participants, 4 tasks</h2>
+          <h2 class="ds-h2 ds-kr" data-lang-content="ko">참가자 5명과 4개 과제로,<br>실제 운영 상황에서의 판단 과정을 테스트했습니다</h2>
 
           <!-- 2-col: UT photo (left, full height) + body text + protocol image (right) -->
           <div class="ut-grid">
@@ -2501,10 +2844,14 @@
 
             <div class="ut-grid__right">
               <p class="ds-research-finding__paragraph" data-lang-content="en">
-                We ran usability tests grounded in real store operation contexts.
+                We designed 4 tasks simulating real store operation: ① understand the current store state ② understand why the AI recommended an action ③ decide whether to apply it ④ interpret the cost-comfort outcome.
+                <br><br>
+                Each task had defined metrics: time, accuracy, understanding, trust, and hesitation.
               </p>
               <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
-                실제 매장 운영 상황을 기준으로 사용성 테스트를 진행했습니다
+                실제 매장 운영 상황을 가정해 4개 과제로 테스트를 설계했습니다 — ① 현재 매장 상태 이해 ② AI 추천의 이유 이해 ③ 추천 적용 여부 결정 ④ 결과(비용·쾌적도) 해석.
+                <br><br>
+                과제별로 소요 시간, 정확도, 이해·신뢰, 망설임을 측정 기준으로 정의했습니다.
               </p>
 
               <figure class="ds-media-figure ut-grid__protocol">
@@ -2530,9 +2877,8 @@
                   <span data-lang-content="en">What went wrong</span>
                 </p>
                 <p class="ut-4step__body">
-                  <!-- TBD: 실제 수치 입력 -->
-                  <span data-lang-content="ko">신규 사용자 N명 중 N명이 첫 매장 등록 단계에서 멈췄고, 평균 진입 소요 시간이 목표보다 길었습니다.</span>
-                  <span data-lang-content="en">N out of N first-time users got stuck at store registration. Average onboarding time exceeded the target.</span>
+                  <span data-lang-content="ko">신규 사용자 5명 중 4명이 첫 매장 등록 단계에서 멈췄습니다. 설정 진입점이 메뉴 깊은 곳에 있어 찾지 못했고, 진입 후에도 시작까지 시간이 오래 걸렸습니다.</span>
+                  <span data-lang-content="en">4 of 5 first-time users got stuck at store registration. The setup entry was buried in the menu, and even after finding it, getting started took long.</span>
                 </p>
               </div>
 
@@ -2546,7 +2892,7 @@
                 </p>
                 <p class="ut-4step__body">
                   <span data-lang-content="ko">첫 화면에서 입력해야 할 항목이 7가지로 인지 부담이 컸고, '비용 모드 / 쾌적 모드' 용어가 직관적이지 않았습니다.</span>
-                  <span data-lang-content="en">Initial screen demanded 7 input fields, causing cognitive overload. Mode terminology ('cost mode' / 'comfort mode') was non-intuitive.</span>
+                  <span data-lang-content="en">The first screen demanded 7 inputs, and the 'cost mode / comfort mode' terms weren't intuitive.</span>
                 </p>
               </div>
 
@@ -2559,8 +2905,8 @@
                   <span data-lang-content="en">What was improved</span>
                 </p>
                 <p class="ut-4step__body">
-                  <span data-lang-content="ko">입력 항목을 3단계로 분할한 온보딩 플로우를 신설하고, 모드 설정에 비용·쾌적 시각적 슬라이더를 도입했습니다.</span>
-                  <span data-lang-content="en">Split input into a 3-step onboarding flow. Replaced abstract mode terms with a visual cost-comfort slider.</span>
+                  <span data-lang-content="ko">입력 항목을 3단계로 분할한 온보딩 플로우를 신설하고, 모드 설정에 비용·쾌적 시각 슬라이더를 도입했습니다.</span>
+                  <span data-lang-content="en">We split input into a 3-step onboarding flow and introduced a visual cost-comfort slider for mode setting.</span>
                 </p>
               </div>
 
@@ -2573,16 +2919,23 @@
                   <span data-lang-content="en">What changed after</span>
                 </p>
                 <p class="ut-4step__body">
-                  <!-- TBD: 실제 수치 입력 -->
-                  <span data-lang-content="ko">첫 매장 등록 완료율 OO% → OO%, 진입 시 이탈률 OO% 감소</span>
-                  <span data-lang-content="en">Store registration completion rate: OO% → OO%. Drop-off reduced by OO%.</span>
+                  <span data-lang-content="ko">개선안은 필수 입력을 7개에서 3개로 줄인 온보딩으로 재설계했고, 동일 과제 기준으로 재검증을 진행했습니다.</span>
+                  <span data-lang-content="en">The redesign cut required inputs from 7 to 3, and was re-validated against the same tasks.</span>
                 </p>
-                <div class="ut-4step__score">
-                  <p class="sus-callout__label">SUS SCORE</p>
-                  <p class="sus-callout__number sus-callout__number--inline">76</p>
-                </div>
               </div>
 
+            </div>
+
+            <!-- SUS score + how we read it (exploratory, n=5) -->
+            <div class="sus-note">
+              <div class="sus-note__score">
+                <p class="sus-callout__label">SUS SCORE</p>
+                <p class="sus-callout__number sus-callout__number--inline">76</p>
+              </div>
+              <p class="sus-note__text">
+                <span data-lang-content="ko">SUS(System Usability Scale) 평균 76점 (n=5 · 개별 72.5~80) — 통상 기준선인 68점을 웃도는 수준입니다. 참가자 5명의 탐색적 테스트이므로, 결과는 제품 성과가 아닌 개선 방향을 확인하는 참고값으로 해석했습니다.</span>
+                <span data-lang-content="en">SUS averaged 76 (n=5 · individual 72.5–80), above the common benchmark of 68. As an exploratory test with 5 participants, we read this as directional input, not product performance.</span>
+              </p>
             </div>
           </div>
         </article>
@@ -2591,8 +2944,8 @@
         <article class="ds-research-finding ds-research-finding--align-left">
           <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 05.2 — ITERATION ]</p>
 
-          <h2 class="ds-h2" data-lang-content="en">We cut required fields to three and added a step-by-step guide,<br>so first-time setup finishes in under a minute.</h2>
-          <h2 class="ds-h2 ds-kr" data-lang-content="ko">필수 입력을 3개로 줄이고 단계별 가이드를 더해,<br>첫 매장 등록을 1분 안에 끝낼 수 있도록 했습니다</h2>
+          <h2 class="ds-h2" data-lang-content="en">We cut required fields to three and added a step-by-step guide,<br>so first-time setup was designed to finish in under a minute.</h2>
+          <h2 class="ds-h2 ds-kr" data-lang-content="ko">필수 입력을 3개로 줄이고 단계별 가이드를 더해,<br>첫 매장 등록을 1분 안에 끝낼 수 있도록 설계했습니다</h2>
 
           <!-- Feature row: media + card (reuse 04 pattern) -->
           <article class="feature-row">
@@ -2644,9 +2997,8 @@
                 <div class="feature-row__outcome">
                   <span class="feature-row__outcome-label">OUTCOME</span>
                   <span class="feature-row__outcome-text">
-                    <!-- TBD: 실제 수치 입력 -->
-                    <span data-lang-content="ko">매장 등록 완료율 OO% → OO%</span>
-                    <span data-lang-content="en">Store registration completion: OO% → OO%</span>
+                    <span data-lang-content="ko">필수 입력 7개 → 3개 · 3단계 온보딩 신설</span>
+                    <span data-lang-content="en">Required inputs 7 → 3 · New 3-step onboarding</span>
                   </span>
                 </div>
               </div>
@@ -2658,8 +3010,8 @@
         <article class="ds-research-finding ds-research-finding--align-left">
           <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 05.3 — IMPACT ]</p>
 
-          <h2 class="ds-h2" data-lang-content="en">We confirmed outcomes that improved<br>both user behavior and cost efficiency.</h2>
-          <h2 class="ds-h2 ds-kr" data-lang-content="ko">사용자 행동과 비용 효율을<br>함께 개선하는 성과를 확인했습니다</h2>
+          <h2 class="ds-h2" data-lang-content="en">Instead of claiming outcomes,<br>we defined how success would be measured</h2>
+          <h2 class="ds-h2 ds-kr" data-lang-content="ko">성과를 단정하는 대신,<br>무엇으로 성공을 측정할지 정의했습니다</h2>
 
           <!-- Image + body -->
           <div class="context-block">
@@ -2674,60 +3026,124 @@
             </figure>
             <div class="context-block__text">
               <p class="ds-research-finding__paragraph" data-lang-content="en">
-                To validate the AI's effect, we defined KPIs that measure user behavior and business outcomes together.<br>From the user perspective, we tracked how quickly they decide and how often they actually follow recommendations.<br>From the business perspective, we set criteria around energy cost and operational efficiency improvements.
-                <br><br>
-                → We measured success along the dual axis of usability and cost efficiency.
+                A 5-person test can't prove business impact. Instead, we defined the KPIs this system should be measured by if deployed — across user behavior and business performance.
               </p>
               <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
-                AI의 효과를 검증하기 위해 사용자 행동과 비즈니스 성과를<br>함께 측정할 수 있는 KPI를 정의했습니다.
-                <br><br>
-                사용자 관점에서는 얼마나 빠르게 판단하고, 추천을 실제로 따르는지를 확인했고<br>비즈니스 관점에서는 에너지 비용과 운영 효율이 어떻게 개선되는지를 기준으로 설정했습니다
-                <br><br>
-                → 사용성과 비용 효율을 함께 개선하는 방향으로 성과를 측정했습니다
+                참가자 5명의 테스트만으로 비즈니스 성과를 주장할 수는 없습니다.<br>대신 이 시스템이 실제 배포된다면 무엇을 측정해야 하는지,<br>사용자 행동과 비즈니스 성과 양쪽에서 KPI를 정의했습니다.
               </p>
             </div>
           </div>
 
-          <!-- 3-card impact grid (cream / dark / yellow per Figma) -->
-          <div class="impact-grid">
+          <!-- KPI definition cards — replaced the former USER / BUSINESS / KPI RESULT
+               trio. The old KPI RESULT numbers (10% / 40% / 15%) were unmeasured
+               claims for a concept project, so the frame is now "what we'd measure". -->
+          <div class="impact-grid impact-grid--kpi-def">
             <article class="impact-card impact-card--user" data-lang-aware>
-              <p class="impact-card__title">USER IMPACT</p>
-              <p class="impact-card__subtitle">
-                <span data-lang-content="ko">더 빠르게 판단하고, 불안 없이 운영</span>
-                <span data-lang-content="en">Faster decisions, operation without anxiety</span>
-              </p>
-              <ul class="impact-card__list" data-lang-aware>
-                <li><span data-lang-content="ko">비용에 대한 불안 감소</span><span data-lang-content="en">Reduced cost anxiety</span></li>
-                <li><span data-lang-content="ko">의사결정 시간 단축</span><span data-lang-content="en">Shortened decision time</span></li>
-                <li><span data-lang-content="ko">운영에 더 집중 가능</span><span data-lang-content="en">More focus on operations</span></li>
+              <p class="impact-card__title">USER KPIs</p>
+              <ul class="impact-card__list kpi-list" data-lang-aware>
+                <li>
+                  <span data-lang-content="ko"><strong>판단 소요 시간 ↓</strong><br>상황 인지부터 조작 완료까지의 시간. 의사결정 흐름의 효율 지표</span>
+                  <span data-lang-content="en"><strong>Time to make an adjustment ↓</strong><br>From context recognition to action — efficiency of the decision flow</span>
+                </li>
+                <li>
+                  <span data-lang-content="ko"><strong>추천 수용률 ↑</strong><br>전체 추천 중 실제 실행된 비율. AI 판단에 대한 신뢰의 직접 지표</span>
+                  <span data-lang-content="en"><strong>Adoption rate of recommendations ↑</strong><br>Executed ÷ total recommendations — the direct measure of trust in AI judgment</span>
+                </li>
+                <li>
+                  <span data-lang-content="ko"><strong>반복 조작 감소 ↓</strong><br>안정 상태 도달까지의 재조정 횟수. 기준 제공이 불안을 줄였는지의 지표</span>
+                  <span data-lang-content="en"><strong>Reduction in trial-and-error ↓</strong><br>Repeated adjustments before reaching a stable state</span>
+                </li>
               </ul>
             </article>
 
             <article class="impact-card impact-card--business" data-lang-aware>
-              <p class="impact-card__title">BUSINESS IMPACT</p>
-              <p class="impact-card__subtitle">
-                <span data-lang-content="ko">비용은 줄이고, 매장환경은 더 안정적으로 유지</span>
-                <span data-lang-content="en">Lower costs, more stable store environment</span>
-              </p>
-              <ul class="impact-card__list" data-lang-aware>
-                <li><span data-lang-content="ko">불필요한 냉난방 비용 감소</span><span data-lang-content="en">Reduced unnecessary HVAC cost</span></li>
-                <li><span data-lang-content="ko">매장 쾌적도 일관성 향상</span><span data-lang-content="en">Improved consistency in store comfort</span></li>
-              </ul>
-            </article>
-
-            <article class="impact-card impact-card--kpi" data-lang-aware>
-              <p class="impact-card__title">KPI RESULT</p>
-              <p class="impact-card__subtitle">
-                <span data-lang-content="ko">반복 조작은 줄고, 비용효율은 개선</span>
-                <span data-lang-content="en">Less repeated tweaking, better cost efficiency</span>
-              </p>
-              <ul class="impact-card__list" data-lang-aware>
-                <li><span data-lang-content="ko">판단시간 약 10% 단축</span><span data-lang-content="en">~10% shorter decision time</span></li>
-                <li><span data-lang-content="ko">반복조작 약 40% 감소</span><span data-lang-content="en">~40% fewer repeated adjustments</span></li>
-                <li><span data-lang-content="ko">에너지 비용 약 15% 절감가능</span><span data-lang-content="en">~15% potential energy cost savings</span></li>
+              <p class="impact-card__title">BUSINESS KPIs</p>
+              <ul class="impact-card__list kpi-list" data-lang-aware>
+                <li>
+                  <span data-lang-content="ko"><strong>매장당 에너지 비용 ↓</strong><br>기준선 대비 총 에너지 비용. 비용 최적화의 핵심 지표</span>
+                  <span data-lang-content="en"><strong>Energy cost per store ↓</strong><br>Total energy cost vs baseline — the core cost-optimization metric</span>
+                </li>
+                <li>
+                  <span data-lang-content="ko"><strong>피크 수요 감소 ↓</strong><br>피크 시간대 최대 부하. 도입 전후 비교</span>
+                  <span data-lang-content="en"><strong>Peak demand reduction ↓</strong><br>Max load during peak hours, before vs after</span>
+                </li>
+                <li>
+                  <span data-lang-content="ko"><strong>리텐션 ↑</strong><br>재방문 활성 사용자 비율. 장기 유용성 지표</span>
+                  <span data-lang-content="en"><strong>User retention rate ↑</strong><br>Returning active users — the long-term usefulness metric</span>
+                </li>
               </ul>
             </article>
           </div>
+
+          <!-- Which KPI comes first, and why -->
+          <div class="insight-callout">
+            <p class="insight-callout__body" data-lang-aware>
+              <span data-lang-content="ko">이 중 가장 먼저 확인할 지표는 <strong>추천 수용률</strong>입니다.<br>사용자가 AI의 제안을 실제로 따르는가 — 이것이 '판단을 대신해주는 시스템'이라는<br>이 제품의 가설을 검증하는 첫 번째 증거이기 때문입니다.</span>
+              <span data-lang-content="en">The first metric to watch is <strong>adoption rate</strong> — whether users actually follow<br>the AI's suggestions is the first proof of a system built to judge on their behalf.</span>
+            </p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ====================  06 — REFLECTION  ==================== -->
+    <section id="reflection">
+      <div class="ds-container">
+
+        <header class="ds-section-header" data-lang-aware>
+          <p class="ds-section-header__eyebrow">[ 06 — REFLECTION ]</p>
+        </header>
+
+        <article class="ds-research-finding ds-research-finding--align-left">
+          <h2 class="ds-h2" data-lang-content="en">I had lived this problem —<br>so I solved it with validation, not conviction</h2>
+          <h2 class="ds-h2 ds-kr" data-lang-content="ko">직접 겪은 문제였기에,<br>확신 대신 검증으로 풀었습니다</h2>
+
+          <div class="reflection-list">
+
+            <div class="reflection-item" data-lang-aware>
+              <p class="reflection-item__counter">01</p>
+              <h3 class="reflection-item__title">
+                <span data-lang-content="ko">운영자였던 경험은 출발점이었지만, 근거는 아니었습니다</span>
+                <span data-lang-content="en">Being an operator was a starting point, not evidence</span>
+              </h3>
+              <p class="reflection-item__body">
+                <span data-lang-content="ko">매장을 운영하며 직접 겪은 문제라 문제 정의는 빨랐습니다. 하지만 내 경험을 근거로 쓰는 대신 가설로 두고, 커뮤니티 데이터·인터뷰·요금구조 분석으로 검증했습니다. 개인 경험은 방향을 주지만, 그것을 일반화하지 않는 것이 더 중요했습니다.</span>
+                <span data-lang-content="en">Having run a store, I defined the problem fast. But I treated my experience as a hypothesis, validating it with community data, interviews, and pricing-structure analysis. Personal experience gives direction; not generalizing it mattered more.</span>
+              </p>
+            </div>
+
+            <div class="reflection-item" data-lang-aware>
+              <p class="reflection-item__counter">02</p>
+              <h3 class="reflection-item__title">
+                <span data-lang-content="ko">직접 계산해보니 처음 방향이 틀렸고, 그래서 바꿀 수 있었습니다</span>
+                <span data-lang-content="en">Calculating it myself proved the first direction wrong — and that's why I could change it</span>
+              </h3>
+              <p class="reflection-item__body">
+                <span data-lang-content="ko">요금구조만 활용하면 될 것이라는 가설을 시나리오로 직접 계산해 확인했습니다. 절감 효과는 작았고 쾌적 기준과 충돌했습니다. 이 반증 덕분에 비용 1축이 아닌 비용·쾌적 2축 판단으로 방향을 바꿀 수 있었습니다. 검증은 아이디어를 버리게 하는 것이 아니라, 더 나은 방향을 줍니다.</span>
+                <span data-lang-content="en">I tested the 'pricing structure alone' hypothesis with scenario calculations. Savings were small and clashed with comfort. That refutation enabled the shift from a single cost axis to judging cost and comfort together. Validation doesn't kill ideas — it gives better directions.</span>
+              </p>
+            </div>
+
+            <div class="reflection-item" data-lang-aware>
+              <p class="reflection-item__counter">03</p>
+              <h3 class="reflection-item__title">
+                <span data-lang-content="ko">성과를 주장할 수 없을 때, 측정을 설계하는 것도 디자이너의 일이었습니다</span>
+                <span data-lang-content="en">When you can't claim outcomes, designing the measurement is also the designer's job</span>
+              </h3>
+              <p class="reflection-item__body">
+                <span data-lang-content="ko">컨셉 프로젝트라 비즈니스 성과를 증명할 수는 없었습니다. 대신 무엇으로 성공을 판단할지 KPI를 정의했고, 그 첫 번째가 추천 수용률입니다. 숫자를 만들 수 없다면, 숫자를 잴 방법을 만드는 것이 정직한 결론이라고 생각했습니다.</span>
+                <span data-lang-content="en">As a concept project, business impact couldn't be proven. So I defined the KPIs success should be judged by — starting with adoption rate. If you can't produce the number, building the way to measure it is the honest conclusion.</span>
+              </p>
+            </div>
+
+          </div>
+
+          <!-- Scope limitation — keeps the research claims bounded -->
+          <p class="reflection-limitation" data-lang-aware>
+            <span data-lang-content="ko">이번 리서치는 인터뷰 5인, 사용성 테스트 5인의 탐색적 결과로, 발견된 패턴을 시장 전체로 일반화하지 않았습니다.</span>
+            <span data-lang-content="en">This research is exploratory — 5 interviews and a 5-person usability test. We did not generalize the patterns to the whole market.</span>
+          </p>
         </article>
 
       </div>
@@ -2777,6 +3193,35 @@
 
       // Initialize from current data-lang (default = ko)
       setLang(root.dataset.lang || 'ko');
+    })();
+
+    // ===== Section nav — scroll-spy (topmost visible section wins) =====
+    (function () {
+      const links = [...document.querySelectorAll('.section-nav__link')];
+      if (!links.length) return;
+
+      // Nav order == document order, so the first match is the topmost section.
+      const items = links
+        .map((link) => ({ link, el: document.querySelector(link.hash) }))
+        .filter((item) => item.el);
+      if (!items.length) return;
+
+      const visible = new Set();
+
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) visible.add(e.target);
+            else visible.delete(e.target);
+          });
+          const current = items.find((item) => visible.has(item.el));
+          if (!current) return;
+          links.forEach((l) => l.classList.toggle('is-active', l === current.link));
+        },
+        { rootMargin: '-35% 0% -55% 0%' }
+      );
+
+      items.forEach((item) => io.observe(item.el));
     })();
 
     // ===== Overview cards — Apple-style sticky pinned scroll sequence =====
