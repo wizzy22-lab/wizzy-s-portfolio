@@ -468,7 +468,7 @@
 
 .ds-implication-arrow {
   color: var(--accent-yellow);
-  font-weight: 600;
+  font-weight: 500;
   margin-right: var(--space-3);
   display: inline-block;
 }

@@ -6,18 +6,33 @@
   --text-primary: #E8E8E5;
   --text-secondary: #E0E2E2;
   --text-tertiary: #6A7075;
-  --text-accent-warm: #FDF89C;
-  --text-accent-cool: #B1E0FF;
+  /* Absorbed into the neutral ramp — see the accent note below. */
+  --text-accent-warm: #E8E8E5;
+  --text-accent-cool: #C9CCCC;
   --text-on-cream: #0A0E0F;
 
   --border-hairline: rgba(245, 245, 240, 0.12);
   --border-default: rgba(245, 245, 240, 0.20);
-  --border-accent: #B1E0FF;
+  --border-accent: rgba(245, 245, 240, 0.20);
 
-  --accent-yellow: #FDF89C;
-  --accent-blue: #B1E0FF;
+  /* ===============================================================
+     ACCENTS — absorbed.
 
-  --card-cream: #CAEAFF; /* legacy name — actual color is light blue (was #F0EBE0 beige) */
+     The lemon (#FDF89C), sky (#B1E0FF / #CAEAFF) and vivid blue
+     (#0098FF) of the old brand no longer appear on UI. The token
+     names are kept so existing markup keeps resolving, but they now
+     point at the neutral ramp: hierarchy is carried by value, not
+     hue. Two steps are kept apart so the surfaces that used to be
+     "yellow card" vs "blue card" stay distinguishable.
+
+     Diagram interiors are deliberately NOT covered by this — inside
+     the trade-off and direction-shift charts the blue/lemon pair is
+     the legend for cost vs comfort, so it stays as authored.
+     =============================================================== */
+  --accent-yellow: #E8E8E5;
+  --accent-blue: #C9CCCC;
+
+  --card-cream: #DCDCD8; /* legacy name — now a neutral light card surface */
   --card-white: #FFFFFF;
 
   --success: #7BD389;

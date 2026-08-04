@@ -20,7 +20,7 @@
 html[data-lang="ko"] .ds-signature {
   font-family: var(--font-kr);
   font-style: normal;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: -0.02em;
 }
 
@@ -374,7 +374,7 @@ html[data-lang="ko"] {
 .ds-numbered-step.ds-kr .ds-numbered-step__title strong,
 .ds-numbered-step.ds-kr .ds-numbered-step__quote strong,
 .ds-numbered-step.ds-kr .ds-numbered-step__closing strong {
-  font-weight: 700;
+  font-weight: 500;
 }
 
 
@@ -440,7 +440,7 @@ html[data-lang="ko"] {
   font-family: var(--font-kr);
 }
 .ds-pull-quote.ds-kr .ds-pull-quote__quote strong {
-  font-weight: 700;
+  font-weight: 500;
 }
 
 
@@ -584,7 +584,7 @@ html[data-lang="ko"] {
   font-family: var(--font-kr);
 }
 .ds-feature.ds-kr .ds-feature__title strong {
-  font-weight: 700;
+  font-weight: 500;
 }
 
 
@@ -908,7 +908,7 @@ html[data-lang="ko"] {
   font-family: var(--font-kr);
 }
 .ds-research-finding.ds-kr .ds-research-finding__title strong {
-  font-weight: 700;
+  font-weight: 500;
 }
 
 /* ----- Compound-finding children ----- */
@@ -938,7 +938,7 @@ html[data-lang="ko"] {
   font-size: 20px;
   line-height: 1.2;
   letter-spacing: 0;
-  font-weight: 700;                        /* Bold */
+  font-weight: 500;                        /* Emphasis */
   font-style: normal;
   color: var(--text-primary);
   margin: 0;                               /* Spacing handled by parent gap + heading-group wrapper */
@@ -1189,7 +1189,7 @@ html[data-lang="ko"] {
   font-family: var(--font-kr);
 }
 .ds-criteria-list.ds-kr .ds-criteria-list__text strong {
-  font-weight: 700;
+  font-weight: 500;
 }
 
 
@@ -1314,7 +1314,7 @@ html[data-lang="ko"] {
   font-family: var(--font-kr);
 }
 .ds-before-after.ds-kr .ds-before-after__col--after .ds-before-after__text strong {
-  font-weight: 700;
+  font-weight: 500;
 }
 
 
@@ -1536,7 +1536,7 @@ html[data-lang="ko"] {
   font-family: var(--font-kr);
 }
 .ds-split-feature.ds-kr .ds-split-feature__content :is(h1, h2, h3) strong {
-  font-weight: 700;
+  font-weight: 500;
 }
 
 
@@ -1662,7 +1662,7 @@ html[data-lang="ko"] {
   font-family: var(--font-kr);
 }
 .ds-insight.ds-kr .ds-insight__title strong {
-  font-weight: 700;
+  font-weight: 500;
 }
 
 /* ----- Need / Pain comparison grid -----
