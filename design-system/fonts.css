@@ -1,3 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&display=swap');
+/* Manrope is requested at 400;500 only — the scale caps weight at 500, so the
+   600/700/800 faces were dead payload. Azeret Mono carries the label system
+   (eyebrows, captions, step counters) and is loaded here rather than per-page,
+   because shared components reference it. */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400&display=swap');
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');

@@ -6,6 +6,8 @@
   --text-primary: #E8E8E5;
   --text-secondary: #E0E2E2;
   --text-tertiary: #6A7075;
+  /* Dimmest readable step — step counters, toggle separators. */
+  --text-faint: #5C5C59;
   /* Absorbed into the neutral ramp — see the accent note below. */
   --text-accent-warm: #E8E8E5;
   --text-accent-cool: #C9CCCC;

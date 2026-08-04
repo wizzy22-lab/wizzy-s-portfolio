@@ -3,12 +3,13 @@
    numbered-step · pull-quote · feature · stat (A standalone, B grid)
    ============================================================= */
 
-/* Shared signature mark — Playfair Italic emphasis word inside any card title.
-   MD §4: Playfair Italic letter-spacing always -0.05em.
-   KR override: Pretendard 700, normal style, letter-spacing -0.02em
+/* Shared signature mark — the emphasis word inside any card title. Once the
+   serif was dropped this is Manrope on the same tracking (-0.05em); the mark
+   now reads as emphasis by tracking and italic, not by a second typeface.
+   KR override: Pretendard 500, normal style, letter-spacing -0.02em
                 (Korean cannot use italic — MD §4 hard rule). */
 .ds-signature {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-style: italic;
   letter-spacing: -0.05em;
   font-weight: var(--text-sig-28-weight);
@@ -112,27 +113,32 @@ html[data-lang="ko"] {
 }
 
 .ds-numbered-step__counter {
-  font-family: var(--font-serif);
-  font-style: italic;
+  /* Folded into the label system: the step numbers read as meta, not as a
+     display flourish. Mono has no italic, so the style is dropped with it. */
+  font-family: var(--font-label);
+  font-style: normal;
   font-size: var(--text-sig-48-size);
   line-height: var(--text-sig-48-line-height);
   letter-spacing: var(--text-sig-48-letter-spacing);
-  font-weight: var(--text-sig-48-weight);
-  color: var(--accent-yellow);
+  font-weight: 400;
+  color: var(--text-faint);
   margin: 0;
   transition: color var(--duration-base) var(--ease-default);
 }
 
 .ds-numbered-step--cream .ds-numbered-step__counter {
   color: var(--text-on-cream);
+  opacity: 0.45;
 }
 
 .ds-numbered-step:hover .ds-numbered-step__counter {
   color: var(--text-primary);
 }
 
+/* On the light card the hover has to go darker, not lighter — the old
+   accent-yellow now resolves to a pale neutral and would vanish here. */
 .ds-numbered-step--cream:hover .ds-numbered-step__counter {
-  color: var(--accent-yellow);
+  opacity: 1;
 }
 
 .ds-numbered-step__caption {
@@ -610,7 +616,7 @@ html[data-lang="ko"] {
 }
 
 .ds-stat-standalone__number {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-style: italic;
   font-size: var(--text-sig-stat-size);
   line-height: var(--text-sig-stat-line-height);
@@ -728,7 +734,7 @@ html[data-lang="ko"] {
 }
 
 .ds-stat-grid__number-value {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-style: italic;
   font-size: var(--text-sig-96-size);
   line-height: var(--text-sig-96-line-height);
@@ -934,7 +940,7 @@ html[data-lang="ko"] {
 }
 
 .ds-research-finding__sub-heading {
-  font-family: var(--font-serif);          /* Playfair Display */
+  font-family: var(--font-sans);
   font-size: 20px;
   line-height: 1.2;
   letter-spacing: 0;
@@ -944,7 +950,7 @@ html[data-lang="ko"] {
   margin: 0;                               /* Spacing handled by parent gap + heading-group wrapper */
 }
 
-/* No .ds-kr override — sub-headings always render English in Playfair */
+/* No .ds-kr override — sub-headings keep the sans stack in both locales. */
 
 /* Heading group: tight pairing of h3 + body (Figma intra-group spec) */
 .ds-research-finding__heading-group {
@@ -1266,7 +1272,7 @@ html[data-lang="ko"] {
 }
 
 .ds-before-after__arrow {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-style: italic;
   font-size: var(--text-sig-64-size);
   line-height: var(--text-sig-64-line-height);

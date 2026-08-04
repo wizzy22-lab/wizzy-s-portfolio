@@ -16,8 +16,11 @@
 
 :root {
   --font-sans: 'Manrope', -apple-system, system-ui, sans-serif;
-  --font-serif: 'Playfair Display', Georgia, serif;
   --font-kr: 'Pretendard', -apple-system, system-ui, sans-serif;
+  /* Label/mono stack — eyebrows, captions and step counters. */
+  --font-label: 'Azeret Mono', 'Pretendard', ui-monospace, monospace;
+  /* Two families only. The old serif-italic signature stack is gone; its
+     consumers take --font-sans, or --font-label for step counters. */
 
   --text-display-size: 56px;
   --text-display-line-height: 61.6px;

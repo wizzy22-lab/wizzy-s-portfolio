@@ -16,7 +16,7 @@ References: GH Social, Thea Washington Casting, Cereal Magazine.
 - Cream + dark inverse rhythm for cards
 - Hairline borders (0.5–1px) only — no heavier
 - Background contrast > borders (cards distinguished by bg color)
-- Sans-serif headlines (Manrope) with Playfair Italic *signature emphasis* on key words
+- Sans headlines (Manrope) with italic *signature emphasis* on key words — one typeface, emphasis by style and tracking
 - Generous whitespace, editorial pacing
 - NO drop shadows, NO gradients
 
@@ -63,19 +63,19 @@ Three font families used:
 ```css
 /* In design-system.css */
 
-/* Manrope — Latin sans, headlines + body */
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+/* Manrope — Latin sans, headlines + body (400/500 only; scale caps at 500) */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&display=swap');
 
-/* Playfair Display — Latin serif italic, signature emphasis only */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400&display=swap');
+/* Azeret Mono — label system: eyebrows, captions, step counters */
+@import url('https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400&display=swap');
 
 /* Pretendard — Korean, all weights */
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
 
 :root {
   --font-sans: 'Manrope', -apple-system, system-ui, sans-serif;
-  --font-serif: 'Playfair Display', Georgia, serif;
   --font-kr: 'Pretendard', -apple-system, system-ui, sans-serif;
+  --font-label: 'Azeret Mono', 'Pretendard', ui-monospace, monospace;
 }
 ```
 
@@ -87,22 +87,22 @@ Three font families used:
 
 ### English text
 - Base font: **Manrope** (body, headings)
-- Signature emphasis (within headlines, counters, stat numbers): **Playfair Display Italic**
-- Letter-spacing for Playfair Italic: **always -0.05em** (-5%)
+- Signature emphasis (within headlines, stat numbers): **Manrope Italic**, tracking -0.05em
+- Letter-spacing for the signature italic: **always -0.05em** (-5%)
 
 ### Korean text
 - Base font: **Pretendard**
-- Emphasis: **Pretendard Bold** (NEVER Playfair Italic — italic doesn't work for Korean)
-- Numbers (e.g., "30%", "76") stay Playfair Italic regardless of language context
+- Emphasis: **Pretendard Medium** (NEVER italic — italic doesn't work for Korean)
+- Numbers (e.g., "30%", "76") take the signature italic regardless of language context
 
 ### `.ds-signature` — Korean override (HARD RULE)
 
-`.ds-signature` is Playfair Italic only in EN context. In any Korean context (`.ds-kr` ancestor/self, or page in `data-lang="ko"`) it MUST switch to Pretendard normal-style. The override below is included in `cards.css`:
+`.ds-signature` is italic only in EN context. In any Korean context (`.ds-kr` ancestor/self, or page in `data-lang="ko"`) it MUST switch to Pretendard normal-style. The override below is included in `cards.css`:
 
 ```css
-/* EN default — Playfair Italic, ls -0.05em */
+/* EN default — sans italic, ls -0.05em */
 .ds-signature {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-style: italic;
   letter-spacing: -0.05em;
   font-weight: var(--text-sig-28-weight);
@@ -120,14 +120,14 @@ html[data-lang="ko"] .ds-signature {
 }
 ```
 
-**Markup rule**: any element wrapping Korean signature words must either be `data-lang-aware` (JS-toggled `.ds-kr`) or sit inside `<html data-lang="ko">`. Number stats are unaffected (still Playfair Italic per design tokens).
+**Markup rule**: any element wrapping Korean signature words must either be `data-lang-aware` (JS-toggled `.ds-kr`) or sit inside `<html data-lang="ko">`. Number stats are unaffected (still the signature italic per design tokens).
 
 > **Language code convention**: `en` / `ko` (NOT `kr`). `KR` is the country code (Republic of Korea), `KO` is the ISO 639-1 language code. CSS attribute selectors, JS data attributes, and toggle button labels all use `EN` / `KO`.
 
 ### Markup pattern
 
 ```html
-<!-- English: Playfair Italic emphasis word inside Manrope headline -->
+<!-- English: italic emphasis word inside Manrope headline -->
 <h2 class="ds-h2">
   HVAC decisions repeat — but the
   <em class="ds-signature">criteria</em>
@@ -139,7 +139,7 @@ html[data-lang="ko"] .ds-signature {
   이 문제는 단순히 <strong>온도</strong>를 조절하는 문제가 아니었다
 </h2>
 
-<!-- Numbers always Playfair Italic -->
+<!-- Numbers always signature italic -->
 <div class="ds-stat-massive">76</div>
 <div class="ds-stat-massive">30<span class="ds-stat-suffix">%</span></div>
 ```
@@ -287,7 +287,7 @@ All cards centered with `margin-inline: auto` when narrower than container.
 **Use**: Overview steps (01–05), Reflection points (01–05)
 
 **Structure** (required):
-- `__counter` — Playfair Italic, **48px** (`--text-sig-48-*` tokens). Switches to text-primary on hover (yellow→primary on dark, dark→yellow on cream).
+- `__counter` — **Azeret Mono 400** on `--text-faint`, **48px** (`--text-sig-48-*` tokens). Brightens to text-primary on hover; on cream it deepens by opacity instead.
 - `__caption` ("— How It Started", eyebrow style, tertiary)
 - `__divider` (short hairline, hover-extends 2×)
 - `__title` h3 (with optional `<em class="ds-signature">` emphasis)
@@ -355,7 +355,7 @@ Adds a square media slot inset at the top-right of the card. Requires wrapping t
 **Use**: Standalone emphasis quotes (▎ box quotes)
 
 **Structure**:
-- quote text (Manrope Medium 22px) with Playfair Italic emphasis words
+- quote text (Manrope Medium 22px) with italic emphasis words
 - optional context line below (~70% opacity)
 
 **Variants**: `--cream` (default, inverse against dark page) | `--dark`
@@ -371,7 +371,7 @@ Adds a square media slot inset at the top-right of the card. Requires wrapping t
 
 **Structure**:
 - eyebrow ("INSIGHT", "USER NEED", "PAIN POINT", etc.)
-- h3 title with Playfair Italic emphasis
+- h3 title with italic emphasis
 - body paragraph (optional)
 
 **Variants**:
@@ -422,7 +422,7 @@ Adds a square media slot inset at the top-right of the card. Requires wrapping t
 
 **Base structure** (simple variant):
 - `__eyebrow` "SECONDARY RESEARCH" (accent-blue)
-- `__title` h2 (with Playfair Italic emphasis)
+- `__title` h2 (with italic emphasis)
 - `__body` paragraph
 - `__grid` — 2-column image grid expecting `__figure` children (each with `__media` + `__caption`), 16:10, gap 16px
 
@@ -488,7 +488,7 @@ Adds a square media slot inset at the top-right of the card. Requires wrapping t
 
 **Structure** (image-led):
 - top: full-width image (16:10), radius card-lg, image flush
-- below: eyebrow + h2 with Playfair Italic emphasis + body + bullet list (em-dash —, accent-blue) + hairline + outcome line
+- below: eyebrow + h2 with italic emphasis + body + bullet list (em-dash —, accent-blue) + hairline + outcome line
 
 **Background**: bg-surface. Radius: card-lg.
 
@@ -500,8 +500,8 @@ Adds a square media slot inset at the top-right of the card. Requires wrapping t
 
 **Structure** (2 columns INVERSE backgrounds):
 - LEFT: bg-surface (BEFORE) — eyebrow text-tertiary, muted flow text
-- RIGHT: card-cream (AFTER) — eyebrow text-on-cream, flow text with Playfair Italic emphasis
-- CENTER: large arrow → (Playfair Italic 80px, accent-yellow)
+- RIGHT: card-cream (AFTER) — eyebrow text-on-cream, flow text with italic emphasis
+- CENTER: large arrow → (sans italic 80px, neutral accent)
 
 **Border**: NONE. Outer radius: card-lg.
 
@@ -587,11 +587,11 @@ Background (required):
 ### 7.9 `stat`
 
 **Use**: KPIs (30/40/15), SUS Score (76)
-**Number style**: Playfair Italic (token), letter-spacing -0.05em.
+**Number style**: signature italic (token), letter-spacing -0.05em.
 
 **Variant A — Standalone (SUS 76)**:
 - background: card-cream
-- big number Playfair Italic (massive size)
+- big number in the signature italic (massive size)
 - hairline divider 40px (1px accent-yellow)
 - label (eyebrow style)
 - caption (max 2 lines, 70% opacity)
@@ -602,7 +602,7 @@ Background (required):
   - Item 1: card-cream / text-on-cream
   - Item 2: accent-yellow / text-on-cream
   - Item 3: bg-surface / text-primary
-- Each: number Playfair Italic + "%" suffix Manrope SemiBold inline
+- Each: number in the signature italic + "%" suffix Manrope Medium inline
 - Hairline divider (32px), label
 
 **Mobile (Variant B)**: 3 columns → vertical stack (3 rows), gap 16px.
@@ -782,8 +782,8 @@ Spacing:
 2. **NO drop shadows**, **NO gradients** on UI elements
 3. **Hairline borders only** (0.5px or 1px max for component borders)
 4. **Cards distinguish via background color contrast**, not borders
-5. **Playfair Italic only for**: signature emphasis words, counters, stat numbers
-6. **Korean = Pretendard**, emphasis = Pretendard Bold (NEVER Playfair Italic)
+5. **Signature italic only for**: signature emphasis words, stat numbers (counters are Azeret Mono)
+6. **Korean = Pretendard**, emphasis = Pretendard Medium (NEVER italic)
 7. **Auto Layout / flexbox / grid** everywhere, NO absolute positioning
 8. **Mobile-first**: write base for mobile, scale up via `@media (min-width: ...)`
 9. **All new classes use `.ds-` prefix** to avoid collision with existing main page classes
@@ -932,7 +932,7 @@ Claude Code self-verification:
 - [ ] Hover states use specified transitions
 - [ ] Mobile transformations applied (vertical stacks where specified)
 - [ ] All classes use `.ds-` prefix
-- [ ] Korean variants use Pretendard, no Playfair Italic on Korean text
+- [ ] Korean variants use Pretendard, no italic on Korean text
 
 **For Operator page**:
 - [ ] Both `design-system.css` and `components.css` linked
