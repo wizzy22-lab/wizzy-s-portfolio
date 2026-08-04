@@ -70,6 +70,50 @@
       .ds-container { max-width: 1280px; padding-inline: 0; }
     }
 
+    /* ---------------------------------------------------------------
+       Nav + footer gutters, mirrored from the main portfolio.
+
+       The case study's own .ds-container tops out at 1280 and so sits
+       ~27px inboard of the main site's bars; laid side by side the two
+       headers did not line up. These three elements — the nav row, the
+       anchor row under it, and the footer — instead take the main
+       site's container geometry verbatim:
+
+         max-w-[1920px] px-6 md:px-16 xl:px-[180px] 2xl:px-[360px]
+
+       Tailwind v4 breakpoints are rem-based (48/80/96rem) and its
+       --spacing is .25rem, so px-6 = 24px and px-16 = 64px. The rem
+       units are kept rather than converted, so the two sites still
+       agree if the root size ever changes.
+
+       Page content keeps the 1280 container — only the bars move.
+       The compound selector outranks the .ds-container rules above,
+       so source order here does not matter.
+       --------------------------------------------------------------- */
+    .ds-container.ds-nav__inner,
+    .ds-container.section-nav__wrap,
+    .ds-container.ds-footer__inner {
+      width: 100%;
+      max-width: 1920px;
+      margin-inline: auto;
+      padding-inline: 24px;                 /* px-6 */
+    }
+    @media (min-width: 48rem) {             /* md */
+      .ds-container.ds-nav__inner,
+      .ds-container.section-nav__wrap,
+      .ds-container.ds-footer__inner { padding-inline: 64px; }
+    }
+    @media (min-width: 80rem) {             /* xl */
+      .ds-container.ds-nav__inner,
+      .ds-container.section-nav__wrap,
+      .ds-container.ds-footer__inner { padding-inline: 180px; }
+    }
+    @media (min-width: 96rem) {             /* 2xl */
+      .ds-container.ds-nav__inner,
+      .ds-container.section-nav__wrap,
+      .ds-container.ds-footer__inner { padding-inline: 360px; }
+    }
+
     /* ===============================================================
        GLOBAL NAV + CASE ANCHORS
        Ported from the main portfolio's SiteHeader so the two bars are
