@@ -29,3 +29,5 @@ dist/
 build/
 .next/
 .cache/
+.vercel
+.env*

@@ -3,9 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Operator — Hajiwi</title>
+  <title>Operator — wizzy</title>
   <meta name="description" content="Operator — an AI-powered HVAC decision system that helps small business owners judge cost and comfort together, instead of adjusting by feel." />
   <link rel="stylesheet" href="../design-system/index.css" />
+  <!-- The main portfolio sets every label-scale run in Azeret Mono; the case
+       anchors and the EN/KO toggle borrow it so the two bars match. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400&display=swap" />
   <style>
     /* Page-level reset & layout (uses tokens only) */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -19,6 +24,9 @@
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      /* The bar is `fixed`, as it is on the main site, so it no longer
+         occupies flow. This is what the hero used to be pushed down by. */
+      padding-top: var(--nav-offset);
     }
     /* image-rendering removed — was sharpening 1:1-mapped images at 1920
        and causing visible pixel grain. Browser default does subpixel
@@ -57,130 +65,169 @@
       .ds-container { max-width: 1280px; padding-inline: 0; }
     }
 
-    /* Nav — language-agnostic. Menu items + tagline never translate. */
-    .ds-nav {
-      position: sticky;
-      top: 0;
-      z-index: var(--z-sticky, 100);
-      background: var(--bg-page);
-      border-bottom: var(--border-thin) solid var(--border-hairline);
+    /* ===============================================================
+       GLOBAL NAV + CASE ANCHORS
+       Ported from the main portfolio's SiteHeader so the two bars are
+       the same object. Row one (70px) is the site nav; row two (38px)
+       is this case study's own anchors. They share one translucent
+       surface — no rule between them, one hairline under the pair.
+       =============================================================== */
+
+    :root {
+      /* The main site's dark token set, under the names it uses there,
+         so the two can be diffed value-for-value. The design system's
+         own --text-primary / --border-hairline are left untouched for
+         the rest of the page. */
+      --text: #f5f5f2;
+      --text-dim: #8b8b88;
+      --text-faint: #5c5c59;
+      --border: rgba(255, 255, 255, 0.08);
+
+      /* Latin is set by Manrope, Hangul falls through to Pretendard —
+         one stack for both scripts, exactly as the main site does it.
+         The label stack does the same behind Azeret Mono. */
+      --font-brand: 'Manrope', 'Pretendard', -apple-system, system-ui, sans-serif;
+      --font-label: 'Azeret Mono', 'Pretendard', ui-monospace, monospace;
+
+      --nav-bar-h: 70px;
+      --nav-anchor-h: 38px;
+      /* 70 + 38 — clears both rows, and is what `body` is padded by. */
+      --nav-offset: 108px;
     }
+
+    .ds-nav {
+      position: fixed;
+      inset-inline: 0;
+      top: 0;
+      z-index: 50;
+      background: rgba(26, 26, 26, 0.8);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      /* Sits on the bar rather than on the anchor row's container, so it
+         runs full-bleed like the surface it closes. It is still the
+         anchor row's underline — there is no rule between the rows. */
+      border-bottom: 1px solid var(--border);
+    }
+
     .ds-nav__inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: var(--space-6);
-      padding-block: var(--space-4);
+      height: var(--nav-bar-h);
     }
 
-    /* Brand: logo + tagline (both fixed English) */
+    /* The mark alone. The "Product designer" sub-line is gone — the main
+       site dropped it, and the hero's ROLE row already says it. */
     .ds-nav__brand {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-1);
-      text-decoration: none;
-      color: var(--text-primary);
-    }
-    .ds-nav__logo {
-      font-family: var(--font-sans);
-      font-size: var(--text-eyebrow-lg-size);
-      line-height: var(--text-eyebrow-lg-line-height);
-      letter-spacing: var(--text-eyebrow-letter-spacing);
-      font-weight: var(--text-eyebrow-weight);
+      font-family: var(--font-brand);
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: 0.025em;
       text-transform: lowercase;
-      color: var(--text-primary);
+      color: var(--text);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: opacity var(--duration-base) var(--ease-default);
     }
-    .ds-nav__tagline {
-      font-family: var(--font-sans);
-      font-size: var(--text-caption-size);
-      line-height: var(--text-caption-line-height);
-      color: var(--text-secondary);
-    }
+    .ds-nav__brand:hover { opacity: 0.7; }
 
-    /* Menu (3 links + lang toggle) */
+    /* Links and the language toggle sit one gap apart, same as the gap
+       between the links themselves. */
+    .ds-nav__right,
     .ds-nav__menu {
       display: flex;
       align-items: center;
-      gap: var(--space-6);
+      gap: 32px;
     }
     @media (min-width: 768px) {
-      .ds-nav__menu { gap: var(--space-8); }
-    }
-    /* Mobile: hide menu links, keep lang toggle visible */
-    @media (max-width: 767px) {
-      .ds-nav__menu .ds-nav-link { display: none; }
+      .ds-nav__right,
+      .ds-nav__menu { gap: 52px; }
     }
 
-    /* Lang toggle (EN / KO) */
+    .ds-nav-link {
+      font-family: var(--font-brand);
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.6;
+      letter-spacing: 0;
+      text-transform: lowercase;
+      color: var(--text-dim);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color var(--duration-base) var(--ease-default);
+    }
+    .ds-nav-link:hover,
+    .ds-nav-link:focus-visible { color: var(--text); }
+
+    /* Lang toggle (EN / KO) — label scale, achromatic. */
     .ds-lang-toggle {
       display: flex;
       align-items: center;
-      gap: var(--space-2);
-      margin-left: var(--space-4);
+      gap: 8px;
     }
+    .ds-lang-toggle__sep { color: var(--text-faint); }
     .ds-lang-toggle__btn {
       background: transparent;
       border: 0;
-      padding: var(--space-2);
+      padding: 0;
       cursor: pointer;
-      font-family: var(--font-sans);
-      font-size: var(--text-eyebrow-size);
-      letter-spacing: var(--text-eyebrow-letter-spacing);
-      font-weight: var(--text-eyebrow-weight);
+      font-family: var(--font-label);
+      font-size: 13px;
+      line-height: 1.4;
+      letter-spacing: 0.08em;
+      font-weight: 400;
       text-transform: uppercase;
-      color: var(--text-tertiary);
+      color: var(--text-dim);
       transition: color var(--duration-base) var(--ease-default);
     }
-    .ds-lang-toggle__btn:hover { color: var(--text-primary); }
-    .ds-lang-toggle__btn--active { color: var(--text-primary); }
-
-    /* ---------------------------------------------------------------
-       Section navigation — second row inside the sticky header.
-       Scroll-spy sets .is-active; --nav-offset keeps anchor targets
-       clear of the (two-row) sticky header.
-       --------------------------------------------------------------- */
-    :root { --nav-offset: 112px; }
-    @media (min-width: 768px) { :root { --nav-offset: 128px; } }
-
-    .section-nav__wrap {
-      border-top: var(--border-thin) solid var(--border-hairline);
+    .ds-lang-toggle__sep,
+    .ds-lang-toggle__btn {
+      font-family: var(--font-label);
+      font-size: 13px;
+      line-height: 1.4;
     }
+    .ds-lang-toggle__btn:hover { color: var(--text); }
+    .ds-lang-toggle__btn--active { color: var(--text); }
+
+    /* --- Case anchors: row two of the same surface -----------------
+       No border-top: the two rows are one bar, not two stacked ones.
+       The single hairline goes under the pair.                      */
     .section-nav {
       display: flex;
-      gap: var(--space-6);
+      align-items: center;
+      height: var(--nav-anchor-h);
+      gap: 24px;
+      /* Narrow screens scroll the row sideways rather than wrapping it,
+         which would break the fixed 38px height. */
+      flex-wrap: nowrap;
       overflow-x: auto;
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
     }
     .section-nav::-webkit-scrollbar { display: none; }
     @media (min-width: 768px) {
-      .section-nav { gap: var(--space-8); overflow-x: visible; }
+      .section-nav { gap: 32px; }
     }
     .section-nav__link {
       flex: 0 0 auto;
-      font-family: var(--font-sans);
-      font-size: var(--text-caption-size);
-      line-height: 1.2;
-      letter-spacing: var(--text-eyebrow-letter-spacing);
-      text-transform: uppercase;
-      color: var(--text-tertiary);
+      font-family: var(--font-label);
+      font-size: 13px;
+      line-height: 1.4;
+      letter-spacing: 0.08em;
+      text-transform: lowercase;
+      color: var(--text-dim);
       text-decoration: none;
-      padding-block: var(--space-3);
-      border-bottom: 2px solid transparent;
       white-space: nowrap;
       transition: color var(--duration-base) var(--ease-default);
     }
-    .section-nav.ds-kr .section-nav__link {
-      font-family: var(--font-kr);
-      letter-spacing: 0;
-    }
-    .section-nav__link:hover { color: var(--text-primary); }
-    .section-nav__link.is-active {
-      color: var(--accent-yellow);
-      border-bottom-color: currentColor;
-    }
+    .section-nav__link:hover { color: var(--text); }
+    /* The current section is a step up the text ramp, not a second
+       colour — the accent-yellow underline is gone with the rest of it. */
+    .section-nav__link.is-active { color: var(--text); }
 
-    /* Anchor targets clear the sticky header */
+    /* Anchor targets clear the fixed header */
     main > section[id] { scroll-margin-top: var(--nav-offset); }
 
     @media (prefers-reduced-motion: no-preference) {
@@ -1283,18 +1330,131 @@
     }
 
     /* Footer */
-    .ds-footer {
-      border-top: var(--border-thin) solid var(--border-hairline);
-      padding-block: var(--space-10);
-      color: var(--text-tertiary);
-      font-size: var(--text-caption-size);
+    /* ===============================================================
+       FOOTER — the light close, ported from the main portfolio's
+       SiteFooter. It carries `id="contact"`: there is no separate
+       contact section on either site, so the nav link lands here.
+       =============================================================== */
+    .ds-footer[data-theme="light"] {
+      /* Same token names, light values — everything below reads through
+         them, so the block needs no second set of colour rules. */
+      --text: #1e1e1e;
+      --text-dim: #747370;
+      --border: rgba(0, 0, 0, 0.08);
+
+      background: #f5f7f2;
+      color: var(--text);
+      font-family: var(--font-brand);
+      padding-top: 128px;
+      padding-bottom: 64px;
+      scroll-margin-top: var(--nav-offset);
     }
+
+    /* Link columns on the left, the mark on the right. `flex-start` is
+       what lines the mark's cap up with the column labels. */
     .ds-footer__inner {
       display: flex;
-      align-items: center;
+      flex-direction: column;
       justify-content: space-between;
-      flex-wrap: wrap;
-      gap: var(--space-3);
+      gap: 64px;
+    }
+    @media (min-width: 1024px) {
+      .ds-footer__inner {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 48px;
+      }
+    }
+
+    /* 2×2 on small screens, a single row of columns from lg up. */
+    .ds-footer__cols {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 32px;
+      row-gap: 56px;
+    }
+    @media (min-width: 1024px) {
+      .ds-footer__cols {
+        display: flex;
+        column-gap: 80px;
+      }
+    }
+
+    .ds-footer__label {
+      font-family: var(--font-brand);
+      /* The main site's heading step: 32px from 1280 up, which is where
+         the spec was measured, easing down so a half-width mobile
+         column doesn't have to wrap "Get in touch" three times. */
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      font-weight: 400;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin: 0;
+    }
+    html[data-lang="ko"] .ds-footer__label { letter-spacing: -0.01em; }
+
+    .ds-footer__list {
+      list-style: none;
+      margin: 24px 0 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .ds-footer__item,
+    .ds-footer__link {
+      font-family: var(--font-brand);
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--text-dim);
+      text-decoration: none;
+    }
+    .ds-footer__item { margin: 24px 0 0; }
+    .ds-footer__link {
+      cursor: pointer;
+      transition: opacity var(--duration-base) var(--ease-default);
+    }
+    .ds-footer__link:hover { opacity: 0.7; }
+
+    .ds-footer__mark-wrap { flex-shrink: 0; }
+    @media (min-width: 1024px) {
+      .ds-footer__mark-wrap { text-align: right; }
+    }
+    .ds-footer__mark {
+      font-family: var(--font-brand);
+      /* Spelled out rather than borrowing the display step, which
+         carries -0.02em and would overwrite the mark's own 0.025em. */
+      font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: 0.025em;
+      text-transform: lowercase;
+      color: var(--text);
+      margin: 0;
+    }
+    .ds-footer__copyright {
+      font-family: var(--font-label);
+      font-size: 13px;
+      line-height: 1.4;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      margin: 20px 0 0;
+    }
+
+    /* Announced to screen readers, invisible on screen — carries the
+       copy confirmation, which is otherwise a purely visual swap. */
+    .ds-sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
 
     /* =============================================================
@@ -1565,29 +1725,62 @@
 </head>
 <body>
 
-  <!-- ====================  NAV  ==================== -->
+  <!-- ====================  NAV  ====================
+       Row one is the main portfolio's own bar; row two is this case
+       study's anchors. `data-href-en` / `data-href-ko` are swapped onto
+       `href` by setLang(), so every destination stays in the language
+       the visitor is reading. -->
   <header class="ds-nav">
     <div class="ds-container ds-nav__inner">
-      <a class="ds-nav__brand" href="../index.html">
-        <span class="ds-nav__logo">wizzy</span>
-        <span class="ds-nav__tagline">Product designer</span>
-      </a>
+      <a class="ds-nav__brand"
+         href="https://wizzy-lime.vercel.app/ko"
+         data-href-en="https://wizzy-lime.vercel.app/en"
+         data-href-ko="https://wizzy-lime.vercel.app/ko">wizzy</a>
 
-      <nav class="ds-nav__menu" aria-label="Primary">
-        <a class="ds-nav-link is-active" href="./operator.html" aria-current="page">PROJECT</a>
-        <!-- ABOUT / RESUME hidden until their destination pages exist —
-             restore these links once /about and /resume ship. -->
+      <div class="ds-nav__right">
+        <nav class="ds-nav__menu" aria-label="Primary">
+          <a class="ds-nav-link"
+             href="https://wizzy-lime.vercel.app/ko#project"
+             data-href-en="https://wizzy-lime.vercel.app/en#project"
+             data-href-ko="https://wizzy-lime.vercel.app/ko#project">
+            <span data-lang-content="en">project</span>
+            <span data-lang-content="ko">프로젝트</span>
+          </a>
+          <a class="ds-nav-link"
+             href="https://wizzy-lime.vercel.app/ko#about"
+             data-href-en="https://wizzy-lime.vercel.app/en#about"
+             data-href-ko="https://wizzy-lime.vercel.app/ko#about">
+            <span data-lang-content="en">about</span>
+            <span data-lang-content="ko">소개</span>
+          </a>
+          <!-- Not a section — opens the CV itself, in its own tab so it
+               never replaces the case study. -->
+          <a class="ds-nav-link"
+             target="_blank" rel="noopener noreferrer"
+             href="https://wizzy-lime.vercel.app/HaejiWi_ProductDesigner_Resume_KO.pdf"
+             data-href-en="https://wizzy-lime.vercel.app/HaejiWi_ProductDesigner_Resume_EN.pdf"
+             data-href-ko="https://wizzy-lime.vercel.app/HaejiWi_ProductDesigner_Resume_KO.pdf">
+            <span data-lang-content="en">resume</span>
+            <span data-lang-content="ko">이력서</span>
+          </a>
+          <!-- Resolves to this page's own footer, which carries the id. -->
+          <a class="ds-nav-link" href="#contact">
+            <span data-lang-content="en">contact</span>
+            <span data-lang-content="ko">연락처</span>
+          </a>
+        </nav>
 
         <div class="ds-lang-toggle" role="group" aria-label="Language">
           <button type="button" class="ds-lang-toggle__btn" data-lang="en" aria-label="English">EN</button>
+          <span class="ds-lang-toggle__sep" aria-hidden="true">/</span>
           <button type="button" class="ds-lang-toggle__btn ds-lang-toggle__btn--active" data-lang="ko" aria-label="Korean">KO</button>
         </div>
-      </nav>
+      </div>
     </div>
 
     <!-- Section navigation — in-page anchors, scroll-spy driven -->
     <div class="ds-container section-nav__wrap">
-      <nav class="section-nav" aria-label="Section navigation" data-lang-aware>
+      <nav class="section-nav" aria-label="Section navigation">
         <a href="#overview" class="section-nav__link is-active">
           <span data-lang-content="en">Overview</span>
           <span data-lang-content="ko">개요</span>
@@ -3151,17 +3344,74 @@
 
   </main>
 
-  <!-- ====================  FOOTER  ==================== -->
-  <footer class="ds-footer">
+  <!-- ====================  FOOTER  ====================
+       Closes the page on the light set, and is the nav's `contact`
+       target — there is no separate contact section. -->
+  <footer class="ds-footer" id="contact" data-theme="light">
     <div class="ds-container ds-footer__inner">
-      <span>
-        <span data-lang-content="ko">© 2025 Hajiwi · 모든 권리 보유</span>
-        <span data-lang-content="en">© 2025 Hajiwi · All rights reserved</span>
-      </span>
-      <span>
-        <span data-lang-content="ko">디자인 시스템 v2</span>
-        <span data-lang-content="en">Design System v2</span>
-      </span>
+      <div class="ds-footer__cols">
+        <div>
+          <h2 class="ds-footer__label">
+            <span data-lang-content="en">Connect</span>
+            <span data-lang-content="ko">연결</span>
+          </h2>
+          <ul class="ds-footer__list">
+            <li>
+              <a class="ds-footer__link" href="https://www.linkedin.com/in/haeji-wi"
+                 target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="ds-footer__label">
+            <span data-lang-content="en">Get in touch</span>
+            <span data-lang-content="ko">연락하기</span>
+          </h2>
+          <ul class="ds-footer__list">
+            <li>
+              <!-- Stays a real mailto: underneath. Where the Clipboard API
+                   is missing — any non-secure origin — the click is simply
+                   not intercepted and the link behaves as an email link. -->
+              <a class="ds-footer__link ds-copy-email"
+                 href="mailto:hazzysw@gmail.com"
+                 aria-label="hazzysw@gmail.com"
+                 data-email="hazzysw@gmail.com"
+                 data-copied-en="Copied!"
+                 data-copied-ko="복사했습니다"><span class="ds-copy-email__label" aria-hidden="true">hazzysw@gmail.com</span></a>
+              <span class="ds-sr-only" aria-live="polite" data-copy-live></span>
+            </li>
+            <li>
+              <a class="ds-footer__link"
+                 target="_blank" rel="noopener noreferrer"
+                 href="https://wizzy-lime.vercel.app/HaejiWi_ProductDesigner_Resume_KO.pdf"
+                 data-href-en="https://wizzy-lime.vercel.app/HaejiWi_ProductDesigner_Resume_EN.pdf"
+                 data-href-ko="https://wizzy-lime.vercel.app/HaejiWi_ProductDesigner_Resume_KO.pdf">
+                <span data-lang-content="en">Resume</span>
+                <span data-lang-content="ko">이력서</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="ds-footer__label">
+            <span data-lang-content="en">Location</span>
+            <span data-lang-content="ko">위치</span>
+          </h2>
+          <p class="ds-footer__item">
+            <span data-lang-content="en">Seoul, South Korea</span>
+            <span data-lang-content="ko">서울, 대한민국</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- The mark, and the notice under it. Left-aligned on mobile,
+           where it has dropped below the columns rather than beside them. -->
+      <div class="ds-footer__mark-wrap">
+        <p class="ds-footer__mark" aria-hidden="true">wizzy</p>
+        <p class="ds-footer__copyright">© 2026 wizzy</p>
+      </div>
     </div>
   </footer>
 
@@ -3185,6 +3435,12 @@
         document.querySelectorAll('[data-lang-aware]').forEach((el) =>
           el.classList.toggle('ds-kr', lang === 'ko')
         );
+
+        // Cross-site destinations follow the language being read, so the
+        // main site and the CV both open in the locale the visitor is in.
+        document.querySelectorAll('[data-href-' + lang + ']').forEach((el) => {
+          el.setAttribute('href', el.getAttribute('data-href-' + lang));
+        });
       };
 
       buttons.forEach((btn) => {
@@ -3193,6 +3449,42 @@
 
       // Initialize from current data-lang (default = ko)
       setLang(root.dataset.lang || 'ko');
+    })();
+
+    // ===== Footer email — copy on click instead of handing off to a
+    // mail client the visitor may not use. =====
+    (function () {
+      const link = document.querySelector('.ds-copy-email');
+      if (!link) return;
+
+      const label = link.querySelector('.ds-copy-email__label');
+      const live = document.querySelector('[data-copy-live]');
+      const email = link.dataset.email;
+      const FEEDBACK_MS = 1500;
+      let timer;
+
+      link.addEventListener('click', async (event) => {
+        if (!navigator.clipboard) return; // no API — let the mailto: through
+        event.preventDefault();
+        try {
+          await navigator.clipboard.writeText(email);
+        } catch {
+          // Denied mid-flight (unfocused document, blocked permission):
+          // fall back to what the href already described.
+          window.location.href = 'mailto:' + email;
+          return;
+        }
+
+        const copied = link.dataset['copied' + (document.documentElement.dataset.lang === 'ko' ? 'Ko' : 'En')];
+        label.textContent = copied;
+        if (live) live.textContent = copied;
+
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          label.textContent = email;
+          if (live) live.textContent = '';
+        }, FEEDBACK_MS);
+      });
     })();
 
     // ===== Section nav — scroll-spy (topmost visible section wins) =====
