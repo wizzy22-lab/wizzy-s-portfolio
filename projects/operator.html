@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" data-lang="ko">
+<html lang="en" data-lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -1821,9 +1821,9 @@
         </nav>
 
         <div class="ds-lang-toggle" role="group" aria-label="Language">
-          <button type="button" class="ds-lang-toggle__btn" data-lang="en" aria-label="English">EN</button>
+          <button type="button" class="ds-lang-toggle__btn ds-lang-toggle__btn--active" data-lang="en" aria-label="English">EN</button>
           <span class="ds-lang-toggle__sep" aria-hidden="true">/</span>
-          <button type="button" class="ds-lang-toggle__btn ds-lang-toggle__btn--active" data-lang="ko" aria-label="Korean">KO</button>
+          <button type="button" class="ds-lang-toggle__btn" data-lang="ko" aria-label="Korean">KO</button>
         </div>
       </div>
     </div>
@@ -1966,7 +1966,7 @@
           <p class="ds-section-header__eyebrow">[ 01 — OVERVIEW ]</p>
         </header>
 
-        <p class="overview-scope-note ds-kr" data-lang-aware>
+        <p class="overview-scope-note" data-lang-aware>
           <span data-lang-content="ko">5인 탐색적 검증 기반의 컨셉 프로젝트로, 결과는 성과가 아닌 개선 방향의 참고값으로 해석했습니다.</span>
           <span data-lang-content="en">A concept project validated through exploratory research with 5 participants — results are read as directional input, not product performance.</span>
         </p>
@@ -1974,7 +1974,7 @@
         <div class="overview-stack">
 
           <!-- ===== CARD 01 — Start point ===== -->
-          <article class="ds-numbered-step ds-kr" data-lang-aware>
+          <article class="ds-numbered-step" data-lang-aware>
             <div class="ds-numbered-step__content">
               <p class="ds-numbered-step__counter">01</p>
               <p class="ds-numbered-step__caption">
@@ -1994,7 +1994,7 @@
           </article>
 
           <!-- ===== CARD 02 — Start point (question) ===== -->
-          <article class="ds-numbered-step ds-kr" data-lang-aware>
+          <article class="ds-numbered-step" data-lang-aware>
             <div class="ds-numbered-step__content">
               <p class="ds-numbered-step__counter">02</p>
               <p class="ds-numbered-step__caption">
@@ -2010,7 +2010,7 @@
           </article>
 
           <!-- ===== CARD 03 — Target (3-up comparison) ===== -->
-          <article class="ds-numbered-step ds-kr" data-lang-aware>
+          <article class="ds-numbered-step" data-lang-aware>
             <div class="ds-numbered-step__content">
               <p class="ds-numbered-step__counter">03</p>
               <p class="ds-numbered-step__caption">
@@ -2096,7 +2096,7 @@
           </article>
 
           <!-- ===== CARD 04 — Target (chosen) ===== -->
-          <article class="ds-numbered-step ds-kr" data-lang-aware>
+          <article class="ds-numbered-step" data-lang-aware>
             <div class="ds-numbered-step__content">
               <p class="ds-numbered-step__counter">04</p>
               <p class="ds-numbered-step__caption">
@@ -2116,7 +2116,7 @@
           </article>
 
           <!-- ===== CARD 05 — Validation ===== -->
-          <article class="ds-numbered-step ds-kr" data-lang-aware>
+          <article class="ds-numbered-step" data-lang-aware>
             <div class="ds-numbered-step__content">
               <p class="ds-numbered-step__counter">05</p>
               <p class="ds-numbered-step__caption">
@@ -2708,7 +2708,7 @@
           </p>
 
           <!-- AI 3-stage decision diagram (Input → Judgment → Output) -->
-          <div class="ai-decision-flow ds-kr" data-lang-aware>
+          <div class="ai-decision-flow" data-lang-aware>
             <div class="ai-decision-flow__step ai-decision-flow__step--input">
               <p class="ai-decision-flow__counter">01</p>
               <p class="ai-decision-flow__label">
@@ -3115,7 +3115,7 @@
           </div>
 
           <!-- SUS Score callout — 4-step UT flow (Stuck → Why → Fix → Result) -->
-          <div class="sus-callout sus-callout--4step ds-kr" data-lang-aware>
+          <div class="sus-callout sus-callout--4step" data-lang-aware>
             <div class="ut-4step">
 
               <div class="ut-4step__item">
@@ -3502,8 +3502,8 @@
         btn.addEventListener('click', () => setLang(btn.dataset.lang));
       });
 
-      // Initialize from current data-lang (default = ko)
-      setLang(root.dataset.lang || 'ko');
+      // Initialize from current data-lang (default = en)
+      setLang(root.dataset.lang || 'en');
     })();
 
     // ===== Footer email — copy on click instead of handing off to a
