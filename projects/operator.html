@@ -345,7 +345,11 @@
     }
     @media (min-width: 768px) {
       .hero-meta {
-        grid-template-columns: repeat(3, 1fr);
+        /* Not equal thirds: ROLE/DURATION need ~130px while MY ROLE and
+           SKILLS carry the long author-set lines (375 and 350). An even
+           split starves the two that matter and wastes 220px on the first,
+           so the track sizes follow the content instead. */
+        grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.2fr) minmax(0, 1.1fr);
         gap: var(--space-8);
         margin-top: var(--space-16);
       }
@@ -514,7 +518,11 @@
     }
     @media (min-width: 768px) {
       .feature-row {
-        grid-template-columns: 876fr 392fr;
+        /* Was 876/392, which resolved to a 343px card — narrower than the
+           author-set lines inside it. The widest is 353px and the card's
+           24px padding takes 48, so the column has to clear ~401. Taken off
+           the media column, which is 16:10 and just scales. */
+        grid-template-columns: 790fr 478fr;
       }
     }
     .feature-row__media {
@@ -1075,7 +1083,11 @@
       color: var(--text-on-cream);
       border-radius: 24px;
       padding: var(--space-8);                /* 32 mobile */
-      max-width: 796px;
+      /* 880 rather than 796: the longest author-set line in these boxes wants
+         723px and the 60px side padding eats 120 of the box. The callouts
+         shrink to their own content, so the wider cap only reaches the one
+         that needs it — the shorter two keep the width they had. */
+      max-width: 880px;
       margin-inline: auto;
       text-align: center;
       display: flex;
@@ -1185,6 +1197,28 @@
          softened body colour set on .problem-statement. */
       color: var(--text-on-cream);
     }
+
+    /* Sentences the author sets as a single line. The design system caps
+       body copy at a 720px measure, which is right for multi-line prose but
+       folds a couple of these one-liners onto a stub second line. Releasing
+       the cap lets the parent (1080 here) govern, so the line holds on
+       desktop and still wraps naturally once the viewport is genuinely too
+       narrow — forcing nowrap there would trade a wrap for a scrollbar. */
+    .ds-research-finding__paragraph--oneline {
+      max-width: none;
+    }
+    /* A line too long for its column, promoted to a full-width row of the
+       media grid and centred under the pair it now describes. */
+    .ds-research-finding__media-grid > .ds-research-finding__paragraph--span {
+      grid-column: 1 / -1;
+      text-align: center;
+    }
+
+    /* The project tagline is set as a single line. At 32px it wants 821px and
+       the section header's measure is 800 — so the cap comes off the header
+       here rather than the heading, which is what actually constrains it. */
+    .ds-h2--oneline { max-width: none; }
+    #project-tagline .ds-section-header { max-width: none; }
 
     /* Scope note — flags the evidence base before the reader meets any
        finding. Body size, no italic and no extra weight: it qualifies the
@@ -1878,7 +1912,7 @@
       <div class="ds-container">
         <header class="ds-section-header" data-lang-aware>
           <p class="ds-section-header__eyebrow">[ PROJECT ]</p>
-          <h2 class="ds-h2" data-lang-content="en"><em class="ds-signature ds-signature--accent-yellow">AI-powered HVAC decision system</em><br>for small business owners</h2>
+          <h2 class="ds-h2 ds-h2--oneline" data-lang-content="en"><em class="ds-signature ds-signature--accent-yellow">AI-powered HVAC decision system</em> for small business owners</h2>
           <h2 class="ds-h2 ds-kr" data-lang-content="ko">자영업자를 위한<br><em class="ds-signature ds-signature--accent-yellow">AI 기반 HVAC 의사결정 시스템</em></h2>
         </header>
 
@@ -1904,8 +1938,8 @@
               <span data-lang-content="ko">기여</span>
             </p>
             <div class="hero-meta__value">
-              <p data-lang-content="en">Pricing-structure &amp; context analysis (lead) · Usability test moderation · System design (co-led) · User research (support)</p>
-              <p data-lang-content="ko">요금구조·맥락 분석 리드 · 사용성 테스트 진행 · 시스템 설계(공동) · 리서치 참여</p>
+              <p data-lang-content="en">Pricing-structure &amp; context analysis (lead)<br>Usability test moderation · System design (co-led) ·<br>User research (support)</p>
+              <p data-lang-content="ko">요금구조·맥락 분석 리드 · 사용성 테스트 진행<br>시스템 설계(공동) · 리서치 참여</p>
             </div>
           </div>
 
@@ -1915,8 +1949,8 @@
               <span data-lang-content="ko">스킬</span>
             </p>
             <div class="hero-meta__value">
-              <p data-lang-content="en">Cost-structure analysis · UT moderation · Data-informed design · AI-assisted visualization</p>
-              <p data-lang-content="ko">비용 구조 분석 · UT 모더레이션 · 데이터 기반 디자인 · AI 이미지 생성 비주얼라이제이션</p>
+              <p data-lang-content="en">Cost-structure analysis · UT moderation<br>Data-informed design · AI-assisted visualization</p>
+              <p data-lang-content="ko">비용 구조 분석 · UT 모더레이션 · 데이터 기반 디자인<br>AI 이미지 생성 비주얼라이제이션</p>
             </div>
           </div>
 
@@ -1968,7 +2002,7 @@
 
         <p class="overview-scope-note" data-lang-aware>
           <span data-lang-content="ko">5인 탐색적 검증 기반의 컨셉 프로젝트로, 결과는 성과가 아닌 개선 방향의 참고값으로 해석했습니다.</span>
-          <span data-lang-content="en">A concept project validated through exploratory research with 5 participants — results are read as directional input, not product performance.</span>
+          <span data-lang-content="en">A concept project validated through exploratory research with 5 participants<br>results are read as directional input, not product performance.</span>
         </p>
 
         <div class="overview-stack">
@@ -2183,11 +2217,11 @@
             <div class="ds-insight ds-insight--dark" data-lang-aware>
               <p class="ds-insight__eyebrow">01</p>
               <h4 class="ds-insight__title">
-                <span data-lang-content="ko">기준 부재로 인한 반복 조정</span>
+                <span data-lang-content="ko">기준 부재로 인한<br>반복 조정</span>
                 <span data-lang-content="en">Repeated adjustments from missing criteria</span>
               </h4>
               <p class="ds-insight__body">
-                <span data-lang-content="ko">기준이 없어 불안할 때마다 냉난방을 계속 바꾸게 된다</span>
+                <span data-lang-content="ko">기준이 없어 불안할 때마다<br>냉난방을 계속 바꾸게 된다</span>
                 <span data-lang-content="en">Without criteria, anxiety drives constant HVAC tweaking</span>
               </p>
             </div>
@@ -2231,7 +2265,7 @@
                 <span data-lang-content="en">Abandonment from store-specific complexity</span>
               </h4>
               <p class="ds-insight__body">
-                <span data-lang-content="ko">매장마다 상황이 달라 조작 방법을 맞추기 어려워, 결국 사용을 포기하게 된다</span>
+                <span data-lang-content="ko">매장마다 상황이 달라<br>조작 방법을 맞추기 어려워,<br>결국 사용을 포기하게 된다</span>
                 <span data-lang-content="en">Each store's setup differs, adapting controls becomes too hard, they give up</span>
               </p>
             </div>
@@ -2239,11 +2273,11 @@
             <div class="ds-insight ds-insight--dark" data-lang-aware>
               <p class="ds-insight__eyebrow">04</p>
               <h4 class="ds-insight__title">
-                <span data-lang-content="ko">판단보다 조작에 의존하는 행동</span>
+                <span data-lang-content="ko">판단보다 조작에<br>의존하는 행동</span>
                 <span data-lang-content="en">Acting first, judging never</span>
               </h4>
               <p class="ds-insight__body">
-                <span data-lang-content="ko">어떻게 판단할지보다, 일단 조작으로 해결하려고 한다</span>
+                <span data-lang-content="ko">어떻게 판단할지보다,<br>일단 조작으로 해결하려고 한다</span>
                 <span data-lang-content="en">Rather than weighing the decision, they jump straight to manipulating the controls</span>
               </p>
             </div>
@@ -2270,7 +2304,7 @@
           <div class="ds-research-finding__heading-group">
             <h3 class="ds-research-finding__sub-heading">Interview</h3>
             <p class="ds-research-finding__paragraph" data-lang-content="en">
-              To understand when stress peaks in real store operations and what actually drives HVAC decisions,<br>we interviewed 5 small business owners.
+              To understand when stress peaks in real store operations<br>and what actually drives HVAC decisions, we interviewed 5 small business owners.
             </p>
             <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
               실제 매장 운영 상황에서 언제 스트레스가 커지는지, 무엇을 기준으로 냉난방을 조절하는지<br>구체적으로 알아보기 위해 자영업자 5인을 인터뷰했습니다
@@ -2294,9 +2328,9 @@
           <div class="ds-research-finding__heading-group">
             <h3 class="ds-research-finding__sub-heading">Data Analysis</h3>
             <p class="ds-research-finding__paragraph" data-lang-content="en">
-              After organizing the interview data through affinity mapping and thematic coding, similar concerns kept surfacing.
+              After organizing the interview data through affinity mapping and thematic coding,<br>similar concerns kept surfacing.
             </p>
-            <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
+            <p class="ds-research-finding__paragraph ds-research-finding__paragraph--oneline ds-kr" data-lang-content="ko">
               이 인터뷰 내용을 어피니티 맵핑과 Thematic coding을 통해 데이터를 정리해보니 비슷한 고민들이 이어지고 있었습니다
             </p>
           </div>
@@ -2339,12 +2373,12 @@
 
             <div class="ds-insight ds-insight--dark" data-lang-aware>
               <h4 class="ds-insight__title">
-                <span data-lang-content="ko">02. 상황마다 다르게 대응하지만 기준이 없다</span>
+                <span data-lang-content="ko">02. 상황마다 다르게 대응하지만<br>기준이 없다</span>
                 <span data-lang-content="en">02. They adapt to each situation, but without any criteria</span>
               </h4>
               <p class="ds-insight__body">
                 <span data-lang-content="ko">바쁠 때와 한가할 때 다르게 조절하지만,<br>어떤 방식이 맞는지는 알지 못한다.</span>
-                <span data-lang-content="en">They adjust differently when busy or quiet,<br>yet they don't know which approach is right.</span>
+                <span data-lang-content="en">They adjust differently when busy<br>or quiet, yet they don't know which<br>approach is right.</span>
               </p>
             </div>
 
@@ -2364,7 +2398,7 @@
           <div class="insight-callout">
             <h3 class="insight-callout__heading">Insight</h3>
             <p class="insight-callout__body" data-lang-aware>
-              <span data-lang-content="en">No matter how often they change the settings, results aren't visible right away,<br>and the bill only arrives a month later — so operators keep adjusting with constant <strong>anxiety</strong>.</span>
+              <span data-lang-content="en">No matter how often they change the settings, results aren't visible right away,<br>and the bill only arrives a month later so operators keep adjusting with constant <strong>anxiety</strong>.</span>
               <span data-lang-content="ko">아무리 설정을 바꿔도 결과는 바로 확인할 수 없고,<br>고지서는 한 달 뒤에 나오기 때문에 자영업자는 <strong>불안</strong>을 안고 계속 바꾸게 된다</span>
             </p>
           </div>
@@ -2375,7 +2409,7 @@
         <article class="ds-research-finding ds-research-finding--align-left">
           <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 02.3 — CONTEXT RESEARCH ]</p>
 
-          <h2 class="ds-h2" data-lang-content="en">Cost mattered most — but the actual pricing structure<br>was hard to understand and judge.</h2>
+          <h2 class="ds-h2" data-lang-content="en">Cost mattered most but the actual pricing structure<br>was hard to understand and judge.</h2>
           <h2 class="ds-h2 ds-kr" data-lang-content="ko">비용이 중요했지만, 실제 요금구조는<br>쉽게 이해하고 판단하기 어려웠습니다.</h2>
 
           <!-- Block 1: image (left) + Energy Pricing Structure text (right) -->
@@ -2393,7 +2427,7 @@
               <div class="ds-research-finding__heading-group">
                 <h3 class="ds-research-finding__sub-heading">Energy Pricing Structure</h3>
                 <p class="ds-research-finding__paragraph" data-lang-content="en">
-                  The pricing structure analysis revealed multiple variables — peak / mid / off-peak time slots,<br>and progressive billing based on usage.
+                  The pricing structure analysis revealed multiple variables<br>peak / mid / off-peak time slots,<br>and progressive billing based on usage.
                   <br><br>
                   For busy small business owners, the pricing structure<br>was too complex to understand during operation.
                 </p>
@@ -2421,7 +2455,7 @@
               <div class="ds-research-finding__heading-group">
                 <h3 class="ds-research-finding__sub-heading">Scenario Test — Try</h3>
                 <p class="ds-research-finding__paragraph" data-lang-content="en">
-                  We checked whether the cost structure alone could really reduce cost in actual operation.
+                  We checked whether the cost structure alone<br>could really reduce cost in actual operation.
                   <br><br>
                   To test this, we wrote a simple store-operation scenario<br>and applied cost-minimizing methods based on the pricing structure.
                 </p>
@@ -2531,7 +2565,7 @@
                 하지만 이 시스템의 목적은 상태를 제어하는 것에 가까웠고<br>어떤 선택이 더 나은지 판단하는 기능까지는 포함되어 있지 않았다
               </p>
               <p class="ds-research-finding__paragraph" data-lang-content="en">
-                In the end, with the systems that exist today, users had to read the data,<br>interpret it themselves, and judge by trying different settings repeatedly.
+                In the end, with the systems that exist today,<br>users had to read the data,<br>interpret it themselves, and judge<br>by trying different settings repeatedly.
               </p>
               <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
                 결국 현재 존재하는 시스템에서 사용자는 데이터를 보고<br>직접 해석하고, 여러 번 바꿔보면서 판단할 수밖에 없었다
@@ -2553,7 +2587,7 @@
         <h3 class="problem-statement__heading">Problem statement</h3>
         <p class="problem-statement__body">
           <span data-lang-content="ko">냉난방 <span class="problem-statement__highlight">설정을 바꾸는 선택</span>과 <span class="problem-statement__highlight">전기요금 변화라는 결과</span>가 연결되지 않아,<br>사용자는 자신의 조절이 비용에 어떤 영향을 주는지 알 수 없다</span>
-          <span data-lang-content="en">The <span class="problem-statement__highlight">choice to change HVAC settings</span> and <span class="problem-statement__highlight">the resulting change in the electricity bill</span> aren't connected,<br>so users can't tell how their adjustments affect cost.</span>
+          <span data-lang-content="en">The <span class="problem-statement__highlight">choice to change HVAC settings</span> and<br><span class="problem-statement__highlight">the resulting change in the electricity bill</span> aren't connected,<br>so users can't tell how their adjustments affect cost.</span>
         </p>
       </div>
     </section>
@@ -2573,7 +2607,7 @@
           <h2 class="ds-h2 ds-kr" data-lang-content="ko"><em class="ds-signature ds-signature--accent-yellow">AI가 비용과 쾌적도를</em><br>함께 판단하는 방식으로 접근 방식을 바꿨습니다</h2>
 
           <p class="ds-research-finding__paragraph" data-lang-content="en">
-            Existing systems were designed around a single axis — comfort — making controls easier to operate.<br>But we focused on the fact that users still couldn't resolve the cost pain point,<br>so we approached the problem in a way that lets them judge cost and comfort together.
+            Existing systems were designed around a single axis<br>comfort making controls easier to operate.<br>But we focused on the fact that users still couldn't resolve the cost pain point,<br>so we approached the problem in a way that lets them judge cost and comfort together.
           </p>
           <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
             기존 시스템은 조작을 쉽게 만드는데 쾌적이라는 한 축을 중심으로 설계되었습니다.<br>하지만 우리는 유저가 비용이라는 페인포인트를 해결하지 못하고 있다는 점에 집중해<br>비용과 쾌적도를 함께 판단할 수 있는 방식으로 접근했습니다.
@@ -2863,7 +2897,7 @@
         <article class="ds-research-finding ds-research-finding--align-left">
           <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 03.5 — STRUCTURE DESIGN ]</p>
 
-          <h2 class="ds-h2" data-lang-content="en">We designed a structure that lets cost and comfort be compared on one screen,<br>and selected immediately.</h2>
+          <h2 class="ds-h2" data-lang-content="en">We designed a structure that lets cost and comfort<br>be compared on one screen, and selected immediately.</h2>
           <h2 class="ds-h2 ds-kr" data-lang-content="ko">비용과 쾌적도를 한 화면에서 비교하고<br>바로 선택할 수 있도록 구조를 설계했다</h2>
 
           <!-- Block 1: IA image (left) + body + closing → (right) -->
@@ -2879,7 +2913,7 @@
             </figure>
             <div class="context-block__text">
               <p class="ds-research-finding__paragraph" data-lang-content="en">
-                To let operators compare without navigating away — critical in busy store contexts —<br>we placed these four data points together on the main screen:
+                To let operators compare without navigating away<br>critical in busy store contexts<br>we placed these four data points together on the main screen:
                 <br><br>
                 Predicted cost<br>Cumulative cost<br>Comfort change<br>Recommended solution
               </p>
@@ -2890,7 +2924,7 @@
               </p>
 
               <p class="ds-research-finding__closing-implication" data-lang-content="en">
-                → Designed for fast decisions first, with a discovery layer for when users want to dig deeper.
+                → Designed for fast decisions first, with a discovery layer<br>for when users want to dig deeper.
               </p>
               <p class="ds-research-finding__closing-implication ds-kr" data-lang-content="ko">
                 → 빠른 결정 중심, 필요 시 탐색하는 구조로 설계했습니다.
@@ -2913,7 +2947,7 @@
               <div class="ds-research-finding__heading-group">
                 <h3 class="ds-research-finding__sub-heading">Interaction Strategy</h3>
                 <p class="ds-research-finding__paragraph" data-lang-content="en">
-                  We determined that most users would handle decisions quickly through pop-up notifications,<br>and would only navigate to the main screen when they wanted more details about a suggestion<br>or had specific questions.
+                  We determined that most users would handle decisions<br>quickly through pop-up notifications,<br>and would only navigate to the main screen when they wanted more<br>details about a suggestion or had specific questions.
                 </p>
                 <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
                   대다수의 사용자는 팝업알림을 통해 빠르게 결정을 처리하고,<br>제안에 대해 더 알고 싶거나 의문이 생긴 경우에만,<br>메인화면으로 이동한다고 판단했습니다.
@@ -2924,7 +2958,7 @@
                 → The main screen needed to be designed for users who want to know more after seeing the pop-up.
               </p>
               <p class="ds-research-finding__closing-implication ds-kr" data-lang-content="ko">
-                → 메인 화면은 팝업에서 더 알고싶은 유저를 위한 화면으로 설계해야했습니다.
+                → 메인 화면은 팝업에서 더 알고싶은 유저를 위한 화면으로<br>설계해야했습니다.
               </p>
             </div>
           </div>
@@ -2949,13 +2983,17 @@
                 <span data-lang-content="en">Design system</span>
                 <span data-lang-content="ko">Design system</span>
               </figcaption>
-              <p class="ds-research-finding__paragraph" data-lang-content="en">
-                We built a visual hierarchy: information that demands recognition within 3 seconds (current cost, comfort)<br>gets large typography, while supporting data sits smaller beneath it.
-              </p>
-              <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
-                3초 안에 인지가 필요한 정보(현재 비용·쾌적도)는 큰 타이포로,<br>보조 정보는 작게 배치하는 시각적 위계를 설계했습니다
-              </p>
             </figure>
+            <!-- Both locales lifted out of the figure to span the grid and
+                 centred: the lines are longer than a 528px column allows, and
+                 the pair now reads as a caption for both images rather than
+                 for the design-system one alone. -->
+            <p class="ds-research-finding__paragraph ds-research-finding__paragraph--oneline ds-research-finding__paragraph--span" data-lang-content="en">
+              We built a visual hierarchy: information that demands recognition within 3 seconds (current cost, comfort)<br>gets large typography, while supporting data sits smaller beneath it.
+            </p>
+            <p class="ds-research-finding__paragraph ds-research-finding__paragraph--oneline ds-research-finding__paragraph--span ds-kr" data-lang-content="ko">
+              3초 안에 인지가 필요한 정보(현재 비용·쾌적도)는 큰 타이포로, 보조 정보는 작게 배치하는 시각적 위계를 설계했습니다
+            </p>
           </div>
         </article>
 
@@ -2980,11 +3018,11 @@
               <p class="feature-row__eyebrow">FEATURE 01 — INSTANT DECISION VIA POP UP</p>
               <h3 class="feature-row__title">
                 <span data-lang-content="ko">팝업에서 상태와 추천을<br>확인하고 바로 적용</span>
-                <span data-lang-content="en">Check status & recommendation in the pop-up,<br>and apply immediately</span>
+                <span data-lang-content="en">Check status & recommendation in<br>the pop-up, and apply immediately</span>
               </h3>
               <p class="feature-row__body">
                 <span data-lang-content="ko">바쁜 운영 환경에서 사용자는 팝업 알림을 통해<br>현재 상태와 AI가 제안한 솔루션을 바로 확인하고 즉시 적용할 수 있습니다</span>
-                <span data-lang-content="en">In busy operations, users can check the current state and AI's recommendation<br>through pop-up notifications and apply them immediately.</span>
+                <span data-lang-content="en">In busy operations, users can check the<br>current state and AI's recommendation<br>through pop-up notifications and<br>apply them immediately.</span>
               </p>
             </div>
             <div class="feature-row__bottom">
@@ -3010,11 +3048,11 @@
               <p class="feature-row__eyebrow">FEATURE 02 — DATA LOG & LEARNING</p>
               <h3 class="feature-row__title">
                 <span data-lang-content="ko">선택한 결과를 기록하고<br>학습하는 데이터 로그</span>
-                <span data-lang-content="en">A data log that records<br>and learns from each choice's outcome</span>
+                <span data-lang-content="en">A data log that records and learns<br>from each choice's outcome</span>
               </h3>
               <p class="feature-row__body">
                 <span data-lang-content="ko">AI는 냉난방 조절 이력과 그에 따른 결과를<br>함께 기록하고 시각화합니다.<br><br>사용자는 자신의 선택이 비용과 쾌적도에 어떤<br>영향을 주었는지 확인 할 수 있습니다.<br><br>AI는 누적된 데이터를 학습해<br>추천 정확도를 점차 개선하고, 이후 결정이<br>점점 더 쉽고 정확해지도록 돕습니다.</span>
-                <span data-lang-content="en">AI records HVAC adjustments along with their outcomes<br>and visualizes the results.<br><br>Users can see how each choice affected<br>both cost and comfort.<br><br>AI learns from the accumulated data to improve<br>recommendation accuracy over time, so decisions<br>become easier and more precise.</span>
+                <span data-lang-content="en">AI records HVAC adjustments along with their<br>outcomes and visualizes the results.<br><br>Users can see how each choice<br>affected both cost and comfort.<br><br>AI learns from the accumulated data<br>to improve recommendation accuracy over time,<br>so decisions become easier and more precise.</span>
               </p>
             </div>
             <div class="feature-row__bottom">
@@ -3040,11 +3078,11 @@
               <p class="feature-row__eyebrow">FEATURE 03 — MODE SETTING</p>
               <h3 class="feature-row__title">
                 <span data-lang-content="ko">사용자가 원하는<br>비용과 쾌적도 기준을 설정하고 운영</span>
-                <span data-lang-content="en">Users set their own cost &amp; comfort criteria<br>and let AI operate within those bounds</span>
+                <span data-lang-content="en">Users set their own cost &amp; comfort<br>criteria and let AI operate within<br>those bounds</span>
               </h3>
               <p class="feature-row__body">
                 <span data-lang-content="ko">모드 설정을 통해 사용자가 비용과 쾌적도 기준을<br>함께 설정할 수 있습니다<br><br>AI는 이 기준을 바탕으로 두 요소를 동시에<br>만족할 수 있는 운영 방식을 제안합니다</span>
-                <span data-lang-content="en">Through mode settings, users can configure<br>cost and comfort criteria together.<br><br>Based on these criteria, AI proposes<br>an operation strategy that satisfies both at once.</span>
+                <span data-lang-content="en">Through mode settings, users can configure<br>cost and comfort criteria together.<br><br>Based on these criteria, AI proposes<br>an operation strategy that satisfies<br>both at once.</span>
               </p>
             </div>
             <div class="feature-row__bottom">
@@ -3092,9 +3130,9 @@
 
             <div class="ut-grid__right">
               <p class="ds-research-finding__paragraph" data-lang-content="en">
-                We designed 4 tasks simulating real store operation: ① understand the current store state ② understand why the AI recommended an action ③ decide whether to apply it ④ interpret the cost-comfort outcome.
+                We designed 4 tasks simulating real store operation:<br>① understand the current store state<br>② understand why the AI recommended an action<br>③ decide whether to apply it<br>④ interpret the cost-comfort outcome.
                 <br><br>
-                Each task had defined metrics: time, accuracy, understanding, trust, and hesitation.
+                Each task had defined metrics:<br>time, accuracy, understanding, trust, and hesitation.
               </p>
               <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
                 실제 매장 운영 상황을 가정해 4개 과제로 테스트를 설계했습니다 — ① 현재 매장 상태 이해 ② AI 추천의 이유 이해 ③ 추천 적용 여부 결정 ④ 결과(비용·쾌적도) 해석.
@@ -3182,7 +3220,7 @@
               </div>
               <p class="sus-note__text">
                 <span data-lang-content="ko">SUS(System Usability Scale) 평균 76점 (n=5 · 개별 72.5~80) — 통상 기준선인 68점을 웃도는 수준입니다. 참가자 5명의 탐색적 테스트이므로, 결과는 제품 성과가 아닌 개선 방향을 확인하는 참고값으로 해석했습니다.</span>
-                <span data-lang-content="en">SUS averaged 76 (n=5 · individual 72.5–80), above the common benchmark of 68. As an exploratory test with 5 participants, we read this as directional input, not product performance.</span>
+                <span data-lang-content="en">SUS averaged 76 (n=5 · individual 72.5–80), above the common benchmark of 68.<br>As an exploratory test with 5 participants, we read this as directional input, not product performance.</span>
               </p>
             </div>
           </div>
@@ -3205,7 +3243,7 @@
                 <p class="feature-row__eyebrow">ADD SPECIFIC ONBOARDING</p>
                 <h3 class="feature-row__title">
                   <span data-lang-content="ko">쉽게 설정할 수 있는<br>온보딩 추가</span>
-                  <span data-lang-content="en">Onboarding flow added<br>for easier setup</span>
+                  <span data-lang-content="en">Onboarding flow<br>added for easier setup</span>
                 </h3>
                 <div class="feature-row__body feature-row__body--blocks">
                   <div class="feature-row__block">
@@ -3274,7 +3312,7 @@
             </figure>
             <div class="context-block__text">
               <p class="ds-research-finding__paragraph" data-lang-content="en">
-                A 5-person test can't prove business impact. Instead, we defined the KPIs this system should be measured by if deployed — across user behavior and business performance.
+                A 5-person test can't prove business impact. Instead,<br>we defined the KPIs this system should be measured<br>by if deployed across user behavior and business performance.
               </p>
               <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
                 참가자 5명의 테스트만으로 비즈니스 성과를 주장할 수는 없습니다.<br>대신 이 시스템이 실제 배포된다면 무엇을 측정해야 하는지,<br>사용자 행동과 비즈니스 성과 양쪽에서 KPI를 정의했습니다.
@@ -3291,11 +3329,11 @@
               <ul class="impact-card__list kpi-list" data-lang-aware>
                 <li>
                   <span data-lang-content="ko"><strong>판단 소요 시간 ↓</strong><br>상황 인지부터 조작 완료까지의 시간. 의사결정 흐름의 효율 지표</span>
-                  <span data-lang-content="en"><strong>Time to make an adjustment ↓</strong><br>From context recognition to action — efficiency of the decision flow</span>
+                  <span data-lang-content="en"><strong>Time to make an adjustment ↓</strong><br>From context recognition to action<br>efficiency of the decision flow</span>
                 </li>
                 <li>
                   <span data-lang-content="ko"><strong>추천 수용률 ↑</strong><br>전체 추천 중 실제 실행된 비율. AI 판단에 대한 신뢰의 직접 지표</span>
-                  <span data-lang-content="en"><strong>Adoption rate of recommendations ↑</strong><br>Executed ÷ total recommendations — the direct measure of trust in AI judgment</span>
+                  <span data-lang-content="en"><strong>Adoption rate of recommendations ↑</strong><br>Executed ÷ total recommendations<br>the direct measure of trust in AI judgment</span>
                 </li>
                 <li>
                   <span data-lang-content="ko"><strong>반복 조작 감소 ↓</strong><br>안정 상태 도달까지의 재조정 횟수. 기준 제공이 불안을 줄였는지의 지표</span>
@@ -3309,7 +3347,7 @@
               <ul class="impact-card__list kpi-list" data-lang-aware>
                 <li>
                   <span data-lang-content="ko"><strong>매장당 에너지 비용 ↓</strong><br>기준선 대비 총 에너지 비용. 비용 최적화의 핵심 지표</span>
-                  <span data-lang-content="en"><strong>Energy cost per store ↓</strong><br>Total energy cost vs baseline — the core cost-optimization metric</span>
+                  <span data-lang-content="en"><strong>Energy cost per store ↓</strong><br>Total energy cost vs baseline<br>the core cost-optimization metric</span>
                 </li>
                 <li>
                   <span data-lang-content="ko"><strong>피크 수요 감소 ↓</strong><br>피크 시간대 최대 부하. 도입 전후 비교</span>
@@ -3317,7 +3355,7 @@
                 </li>
                 <li>
                   <span data-lang-content="ko"><strong>리텐션 ↑</strong><br>재방문 활성 사용자 비율. 장기 유용성 지표</span>
-                  <span data-lang-content="en"><strong>User retention rate ↑</strong><br>Returning active users — the long-term usefulness metric</span>
+                  <span data-lang-content="en"><strong>User retention rate ↑</strong><br>Returning active users<br>the long-term usefulness metric</span>
                 </li>
               </ul>
             </article>
