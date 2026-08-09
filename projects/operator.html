@@ -1655,32 +1655,29 @@
     }
 
     .ai-decision-flow__step {
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      border: var(--border-normal) solid var(--border);
       border-radius: var(--radius-card);
-      padding: var(--space-6);
+      /* 28 on every viewport — the card's one inset, and the only thing
+         standing between the counter/label/list and the border. */
+      padding: var(--space-7);
       display: flex;
       flex-direction: column;
       gap: var(--space-3);
       box-sizing: border-box;
       height: 100%;
-    }
-    @media (min-width: 768px) {
-      .ai-decision-flow__step { padding: var(--space-7); }
+      /* A grid item's default `min-width: auto` floors the track at the
+         longest line, so a `1fr` column can be pushed wider than its
+         share and the row overflows. 0 lets the list wrap instead. */
+      min-width: 0;
     }
 
-    .ai-decision-flow__step--input {
-      background: var(--bg-surface);
-      color: var(--text-primary);
-      border: var(--border-thin) solid rgba(255, 255, 255, 0.08);
-    }
-    .ai-decision-flow__step--judgment {
-      background: var(--card-cream);
-      color: var(--text-on-cream);
-    }
-    .ai-decision-flow__step--output {
-      background: var(--bg-surface);
-      color: var(--text-primary);
-      border: var(--border-thin) solid var(--accent-yellow);
-    }
+    /* One surface for all three. The stages are a sequence, not a
+       ranking — 02's cream fill and 03's accent outline were reading as
+       emphasis and pulling the eye out of left-to-right order. The
+       --input/--judgment/--output modifiers stay on the markup as hooks,
+       but no longer carry any appearance of their own. */
 
     .ai-decision-flow__counter {
       font-family: var(--font-sans);
@@ -1689,9 +1686,6 @@
       font-weight: 400;
       color: var(--accent-yellow);
       margin: 0;
-    }
-    .ai-decision-flow__step--judgment .ai-decision-flow__counter {
-      color: var(--text-on-cream);
     }
 
     .ai-decision-flow__label {
@@ -1703,13 +1697,6 @@
       text-transform: uppercase;
       color: var(--text-tertiary);
       margin: 0;
-    }
-    .ai-decision-flow__step--judgment .ai-decision-flow__label {
-      color: var(--text-on-cream);
-      opacity: 0.6;
-    }
-    .ai-decision-flow__step--output .ai-decision-flow__label {
-      color: var(--accent-yellow);
     }
 
     .ai-decision-flow__title {
@@ -1745,17 +1732,6 @@
       position: absolute;
       left: 0;
       color: var(--text-tertiary);
-    }
-    .ai-decision-flow__step--judgment .ai-decision-flow__list li {
-      color: var(--text-on-cream);
-      opacity: 0.85;
-    }
-    .ai-decision-flow__step--judgment .ai-decision-flow__list li::before {
-      color: var(--text-on-cream);
-      opacity: 0.6;
-    }
-    .ai-decision-flow__step--output .ai-decision-flow__list li::before {
-      color: var(--accent-yellow);
     }
 
     .ai-decision-flow__arrow {
