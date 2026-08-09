@@ -3,7 +3,13 @@
   --space-2: 8px;
   --space-3: 12px;
   --space-4: 16px;
+  /* 5 and 7 were referenced by name across the case study long before they
+     existed here, so every `var(--space-5)` / `var(--space-7)` silently
+     computed to the property's initial value — 0 for padding and margin.
+     Values follow the intent recorded at those call sites. */
+  --space-5: 20px;
   --space-6: 24px;
+  --space-7: 28px;
   --space-8: 32px;
   --space-10: 40px;
   --space-12: 48px;
