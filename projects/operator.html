@@ -1186,6 +1186,30 @@
       color: var(--text-on-cream);
     }
 
+    /* Scope note — flags the evidence base before the reader meets any
+       finding. Body size, no italic and no extra weight: it qualifies the
+       section, it does not compete with it. The detail lives in the 05.1
+       SUS box and the reflection; this is only the advance notice. */
+    .overview-scope-note {
+      font-family: var(--font-sans);
+      font-size: var(--text-body-size);
+      line-height: var(--text-body-line-height);
+      letter-spacing: var(--text-body-letter-spacing);
+      font-weight: var(--text-body-weight);
+      font-style: normal;
+      color: var(--text-dim);
+      /* .ds-container is a centring flex column, so a bare paragraph becomes
+         a shrink-to-fit item and its left edge moves with the text length —
+         the shorter KO line sat 170px right of the EN one. An explicit width
+         pins the box to the 960 card column in both languages. */
+      width: 100%;
+      max-width: 960px;
+      margin: var(--space-6) auto 0 auto;
+    }
+    .overview-scope-note.ds-kr {
+      font-family: var(--font-kr);
+    }
+
     /* Overview card stack */
     .overview-stack {
       display: flex;
@@ -1941,6 +1965,11 @@
         <header class="ds-section-header" data-lang-aware>
           <p class="ds-section-header__eyebrow">[ 01 — OVERVIEW ]</p>
         </header>
+
+        <p class="overview-scope-note ds-kr" data-lang-aware>
+          <span data-lang-content="ko">5인 탐색적 검증 기반의 컨셉 프로젝트로, 결과는 성과가 아닌 개선 방향의 참고값으로 해석했습니다.</span>
+          <span data-lang-content="en">A concept project validated through exploratory research with 5 participants — results are read as directional input, not product performance.</span>
+        </p>
 
         <div class="overview-stack">
 
