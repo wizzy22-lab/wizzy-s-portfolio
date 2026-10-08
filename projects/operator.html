@@ -1335,59 +1335,6 @@
     }
 
 
-    /* Problem statement — full-bleed yellow callout (Figma Frame 12) */
-    .problem-statement {
-      background: var(--accent-yellow);       /* neutral light — accent absorbed */
-      /* Softened one step so __highlight still has somewhere to go now
-         that it can no longer differ by hue. */
-      color: #3A3F42;
-      width: 100%;
-      padding-block: var(--space-20);         /* 80 — Figma top/bottom */
-    }
-    .problem-statement__inner {
-      max-width: 1200px;                      /* widened so long KO line 1 fits */
-      margin-inline: auto;
-      padding-inline: var(--space-6);
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-6);                    /* 24 — heading → body */
-      text-align: center;
-    }
-    /* Reframe line — sits above the Problem statement heading */
-    .problem-statement__reframe {
-      font-family: inherit;
-      font-size: 20px;
-      line-height: 1.4;
-      font-weight: 500;
-      letter-spacing: 0;
-      margin: 0;
-      opacity: 0.72;
-    }
-    @media (min-width: 768px) {
-      .problem-statement__reframe { font-size: 20px; }
-    }
-    .problem-statement__heading {
-      font-family: var(--font-sans);
-      font-size: 20px;
-      line-height: 1.2;
-      font-weight: 500;
-      letter-spacing: 0;
-      margin: 0;
-    }
-    .problem-statement__body {
-      font-family: inherit;                   /* uses Manrope (EN) / Pretendard (KO) via body */
-      font-size: 32px;
-      line-height: 1.5;                       /* 48 / 32 = 1.5 */
-      font-weight: 500;
-      letter-spacing: 0;
-      margin: 0;
-    }
-    .problem-statement__highlight {
-      /* Emphasis by density instead of hue: full-strength against the
-         softened body colour set on .problem-statement. */
-      color: var(--text-on-cream);
-    }
-
     /* Sentences the author sets as a single line. The design system caps
        body copy at a 720px measure, which is right for multi-line prose but
        folds a couple of these one-liners onto a stub second line. Releasing
@@ -1420,9 +1367,9 @@
        the page gutter either side (a 1200 card at 1920), 48 inside easing
        to 24, 32 corners, 64/80 between sheets in a section, and the
        section's own 72/96/120 above and below. Inside the card, Figma. */
-    #overview, #research { padding-block: 72px; }
-    @media (min-width: 768px) { #overview, #research { padding-block: 96px; } }
-    @media (min-width: 992px) { #overview, #research { padding-block: 120px; } }
+    #overview, #research, #problem { padding-block: 72px; }
+    @media (min-width: 768px) { #overview, #research, #problem { padding-block: 96px; } }
+    @media (min-width: 992px) { #overview, #research, #problem { padding-block: 120px; } }
     .op-step {
       width: 100%;
       max-width: 1920px;
@@ -1586,6 +1533,7 @@
       line-height: 1.2;
     }
     .op-step__title + .op-step__lead { margin-top: 24px; }
+    .op-step__title + .op-step__lead--close { margin-top: 12px; }   /* 3 */
     .op-step__part {
       display: flex;
       align-items: center;
@@ -2911,18 +2859,26 @@
       </div>
     </section>
 
-    <!-- ====================  PROBLEM STATEMENT (full-bleed callout)  ==================== -->
-    <section class="problem-statement" data-lang-aware>
-      <div class="problem-statement__inner">
-        <p class="problem-statement__reframe">
-          <span data-lang-content="ko">냉난방 관리는 기기 제어의 문제가 아니라, 판단의 문제였습니다.</span>
-          <span data-lang-content="en">Managing HVAC wasn't a control problem — it was a decision problem.</span>
-        </p>
-        <h3 class="problem-statement__heading">Problem statement</h3>
-        <p class="problem-statement__body">
-          <span data-lang-content="ko">냉난방 <span class="problem-statement__highlight">설정을 바꾸는 선택</span>과 <span class="problem-statement__highlight">전기요금 변화라는 결과</span>가 연결되지 않아,<br>사용자는 자신의 조절이 비용에 어떤 영향을 주는지 알 수 없다</span>
-          <span data-lang-content="en">The <span class="problem-statement__highlight">choice to change HVAC settings</span> and<br><span class="problem-statement__highlight">the resulting change in the electricity bill</span> aren't connected,<br>so users can't tell how their adjustments affect cost.</span>
-        </p>
+    <!-- ====================  3 — PROBLEM STATEMENT (Figma 14:397)  ==================== -->
+    <section id="problem">
+      <div class="op-step" data-lang-aware>
+        <article class="op-step__card">
+          <header class="op-step__head">
+            <p class="op-step__num">3</p>
+            <p class="op-step__label">
+              <span data-lang-content="en">Problem statement</span>
+              <span data-lang-content="ko">문제 정의</span>
+            </p>
+          </header>
+          <h2 class="op-step__title">
+            <span data-lang-content="en">Managing HVAC wasn't a control problem —<br>it was a decision problem.</span>
+            <span data-lang-content="ko">냉난방 관리는 기기 제어의 문제가 아니라,<br>판단의 문제였습니다.</span>
+          </h2>
+          <p class="op-step__lead op-step__lead--close">
+            <span data-lang-content="en">HVAC systems made it easy to monitor and adjust settings, but they didn't show the impact of those decisions.<br>Users couldn't tell whether a change would actually reduce energy costs without compromising comfort,<br>so they had to rely on repeated adjustments and intuition.</span>
+            <span data-lang-content="ko">냉난방 시스템은 설정을 확인하고 바꾸기 쉽게 만들었지만, 그 결정의 영향은 보여주지 않았습니다.<br>사용자는 설정을 바꿔도 쾌적함을 해치지 않으면서 비용이 실제로 줄어드는지 알 수 없었고,<br>그래서 반복 조정과 직관에 의존할 수밖에 없었습니다.</span>
+          </p>
+        </article>
       </div>
     </section>
 
