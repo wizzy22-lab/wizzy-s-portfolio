@@ -13,9 +13,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400&display=swap" />
-  <!-- The Figma hero sets its title at 700 and subtitle at 600; the shared
-       font file only ships Manrope 400/500, so the two heavier faces load here. -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700&display=swap" />
+  <!-- The Figma sections set Manrope at 600/700/800; the shared font file
+       only ships 400/500, so the heavier faces load here. -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&display=swap" />
   <style>
     /* Page-level reset & layout (uses tokens only) */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -76,47 +76,32 @@
     }
 
     /* ---------------------------------------------------------------
-       Nav + footer gutters, mirrored from the main portfolio.
+       One page gutter, the main portfolio's.
 
-       The case study's own .ds-container tops out at 1280 and so sits
-       ~27px inboard of the main site's bars; laid side by side the two
-       headers did not line up. These three elements — the nav row, the
-       anchor row under it, and the footer — instead take the main
-       site's container geometry verbatim:
+       Everything that has a left edge — the nav row, the anchor row, the
+       hero, every step card, the footer — sits in the main site's own
+       container, verbatim:
 
          max-w-[1920px] px-6 md:px-16 xl:px-[180px] 2xl:px-[360px]
 
-       Tailwind v4 breakpoints are rem-based (48/80/96rem) and its
-       --spacing is .25rem, so px-6 = 24px and px-16 = 64px. The rem
-       units are kept rather than converted, so the two sites still
-       agree if the root size ever changes.
-
-       Page content keeps the 1280 container — only the bars move.
-       The compound selector outranks the .ds-container rules above,
-       so source order here does not matter.
+       so the case study and the site it is opened from start on the same
+       line, and nothing jumps on the way in. Tailwind v4 breakpoints are
+       rem-based (48/80/96rem) and px-6 / px-16 are 24 / 64; the rem units
+       are kept so the two still agree if the root size ever changes.
+       Shoot Shoot Penguin uses the same gutter.
        --------------------------------------------------------------- */
+    :root { --page-gutter: 24px; }
+    @media (min-width: 48rem) { :root { --page-gutter: 64px; } }
+    @media (min-width: 80rem) { :root { --page-gutter: 180px; } }
+    @media (min-width: 96rem) { :root { --page-gutter: 360px; } }
+
     .ds-container.ds-nav__inner,
     .ds-container.section-nav__wrap,
     .ds-container.ds-footer__inner {
       width: 100%;
       max-width: 1920px;
       margin-inline: auto;
-      padding-inline: 24px;                 /* px-6 */
-    }
-    @media (min-width: 48rem) {             /* md */
-      .ds-container.ds-nav__inner,
-      .ds-container.section-nav__wrap,
-      .ds-container.ds-footer__inner { padding-inline: 64px; }
-    }
-    @media (min-width: 80rem) {             /* xl */
-      .ds-container.ds-nav__inner,
-      .ds-container.section-nav__wrap,
-      .ds-container.ds-footer__inner { padding-inline: 180px; }
-    }
-    @media (min-width: 96rem) {             /* 2xl */
-      .ds-container.ds-nav__inner,
-      .ds-container.section-nav__wrap,
-      .ds-container.ds-footer__inner { padding-inline: 360px; }
+      padding-inline: var(--page-gutter);
     }
 
     /* ===============================================================
@@ -307,21 +292,22 @@
       padding-block: 0;
       background: var(--bg-page);
       font-family: 'Manrope', var(--font-kr);
+      word-break: keep-all;               /* Hangul wraps at words, not syllables */
     }
     .op-hero__inner {
       position: relative;
+      /* On the page gutter, so the hero starts on the nav's line (360 at
+         1920, as in Figma). */
       max-width: 1920px;
-      min-height: 936px;
       margin-inline: auto;
-      padding-inline: 24px;
+      /* 64 / 80 rather than the Figma frame's fixed 936, so the hero clears
+         in one screen below the 108 nav (≈945 at 1920, ≈820 at 1440). The
+         height is the text column's; the tablet PNG's lower ~80 is clear. */
+      padding: 64px var(--page-gutter) 80px;
     }
-    @media (min-width: 48rem) { .op-hero__inner { padding-inline: 64px; } }
-    @media (min-width: 80rem) { .op-hero__inner { padding-inline: 180px; } }
-    @media (min-width: 96rem) { .op-hero__inner { padding-inline: 360px; } }
 
     .op-hero__text {
       max-width: 595px;
-      padding-top: 120.92px;
     }
     .op-hero__pill {
       display: inline-flex;
@@ -365,7 +351,10 @@
     }
     .op-hero__tag {
       padding: 8px 16px;
-      border: 1px solid #e5e5e5;
+      /* Figma draws #e5e5e5, which on the dark ground outshone the #787570
+         label inside it. Dropped to sit just under the label, in the same
+         white-alpha family as the meta rules below. */
+      border: 1px solid rgba(255, 255, 255, 0.16);
       border-radius: 999px;
       color: #787570;
       font-size: 14px;
@@ -382,7 +371,6 @@
       grid-template-columns: minmax(0, 270px);
       row-gap: 6.02px;
       margin-top: 64px;
-      padding-bottom: 64px;
     }
     @media (min-width: 640px) {
       .op-hero__meta {
@@ -438,17 +426,18 @@
     .op-hero__device > * { --u: calc(100cqw / 924); }
     @media (min-width: 80rem) {
       .op-hero__text { position: relative; z-index: 1; }
-      .op-hero__meta { margin-top: 110px; padding-bottom: 0; }
       .op-hero__device {
         position: absolute;
-        top: 138px;
-        left: calc(180px + 563px);
-        width: calc(100% - 180px - 563px + 120px);
+        top: 81.08px;                     /* 17.08 below the text top, as in Figma */
+        left: calc(var(--page-gutter) + 563px);
+        /* Overhangs the right gutter as in Figma, but stops 24 short of the
+           viewport so the stand is never cut; 924 is the Figma size. */
+        width: min(924px, calc(100% - var(--page-gutter) - 563px - 24px));
         margin-top: 0;
       }
     }
     @media (min-width: 96rem) {
-      .op-hero__device { left: calc(360px + 563px); width: 924px; }
+      .op-hero__meta { margin-top: 110px; }   /* Figma's gap, where there is room */
     }
     .op-hero__tablet {
       position: absolute;
@@ -705,47 +694,6 @@
     /* Was a vivid-blue emphasis. The signature is already serif italic,
        so the emphasis survives on type alone once the hue is gone. */
     .ds-signature--accent-blue-vivid { color: var(--text-primary); }
-
-    /* Pattern sub-heading — centered (gap to grid below = parent's 24) */
-    .pattern-heading {
-      text-align: center;
-    }
-
-    /* Observation card (cream bg, full container width, centered text)
-       — uses .ds-insight base, overrides max-width / alignment per Figma */
-    .observation-card {
-      max-width: 100%;
-      padding: var(--space-12);              /* 48 — Figma spec */
-      text-align: center;
-    }
-    .observation-card .ds-insight__body {
-      font-size: 18px;
-      line-height: 1.4;
-      opacity: 1;
-    }
-    .observation-card .ds-insight__body strong {
-      font-weight: 500;
-    }
-
-    /* Primary Research interview grid — protocol only.
-       Was 3-up (392/392/470); the two session photos were removed because
-       interview-01.jpg / interview-02.jpg never shipped (404). Single card
-       is held to half width so it keeps the 2-up rhythm of the grid below. */
-    @media (min-width: 768px) {
-      .primary-interview-grid {
-        grid-template-columns: 1fr;
-        max-width: 634px;
-        margin-inline: auto;
-      }
-    }
-
-    /* Primary Research analysis grid — 2 equal cards (634/634, 12 gap) */
-    @media (min-width: 768px) {
-      .primary-analysis-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: var(--space-3);                  /* 12 — Figma spec */
-      }
-    }
 
     /* ===== 04 — KEY FEATURES ===== */
     #features .ds-container {
@@ -1461,189 +1409,392 @@
        here rather than the heading, which is what actually constrains it. */
     .ds-h2--oneline { max-width: none; }
 
-    /* Scope note — flags the evidence base before the reader meets any
-       finding. Body size, no italic and no extra weight: it qualifies the
-       section, it does not compete with it. The detail lives in the 05.1
-       SUS box and the reflection; this is only the advance notice. */
-    .overview-scope-note {
-      font-family: var(--font-sans);
-      font-size: var(--text-body-size);
-      line-height: var(--text-body-line-height);
-      letter-spacing: var(--text-body-letter-spacing);
-      font-weight: var(--text-body-weight);
-      font-style: normal;
-      color: var(--text-dim);
-      /* .ds-container is a centring flex column, so a bare paragraph becomes
-         a shrink-to-fit item and its left edge moves with the text length —
-         the shorter KO line sat 170px right of the EN one. An explicit width
-         pins the box to the 960 card column in both languages. */
+    /* ===============================================================
+       STEP CARDS — Figma "1-1/ Start point" (4:4) and the frames after it.
+       A white 1438 card on the page ground: a big step number, an orange
+       label pill, then grey sub-boxes. Each step sets its own top/bottom
+       room, since the Figma frames place their cards differently.
+       =============================================================== */
+    /* Card size and spacing are Shoot Shoot Penguin's `.spec-band` /
+       `.spec-card` (style.css there), so the case studies share one rhythm:
+       the page gutter either side (a 1200 card at 1920), 48 inside easing
+       to 24, 32 corners, 64/80 between sheets in a section, and the
+       section's own 72/96/120 above and below. Inside the card, Figma. */
+    #overview, #research { padding-block: 72px; }
+    @media (min-width: 768px) { #overview, #research { padding-block: 96px; } }
+    @media (min-width: 992px) { #overview, #research { padding-block: 120px; } }
+    .op-step {
       width: 100%;
-      max-width: 960px;
-      margin: var(--space-6) auto 0 auto;
+      max-width: 1920px;
+      margin: 64px auto;
+      padding: 0 var(--page-gutter);
+      font-family: 'Manrope', var(--font-kr);
+      word-break: keep-all;
     }
-    .overview-scope-note.ds-kr {
-      font-family: var(--font-kr);
+    @media (min-width: 1360px) { .op-step { margin-block: 80px; } }
+    main > section > .op-step:first-child { margin-top: 0; }
+    main > section > .op-step:last-child { margin-bottom: 0; }
+    .op-step__card {
+      container: op-card / inline-size;   /* lets grids inside count columns by card width */
+      padding: clamp(24px, 3.4vw, 48px);
+      overflow: hidden;
+      border-radius: 32px;
+      background: #fff;
     }
-
-    /* Overview card stack */
-    .overview-stack {
+    .op-step__head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+    }
+    .op-step__num {
+      color: #e5e5e5;
+      font-size: clamp(40px, 4.4vw, 64px);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+    .op-step__label {
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: #ff8c42;
+      color: #000;
+      font-size: clamp(13px, 1.1vw, 16px);
+      font-weight: 500;
+      line-height: 1.2;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .op-step__note {
+      margin-top: 10px;                   /* SSP: first line under the runner */
+      color: #8b8b88;
+      font-size: 16px;
+      line-height: 27.2px;
+    }
+    .op-step__boxes {
       display: flex;
       flex-direction: column;
-      gap: var(--space-6);            /* 24 — per Figma */
-      align-items: center;
+      gap: 24px;
+      margin-top: 24px;
     }
-    /* Overview cards are wider (960) than the design-system default (640) */
-    .overview-stack .ds-numbered-step { max-width: 960px; }
-
-    /* Overview-only square 120px media slot (overrides 16:10 → 160sq → 200sq default) */
-    .overview-stack .ds-numbered-step--with-media .ds-numbered-step__media {
-      aspect-ratio: 1 / 1;
-      max-width: 120px;
-      margin-left: auto;
-      margin-bottom: var(--space-6);
+    .op-step__box {
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+      overflow: hidden;
+      border: 1px solid #f5f5f5;
+      border-radius: 16px;
+      background: #fafafa;
+    }
+    .op-step__box-title {
+      color: #000;
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+    .op-step__box-title em {
+      font-style: normal;
+      color: #ff8c42;
+    }
+    .op-step__box-body {
+      margin-top: 12px;
+      color: #6e7884;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    /* "HVAC?" and its definition, set as a term/definition pair. */
+    .op-step__term {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 24px;
+      margin-top: 24px;
+    }
+    .op-step__term dt {
+      color: #ff8c42;
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+    .op-step__term dd {
+      max-width: 680px;
+      color: #6e7884;
+      font-size: 16px;
+      line-height: 1.6;
     }
 
-    /* Overview Card 03 — 3-column target comparison grid */
-    .overview-target-grid {
+    /* 1-2 Target (Figma 6:30) — a lead, three candidate tiles, then the
+       decision and its reasoning. */
+    .op-step__lead {
+      margin-top: 34px;
+      color: #6e7884;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    .op-step__lead + .op-step__lead { margin-top: 25.6px; }   /* one blank line */
+    .op-step__tiles {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: var(--space-3);
-      margin-top: var(--space-6);
-      width: 100%;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 24px;
+      margin-top: 24px;
+      list-style: none;
     }
     @media (min-width: 768px) {
-      .overview-target-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--space-4);
-      }
+      .op-step__tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
-    .overview-target-card {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 12px;
-      padding: var(--space-5);
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-3);
-      transition: background var(--duration-base) var(--ease-default),
-                  border-color var(--duration-base) var(--ease-default);
+    .op-step__tile {
+      min-height: 260px;
+      padding: 19px;
+      border: 1px solid #f5f5f5;
+      border-radius: 16px;
+      background: #fafafa;
     }
-    .overview-target-card--highlight {
-      background: rgba(255, 222, 89, 0.08);
-      border-color: rgba(255, 222, 89, 0.4);
+    .op-step__tile-icon { display: block; }
+    .op-step__tile-title {
+      margin-top: 12px;
+      color: #000;
+      font-family: var(--font-kr);       /* Figma sets these in Pretendard */
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 24px;
+      letter-spacing: -0.2px;
     }
-    .overview-target-card__title {
-      font-family: var(--font-sans);
-      font-size: 18px;
-      line-height: 1.2;
-      letter-spacing: 0;
-      font-weight: 500;
-      color: var(--text-primary);
-      margin: 0;
-    }
-    .overview-target-card--highlight .overview-target-card__title {
-      color: var(--accent-yellow);
-    }
-    .overview-target-card__list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .overview-target-card__list li {
-      font-family: var(--font-sans);
+    .op-step__tile-list {
+      margin-top: 8px;
+      padding-left: 24px;
+      list-style: disc;
+      color: #6e7884;
       font-size: 16px;
       line-height: 1.5;
-      color: var(--text-secondary);
     }
-    .overview-target-card--highlight .overview-target-card__list li {
-      color: var(--text-primary);
-      opacity: 0.85;
+    .op-step__decision {
+      margin-top: 24px;
+      color: #000;
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.2;
     }
-    @media (min-width: 768px) {
-      .overview-stack .ds-numbered-step--with-media .ds-numbered-step__media {
-        width: 120px;
-        height: 120px;
-        max-width: 120px;
-      }
-      .overview-stack .ds-numbered-step--with-media .ds-numbered-step__content {
-        padding-right: calc(120px + var(--space-6));
-      }
+    .op-step__decision + .op-step__lead { margin-top: 12px; }
+
+    /* 2-1 Secondary research (Figma 9:184) — a display title, then three
+       numbered parts: data, patterns, observation. */
+    .op-step__title {
+      margin-top: 34px;
+      text-wrap: balance;   /* the card is 1104 inside at 1920, not Figma's 1342 */
+      color: #000;
+      font-size: clamp(28px, 3.3vw, 48px);  /* SSP's .spec-card__title scale */
+      font-weight: 800;
+      line-height: 1.2;
     }
-    @media (min-width: 1440px) {
-      .overview-stack .ds-numbered-step--with-media .ds-numbered-step__media {
-        width: 120px;
-        height: 120px;
-      }
-      .overview-stack .ds-numbered-step--with-media .ds-numbered-step__content {
-        padding-right: calc(120px + var(--space-6));
-      }
+    .op-step__title + .op-step__lead { margin-top: 24px; }
+    .op-step__part {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 48px;
+    }
+    .op-step__part-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      border-radius: 999px;
+      background: #12161a;
+      color: #e5e5e5;
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+    .op-step__part-title {
+      color: #000;
+      font-family: var(--font-kr);       /* Figma sets these in Pretendard */
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.2px;
+    }
+    .op-step__part + .op-step__lead,
+    .op-step__part + .op-step__figs,
+    .op-step__part + .op-step__box,
+    .op-step__lead + .op-step__cells { margin-top: 12px; }
+    .op-step__figs {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 24px;
+    }
+    @container op-card (min-width: 700px) {
+      .op-step__figs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    .op-step__fig img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 493 / 330;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+    .op-step__fig figcaption {
+      margin-top: 12px;
+      color: #6e7884;
+      font-size: 12px;
+      line-height: 1.2;
+      letter-spacing: 1.04px;
+      text-align: center;
+    }
+    /* Four pattern cells: four across only when the card's content box
+       can give each one 240 (4 × 240 + 3 × 24 = 1032), which on the page
+       gutter means the 1200 card at 1920; two across below. */
+    .op-step__cells {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 24px;
+      grid-auto-rows: 1fr;  /* one height for every cell in the set, across rows too */
+      list-style: none;
+    }
+    @container op-card (min-width: 560px) {
+      .op-step__cells { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @container op-card (min-width: 1032px) {
+      .op-step__cells { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    }
+    .op-step__cell {
+      padding: 20px;
+      border: 1px solid #f5f5f5;
+      border-radius: 16px;
+      background: #fafafa;
+    }
+    .op-step__cell-title {
+      text-wrap: balance;                 /* cells are 258 at 1920, not Figma's 317, so no hand breaks */
+      color: #000;
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.2px;
+    }
+    .op-step__cell-body {
+      margin-top: 12px;
+      color: #6e7884;
+      font-size: 16px;
+      line-height: 1.5;
     }
 
-    /* ===== Apple-style sticky pinned scroll sequence (Overview cards) =====
-       Mobile + reduced-motion: wrappers transparent (display:contents),
-       cards keep original vertical-stack behavior.
-       Desktop + motion-allowed: pinned 500vh stage, one card at a time. */
-    .overview-pinned,
-    .overview-pinned__stage {
-      display: contents;
+    /* 2-2 Primary research (Figma 10:239) — adds a media + text row, a
+       wider figure ratio, and three finding cells. */
+    .op-step__title + .op-step__part { margin-top: 36px; }
+    .op-step__media-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
     }
+    @container op-card (min-width: 700px) {
+      .op-step__media-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    .op-step__part + .op-step__media-row { margin-top: 12px; }
+    .op-step__media-row .op-step__lead { margin-top: 0; }
+    .op-step__fig--interview img { aspect-ratio: 653 / 408; }
+    .op-step__figs--wide img { aspect-ratio: 634 / 356.63; }
+    .op-step__figs + .op-step__lead { margin-top: 24px; }
+    .op-step__lead + .op-step__part,
+    .op-step__media-row + .op-step__part,
+    .op-step__figs + .op-step__part,
+    .op-step__cells + .op-step__part { margin-top: 48px; }
+    .op-step__part + .op-step__cells { margin-top: 12px; }
+    /* Findings: three across once each can hold ~300; stacked below. */
+    .op-step__cells--3 { grid-template-columns: minmax(0, 1fr); }
+    @container op-card (min-width: 560px) {
+      .op-step__cells--3 { grid-template-columns: minmax(0, 1fr); }
+    }
+    @container op-card (min-width: 900px) {
+      .op-step__cells--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    .op-step__cells--3 .op-step__cell-body { margin-top: 24px; }
 
-    @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
-      .overview-pinned {
-        display: block;
-        position: relative;
-        height: 500vh;          /* 5 cards × 100vh of scroll distance */
-      }
-      .overview-pinned__stage {
-        position: sticky;
-        top: 0;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        overflow: hidden;
-      }
-      .overview-pinned__stage > .ds-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: var(--space-8);
-        height: 100%;
-      }
-      .overview-stack {
-        position: relative;
-        min-height: 400px;      /* tallest card is 399px — keeps card 03 unclipped */
-        gap: 0;
-      }
-      /* Cards are centred on the stack, not top-aligned, so a taller card
-         can't leave a tail sticking out past a shorter one during the swap. */
-      .overview-stack > .ds-numbered-step {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, calc(-50% + 40px));
-        opacity: 0;
-        /* Leaving: fade out fast, no delay. */
-        transition:
-          opacity var(--duration-base) var(--ease-out),
-          transform var(--duration-base) var(--ease-out);
-        pointer-events: none;
-        will-change: opacity, transform;
-      }
-      .overview-stack > .ds-numbered-step.is-active {
-        opacity: 1;
-        transform: translate(-50%, -50%);
-        pointer-events: auto;
-        /* Entering: wait for the outgoing card to clear, then fade in.
-           Staggering the two halves is what removes the ghosted overlap. */
-        transition:
-          opacity var(--duration-slow) var(--ease-out) var(--duration-base),
-          transform var(--duration-slow) var(--ease-out) var(--duration-base);
-      }
+    /* 2-3 Context research (Figma 12:337) — image beside a statement and
+       its reading, and an insight box that carries the cost/comfort scale. */
+    .op-step__fig--ctx img { aspect-ratio: 533.03 / 399.77; }
+    .op-step__lead + .op-step__media-row { margin-top: 24px; }   /* 2-4 */
+    .op-step__aside > * + * { margin-top: 12px; }
+    .op-step__aside > .op-step__lead + .op-step__statement { margin-top: 48px; }
+    .op-step__statement {
+      color: #000;
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.5;
     }
+    .op-step__box--scale {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+    .op-step__box--scale > :first-child { flex: 1 1 320px; }
+    .op-step__scale {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .op-scale {
+      display: block;
+      width: clamp(120px, 22cqi, 240px);   /* 240 at the 1104 card content, as in Figma */
+      height: auto;
+      overflow: visible;
+    }
+    /* The weighing: cost pulls the beam down on its side, comfort pulls it
+       back past level, and it settles even — the box's claim, that the
+       answer is a criterion holding both. The beam turns on the pivot
+       ring's centre; each pan rises or falls by its hook's arc (62 units
+       out, so 62·sin θ) and stays upright; the pills ride their pans. */
+    .op-scale__beam {
+      transform-box: view-box;
+      transform-origin: 124.796px 55.959px;
+    }
+    /* Loops for as long as it is on screen: weigh, settle, hold level for
+       a beat, weigh again. Paused off screen (the script sets is-live). */
+    .op-scale__beam,
+    .op-scale__pan,
+    .op-step__weight {
+      animation: 3.4s ease-in-out infinite paused;
+    }
+    .op-scale__beam { animation-name: op-scale-beam; }
+    .op-scale__pan--l, .op-step__weight--cost { animation-name: op-scale-left; }
+    .op-scale__pan--r, .op-step__weight--comfort { animation-name: op-scale-right; }
+    .op-step__scale.is-live :is(.op-scale__beam, .op-scale__pan, .op-step__weight) {
+      animation-play-state: running;
+    }
+    @keyframes op-scale-beam {
+      0%, 78%, 100% { transform: rotate(0deg); }
+      18% { transform: rotate(-8deg); }
+      42% { transform: rotate(6deg); }
+      62% { transform: rotate(-3deg); }
+    }
+    @keyframes op-scale-left {
+      0%, 78%, 100% { transform: translateY(0); }
+      18% { transform: translateY(8.6px); }
+      42% { transform: translateY(-6.5px); }
+      62% { transform: translateY(3.2px); }
+    }
+    @keyframes op-scale-right {
+      0%, 78%, 100% { transform: translateY(0); }
+      18% { transform: translateY(-8.6px); }
+      42% { transform: translateY(6.5px); }
+      62% { transform: translateY(-3.2px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .op-scale__beam, .op-scale__pan, .op-step__weight { animation: none; }
+    }
+    .op-step__weight {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 74px;
+      height: 58px;
+      border-radius: 9999px;
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.2;
+      text-align: center;
+    }
+    .op-step__weight--cost { background: #ff8c42; color: #000; }
+    .op-step__weight--comfort { background: #14110e; color: #fff; }
 
     /* Approach / Define / Ideate / Outcome — flex column with explicit
        vertical gap between cards (cards have varying max-widths and
@@ -1847,16 +1998,6 @@
     html[data-lang="ko"] .direction-shift__svg-label--en { display: none; }
     html[data-lang="en"] .tradeoff-svg__label--ko,
     html[data-lang="en"] .direction-shift__svg-label--ko { display: none; }
-
-    /* ----- Mini balance (Pattern 02 card, dark background) ----- */
-    .tradeoff-mini {
-      display: block;
-      width: 100%;
-      max-width: 180px;
-      height: auto;
-      margin: 0 auto var(--space-4) auto;
-      color: var(--text-tertiary);
-    }
 
     /* ----- Main conflict balance (Insight callout, cream background) ----- */
     .tradeoff-balance {
@@ -2216,588 +2357,557 @@
 
     <!-- ====================  OVERVIEW  ==================== -->
     <section id="overview">
-      <div class="overview-pinned">
-        <div class="overview-pinned__stage">
-          <div class="ds-container">
-
-        <header class="ds-section-header" data-lang-aware>
-          <p class="ds-section-header__eyebrow">[ 01 — OVERVIEW ]</p>
-        </header>
-
-        <p class="overview-scope-note" data-lang-aware>
-          <span data-lang-content="ko">5인 탐색적 검증 기반의 컨셉 프로젝트로, 결과는 성과가 아닌 개선 방향의 참고값으로 해석했습니다.</span>
-          <span data-lang-content="en">A concept project validated through exploratory research with 5 participants<br>results are read as directional input, not product performance.</span>
-        </p>
-
-        <div class="overview-stack">
-
-          <!-- ===== CARD 01 — Start point ===== -->
-          <article class="ds-numbered-step" data-lang-aware>
-            <div class="ds-numbered-step__content">
-              <p class="ds-numbered-step__counter">01</p>
-              <p class="ds-numbered-step__caption">
-                <span data-lang-content="ko">— 시작점</span>
-                <span data-lang-content="en">— Start point</span>
-              </p>
-              <div class="ds-numbered-step__divider"></div>
-              <h3 class="ds-numbered-step__title">
-                <span data-lang-content="ko">여름철만 되면 냉방비에 대한 이슈가 반복됩니다.</span>
+      <!-- ===== 1-1 — Start point (Figma 4:4) ===== -->
+      <div class="op-step op-step--start" data-lang-aware>
+        <article class="op-step__card">
+          <header class="op-step__head">
+            <p class="op-step__num">1-1</p>
+            <p class="op-step__label">
+              <span data-lang-content="en">Start point</span>
+              <span data-lang-content="ko">시작점</span>
+            </p>
+          </header>
+          <p class="op-step__note">
+            <span data-lang-content="en">*A concept project validated through exploratory research with 5 participants<br>results are read as directional input, not product performance.</span>
+            <span data-lang-content="ko">*5인 탐색적 검증 기반의 컨셉 프로젝트로,<br>결과는 성과가 아닌 개선 방향의 참고값으로 해석했습니다.</span>
+          </p>
+          <div class="op-step__boxes">
+            <div class="op-step__box">
+              <h3 class="op-step__box-title">
                 <span data-lang-content="en">Every summer, the same cooling-cost issue keeps coming back.</span>
+                <span data-lang-content="ko">여름철만 되면 냉방비에 대한 이슈가 반복됩니다.</span>
               </h3>
-              <p class="ds-numbered-step__body">
+              <p class="op-step__box-body">
+                <span data-lang-content="en">Plenty of tips for cutting bills get shared, but in real environments.<br>It's never clear how to actually apply them.</span>
                 <span data-lang-content="ko">전기요금을 줄이기 위한 다양한 방법들이 공유되지만,<br>실제 환경에서는 이를 어떻게 적용해야 할지 명확하지 않습니다</span>
-                <span data-lang-content="en">Plenty of tips for cutting bills get shared, but in real environments<br>it's never clear how to actually apply them.</span>
               </p>
             </div>
-          </article>
-
-          <!-- ===== CARD 02 — Start point (question) ===== -->
-          <article class="ds-numbered-step" data-lang-aware>
-            <div class="ds-numbered-step__content">
-              <p class="ds-numbered-step__counter">02</p>
-              <p class="ds-numbered-step__caption">
-                <span data-lang-content="ko">— 시작점</span>
-                <span data-lang-content="en">— Start point</span>
-              </p>
-              <div class="ds-numbered-step__divider"></div>
-              <h3 class="ds-numbered-step__title">
-                <span data-lang-content="ko">그렇다면, 왜 사람들은 냉난방을 <em class="ds-signature">명확한 기준 없이</em> 조절하고 있을까요?</span>
-                <span data-lang-content="en">So why do people adjust HVAC <em class="ds-signature">without any clear criteria</em>?</span>
+            <div class="op-step__box">
+              <h3 class="op-step__box-title">
+                <span data-lang-content="en">So why do people adjust <em>HVAC</em> without any clear criteria?</span>
+                <span data-lang-content="ko">그렇다면, 왜 사람들은 <em>냉난방</em>을 명확한 기준 없이 조절하고 있을까요?</span>
               </h3>
+              <dl class="op-step__term">
+                <dt>HVAC?</dt>
+                <dd>
+                  <span data-lang-content="en">is a system that manages a space’s temperature, humidity, and air quality.</span>
+                  <span data-lang-content="ko">공간의 온도, 습도, 공기질을 관리하는 냉난방·환기 시스템입니다.</span>
+                </dd>
+              </dl>
             </div>
-          </article>
-
-          <!-- ===== CARD 03 — Target (3-up comparison) ===== -->
-          <article class="ds-numbered-step" data-lang-aware>
-            <div class="ds-numbered-step__content">
-              <p class="ds-numbered-step__counter">03</p>
-              <p class="ds-numbered-step__caption">
-                <span data-lang-content="ko">— 타깃</span>
-                <span data-lang-content="en">— Target</span>
-              </p>
-              <div class="ds-numbered-step__divider"></div>
-              <p class="ds-numbered-step__body">
-                <span data-lang-content="ko">타겟 선정을 위해 비용 영향과 현재 해결 여부를 기준으로 세 가지 후보를 비교했습니다.</span>
-                <span data-lang-content="en">To choose a target, I compared three candidates by cost impact and whether the problem is already solved today.</span>
-              </p>
-              <div class="overview-target-grid">
-                <div class="overview-target-card">
-                  <h4 class="overview-target-card__title">
-                    <span data-lang-content="ko">가정</span>
-                    <span data-lang-content="en">Households</span>
-                  </h4>
-                  <ul class="overview-target-card__list">
-                    <li>
-                      <span data-lang-content="ko">낮은 사용량</span>
-                      <span data-lang-content="en">Low consumption</span>
-                    </li>
-                    <li>
-                      <span data-lang-content="ko">비용 영향 낮음</span>
-                      <span data-lang-content="en">Low cost impact</span>
-                    </li>
-                    <li>
-                      <span data-lang-content="ko">별도 관리 시스템 없음</span>
-                      <span data-lang-content="en">No dedicated management system</span>
-                    </li>
-                  </ul>
-                </div>
-                <div class="overview-target-card">
-                  <h4 class="overview-target-card__title">
-                    <span data-lang-content="ko">대형건물</span>
-                    <span data-lang-content="en">Large buildings</span>
-                  </h4>
-                  <ul class="overview-target-card__list">
-                    <li>
-                      <span data-lang-content="ko">높은 사용량</span>
-                      <span data-lang-content="en">High consumption</span>
-                    </li>
-                    <li>
-                      <span data-lang-content="ko">비용 영향 큼</span>
-                      <span data-lang-content="en">High cost impact</span>
-                    </li>
-                    <li>
-                      <span data-lang-content="ko">EMS 관리시스템 존재</span>
-                      <span data-lang-content="en">EMS in place</span>
-                    </li>
-                    <li>
-                      <span data-lang-content="ko">이미 관리 및 최적화가 이뤄지는 영역</span>
-                      <span data-lang-content="en">Already managed and optimized</span>
-                    </li>
-                  </ul>
-                </div>
-                <div class="overview-target-card overview-target-card--highlight">
-                  <h4 class="overview-target-card__title">
-                    <span data-lang-content="ko">자영업자 매장</span>
-                    <span data-lang-content="en">Small business stores</span>
-                  </h4>
-                  <ul class="overview-target-card__list">
-                    <li>
-                      <span data-lang-content="ko">높은 사용량</span>
-                      <span data-lang-content="en">High consumption</span>
-                    </li>
-                    <li>
-                      <span data-lang-content="ko">비용 영향 큼</span>
-                      <span data-lang-content="en">High cost impact</span>
-                    </li>
-                    <li>
-                      <span data-lang-content="ko">별도 에너지관리 시스템 없음</span>
-                      <span data-lang-content="en">No dedicated energy management system</span>
-                    </li>
-                    <li>
-                      <span data-lang-content="ko">개별 판단에 의존</span>
-                      <span data-lang-content="en">Reliant on individual judgment</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- ===== CARD 04 — Target (chosen) ===== -->
-          <article class="ds-numbered-step" data-lang-aware>
-            <div class="ds-numbered-step__content">
-              <p class="ds-numbered-step__counter">04</p>
-              <p class="ds-numbered-step__caption">
-                <span data-lang-content="ko">— 타깃</span>
-                <span data-lang-content="en">— Target</span>
-              </p>
-              <div class="ds-numbered-step__divider"></div>
-              <h3 class="ds-numbered-step__title">
-                <span data-lang-content="ko"><em class="ds-signature">자영업자 매장</em>을 타깃으로 설정했습니다.</span>
-                <span data-lang-content="en">I set <em class="ds-signature">small business stores</em> as the target.</span>
-              </h3>
-              <p class="ds-numbered-step__body">
-                <span data-lang-content="ko">가정과 비교해 비용 기준에서 차이가 크게 발생하며, 아직 명확한 해결 기준이 없는 영역이기 때문입니다.</span>
-                <span data-lang-content="en">The cost gap versus households is significant, and there's still no clear solution baseline in this space.</span>
-              </p>
-            </div>
-          </article>
-
-          <!-- ===== CARD 05 — Validation ===== -->
-          <article class="ds-numbered-step" data-lang-aware>
-            <div class="ds-numbered-step__content">
-              <p class="ds-numbered-step__counter">05</p>
-              <p class="ds-numbered-step__caption">
-                <span data-lang-content="ko">— 검증</span>
-                <span data-lang-content="en">— Validation</span>
-              </p>
-              <div class="ds-numbered-step__divider"></div>
-              <p class="ds-numbered-step__body">
-                <span data-lang-content="ko">저 역시 매장을 운영하며 이 문제를 직접 겪고 있었습니다.<br><br>이 문제가 개인적인 사례에 그치지 않는지 확인하기 위해, 사용자 리서치를 진행했습니다.</span>
-                <span data-lang-content="en">I'd been living this problem myself while running a store.<br><br>To check that it wasn't just my personal case, I ran user research.</span>
-              </p>
-            </div>
-          </article>
-
-        </div>
           </div>
-        </div>
+        </article>
+      </div>
+
+      <!-- ===== 1-2 — Target (Figma 6:30) ===== -->
+      <div class="op-step" data-lang-aware>
+        <article class="op-step__card">
+          <header class="op-step__head">
+            <p class="op-step__num">1-2</p>
+            <p class="op-step__label">
+              <span data-lang-content="en">Target</span>
+              <span data-lang-content="ko">타깃</span>
+            </p>
+          </header>
+          <p class="op-step__lead">
+            <span data-lang-content="en">To choose a target, I compared three candidates by cost impact and whether the problem is already solved today.</span>
+            <span data-lang-content="ko">타겟 선정을 위해 비용 영향과 현재 해결 여부를 기준으로 세 가지 후보를 비교했습니다.</span>
+          </p>
+          <ul class="op-step__tiles">
+            <li class="op-step__tile">
+              <img class="op-step__tile-icon" src="operator/overview/icon-household.svg" width="48" height="48" alt="" />
+              <h4 class="op-step__tile-title">
+                <span data-lang-content="en">Households</span>
+                <span data-lang-content="ko">가정</span>
+              </h4>
+              <ul class="op-step__tile-list">
+                <li>
+                  <span data-lang-content="en">Low consumption</span>
+                  <span data-lang-content="ko">낮은 사용량</span>
+                </li>
+                <li>
+                  <span data-lang-content="en">Low cost impact</span>
+                  <span data-lang-content="ko">비용 영향 낮음</span>
+                </li>
+                <li>
+                  <span data-lang-content="en">No dedicated management system</span>
+                  <span data-lang-content="ko">별도 관리 시스템 없음</span>
+                </li>
+              </ul>
+            </li>
+            <li class="op-step__tile">
+              <img class="op-step__tile-icon" src="operator/overview/icon-building.svg" width="48" height="48" alt="" />
+              <h4 class="op-step__tile-title">
+                <span data-lang-content="en">Large buildings</span>
+                <span data-lang-content="ko">대형건물</span>
+              </h4>
+              <ul class="op-step__tile-list">
+                <li>
+                  <span data-lang-content="en">High consumption</span>
+                  <span data-lang-content="ko">높은 사용량</span>
+                </li>
+                <li>
+                  <span data-lang-content="en">High cost impact</span>
+                  <span data-lang-content="ko">비용 영향 큼</span>
+                </li>
+                <li>
+                  <span data-lang-content="en">EMS in place</span>
+                  <span data-lang-content="ko">EMS 관리시스템 존재</span>
+                </li>
+                <li>
+                  <span data-lang-content="en">Already managed and optimized</span>
+                  <span data-lang-content="ko">이미 관리 및 최적화가 이뤄지는 영역</span>
+                </li>
+              </ul>
+            </li>
+            <li class="op-step__tile">
+              <img class="op-step__tile-icon" src="operator/overview/icon-store.svg" width="48" height="48" alt="" />
+              <h4 class="op-step__tile-title">
+                <span data-lang-content="en">Small business stores</span>
+                <span data-lang-content="ko">자영업자 매장</span>
+              </h4>
+              <ul class="op-step__tile-list">
+                <li>
+                  <span data-lang-content="en">High consumption</span>
+                  <span data-lang-content="ko">높은 사용량</span>
+                </li>
+                <li>
+                  <span data-lang-content="en">High cost impact</span>
+                  <span data-lang-content="ko">비용 영향 큼</span>
+                </li>
+                <li>
+                  <span data-lang-content="en">No dedicated energy<br>management system</span>
+                  <span data-lang-content="ko">별도 에너지관리 시스템 없음</span>
+                </li>
+                <li>
+                  <span data-lang-content="en">Reliant on individual judgment</span>
+                  <span data-lang-content="ko">개별 판단에 의존</span>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <h3 class="op-step__decision">
+            <span data-lang-content="en">I set small business stores as the target.</span>
+            <span data-lang-content="ko">자영업자 매장을 타깃으로 설정했습니다.</span>
+          </h3>
+          <p class="op-step__lead">
+            <span data-lang-content="en">The cost gap versus households is significant, and there's still no clear solution baseline in this space.</span>
+            <span data-lang-content="ko">가정과 비교해 비용 기준에서 차이가 크게 발생하며, 아직 명확한 해결 기준이 없는 영역이기 때문입니다.</span>
+          </p>
+          <p class="op-step__lead">
+            <span data-lang-content="en">I'd been living this problem myself while running a store.<br>To check that it wasn't just my personal case, I ran user research.</span>
+            <span data-lang-content="ko">저 역시 매장을 운영하며 이 문제를 직접 겪고 있었습니다.<br>이 문제가 개인적인 사례에 그치지 않는지 확인하기 위해, 사용자 리서치를 진행했습니다.</span>
+          </p>
+        </article>
       </div>
     </section>
 
     <!-- ====================  APPROACH  ==================== -->
     <section id="research">
-      <div class="ds-container">
+      <!-- ===== 2-1 — Secondary research (Figma 9:184) ===== -->
+      <div class="op-step" data-lang-aware>
+        <article class="op-step__card">
+          <header class="op-step__head">
+            <p class="op-step__num">2-1</p>
+            <p class="op-step__label">
+              <span data-lang-content="en">Secondary research</span>
+              <span data-lang-content="ko">2차 리서치</span>
+            </p>
+          </header>
+          <h2 class="op-step__title">
+            <span data-lang-content="en">Without clear criteria, HVAC adjustments<br>became a matter of trial and error.</span>
+            <span data-lang-content="ko">명확한 기준이 없어,<br>냉난방 조절은 시행착오의 반복이 되었습니다.</span>
+          </h2>
+          <p class="op-step__lead">
+            <span data-lang-content="en">Secondary research revealed consistent patterns behind repeated HVAC adjustments.</span>
+            <span data-lang-content="ko">2차 리서치를 통해, 반복되는 냉난방 조절 뒤에 일관된 패턴이 있음을 확인했습니다.</span>
+          </p>
 
-        <header class="ds-section-header" data-lang-aware>
-          <p class="ds-section-header__eyebrow">[ 02 — RESEARCH ]</p>
-        </header>
-
-        <!-- ===== 02.1 — SECONDARY RESEARCH ===== -->
-        <article class="ds-research-finding ds-research-finding--align-left">
-          <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 02.1 — SECONDARY RESEARCH ]</p>
-
-          <h2 class="ds-h2" data-lang-content="en">Without clear criteria for <em class="ds-signature ds-signature--accent-yellow">when or how to adjust</em> HVAC,<br>small business owners kept anxiously changing the settings</h2>
-          <h2 class="ds-h2 ds-kr" data-lang-content="ko">냉난방을 <em class="ds-signature ds-signature--accent-yellow">언제, 어떻게 바꿔야 할</em> 기준이 없어,<br>자영업자는 불안해서 계속 설정을 바꾸고 있었다</h2>
-
-          <p class="ds-research-finding__paragraph" data-lang-content="en">Analyzing community data revealed recurring patterns.</p>
-          <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">자영업자 커뮤니티 데이터를 분석한 결과 다음과 같은 패턴이 반복적으로 나타났습니다.</p>
-
-          <!-- 2-column media grid -->
-          <div class="ds-research-finding__media-grid">
-            <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="16/10">
-                <img src="operator/approach/secondary-research-01.png" alt="Collected community posts" loading="lazy" />
-              </div>
-              <figcaption class="ds-media-figure__caption" data-lang-aware>
+          <h3 class="op-step__part">
+            <span class="op-step__part-num">01</span>
+            <span class="op-step__part-title">
+              <span data-lang-content="en">Data collection</span>
+                <span data-lang-content="ko">데이터 수집</span>
+            </span>
+          </h3>
+          <div class="op-step__figs">
+            <figure class="op-step__fig">
+              <img src="operator/approach/secondary-research-01.png" alt="Collected community posts" loading="lazy" />
+              <figcaption>
                 <span data-lang-content="en">Collected community posts</span>
                 <span data-lang-content="ko">커뮤니티 데이터 게시글 모음</span>
               </figcaption>
             </figure>
-            <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="16/10">
-                <img src="operator/approach/secondary-research-02.png" alt="Categorized community data analysis" loading="lazy" />
-              </div>
-              <figcaption class="ds-media-figure__caption" data-lang-aware>
+            <figure class="op-step__fig">
+              <img src="operator/approach/secondary-research-02.png" alt="Categorized community data analysis" loading="lazy" />
+              <figcaption>
                 <span data-lang-content="en">Categorized community data analysis</span>
                 <span data-lang-content="ko">커뮤니티 데이터 카테고리화 분석</span>
               </figcaption>
             </figure>
           </div>
 
-          <!-- Pattern -->
-          <h3 class="ds-research-finding__sub-heading pattern-heading">Pattern</h3>
-          <div class="ds-impact-grid ds-impact-grid--4col">
-            <div class="ds-insight ds-insight--dark" data-lang-aware>
-              <p class="ds-insight__eyebrow">01</p>
-              <h4 class="ds-insight__title">
-                <span data-lang-content="ko">기준 부재로 인한<br>반복 조정</span>
-                <span data-lang-content="en">Repeated adjustments from missing criteria</span>
+          <h3 class="op-step__part">
+            <span class="op-step__part-num">02</span>
+            <span class="op-step__part-title">
+              <span data-lang-content="en">Patterns</span>
+                <span data-lang-content="ko">패턴</span>
+            </span>
+          </h3>
+          <p class="op-step__lead">
+            <span data-lang-content="en">Analyzing community data revealed recurring patterns.</span>
+            <span data-lang-content="ko">자영업자 커뮤니티 데이터를 분석한 결과 다음과 같은 패턴이 반복적으로 나타났습니다.</span>
+          </p>
+          <ul class="op-step__cells">
+            <li class="op-step__cell">
+              <h4 class="op-step__cell-title">
+                <span data-lang-content="en">1. Repeated adjustments from missing criteria</span>
+                <span data-lang-content="ko">1. 기준 부재로 인한 반복 조정</span>
               </h4>
-              <p class="ds-insight__body">
-                <span data-lang-content="ko">기준이 없어 불안할 때마다<br>냉난방을 계속 바꾸게 된다</span>
+              <p class="op-step__cell-body">
                 <span data-lang-content="en">Without criteria, anxiety drives constant HVAC tweaking</span>
+                <span data-lang-content="ko">기준이 없어 불안할 때마다 냉난방을 계속 바꾸게 된다</span>
               </p>
-            </div>
-
-            <div class="ds-insight ds-insight--dark" data-lang-aware>
-              <p class="ds-insight__eyebrow">02</p>
-              <h4 class="ds-insight__title">
-                <span data-lang-content="ko">쾌적함 vs 비용 사이의 고민</span>
-                <span data-lang-content="en">Caught between comfort and cost</span>
+            </li>
+            <li class="op-step__cell">
+              <h4 class="op-step__cell-title">
+                <span data-lang-content="en">2. Caught between comfort and cost</span>
+                <span data-lang-content="ko">2. 쾌적함 vs 비용 사이의 고민</span>
               </h4>
-              <svg class="tradeoff-mini" viewBox="0 0 200 80" role="img" aria-hidden="true" focusable="false">
-                <!-- tilted beam -->
-                <line x1="22" y1="32" x2="178" y2="48" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.55"/>
-                <!-- fulcrum + base -->
-                <polygon points="100,40 90,62 110,62" fill="currentColor" opacity="0.4"/>
-                <line x1="78" y1="62" x2="122" y2="62" stroke="currentColor" stroke-width="1.5" opacity="0.5" stroke-linecap="round"/>
-                <!-- left weight (cost, blue) -->
-                <circle cx="22" cy="32" r="9" fill="#0098FF"/>
-                <!-- right weight (comfort, yellow) -->
-                <circle cx="178" cy="48" r="9" fill="#FDF89C"/>
-                <!-- tension arrows -->
-                <g stroke="#0098FF" stroke-width="1.4" fill="none" stroke-linecap="round" opacity="0.75">
-                  <line x1="14" y1="20" x2="6" y2="12"/>
-                  <polyline points="6,12 12,12 6,12 6,18"/>
-                </g>
-                <g stroke="#FDF89C" stroke-width="1.4" fill="none" stroke-linecap="round" opacity="0.85">
-                  <line x1="186" y1="36" x2="194" y2="28"/>
-                  <polyline points="194,28 188,28 194,28 194,34"/>
-                </g>
-              </svg>
-              <p class="ds-insight__body">
-                <span data-lang-content="ko">쾌적하게 유지하고 싶지만, 비용이 걱정돼 계속 고민하게 된다</span>
+              <p class="op-step__cell-body">
                 <span data-lang-content="en">Wanting comfort but worried about cost, the deliberation never stops</span>
+                <span data-lang-content="ko">쾌적하게 유지하고 싶지만, 비용이 걱정돼 계속 고민하게 된다</span>
               </p>
-            </div>
-
-            <div class="ds-insight ds-insight--dark" data-lang-aware>
-              <p class="ds-insight__eyebrow">03</p>
-              <h4 class="ds-insight__title">
-                <span data-lang-content="ko">매장별 상황 차이로 인한 사용 포기</span>
-                <span data-lang-content="en">Abandonment from store-specific complexity</span>
+            </li>
+            <li class="op-step__cell">
+              <h4 class="op-step__cell-title">
+                <span data-lang-content="en">3. Abandonment from store specific complexity</span>
+                <span data-lang-content="ko">3. 매장별 상황 차이로 인한 사용 포기</span>
               </h4>
-              <p class="ds-insight__body">
-                <span data-lang-content="ko">매장마다 상황이 달라<br>조작 방법을 맞추기 어려워,<br>결국 사용을 포기하게 된다</span>
+              <p class="op-step__cell-body">
                 <span data-lang-content="en">Each store's setup differs, adapting controls becomes too hard, they give up</span>
+                <span data-lang-content="ko">매장마다 상황이 달라 조작 방법을 맞추기 어려워, 결국 사용을 포기하게 된다</span>
               </p>
-            </div>
-
-            <div class="ds-insight ds-insight--dark" data-lang-aware>
-              <p class="ds-insight__eyebrow">04</p>
-              <h4 class="ds-insight__title">
-                <span data-lang-content="ko">판단보다 조작에<br>의존하는 행동</span>
-                <span data-lang-content="en">Acting first, judging never</span>
+            </li>
+            <li class="op-step__cell">
+              <h4 class="op-step__cell-title">
+                <span data-lang-content="en">4. Acting first, judging never</span>
+                <span data-lang-content="ko">4. 판단보다 조작에 의존하는 행동</span>
               </h4>
-              <p class="ds-insight__body">
-                <span data-lang-content="ko">어떻게 판단할지보다,<br>일단 조작으로 해결하려고 한다</span>
+              <p class="op-step__cell-body">
                 <span data-lang-content="en">Rather than weighing the decision, they jump straight to manipulating the controls</span>
+                <span data-lang-content="ko">어떻게 판단할지보다, 일단 조작으로 해결하려고 한다</span>
               </p>
-            </div>
-          </div>
+            </li>
+          </ul>
 
-          <!-- Observation -->
-          <h3 class="ds-research-finding__sub-heading pattern-heading">Observation</h3>
-          <div class="ds-insight observation-card" data-lang-aware>
-            <p class="ds-insight__body">
-              <span data-lang-content="ko">자영업자들은 <strong>쾌적</strong>하게 유지하고 싶지만 <strong>비용</strong>이 부담돼 스트레스를 받고 있었고,<br>비용을 아끼면서도 매장을 유지하기 위해 계속 어떻게 조작할지 고민하고 있었다</span>
-              <span data-lang-content="en">Operators wanted to keep stores <strong>comfortable</strong> but were stressed by the <strong>cost</strong>,<br>and they kept deliberating how to control the system to save money while keeping the store running.</span>
+          <h3 class="op-step__part">
+            <span class="op-step__part-num">03</span>
+            <span class="op-step__part-title">
+              <span data-lang-content="en">Observation</span>
+                <span data-lang-content="ko">관찰</span>
+            </span>
+          </h3>
+          <div class="op-step__box">
+            <h4 class="op-step__box-title">
+              <span data-lang-content="en">Small business owners adjusted HVAC throughout the day as store conditions changed.</span>
+              <span data-lang-content="ko">자영업자들은 매장 상황이 바뀔 때마다 하루 종일 냉난방을 조절하고 있었습니다.</span>
+            </h4>
+            <p class="op-step__box-body">
+              <span data-lang-content="en">Their experiences revealed repeated adjustments, different approaches, and uncertainty about what to do.</span>
+              <span data-lang-content="ko">이들의 경험에서 반복되는 조정, 제각각인 방식, 무엇을 해야 할지에 대한 불확실성이 드러났습니다.</span>
             </p>
           </div>
         </article>
+      </div>
 
-        <!-- ===== 02.2 — PRIMARY RESEARCH ===== -->
-        <article class="ds-research-finding ds-research-finding--align-left">
-          <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 02.2 — PRIMARY RESEARCH ]</p>
-
-          <h2 class="ds-h2" data-lang-content="en">Behind the constant setting changes,<br>lay <em class="ds-signature ds-signature--accent-yellow">anxiety over cost and the absence of judgment criteria</em></h2>
-          <h2 class="ds-h2 ds-kr" data-lang-content="ko">기준이 없어 계속 설정을 바꾸는 문제 뒤에는,<br><em class="ds-signature ds-signature--accent-yellow">비용에 대한 불안과 판단 기준의 부재</em>가 있었다</h2>
-
-          <!-- Interview heading + body (precedes the 3 image cards per Figma) -->
-          <div class="ds-research-finding__heading-group">
-            <h3 class="ds-research-finding__sub-heading">Interview</h3>
-            <p class="ds-research-finding__paragraph" data-lang-content="en">
-              To understand when stress peaks in real store operations<br>and what actually drives HVAC decisions, we interviewed 5 small business owners.
+      <!-- ===== 2-2 — Primary research (Figma 10:239) ===== -->
+      <div class="op-step" data-lang-aware>
+        <article class="op-step__card">
+          <header class="op-step__head">
+            <p class="op-step__num">2-2</p>
+            <p class="op-step__label">
+              <span data-lang-content="en">Primary research</span>
+              <span data-lang-content="ko">1차 리서치</span>
             </p>
-            <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
-              실제 매장 운영 상황에서 언제 스트레스가 커지는지, 무엇을 기준으로 냉난방을 조절하는지<br>구체적으로 알아보기 위해 자영업자 5인을 인터뷰했습니다
-            </p>
-          </div>
+          </header>
+          <h2 class="op-step__title">
+            <span data-lang-content="en">Repeated adjustments were driven by cost anxiety and uncertainty about when to act.</span>
+            <span data-lang-content="ko">반복되는 조절은 비용에 대한 불안과 언제 움직여야 할지 모르는 불확실성에서 비롯됐습니다.</span>
+          </h2>
 
-          <!-- Interview protocol — FIG. 02.2.1 / 02.2.2 session photos removed (files 404) -->
-          <div class="ds-research-finding__media-grid primary-interview-grid">
-            <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="16/10" data-zoomable="true">
-                <img src="operator/approach/interview-protocol.png" alt="Interview protocol" loading="lazy" />
-              </div>
-              <figcaption class="ds-media-figure__caption" data-lang-aware>
+          <h3 class="op-step__part">
+            <span class="op-step__part-num">01</span>
+            <span class="op-step__part-title">
+              <span data-lang-content="en">Interview</span>
+              <span data-lang-content="ko">인터뷰</span>
+            </span>
+          </h3>
+          <div class="op-step__media-row">
+            <figure class="op-step__fig op-step__fig--interview">
+              <img src="operator/approach/interview-protocol.png" alt="Interview protocol" loading="lazy" />
+              <figcaption>
                 <span data-lang-content="en">Interview protocol</span>
                 <span data-lang-content="ko">인터뷰 프로토콜</span>
               </figcaption>
             </figure>
-          </div>
-
-          <!-- Data Analysis -->
-          <div class="ds-research-finding__heading-group">
-            <h3 class="ds-research-finding__sub-heading">Data Analysis</h3>
-            <p class="ds-research-finding__paragraph" data-lang-content="en">
-              After organizing the interview data through affinity mapping and thematic coding,<br>similar concerns kept surfacing.
-            </p>
-            <p class="ds-research-finding__paragraph ds-research-finding__paragraph--oneline ds-kr" data-lang-content="ko">
-              이 인터뷰 내용을 어피니티 맵핑과 Thematic coding을 통해 데이터를 정리해보니 비슷한 고민들이 이어지고 있었습니다
+            <p class="op-step__lead">
+              <span data-lang-content="en">To understand what drives HVAC decisions in real store operations, we interviewed 5 small business owners.<br>We explored when they adjust settings, what influences their decisions, and how they assess the outcome.</span>
+              <span data-lang-content="ko">실제 매장 운영에서 무엇이 냉난방 결정을 이끄는지 알아보기 위해 자영업자 5인을 인터뷰했습니다.<br>언제 설정을 바꾸는지, 무엇이 결정에 영향을 주는지, 결과를 어떻게 판단하는지 살펴봤습니다.</span>
             </p>
           </div>
 
-          <!-- 2-image grid (634/634, 12 gap per Figma) -->
-          <div class="ds-research-finding__media-grid primary-analysis-grid">
-            <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="16/9" data-zoomable="true">
-                <img src="operator/approach/affinity-map.png" alt="Affinity mapping" loading="lazy" />
-              </div>
-              <figcaption class="ds-media-figure__caption" data-lang-aware>
+          <h3 class="op-step__part">
+            <span class="op-step__part-num">02</span>
+            <span class="op-step__part-title">
+              <span data-lang-content="en">Data Analysis</span>
+              <span data-lang-content="ko">데이터 분석</span>
+            </span>
+          </h3>
+          <div class="op-step__figs op-step__figs--wide">
+            <figure class="op-step__fig">
+              <img src="operator/approach/affinity-map.png" alt="Affinity mapping" loading="lazy" />
+              <figcaption>
                 <span data-lang-content="en">Affinity mapping</span>
                 <span data-lang-content="ko">어피니티 맵핑</span>
               </figcaption>
             </figure>
-            <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="16/9" data-zoomable="true">
-                <img src="operator/approach/thematic-coding.png" alt="Thematic coding" loading="lazy" />
-              </div>
-              <figcaption class="ds-media-figure__caption" data-lang-aware>
+            <figure class="op-step__fig">
+              <img src="operator/approach/thematic-coding.png" alt="Thematic coding" loading="lazy" />
+              <figcaption>
                 <span data-lang-content="en">Thematic coding</span>
                 <span data-lang-content="ko">Thematic coding</span>
               </figcaption>
             </figure>
           </div>
+          <p class="op-step__lead">
+            <span data-lang-content="en">After organizing the interview data through affinity mapping and thematic coding, similar concerns kept surfacing.</span>
+            <span data-lang-content="ko">인터뷰 내용을 어피니티 맵핑과 Thematic coding으로 정리해보니 비슷한 고민들이 계속 이어지고 있었습니다.</span>
+          </p>
 
-          <!-- Findings — 3-card pattern grid (combined "01. title" per Figma) -->
-          <h3 class="ds-research-finding__sub-heading pattern-heading">Findings</h3>
-          <div class="ds-impact-grid ds-impact-grid--3col-pattern">
-            <div class="ds-insight ds-insight--dark" data-lang-aware>
-              <h4 class="ds-insight__title">
-                <span data-lang-content="ko">01. 결과를 알 수 없어 불안하다.</span>
-                <span data-lang-content="en">01. Anxiety from not knowing the outcome</span>
+          <h3 class="op-step__part">
+            <span class="op-step__part-num">03</span>
+            <span class="op-step__part-title">
+              <span data-lang-content="en">Findings</span>
+              <span data-lang-content="ko">발견</span>
+            </span>
+          </h3>
+          <ul class="op-step__cells op-step__cells--3">
+            <li class="op-step__cell">
+              <h4 class="op-step__cell-title">
+                <span data-lang-content="en">1. They can't predict the outcome</span>
+                <span data-lang-content="ko">1. 결과를 예측할 수 없다</span>
               </h4>
-              <p class="ds-insight__body">
-                <span data-lang-content="ko">설정을 바꿔도 전기요금이 얼마나 달라지는지<br>알 수 없어 불안해한다.</span>
-                <span data-lang-content="en">Even after changing the settings,<br>they can't tell how much the bill<br>will shift, so anxiety lingers.</span>
+              <p class="op-step__cell-body">
+                <span data-lang-content="en">Even after adjusting the settings, they can’t tell how much the energy bill will change, leaving them unsure whether to adjust again</span>
+                <span data-lang-content="ko">설정을 바꿔도 전기요금이 얼마나 달라지는지 알 수 없어, 다시 조절해야 할지 확신하지 못한다</span>
               </p>
-            </div>
-
-            <div class="ds-insight ds-insight--dark" data-lang-aware>
-              <h4 class="ds-insight__title">
-                <span data-lang-content="ko">02. 상황마다 다르게 대응하지만<br>기준이 없다</span>
-                <span data-lang-content="en">02. They adapt to each situation, but without any criteria</span>
+            </li>
+            <li class="op-step__cell">
+              <h4 class="op-step__cell-title">
+                <span data-lang-content="en">2. They adapt to each situation, but without clear criteria</span>
+                <span data-lang-content="ko">2. 상황마다 다르게 대응하지만, 명확한 기준은 없다</span>
               </h4>
-              <p class="ds-insight__body">
-                <span data-lang-content="ko">바쁠 때와 한가할 때 다르게 조절하지만,<br>어떤 방식이 맞는지는 알지 못한다.</span>
-                <span data-lang-content="en">They adjust differently<br>when busy or quiet,<br>yet they don't know<br>which approach is right.</span>
+              <p class="op-step__cell-body">
+                <span data-lang-content="en">They adjust differently when busy or quiet, yet they don't know which approach is right.</span>
+                <span data-lang-content="ko">바쁠 때와 한가할 때 다르게 조절하지만, 어떤 방식이 맞는지는 알지 못한다.</span>
               </p>
-            </div>
-
-            <div class="ds-insight ds-insight--dark" data-lang-aware>
-              <h4 class="ds-insight__title">
-                <span data-lang-content="ko">03. 그래서 직관에 의존하게 된다.</span>
-                <span data-lang-content="en">03. So they fall back on intuition</span>
+            </li>
+            <li class="op-step__cell">
+              <h4 class="op-step__cell-title">
+                <span data-lang-content="en">3. They fall back on intuition</span>
+                <span data-lang-content="ko">3. 직관에 의존하게 된다</span>
               </h4>
-              <p class="ds-insight__body">
-                <span data-lang-content="ko">결국 느낌이나 경험에 따라 계속 설정을 바꾸게 된다.</span>
-                <span data-lang-content="en">In the end, they keep changing settings based on feel or past experience.</span>
+              <p class="op-step__cell-body">
+                <span data-lang-content="en">In the end, they keep changing settings based on how the store feels or what worked in the past.</span>
+                <span data-lang-content="ko">결국 매장에서 느껴지는 체감이나 예전에 효과가 있었던 방식에 따라 계속 설정을 바꾸게 된다.</span>
               </p>
-            </div>
-          </div>
+            </li>
+          </ul>
 
-          <!-- Insight callout (heading + body combined inside one cream box) -->
-          <div class="insight-callout">
-            <h3 class="insight-callout__heading">Insight</h3>
-            <p class="insight-callout__body" data-lang-aware>
-              <span data-lang-content="en">No matter how often they change the settings, results aren't visible right away,<br>and the bill only arrives a month later so operators keep adjusting with constant <strong>anxiety</strong>.</span>
-              <span data-lang-content="ko">아무리 설정을 바꿔도 결과는 바로 확인할 수 없고,<br>고지서는 한 달 뒤에 나오기 때문에 자영업자는 <strong>불안</strong>을 안고 계속 바꾸게 된다</span>
+          <h3 class="op-step__part">
+            <span class="op-step__part-num">04</span>
+            <span class="op-step__part-title">
+              <span data-lang-content="en">Insight!</span>
+              <span data-lang-content="ko">인사이트!</span>
+            </span>
+          </h3>
+          <div class="op-step__box">
+            <h4 class="op-step__box-title">
+              <span data-lang-content="en">Without immediate feedback, every adjustment becomes a guess.</span>
+              <span data-lang-content="ko">즉각적인 피드백이 없어, 모든 조절이 추측이 됩니다.</span>
+            </h4>
+            <p class="op-step__box-body">
+              <span data-lang-content="en">The impact on energy costs is only revealed when the monthly bill arrives,<br>leaving small business owners to repeatedly adjust without knowing what works.</span>
+              <span data-lang-content="ko">에너지 비용에 미치는 영향은 한 달 뒤 고지서가 와야 드러나기 때문에,<br>자영업자는 무엇이 효과가 있는지 모른 채 조절을 반복하게 됩니다.</span>
             </p>
           </div>
-
         </article>
+      </div>
 
-        <!-- ===== 02.3 — CONTEXT RESEARCH ===== -->
-        <article class="ds-research-finding ds-research-finding--align-left">
-          <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 02.3 — CONTEXT RESEARCH ]</p>
+      <!-- ===== 2-3 — Context research (Figma 12:337) ===== -->
+      <div class="op-step" data-lang-aware>
+        <article class="op-step__card">
+          <header class="op-step__head">
+            <p class="op-step__num">2-3</p>
+            <p class="op-step__label">
+              <span data-lang-content="en">Context research</span>
+              <span data-lang-content="ko">맥락 리서치</span>
+            </p>
+          </header>
+          <h2 class="op-step__title">
+            <span data-lang-content="en">Cost mattered most, but the pricing structure was too complex to act on.</span>
+            <span data-lang-content="ko">비용이 가장 중요했지만, 요금 구조는 판단에 쓰기엔 너무 복잡했습니다.</span>
+          </h2>
+          <p class="op-step__lead">
+            <span data-lang-content="en">Interview findings pointed to cost as a major concern, leading us to examine the pricing structure behind the bill.</span>
+            <span data-lang-content="ko">인터뷰에서 비용이 가장 큰 걱정거리로 드러나, 고지서 뒤에 있는 요금 구조를 살펴봤습니다.</span>
+          </p>
 
-          <h2 class="ds-h2" data-lang-content="en">Cost mattered most but the actual pricing structure<br>was hard to understand and judge.</h2>
-          <h2 class="ds-h2 ds-kr" data-lang-content="ko">비용이 중요했지만, 실제 요금구조는<br>쉽게 이해하고 판단하기 어려웠습니다.</h2>
-
-          <!-- Block 1: image (left) + Energy Pricing Structure text (right) -->
-          <div class="context-block">
-            <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="4/3" data-zoomable="true">
-                <img src="operator/approach/pricing-structure.png" alt="Pricing structure analysis" loading="lazy" />
-              </div>
-              <figcaption class="ds-media-figure__caption" data-lang-aware>
+          <h3 class="op-step__part">
+            <span class="op-step__part-num">01</span>
+            <span class="op-step__part-title">
+              <span data-lang-content="en">Energy Pricing Structure</span>
+              <span data-lang-content="ko">에너지 요금 구조</span>
+            </span>
+          </h3>
+          <div class="op-step__media-row">
+            <figure class="op-step__fig op-step__fig--ctx">
+              <img src="operator/approach/pricing-structure.png" alt="Pricing structure analysis" loading="lazy" />
+              <figcaption>
                 <span data-lang-content="en">Pricing structure analysis</span>
                 <span data-lang-content="ko">요금구조 분석 이미지</span>
               </figcaption>
             </figure>
-            <div class="context-block__text">
-              <div class="ds-research-finding__heading-group">
-                <h3 class="ds-research-finding__sub-heading">Energy Pricing Structure</h3>
-                <p class="ds-research-finding__paragraph" data-lang-content="en">
-                  The pricing structure analysis revealed multiple variables<br>peak / mid / off-peak time slots,<br>and progressive billing based on usage.
-                  <br><br>
-                  For busy small business owners, the pricing structure<br>was too complex to understand during operation.
-                </p>
-                <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
-                  에너지 요금 구조를 분석한 결과 피크 / 중간 / 경부하 시간,<br>사용량에 따른 누적 과금 등 여러 변수들이 존재했습니다
-                  <br><br>
-                  운영에 바쁜 자영업자가 요금 구조를 이해하기에는<br>과금 체계가 복잡한 상태였습니다
-                </p>
-              </div>
+            <div class="op-step__aside">
+              <p class="op-step__statement">
+                <span data-lang-content="en">Energy costs are determined by multiple variables, including peak, mid-peak, and off-peak time slots, as well as progressive billing based on usage.</span>
+                <span data-lang-content="ko">에너지 비용은 피크·중간·경부하 시간대와 사용량에 따른 누진 과금 등 여러 변수로 결정됩니다.</span>
+              </p>
+              <p class="op-step__lead">
+                <span data-lang-content="en">For busy small business owners, understanding how these variables affect the final bill is difficult during daily operations.</span>
+                <span data-lang-content="ko">운영에 바쁜 자영업자가 이 변수들이 최종 요금에 어떤 영향을 주는지 매일 따져보기는 어렵습니다.</span>
+              </p>
             </div>
           </div>
+          <p class="op-step__lead">
+            <span data-lang-content="en">But could this pricing structure actually guide cost-saving decisions in a real store?</span>
+            <span data-lang-content="ko">그렇다면 이 요금 구조가 실제 매장에서 비용 절감 판단의 기준이 될 수 있을까요?</span>
+          </p>
 
-          <!-- Block 2: image (left) + Scenario Test Try + Result text (right) -->
-          <div class="context-block">
-            <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="4/3" data-zoomable="true">
-                <img src="operator/approach/scenario.png" alt="Scenario diagram" loading="lazy" />
-              </div>
-              <figcaption class="ds-media-figure__caption" data-lang-aware>
+          <h3 class="op-step__part">
+            <span class="op-step__part-num">02</span>
+            <span class="op-step__part-title">
+              <span data-lang-content="en">Scenario Test</span>
+              <span data-lang-content="ko">시나리오 테스트</span>
+            </span>
+          </h3>
+          <div class="op-step__media-row">
+            <figure class="op-step__fig op-step__fig--ctx">
+              <img src="operator/approach/scenario.png" alt="Scenario diagram" loading="lazy" />
+              <figcaption>
                 <span data-lang-content="en">Scenario diagram</span>
                 <span data-lang-content="ko">시나리오 이미지</span>
               </figcaption>
             </figure>
-            <div class="context-block__text">
-              <div class="ds-research-finding__heading-group">
-                <h3 class="ds-research-finding__sub-heading">Scenario Test — Try</h3>
-                <p class="ds-research-finding__paragraph" data-lang-content="en">
-                  We checked whether the cost structure alone<br>could really reduce cost in actual operation.
-                  <br><br>
-                  To test this, we wrote a simple store-operation scenario<br>and applied cost-minimizing methods based on the pricing structure.
-                </p>
-                <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
-                  그래서 비용 구조만 잘 활용하면 실제 운영에서도<br>비용을 줄일 수 있는지 확인해봤습니다.
-                  <br><br>
-                  이를 위해 간단한 매장 운영 시나리오를 작성하고<br>요금 구조에 따라 비용을 최소화할 수 있는 방법을 적용해봤습니다.
-                </p>
-              </div>
-              <div class="ds-research-finding__heading-group">
-                <h3 class="ds-research-finding__sub-heading">Scenario Test — Result</h3>
-                <p class="ds-research-finding__paragraph" data-lang-content="en">
-                  As a result, adjusting based on time slots or usage<br>did reduce energy use.
-                  <br><br>
-                  But in real stores:<br>
-                  1) the cost-cutting criteria conflicted with the comfort criteria, and<br>
-                  2) the savings were smaller than expected.
-                </p>
-                <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
-                  그 결과, 시간대나 사용량을 기준으로 조절하면<br>에너지 사용을 줄일 수는 있었습니다.
-                  <br><br>
-                  하지만 실제 매장에서는<br>
-                  1) 비용을 줄이는 기준과 쾌적하게 유지하는 기준이 서로 충돌했고<br>
-                  2) 그리고 절감효과도 예상보다 크지 않았습니다.
-                </p>
-              </div>
+            <div class="op-step__aside">
+              <p class="op-step__lead">
+                <span data-lang-content="en">We created a simple store-operation scenario and applied cost-minimizing strategies based on the pricing structure.</span>
+                <span data-lang-content="ko">간단한 매장 운영 시나리오를 작성하고, 요금 구조에 따라 비용을 최소화하는 방법을 적용해봤습니다.</span>
+              </p>
+              <p class="op-step__statement">
+                <span data-lang-content="en">Cost savings came with trade-offs</span>
+                <span data-lang-content="ko">비용 절감에는 대가가 따랐습니다</span>
+              </p>
+              <p class="op-step__lead">
+                <span data-lang-content="en">Adjusting HVAC based on time slots and usage reduced energy consumption, but the savings were smaller than expected and often conflicted with comfort needs.</span>
+                <span data-lang-content="ko">시간대와 사용량에 맞춰 조절하면 에너지 사용은 줄었지만, 절감 효과는 예상보다 작았고 쾌적함과 자주 충돌했습니다.</span>
+              </p>
             </div>
           </div>
 
-          <!-- Insight callout (heading + body combined inside one cream box) -->
-          <div class="insight-callout">
-            <h3 class="insight-callout__heading">Insight</h3>
-            <svg class="tradeoff-balance" viewBox="0 0 600 240" role="img" aria-hidden="true" focusable="false">
-              <!-- Outward tension arrows on each side -->
-              <g stroke="#0098FF" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="68" y1="120" x2="20" y2="120"/>
-                <polyline points="34,108 20,120 34,132"/>
-              </g>
-              <g stroke="#C5A800" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="532" y1="120" x2="580" y2="120"/>
-                <polyline points="566,108 580,120 566,132"/>
-              </g>
-
-              <!-- Tilted beam -->
-              <g transform="rotate(-6 300 120)">
-                <rect x="100" y="116" width="400" height="6" rx="3" fill="currentColor" opacity="0.45"/>
-              </g>
-
-              <!-- Cost pan (left, raised) -->
-              <g transform="translate(120 78)">
-                <circle r="46" fill="#0098FF" fill-opacity="0.12" stroke="#0098FF" stroke-width="2"/>
-                <text class="tradeoff-balance__caption tradeoff-balance__caption--cost tradeoff-svg__label--ko" y="0" text-anchor="middle" dominant-baseline="middle">비용 절감</text>
-                <text class="tradeoff-balance__caption tradeoff-balance__caption--cost tradeoff-svg__label--en" y="0" text-anchor="middle" dominant-baseline="middle">Cost saving</text>
-              </g>
-
-              <!-- Comfort pan (right, lowered) -->
-              <g transform="translate(480 162)">
-                <circle r="46" fill="#FDF89C" fill-opacity="0.4" stroke="#C5A800" stroke-width="2"/>
-                <text class="tradeoff-balance__caption tradeoff-balance__caption--comfort tradeoff-svg__label--ko" y="0" text-anchor="middle" dominant-baseline="middle">쾌적도 유지</text>
-                <text class="tradeoff-balance__caption tradeoff-balance__caption--comfort tradeoff-svg__label--en" y="0" text-anchor="middle" dominant-baseline="middle">Comfort</text>
-              </g>
-
-              <!-- Conflict X mark above fulcrum -->
-              <g stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.8">
-                <line x1="288" y1="40" x2="312" y2="64"/>
-                <line x1="312" y1="40" x2="288" y2="64"/>
-              </g>
-
-              <!-- Fulcrum triangle + base -->
-              <polygon points="300,120 278,200 322,200" fill="currentColor" opacity="0.55"/>
-              <line x1="260" y1="200" x2="340" y2="200" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
-            </svg>
-            <p class="insight-callout__body" data-lang-aware>
-              <span data-lang-content="ko">비용만 기준으로는 실제 운영 문제를 해결할 수 없다는 것을 확인했습니다.<br>그래서 비용과 쾌적도를 함께 고려할 수 있는 기준이 필요했습니다.</span>
-              <span data-lang-content="en">We confirmed that cost alone can't solve real operation problems.<br>That's why we needed a criterion combining both cost and comfort.</span>
-            </p>
+          <h3 class="op-step__part">
+            <span class="op-step__part-num">03</span>
+            <span class="op-step__part-title">
+              <span data-lang-content="en">Insight!</span>
+              <span data-lang-content="ko">인사이트!</span>
+            </span>
+          </h3>
+          <div class="op-step__box op-step__box--scale">
+            <div>
+              <h4 class="op-step__box-title">
+                <span data-lang-content="en">Cost savings alone couldn't guide real-world HVAC decisions.</span>
+                <span data-lang-content="ko">비용 절감만으로는 실제 냉난방 판단을 이끌 수 없었습니다.</span>
+              </h4>
+              <p class="op-step__box-body">
+                <span data-lang-content="en">We needed a clear criterion that balances cost savings with comfort.</span>
+                <span data-lang-content="ko">비용 절감과 쾌적함의 균형을 잡아줄 명확한 기준이 필요했습니다.</span>
+              </p>
+            </div>
+            <div class="op-step__scale" aria-hidden="true" data-scale>
+              <span class="op-step__weight op-step__weight--cost">
+                <span data-lang-content="en">cost<br>savings</span>
+                <span data-lang-content="ko">비용<br>절감</span>
+              </span>
+              <!-- operator/research/icon-balance.svg, inline so its parts can move:
+                   the one path is drawn four times, each clipped to a part —
+                   beam + pivot ring (tips), two pans (hang level), column + base. -->
+              <svg class="op-scale" width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <path id="op-scale-shape" d="M37.0207 205.693C35.5509 205.693 34.3229 205.2 33.3367 204.214C32.3505 203.228 31.8575 202 31.8575 200.53C31.8575 199.06 32.3505 197.832 33.3367 196.846C34.3229 195.86 35.5509 195.367 37.0207 195.367H119.633V81.1606C114.76 80.2725 110.458 78.0609 106.725 74.5258C102.992 70.9907 100.615 66.5228 99.5941 61.122H64.0297L91.8312 130.707C92.5592 132.335 92.943 134.006 92.9826 135.721C93.0222 137.435 92.8699 139.127 92.5256 140.796C90.9767 147.123 87.18 151.975 81.1355 155.351C75.0928 158.728 68.9933 160.417 62.837 160.417C56.6806 160.417 50.5811 158.728 44.5384 155.351C38.4939 151.975 34.6972 147.123 33.1483 140.796C32.804 139.127 32.6517 137.435 32.6913 135.721C32.7309 134.006 33.1147 132.335 33.8427 130.707L61.6442 61.122H47.3472C45.8774 61.122 44.6494 60.629 43.6632 59.6428C42.677 58.6566 42.184 57.4286 42.184 55.9588C42.184 54.489 42.677 53.261 43.6632 52.2748C44.6494 51.2886 45.8774 50.7955 47.3472 50.7955H99.5941C100.733 45.0368 103.607 40.1549 108.214 36.15C112.822 32.145 118.349 30.1425 124.796 30.1425C131.243 30.1425 136.77 32.145 141.378 36.15C145.985 40.1549 148.858 45.0368 149.998 50.7955H202.245C203.715 50.7955 204.943 51.2886 205.929 52.2748C206.915 53.261 207.408 54.489 207.408 55.9588C207.408 57.4286 206.915 58.6566 205.929 59.6428C204.943 60.629 203.715 61.122 202.245 61.122H187.948L215.749 130.707C216.477 132.335 216.861 134.006 216.901 135.721C216.94 137.435 216.788 139.127 216.444 140.796C214.895 147.123 211.098 151.975 205.054 155.351C199.011 158.728 192.911 160.417 186.755 160.417C180.599 160.417 174.499 158.728 168.456 155.351C162.412 151.975 158.615 147.123 157.066 140.796C156.722 139.127 156.57 137.435 156.609 135.721C156.649 134.006 157.033 132.335 157.761 130.707L185.562 61.122H149.998C148.977 66.5228 146.6 70.9907 142.867 74.5258C139.134 78.0609 134.832 80.2725 129.959 81.1606V195.367H212.571C214.041 195.367 215.269 195.86 216.255 196.846C217.241 197.832 217.734 199.06 217.734 200.53C217.734 202 217.241 203.228 216.255 204.214C215.269 205.2 214.041 205.693 212.571 205.693H37.0207ZM166.004 134.6H207.506L186.755 82.7277L166.004 134.6ZM42.0858 134.6H83.5881L62.837 82.7277L42.0858 134.6ZM124.796 71.4485C129.045 71.4485 132.69 69.9297 135.729 66.892C138.767 63.8525 140.286 60.2081 140.286 55.9588C140.286 51.7094 138.767 48.065 135.729 45.0256C132.69 41.9879 129.045 40.469 124.796 40.469C120.547 40.469 116.902 41.9879 113.863 45.0256C110.825 48.065 109.306 51.7094 109.306 55.9588C109.306 60.2081 110.825 63.8525 113.863 66.892C116.902 69.9297 120.547 71.4485 124.796 71.4485Z" fill="#1C1B1F"/>
+                  <clipPath id="op-scale-beam"><rect x="0" y="28" width="240" height="33.12"/><rect x="98" y="61.12" width="54" height="20.88"/></clipPath>
+                  <clipPath id="op-scale-pan-l"><rect x="28" y="61.12" width="70" height="101"/></clipPath>
+                  <clipPath id="op-scale-pan-r"><rect x="152" y="61.12" width="68" height="101"/></clipPath>
+                  <clipPath id="op-scale-base"><rect x="98" y="82" width="54" height="124"/><rect x="0" y="162.12" width="240" height="78"/></clipPath>
+                </defs>
+                <g clip-path="url(#op-scale-base)"><use href="#op-scale-shape"/></g>
+                <g class="op-scale__pan op-scale__pan--l"><g clip-path="url(#op-scale-pan-l)"><use href="#op-scale-shape"/></g></g>
+                <g class="op-scale__pan op-scale__pan--r"><g clip-path="url(#op-scale-pan-r)"><use href="#op-scale-shape"/></g></g>
+                <g class="op-scale__beam"><g clip-path="url(#op-scale-beam)"><use href="#op-scale-shape"/></g></g>
+              </svg>
+              <span class="op-step__weight op-step__weight--comfort">
+                <span data-lang-content="en">comfort</span>
+                <span data-lang-content="ko">쾌적함</span>
+              </span>
+            </div>
           </div>
         </article>
+      </div>
 
-        <!-- ===== 02.4 — COMPETITOR RESEARCH ===== -->
-        <article class="ds-research-finding ds-research-finding--align-left">
-          <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 02.4 — COMPETITOR RESEARCH ]</p>
-
-          <h2 class="ds-h2" data-lang-content="en">Existing systems <em class="ds-signature ds-signature--accent-yellow">focused on precise state control</em>,<br>so they didn't provide a way to judge which choice was better.</h2>
-          <h2 class="ds-h2 ds-kr" data-lang-content="ko">기존 시스템은 상태를 <em class="ds-signature ds-signature--accent-yellow">정확하게 제어하는 데 집중</em>했기 때문에,<br>어떤 선택이 더 나은지 판단하는 기능까지는 제공하지 않았다</h2>
-
-          <!-- Block: image (left) + body text (right) -->
-          <div class="context-block">
-            <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="4/3" data-zoomable="true">
-                <img src="operator/approach/competitor-analysis.png" alt="Competitor analysis spreadsheet" loading="lazy" />
-              </div>
-              <figcaption class="ds-media-figure__caption" data-lang-aware>
+      <!-- ===== 2-4 — Competitor research (Figma 13:385) ===== -->
+      <div class="op-step" data-lang-aware>
+        <article class="op-step__card">
+          <header class="op-step__head">
+            <p class="op-step__num">2-4</p>
+            <p class="op-step__label">
+              <span data-lang-content="en">Competitor research</span>
+              <span data-lang-content="ko">경쟁사 리서치</span>
+            </p>
+          </header>
+          <h2 class="op-step__title">
+            <span data-lang-content="en">Existing HVAC systems made monitoring and control easy, but left the judgment to users.</span>
+            <span data-lang-content="ko">기존 냉난방 시스템은 확인과 조작은 쉽게 만들었지만, 판단은 사용자에게 맡겼습니다.</span>
+          </h2>
+          <p class="op-step__lead">
+            <span data-lang-content="en">We then looked at existing HVAC systems to see how they support these decisions today.</span>
+            <span data-lang-content="ko">이어서 기존 냉난방 시스템이 이런 판단을 지금 어떻게 돕고 있는지 살펴봤습니다.</span>
+          </p>
+          <div class="op-step__media-row">
+            <figure class="op-step__fig op-step__fig--ctx">
+              <img src="operator/approach/competitor-analysis.png" alt="Competitor analysis spreadsheet" loading="lazy" />
+              <figcaption>
                 <span data-lang-content="en">Competitor analysis spreadsheet</span>
                 <span data-lang-content="ko">경쟁사 분석 엑셀</span>
               </figcaption>
             </figure>
-            <div class="context-block__text">
-              <p class="ds-research-finding__paragraph" data-lang-content="en">
-                Existing HVAC systems were designed<br>to clearly show the current state<br>temperature, humidity<br>and to make adjustments easy.
-                <br><br>
-                But the purpose of these systems was closer to state control;<br>they didn't include a function for judging which choice was better.
-              </p>
-              <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
-                기존의 냉난방 시스템은 온도와 습도 같은 현재 상태를 정확하게<br>보여주고 조작을 쉽게 할 수 있도록 설계되어 있었다.
-                <br><br>
-                하지만 이 시스템의 목적은 상태를 제어하는 것에 가까웠고<br>어떤 선택이 더 나은지 판단하는 기능까지는 포함되어 있지 않았다
-              </p>
-              <p class="ds-research-finding__paragraph" data-lang-content="en">
-                In the end, with the systems that exist today,<br>users had to read the data,<br>interpret it themselves, and judge<br>by trying different settings repeatedly.
-              </p>
-              <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
-                결국 현재 존재하는 시스템에서 사용자는 데이터를 보고<br>직접 해석하고, 여러 번 바꿔보면서 판단할 수밖에 없었다
+            <div class="op-step__aside">
+              <p class="op-step__lead">
+                <span data-lang-content="en">They clearly showed states such as temperature<br>and humidity and made adjustments easy.<br>However, they didn't help users determine<br>which action would best balance comfort and cost.</span>
+                <span data-lang-content="ko">온도와 습도 같은 상태를 명확하게 보여주고<br>조작을 쉽게 만들었습니다.<br>하지만 어떤 행동이 쾌적함과 비용의 균형에<br>가장 맞는지는 판단을 돕지 못했습니다.</span>
               </p>
             </div>
           </div>
         </article>
-
       </div>
     </section>
 
@@ -3833,54 +3943,15 @@
       items.forEach((item) => io.observe(item.el));
     })();
 
-    // ===== Overview cards — Apple-style sticky pinned scroll sequence =====
+    // ===== 2-3 insight — the scale weighs cost against comfort, on a loop =====
+    // Runs only while it is on screen, so it costs nothing elsewhere.
     (function () {
-      const pinned = document.querySelector('.overview-pinned');
-      if (!pinned) return;
-      const cards = pinned.querySelectorAll('.overview-stack > .ds-numbered-step');
-      if (!cards.length) return;
-
-      const mqDesktop = window.matchMedia('(min-width: 768px)');
-      const mqMotion = window.matchMedia('(prefers-reduced-motion: no-preference)');
-
-      const isActive = () => mqDesktop.matches && mqMotion.matches;
-
-      const setActive = (index) => {
-        cards.forEach((c, i) => c.classList.toggle('is-active', i === index));
-      };
-
-      const clearActive = () => {
-        cards.forEach((c) => c.classList.remove('is-active'));
-      };
-
-      let ticking = false;
-      const onScroll = () => {
-        if (ticking) return;
-        ticking = true;
-        requestAnimationFrame(() => {
-          ticking = false;
-          if (!isActive()) {
-            clearActive();
-            return;
-          }
-          const rect = pinned.getBoundingClientRect();
-          const scrollDistance = pinned.offsetHeight - window.innerHeight;
-          if (scrollDistance <= 0) return;
-          const scrolled = Math.min(scrollDistance, Math.max(0, -rect.top));
-          const progress = scrolled / scrollDistance;
-          const idx = Math.min(cards.length - 1, Math.floor(progress * cards.length));
-          setActive(idx);
-        });
-      };
-
-      if (isActive()) setActive(0);
-
-      window.addEventListener('scroll', onScroll, { passive: true });
-      window.addEventListener('resize', onScroll, { passive: true });
-      mqDesktop.addEventListener('change', onScroll);
-      mqMotion.addEventListener('change', onScroll);
+      const scale = document.querySelector('[data-scale]');
+      if (!scale) return;
+      new IntersectionObserver(([entry]) => {
+        scale.classList.toggle('is-live', entry.isIntersecting);
+      }).observe(scale);
     })();
-
 
     // ===== Hero — the cards play alert → tap → press → confirmation =====
     // Same pass as the main site's Operator cover. It loops while the hero is
