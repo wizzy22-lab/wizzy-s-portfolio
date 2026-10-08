@@ -1791,6 +1791,47 @@
       text-align: center;
     }
     .op-step__shift-arrow { display: block; }
+    /* 4-1 — the shift, played once when the panels come into view (~3.2s, 1.2× the first cut):
+       the Before dot wanders its one axis, the missing cost axis flickers,
+       then the After cost axis draws, comfort rises, the target zone opens
+       and the dot travels from the origin into it. The script arms the
+       hidden start only when it will play, so without it (or with reduced
+       motion) the finished diagrams show as drawn. */
+    .op-shift__sway, .op-shift__target, .op-shift__zone { transform-box: fill-box; transform-origin: center; }
+    .op-step__shift.is-armed .op-shift__draw { stroke-dasharray: 1; stroke-dashoffset: 1; }
+    .op-step__shift.is-armed :is(.op-shift__tip, .op-shift__zone, .op-shift__target) { opacity: 0; }
+    .op-step__shift.is-played .op-shift__sway    { animation: op-shift-sway 1.2s ease-in-out both; }
+    .op-step__shift.is-played .op-shift__missing { animation: op-shift-flicker 0.72s 1.08s linear both; }
+    .op-step__shift.is-played .op-shift__draw--x { animation: op-shift-draw 0.6s 1.44s ease-out both; }
+    .op-step__shift.is-played .op-shift__tip--x  { animation: op-shift-in 0.3s 1.92s ease-out both; }
+    .op-step__shift.is-played .op-shift__draw--y { animation: op-shift-draw 0.6s 1.8s ease-out both; }
+    .op-step__shift.is-played .op-shift__tip--y  { animation: op-shift-in 0.3s 2.28s ease-out both; }
+    .op-step__shift.is-played .op-shift__zone    { animation: op-shift-zone 0.42s 2.4s ease-out both; }
+    .op-step__shift.is-played .op-shift__target  { animation: op-shift-travel 0.72s 2.52s cubic-bezier(0.3, 0, 0.2, 1) both; }
+    @keyframes op-shift-sway {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-14px); }
+      55% { transform: translateX(10px); }
+      80% { transform: translateX(-5px); }
+    }
+    @keyframes op-shift-flicker {
+      0%, 40%, 80% { opacity: 1; }
+      20%, 60% { opacity: 0.15; }
+      100% { opacity: 1; }
+    }
+    @keyframes op-shift-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+    @keyframes op-shift-in { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes op-shift-zone {
+      from { opacity: 0; transform: scale(0.6); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    /* from the axes' origin (60,180) to the zone's centre (170,80) */
+    @keyframes op-shift-travel {
+      from { opacity: 0; transform: translate(-110px, 100px); }
+      20% { opacity: 1; }
+      to { opacity: 1; transform: translate(0, 0); }
+    }
+
     @container op-card (min-width: 700px) {
       .op-step__shift-arrow { transform: rotate(-90deg); }   /* drawn pointing down, as in Figma */
     }
@@ -2903,7 +2944,7 @@
             <span data-lang-content="en">We focused on bringing comfort and cost together as the basis for each HVAC decision,<br>with AI helping users understand the trade-off and choose what to do next.</span>
             <span data-lang-content="ko">우리는 쾌적함과 비용을 함께 냉난방 판단의 기준으로 삼고,<br>AI가 그 사이의 균형을 이해하고 다음 행동을 고르도록 돕는 데 집중했습니다.</span>
           </p>
-          <div class="op-step__shift">
+          <div class="op-step__shift" data-shift>
             <div class="op-step__shift-panel">
               <svg class="op-step__shift-svg" viewBox="0 0 240 200" role="img" aria-hidden="true" focusable="false">
                 <!-- one horizontal axis: comfort only -->
@@ -2912,13 +2953,15 @@
                 <line x1="60" y1="96" x2="60" y2="104" stroke="#A9AFB7" stroke-width="1.5"/>
                 <line x1="120" y1="96" x2="120" y2="104" stroke="#A9AFB7" stroke-width="1.5"/>
                 <line x1="180" y1="96" x2="180" y2="104" stroke="#A9AFB7" stroke-width="1.5"/>
-                <circle cx="160" cy="100" r="8" fill="#000000"/>
+                <g class="op-shift__sway"><circle cx="160" cy="100" r="8" fill="#000000"/></g>
                 <text class="direction-shift__svg-label--ko" x="220" y="128" text-anchor="end" fill="#000000" font-size="13" font-weight="800">쾌적도</text>
                 <text class="direction-shift__svg-label--en" x="220" y="128" text-anchor="end" fill="#000000" font-size="13" font-weight="800">Comfort</text>
                 <!-- the missing cost axis -->
-                <line x1="120" y1="40" x2="120" y2="80" stroke="#A9AFB7" stroke-width="1.5" stroke-dasharray="4 4" stroke-linecap="round"/>
-                <text class="direction-shift__svg-label--ko" x="120" y="32" text-anchor="middle" fill="#6E7884" font-size="11" font-style="italic">비용 축 부재</text>
-                <text class="direction-shift__svg-label--en" x="120" y="32" text-anchor="middle" fill="#6E7884" font-size="11" font-style="italic">No cost axis</text>
+                <g class="op-shift__missing">
+                  <line x1="120" y1="40" x2="120" y2="80" stroke="#A9AFB7" stroke-width="1.5" stroke-dasharray="4 4" stroke-linecap="round"/>
+                  <text class="direction-shift__svg-label--ko" x="120" y="32" text-anchor="middle" fill="#6E7884" font-size="11" font-style="italic">비용 축 부재</text>
+                  <text class="direction-shift__svg-label--en" x="120" y="32" text-anchor="middle" fill="#6E7884" font-size="11" font-style="italic">No cost axis</text>
+                </g>
               </svg>
               <p class="op-step__shift-title">
                 <span data-lang-content="en">Before - Existing systems</span>
@@ -2928,19 +2971,23 @@
             <img class="op-step__shift-arrow" src="operator/approach/icon-direction-arrow.svg" width="23.094" height="74" alt="" />
             <div class="op-step__shift-panel">
               <svg class="op-step__shift-svg" viewBox="0 0 240 200" role="img" aria-hidden="true" focusable="false">
+                <!-- cost (x) — drawn first: the axis the Before panel was missing -->
+                <line class="op-shift__draw op-shift__draw--x" pathLength="1" x1="60" y1="180" x2="220" y2="180" stroke="#FF8C42" stroke-width="2" stroke-linecap="round"/>
+                <g class="op-shift__tip op-shift__tip--x">
+                  <polyline points="210,172 220,180 210,188" fill="none" stroke="#FF8C42" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <text class="direction-shift__svg-label--ko" x="220" y="198" text-anchor="end" fill="#FF8C42" font-size="13" font-weight="800">비용</text>
+                  <text class="direction-shift__svg-label--en" x="220" y="198" text-anchor="end" fill="#FF8C42" font-size="13" font-weight="800">Cost</text>
+                </g>
                 <!-- comfort (y) -->
-                <line x1="60" y1="180" x2="60" y2="20" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
-                <polyline points="52,30 60,20 68,30" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <!-- cost (x) -->
-                <line x1="60" y1="180" x2="220" y2="180" stroke="#FF8C42" stroke-width="2" stroke-linecap="round"/>
-                <polyline points="210,172 220,180 210,188" fill="none" stroke="#FF8C42" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <line class="op-shift__draw op-shift__draw--y" pathLength="1" x1="60" y1="180" x2="60" y2="20" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
+                <g class="op-shift__tip op-shift__tip--y">
+                  <polyline points="52,30 60,20 68,30" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <text class="direction-shift__svg-label--ko" x="50" y="28" text-anchor="end" fill="#000000" font-size="13" font-weight="800">쾌적</text>
+                  <text class="direction-shift__svg-label--en" x="50" y="28" text-anchor="end" fill="#000000" font-size="13" font-weight="800">Comfort</text>
+                </g>
                 <!-- target zone: low cost, high comfort -->
-                <rect x="140" y="50" width="60" height="60" rx="6" fill="#FF8C42" fill-opacity="0.12" stroke="#A9AFB7" stroke-width="1.5" stroke-dasharray="4 3"/>
-                <circle cx="170" cy="80" r="6" fill="#000000" stroke="#FF8C42" stroke-width="2"/>
-                <text class="direction-shift__svg-label--ko" x="220" y="198" text-anchor="end" fill="#FF8C42" font-size="13" font-weight="800">비용</text>
-                <text class="direction-shift__svg-label--en" x="220" y="198" text-anchor="end" fill="#FF8C42" font-size="13" font-weight="800">Cost</text>
-                <text class="direction-shift__svg-label--ko" x="50" y="28" text-anchor="end" fill="#000000" font-size="13" font-weight="800">쾌적</text>
-                <text class="direction-shift__svg-label--en" x="50" y="28" text-anchor="end" fill="#000000" font-size="13" font-weight="800">Comfort</text>
+                <rect class="op-shift__zone" x="140" y="50" width="60" height="60" rx="6" fill="#FF8C42" fill-opacity="0.12" stroke="#A9AFB7" stroke-width="1.5" stroke-dasharray="4 3"/>
+                <g class="op-shift__target"><circle cx="170" cy="80" r="6" fill="#000000" stroke="#FF8C42" stroke-width="2"/></g>
               </svg>
               <p class="op-step__shift-title">
                 <span data-lang-content="en">After - Our approach</span>
@@ -3891,6 +3938,18 @@
       new IntersectionObserver(([entry]) => {
         scale.classList.toggle('is-live', entry.isIntersecting);
       }).observe(scale);
+    })();
+
+    // ===== 4-1 — Before → After plays once on arrival =====
+    (function () {
+      const shift = document.querySelector('[data-shift]');
+      if (!shift || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      shift.classList.add('is-armed');
+      new IntersectionObserver((entries, io) => {
+        if (!entries[0].isIntersecting) return;
+        shift.classList.add('is-played');
+        io.disconnect();
+      }, { threshold: 0.5 }).observe(shift);
     })();
 
     // ===== Hero — the cards play alert → tap → press → confirmation =====
