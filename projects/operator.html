@@ -13,6 +13,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400&display=swap" />
+  <!-- The Figma hero sets its title at 700 and subtitle at 600; the shared
+       font file only ships Manrope 400/500, so the two heavier faces load here. -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700&display=swap" />
   <style>
     /* Page-level reset & layout (uses tokens only) */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -133,6 +136,10 @@
       --text-dim: #8b8b88;
       --text-faint: #5c5c59;
       --border: rgba(255, 255, 255, 0.08);
+
+      /* The page ground takes the nav's own #1a1a1a, so the bar reads as
+         the same surface rather than a band over a bluer page. */
+      --bg-page: #1a1a1a;
 
       /* Latin is set by Manrope, Hangul falls through to Pretendard —
          one stack for both scripts, exactly as the main site does it.
@@ -285,103 +292,336 @@
       html { scroll-behavior: smooth; }
     }
 
-    /* Hero placeholder */
+    /* ===============================================================
+       HERO — Figma "Operator- Hero" (1:91), 1920 frame.
+
+       Left column flows; the device group is absolutely placed so it can
+       overhang the right gutter the way the frame does (it runs to x=1847
+       of 1920 and is clipped by the section). Device-group sizes are
+       written in --u, one Figma pixel at the 924px design width, so the
+       group scales as one piece below 2xl.
+       =============================================================== */
     #hero {
-      padding-block: var(--space-30);
-      border-bottom: var(--border-thin) solid var(--border-hairline);
+      position: relative;
+      overflow: hidden;
+      padding-block: 0;
+      background: var(--bg-page);
+      font-family: 'Manrope', var(--font-kr);
     }
-    /* Hero media — video plays by default, swaps to hover image on pointer over */
-    .hero-media {
+    .op-hero__inner {
+      position: relative;
+      max-width: 1920px;
+      min-height: 936px;
+      margin-inline: auto;
+      padding-inline: 24px;
+    }
+    @media (min-width: 48rem) { .op-hero__inner { padding-inline: 64px; } }
+    @media (min-width: 80rem) { .op-hero__inner { padding-inline: 180px; } }
+    @media (min-width: 96rem) { .op-hero__inner { padding-inline: 360px; } }
+
+    .op-hero__text {
+      max-width: 595px;
+      padding-top: 120.92px;
+    }
+    .op-hero__pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: #ff8c42;
+      color: #000;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+    .op-hero__title {
+      margin-top: 5.38px;
+      color: #f5f5f2;
+      font-size: 56px;
+      font-weight: 700;
+      line-height: 66.08px;
+      letter-spacing: -1.12px;
+    }
+    .op-hero__subtitle {
+      margin-top: 25.54px;
+      color: #f5f5f2;
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+    .op-hero__body {
+      margin-top: 12px;
+      color: #929190;
+      font-size: 18px;
+      line-height: 1.5;
+    }
+    .op-hero__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+      list-style: none;
+    }
+    .op-hero__tag {
+      padding: 8px 16px;
+      border: 1px solid #e5e5e5;
+      border-radius: 999px;
+      color: #787570;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.2;
+      text-transform: capitalize;
+      white-space: nowrap;
+    }
+
+    /* Meta — TEAM / TYPE·DURATION stacked in column 1, ROLE spans both
+       rows in column 2. Rows are 103.98 tall with a 6px seam (539 → 649). */
+    .op-hero__meta {
+      display: grid;
+      grid-template-columns: minmax(0, 270px);
+      row-gap: 6.02px;
+      margin-top: 64px;
+      padding-bottom: 64px;
+    }
+    @media (min-width: 640px) {
+      .op-hero__meta {
+        grid-template-columns: repeat(2, minmax(0, 270px));
+        column-gap: 40px;
+      }
+      .op-hero__meta-item--role { grid-column: 2; grid-row: 1 / span 2; }
+    }
+    .op-hero__meta-item {
+      min-height: 103.98px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .op-hero__meta-label {
+      padding-top: 19.6px;
+      color: #8b8b88;
+      font-family: var(--font-kr);
+      font-size: 13px;
+      line-height: 20.8px;
+      text-transform: uppercase;
+    }
+    .op-hero__meta-value {
+      margin-top: 10.6px;
+      color: #f5f5f2;
+      font-size: 16px;
+      line-height: 25.6px;
+    }
+    .op-hero__roles {
+      margin-top: 11.6px;
+      list-style: none;
+      color: #e8e8e5;
+      font-size: 16px;
+      line-height: 24px;
+    }
+    .op-hero__roles li {
+      position: relative;
+      padding-left: 12px;
+    }
+    .op-hero__roles li::before {
+      content: '·';
+      position: absolute;
+      left: 4px;
+    }
+
+    /* Device group — tablet render, two notification cards, the floor bar. */
+    .op-hero__device {
+      container-type: inline-size;
       position: relative;
       width: 100%;
-      border-radius: var(--radius-card-lg);
-      overflow: hidden;
-      background: var(--bg-surface);
-      cursor: pointer;
+      max-width: 924px;
+      aspect-ratio: 924 / 693;
+      margin-top: 48px;
     }
-    .hero-media__video,
-    .hero-media__hover {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
-    .hero-media__hover {
-      position: absolute;
-      inset: 0;
-      object-fit: cover;
-      opacity: 0;                                /* hidden by default */
-      transition: opacity var(--duration-base) var(--ease-default);
-      pointer-events: none;
-    }
-    .hero-media[data-hover="true"] .hero-media__hover {
-      opacity: 1;                                /* fade in on hover */
-    }
-
-    /* Project type chip — "CONCEPT PROJECT" under the tagline */
-    .project-tag {
-      display: inline-block;
-      font-family: var(--font-sans);
-      font-size: var(--text-eyebrow-size);
-      line-height: var(--text-eyebrow-line-height);
-      letter-spacing: var(--text-eyebrow-letter-spacing);
-      font-weight: var(--text-eyebrow-weight);
-      text-transform: uppercase;
-      border: var(--border-thin) solid var(--border-hairline);
-      border-radius: var(--radius-xl);
-      padding: var(--space-2) var(--space-4);
-      margin: 0;
-    }
-    .project-tag--concept {
-      color: var(--accent-yellow);
-      border-color: var(--accent-yellow);
-    }
-
-    /* Hero meta row — mirrors the BingX case-study meta block */
-    .hero-meta {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: var(--space-6);
-      margin-top: var(--space-12);
-      padding-top: var(--space-8);
-      border-top: var(--border-thin) solid var(--border-hairline);
-    }
-    @media (min-width: 768px) {
-      .hero-meta {
-        /* Not equal thirds: ROLE/DURATION need ~130px while MY ROLE and
-           SKILLS carry the long author-set lines (375 and 350). An even
-           split starves the two that matter and wastes 220px on the first,
-           so the track sizes follow the content instead. */
-        grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.2fr) minmax(0, 1.1fr);
-        gap: var(--space-8);
-        margin-top: var(--space-16);
+    .op-hero__device > * { --u: calc(100cqw / 924); }
+    @media (min-width: 80rem) {
+      .op-hero__text { position: relative; z-index: 1; }
+      .op-hero__meta { margin-top: 110px; padding-bottom: 0; }
+      .op-hero__device {
+        position: absolute;
+        top: 138px;
+        left: calc(180px + 563px);
+        width: calc(100% - 180px - 563px + 120px);
+        margin-top: 0;
       }
     }
-    .hero-meta__label {
-      margin: 0 0 var(--space-3) 0;
-      color: var(--text-tertiary);
-      display: block;
+    @media (min-width: 96rem) {
+      .op-hero__device { left: calc(360px + 563px); width: 924px; }
     }
-    .hero-meta__value p {
-      margin: 0;
-      font-size: var(--text-body-size);
-      line-height: 1.5;
-      color: var(--text-primary);
+    .op-hero__tablet {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+      /* Dimmed so the cards read first — the main site's cover lays a 20%
+         black over its tablet. A filter rather than an overlay: the PNG is
+         cut out, and an overlay box would also darken the page around it. */
+      filter: brightness(0.8);
     }
-    .hero-meta.ds-kr .hero-meta__value p {
+    .op-hero__card {
+      position: absolute;
+      left: calc(61 * var(--u));
+      width: calc(464 * var(--u));
+      height: calc(122.23 * var(--u));
+      overflow: hidden;
+      border: calc(2.373 * var(--u)) solid;
+      border-radius: calc(9.494 * var(--u));
       font-family: var(--font-kr);
+      font-weight: 600;
+      transition: opacity 450ms ease-out, transform 450ms ease-out;
     }
-
-    .hero-placeholder {
-      background: var(--bg-muted);
-      border: var(--border-thin) dashed var(--border-hairline);
-      border-radius: var(--radius-card);
-      aspect-ratio: 16 / 9;
+    .op-hero__card--alert { top: 0; background: #fef2f2; border-color: #ffc9c9; }
+    .op-hero__card--done  { top: calc(146 * var(--u)); background: #f0fdf4; border-color: #b9f8cf; }
+    .op-hero__card-status {
+      position: absolute;
+      top: calc(9.49 * var(--u));
+      left: calc(9.49 * var(--u));
+      display: flex;
+      align-items: center;
+      gap: calc(7.12 * var(--u));
+      font-size: calc(11.867 * var(--u));
+      line-height: 1.5;
+      white-space: nowrap;
+    }
+    .op-hero__card-status::before {
+      content: '';
+      flex: none;
+      width: calc(9.494 * var(--u));
+      height: calc(9.494 * var(--u));
+      border-radius: 50%;
+    }
+    .op-hero__card--alert .op-hero__card-status { color: #c10007; }
+    .op-hero__card--alert .op-hero__card-status::before { background: #fb2c36; }
+    .op-hero__card--done .op-hero__card-status { color: #008236; }
+    .op-hero__card--done .op-hero__card-status::before { background: #00c950; }
+    .op-hero__card-panel {
+      position: absolute;
+      top: calc(34.41 * var(--u));
+      left: calc(9.49 * var(--u));
+      width: calc(439.079 * var(--u));
+      height: calc(59.928 * var(--u));
+      overflow: hidden;
+      border-radius: calc(9.494 * var(--u));
+      background: #fff;
+    }
+    .op-hero__card-action {
+      position: absolute;
+      top: calc(21.36 * var(--u));
+      left: calc(19.58 * var(--u));
+      color: #111827;
+      font-size: calc(14.24 * var(--u));
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+    .op-hero__card-btn {
+      position: absolute;
+      top: calc(14.24 * var(--u));
+      left: calc(284.21 * var(--u));
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--text-tertiary);
-      font-family: monospace;
-      font-size: var(--text-caption-size);
+      gap: calc(4.747 * var(--u));
+      width: calc(140.624 * var(--u));
+      height: calc(31.448 * var(--u));
+      border-radius: calc(5.28 * var(--u));
+      color: #fff;
+      font-size: calc(11.867 * var(--u));
+      line-height: 1.5;
+      white-space: nowrap;
+      filter: drop-shadow(0 calc(3.771 * var(--u)) calc(2.828 * var(--u)) rgba(0, 0, 0, 0.1))
+              drop-shadow(0 calc(1.508 * var(--u)) calc(1.131 * var(--u)) rgba(0, 0, 0, 0.1));
+      transition: transform 160ms ease-out, filter 160ms ease-out;
+    }
+    button.op-hero__card-btn {
+      padding: 0;
+      border: 0;
+      font-family: inherit;
+      font-weight: inherit;
+      cursor: pointer;
+    }
+    button.op-hero__card-btn:focus-visible { outline: 2px solid #111827; outline-offset: 2px; }
+    .op-hero__card--alert .op-hero__card-btn { background: linear-gradient(to right, #ef4444 49.519%, #892727); }
+    .op-hero__card--done .op-hero__card-btn { left: calc(283.62 * var(--u)); background: linear-gradient(to right, #10b981, #059669); }
+    .op-hero__card-check {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: calc(14.24 * var(--u));
+      height: calc(14.24 * var(--u));
+    }
+    .op-hero__card-check img {
+      display: block;
+      width: calc(10.087 * var(--u));
+      height: calc(7.714 * var(--u));
+    }
+    .op-hero__card-knob {
+      position: absolute;
+      top: calc(33.82 * var(--u));
+      left: calc(388.64 * var(--u));
+      width: calc(23.734 * var(--u));
+      height: calc(23.734 * var(--u));
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 calc(5.934 * var(--u)) calc(8.9 * var(--u)) calc(-1.78 * var(--u)) rgba(0, 0, 0, 0.1),
+                  0 calc(2.373 * var(--u)) calc(3.56 * var(--u)) calc(-2.373 * var(--u)) rgba(0, 0, 0, 0.1);
+      pointer-events: none;
+      transition: opacity 300ms ease-out, transform 200ms ease-out;
+    }
+    .op-hero__card--alert .op-hero__card-knob { width: calc(22.547 * var(--u)); height: calc(22.547 * var(--u)); }
+
+    /* The cards play in product order — the main site's Operator cover
+       (`OperatorThumbnail.tsx`, `.op-demo`), same phases and timings:
+         0 tablet only · 1 alert arrives · 2 tap lands on 실행하기 ·
+         3 press · 4 confirmation drops in (the Figma frame) · 5 both fade.
+       With no data-phase (no JS) the device shows the Figma frame as drawn. */
+    .op-hero__device[data-phase="0"] .op-hero__card--alert {
+      opacity: 0;
+      transform: translateY(calc(-12 * var(--u)));
+    }
+    .op-hero__device[data-phase="0"] .op-hero__card-knob,
+    .op-hero__device[data-phase="1"] .op-hero__card-knob {
+      opacity: 0;
+      transform: scale(1.6);
+    }
+    .op-hero__device[data-phase="3"] .op-hero__card-knob { transform: scale(0.8); }
+    .op-hero__device[data-phase="3"] .op-hero__card--alert .op-hero__card-btn {
+      transform: scale(0.96);
+      filter: brightness(0.88);
+    }
+    .op-hero__device[data-phase]:not([data-phase="4"]) .op-hero__card--done {
+      opacity: 0;
+      transform: translateY(calc(-40 * var(--u)));
+    }
+    .op-hero__device[data-phase="5"] .op-hero__card {
+      opacity: 0;
+      transform: none;
+    }
+    .op-hero__floor {
+      position: absolute;
+      /* 13 below the Figma frame's 528 — the main site's cover sits its bar
+         there, which covers the pen fully. */
+      top: calc(541 * var(--u));
+      left: calc(163.82 * var(--u));
+      width: calc(465.7 * var(--u));
+      height: calc(84.08 * var(--u));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+    .op-hero__floor::before {
+      content: '';
+      flex: none;
+      width: calc(464 * var(--u));
+      height: calc(40 * var(--u));
+      /* Hides the pen lying at the tablet's foot, so it must be the page
+         ground exactly — it is meant to be invisible. */
+      background: var(--bg-page);
+      transform: rotate(5.47deg);
     }
 
     /* Section spacing — Section 10 spec */
@@ -1220,7 +1460,6 @@
        the section header's measure is 800 — so the cap comes off the header
        here rather than the heading, which is what actually constrains it. */
     .ds-h2--oneline { max-width: none; }
-    #project-tagline .ds-section-header { max-width: none; }
 
     /* Scope note — flags the evidence base before the reader meets any
        finding. Body size, no italic and no extra weight: it qualifies the
@@ -1897,97 +2136,80 @@
 
   <main>
 
-    <!-- ====================  HERO (placeholder)  ==================== -->
-    <section id="hero">
-      <div class="ds-container">
-        <div class="hero-media">
-          <video class="hero-media__video" autoplay muted loop playsinline preload="metadata" aria-label="Operator product demo">
-            <source src="operator/hero/hero.mp4" type="video/mp4" />
-          </video>
-          <img class="hero-media__hover" src="operator/hero/hero-hover.png" alt="" loading="lazy" aria-hidden="true" />
+    <!-- ====================  HERO — Figma 1:91  ==================== -->
+    <section id="hero" data-lang-aware>
+      <div class="op-hero__inner">
+        <div class="op-hero__text">
+          <p class="op-hero__pill">
+            <span data-lang-content="ko">자영업자를 위한 냉난방 비용 최적화 시스템</span>
+            <span data-lang-content="en">HVAC cost optimization for small business owners</span>
+          </p>
+          <h1 class="op-hero__title">Operator</h1>
+          <p class="op-hero__subtitle">
+            <span data-lang-content="ko">복잡한 냉난방 판단을 간단한 행동으로</span>
+            <span data-lang-content="en">Turning complex HVAC judgment into simple actions</span>
+          </p>
+          <p class="op-hero__body">
+            <span data-lang-content="ko">매장 환경과 비용 데이터를 바탕으로 현재 상태를 파악하고 필요한 조치를<br>바로 선택할 수 있도록 의사결정 과정을 단순화했습니다.<br>사용성 테스트를 통해 필수 입력을 7개에서 3개로 줄였습니다.</span>
+            <span data-lang-content="en">I simplified the decision process so owners can read the current state<br>from store conditions and cost data, then pick the action they need.<br>Usability testing cut required inputs from 7 to 3.</span>
+          </p>
+          <ul class="op-hero__tags">
+            <li class="op-hero__tag">AI Recommendations</li>
+            <li class="op-hero__tag">Decision Support</li>
+            <li class="op-hero__tag">Product Design</li>
+          </ul>
         </div>
-      </div>
-    </section>
 
-    <!-- ====================  PROJECT TAGLINE  ==================== -->
-    <section id="project-tagline">
-      <div class="ds-container">
-        <header class="ds-section-header" data-lang-aware>
-          <p class="ds-section-header__eyebrow">[ PROJECT ]</p>
-          <h2 class="ds-h2 ds-h2--oneline" data-lang-content="en"><em class="ds-signature ds-signature--accent-yellow">AI-powered HVAC decision system</em> for small business owners</h2>
-          <h2 class="ds-h2 ds-kr" data-lang-content="ko">자영업자를 위한<br><em class="ds-signature ds-signature--accent-yellow">AI 기반 HVAC 의사결정 시스템</em></h2>
-        </header>
-
-        <!-- Project type chip — language-agnostic, same as nav -->
-        <p class="project-tag project-tag--concept">CONCEPT PROJECT</p>
-
-        <!-- Hero meta row — role / contribution / skills / duration / team / type -->
-        <div class="hero-meta" data-lang-aware>
-          <div class="hero-meta__row">
-            <p class="ds-eyebrow hero-meta__label">
-              <span data-lang-content="en">ROLE</span>
-              <span data-lang-content="ko">역할</span>
-            </p>
-            <div class="hero-meta__value">
-              <p data-lang-content="en">Product Designer</p>
-              <p data-lang-content="ko">프로덕트 디자이너</p>
-            </div>
-          </div>
-
-          <div class="hero-meta__row">
-            <p class="ds-eyebrow hero-meta__label">
-              <span data-lang-content="en">MY ROLE</span>
-              <span data-lang-content="ko">기여</span>
-            </p>
-            <div class="hero-meta__value">
-              <p data-lang-content="en">Pricing-structure &amp; context analysis (lead)<br>Usability test moderation · System design (co-led) ·<br>User research (support)</p>
-              <p data-lang-content="ko">요금구조·맥락 분석 리드 · 사용성 테스트 진행<br>시스템 설계(공동) · 리서치 참여</p>
-            </div>
-          </div>
-
-          <div class="hero-meta__row">
-            <p class="ds-eyebrow hero-meta__label">
-              <span data-lang-content="en">SKILLS</span>
-              <span data-lang-content="ko">스킬</span>
-            </p>
-            <div class="hero-meta__value">
-              <p data-lang-content="en">Cost-structure analysis · UT moderation<br>Data-informed design · AI-assisted visualization</p>
-              <p data-lang-content="ko">비용 구조 분석 · UT 모더레이션 · 데이터 기반 디자인<br>AI 이미지 생성 비주얼라이제이션</p>
-            </div>
-          </div>
-
-          <div class="hero-meta__row">
-            <p class="ds-eyebrow hero-meta__label">
-              <span data-lang-content="en">DURATION</span>
-              <span data-lang-content="ko">기간</span>
-            </p>
-            <div class="hero-meta__value">
-              <p data-lang-content="en">7 weeks</p>
-              <p data-lang-content="ko">7주</p>
-            </div>
-          </div>
-
-          <div class="hero-meta__row">
-            <p class="ds-eyebrow hero-meta__label">
-              <span data-lang-content="en">TEAM</span>
+        <div class="op-hero__meta">
+          <div class="op-hero__meta-item">
+            <p class="op-hero__meta-label">
               <span data-lang-content="ko">팀</span>
+              <span data-lang-content="en">Team</span>
             </p>
-            <div class="hero-meta__value">
-              <p data-lang-content="en">2 designers</p>
-              <p data-lang-content="ko">디자이너 2명</p>
-            </div>
+            <p class="op-hero__meta-value">2 Product Designer</p>
           </div>
+          <div class="op-hero__meta-item">
+            <p class="op-hero__meta-label">
+              <span data-lang-content="ko">프로젝트 타입 · 기간</span>
+              <span data-lang-content="en">Project type · Duration</span>
+            </p>
+            <p class="op-hero__meta-value">
+              <span data-lang-content="ko">Concept project · 7주</span>
+              <span data-lang-content="en">Concept project · 7 weeks</span>
+            </p>
+          </div>
+          <div class="op-hero__meta-item op-hero__meta-item--role">
+            <p class="op-hero__meta-label">
+              <span data-lang-content="ko">역할</span>
+              <span data-lang-content="en">Role</span>
+            </p>
+            <ul class="op-hero__roles">
+              <li>Pricing-structure<br>&amp; context analysis (lead)</li>
+              <li>Usability test moderation</li>
+              <li>System design (co-led)</li>
+              <li>User research (support)</li>
+            </ul>
+          </div>
+        </div>
 
-          <div class="hero-meta__row">
-            <p class="ds-eyebrow hero-meta__label">
-              <span data-lang-content="en">TYPE</span>
-              <span data-lang-content="ko">성격</span>
-            </p>
-            <div class="hero-meta__value">
-              <p data-lang-content="en">Concept project</p>
-              <p data-lang-content="ko">컨셉 프로젝트</p>
+        <div class="op-hero__device">
+          <img class="op-hero__tablet" src="operator/hero/hero-tablet.png" alt="Operator dashboard on a tablet" />
+          <div class="op-hero__card op-hero__card--alert">
+            <p class="op-hero__card-status">습도상승으로 냉방효율저하 감지</p>
+            <div class="op-hero__card-panel">
+              <p class="op-hero__card-action">제습우선모드 + 목표온도 25도 조정</p>
+              <button type="button" class="op-hero__card-btn">실행하기</button>
+              <span class="op-hero__card-knob"></span>
             </div>
           </div>
+          <div class="op-hero__card op-hero__card--done" role="status">
+            <p class="op-hero__card-status">오퍼레이터가 추천솔루션을 적용 완료했습니다!</p>
+            <div class="op-hero__card-panel">
+              <p class="op-hero__card-action">제습우선모드 + 목표온도 25도 조정</p>
+              <span class="op-hero__card-btn"><span class="op-hero__card-check"><img src="operator/hero/icon-check.svg" width="10.087" height="7.71356" alt="" /></span>적용 완료</span>
+            </div>
+          </div>
+          <div class="op-hero__floor" aria-hidden="true"></div>
         </div>
       </div>
     </section>
@@ -3659,25 +3881,44 @@
       mqMotion.addEventListener('change', onScroll);
     })();
 
-    // ===== Hero — swap video → image on hover =====
+
+    // ===== Hero — the cards play alert → tap → press → confirmation =====
+    // Same pass as the main site's Operator cover. It loops while the hero is
+    // on screen; pressing 실행하기 skips the wait and runs press → confirm.
     (function () {
-      const heroMedia = document.querySelector('.hero-media');
-      if (!heroMedia) return;
-      const video = heroMedia.querySelector('.hero-media__video');
+      const device = document.querySelector('.op-hero__device');
+      if (!device) return;
+      const run = device.querySelector('.op-hero__card--alert .op-hero__card-btn');
+      const PASS = [[1, 400], [2, 1200], [3, 1800], [4, 2100], [5, 5100]];
+      const PASS_END = 5600;
+      // A click enters the pass at the press, so the rest keeps its spacing.
+      const FROM_PRESS = PASS.filter(([p]) => p >= 3).map(([p, ms]) => [p, ms - 1800]);
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+      let timers = [];
 
-      const enter = () => {
-        heroMedia.dataset.hover = 'true';
-        if (video) video.pause();
+      const set = (p) => { device.dataset.phase = String(p); };
+      const clear = () => { timers.forEach(clearTimeout); timers = []; };
+      const play = (steps, end) => {
+        clear();
+        steps.forEach(([p, ms]) => timers.push(setTimeout(() => set(p), ms)));
+        timers.push(setTimeout(() => { set(0); play(PASS, PASS_END); }, end));
       };
-      const leave = () => {
-        heroMedia.dataset.hover = 'false';
-        if (video) video.play().catch(() => {});
+      const start = () => {
+        if (reduced.matches) { clear(); set(4); return; }
+        set(0);
+        play(PASS, PASS_END);
       };
 
-      heroMedia.addEventListener('mouseenter', enter);
-      heroMedia.addEventListener('mouseleave', leave);
-      heroMedia.addEventListener('focusin', enter);
-      heroMedia.addEventListener('focusout', leave);
+      run.addEventListener('click', () => {
+        const p = device.dataset.phase;
+        if (reduced.matches || !(p === '1' || p === '2')) return;
+        play(FROM_PRESS, PASS_END - 1800);
+      });
+
+      new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) start();
+        else { clear(); set(0); }
+      }, { threshold: 0.25 }).observe(device);
     })();
   </script>
 </body>
