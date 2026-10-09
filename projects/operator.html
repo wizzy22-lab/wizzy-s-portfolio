@@ -1838,6 +1838,136 @@
 
     .op-step__weight--comfort { background: #14110e; color: #fff; }
 
+    /* 4-2 Solution direction (Figma 19:460) — Input / Judgement / Output:
+       a numbered part above each grey cell, three across, one cell height. */
+    .op-step__flow {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 24px;
+      margin-top: 76px;
+      list-style: none;
+    }
+    @container op-card (min-width: 900px) {
+      .op-step__flow { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    .op-step__flow-step {
+      display: flex;
+      flex-direction: column;
+    }
+    .op-step__flow-step .op-step__part { margin-top: 0; }
+    .op-step__flow-step .op-step__cell {
+      flex: 1;
+      margin-top: 12px;
+    }
+    .op-step__cell-list {
+      margin-top: 12px;
+      padding-left: 24px;
+      list-style: disc;
+      color: #6e7884;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    /* 4-3 Ideal process (Figma 20:496) — two image pairs at the original
+       files' 16:10, then the MVP feature set as a row of chips. */
+    .op-step__figs--ideal img { aspect-ratio: 528 / 330; }
+    .op-step__lead + .op-step__part--near { margin-top: 24px; }   /* Figma: intro sits closer than the later leads */
+    .op-step__fig--edged img { outline: 1px solid #f5f5f5; outline-offset: -1px; }
+    .op-step__chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-top: 24px;
+      list-style: none;
+    }
+    .op-step__chip {
+      padding: 20px;
+      border: 1px solid #f5f5f5;
+      border-radius: 16px;
+      background: #fafafa;
+      color: #000;
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.2px;
+    }
+
+    /* 4-4 Structure design (Figma 26:4) — the pop-up → main-screen flow as
+       a small diagram, the IA beside its reading, and three 4:3 figures. */
+    .op-step__flowmap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 35px 24px 50px;
+      border: 1px solid #f5f5f5;
+      border-radius: 16px;
+      background: #fafafa;
+      text-align: center;
+    }
+    .op-step__flowmap-node { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .op-step__flowmap-icon { display: block; margin-bottom: 4px; }   /* 8 to the title with the 4 gap */
+    .op-step__flowmap-title {
+      color: #000;
+      font-family: var(--font-kr);       /* Figma sets these in Pretendard */
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 24px;
+      letter-spacing: -0.2px;
+    }
+    .op-step__flowmap-sub {
+      color: #6e7884;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    .op-step__flowmap-arrow { display: block; margin-block: 12px; }
+    .op-step__flowmap-node--check {
+      padding: 12px 24px;
+      border-radius: 12px;
+      background: #fff;
+    }
+    .op-step__flowmap-branches {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+      width: 100%;
+    }
+    .op-step__flowmap-branch { display: flex; flex-direction: column; align-items: center; }
+    .op-step__flowmap-branch .op-step__flowmap-arrow { margin-top: 12px; }
+    .op-step__flowmap-chip {
+      margin-bottom: 24px;
+      padding: 4px 12px;
+      border-radius: 99999px;
+      background: #e0e2e2;
+      color: #6e7884;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.6;
+    }
+    .op-step__flowmap-chip--yes { background: #cdf4b9; color: #338b0b; }
+    .op-step__media-row > .op-step__flowmap { align-self: stretch; }
+    .op-step__fig--4x3 img,
+    .op-step__fig--4x3 video {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+    .op-step__bullets {
+      margin-top: 25.6px;                 /* one blank line, as in Figma */
+      padding-left: 24px;
+      list-style: disc;
+      color: #6e7884;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    .op-step__aside > .op-step__lead + .op-step__bullets { margin-top: 25.6px; }
+    .op-step__figs--3 { grid-template-columns: minmax(0, 1fr); }
+    @container op-card (min-width: 700px) {
+      .op-step__figs--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    .op-step__lead + .op-step__figs { margin-top: 24px; }
+
     /* Approach / Define / Ideate / Outcome — flex column with explicit
        vertical gap between cards (cards have varying max-widths and
        margin-inline:auto for centering; flex parent ensures separation). */
@@ -2059,120 +2189,6 @@
     }
     .tradeoff-balance__caption--cost { fill: #0098FF; }
     .tradeoff-balance__caption--comfort { fill: var(--text-on-cream); }
-
-
-    /* =============================================================
-       AI decision flow — 3-stage diagram (Input → Judgment → Output)
-       Used in 03.3 Solution Direction
-       ============================================================= */
-    .ai-decision-flow {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: var(--space-4);
-      margin-top: var(--space-8);
-      align-items: stretch;
-    }
-    @media (min-width: 768px) {
-      .ai-decision-flow {
-        grid-template-columns: 1fr auto 1fr auto 1fr;
-        gap: var(--space-3);
-        align-items: stretch;
-      }
-    }
-
-    .ai-decision-flow__step {
-      background: var(--bg-surface);
-      color: var(--text-primary);
-      border: var(--border-normal) solid var(--border);
-      border-radius: var(--radius-card);
-      /* 28 on every viewport — the card's one inset, and the only thing
-         standing between the counter/label/list and the border. */
-      padding: var(--space-7);
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-3);
-      box-sizing: border-box;
-      height: 100%;
-      /* A grid item's default `min-width: auto` floors the track at the
-         longest line, so a `1fr` column can be pushed wider than its
-         share and the row overflows. 0 lets the list wrap instead. */
-      min-width: 0;
-    }
-
-    /* One surface for all three. The stages are a sequence, not a
-       ranking — 02's cream fill and 03's accent outline were reading as
-       emphasis and pulling the eye out of left-to-right order. The
-       --input/--judgment/--output modifiers stay on the markup as hooks,
-       but no longer carry any appearance of their own. */
-
-    .ai-decision-flow__counter {
-      font-family: var(--font-sans);
-      font-size: 32px;
-      line-height: 1;
-      font-weight: 400;
-      color: var(--accent-yellow);
-      margin: 0;
-    }
-
-    .ai-decision-flow__label {
-      font-family: var(--font-sans);
-      font-size: var(--text-eyebrow-size);
-      line-height: var(--text-eyebrow-line-height);
-      letter-spacing: var(--text-eyebrow-letter-spacing);
-      font-weight: var(--text-eyebrow-weight);
-      text-transform: uppercase;
-      color: var(--text-tertiary);
-      margin: 0;
-    }
-
-    .ai-decision-flow__title {
-      font-family: var(--font-sans);
-      font-size: 18px;
-      line-height: 1.3;
-      font-weight: 500;
-      color: inherit;
-      margin: 0;
-    }
-    .ai-decision-flow.ds-kr .ai-decision-flow__title {
-      font-family: var(--font-kr);
-    }
-
-    .ai-decision-flow__list {
-      list-style: none;
-      padding: 0;
-      margin: var(--space-1) 0 0 0;
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-2);
-    }
-    .ai-decision-flow__list li {
-      font-family: var(--font-sans);
-      font-size: 16px;
-      line-height: 1.5;
-      color: var(--text-secondary);
-      padding-left: var(--space-4);
-      position: relative;
-    }
-    .ai-decision-flow__list li::before {
-      content: '—';
-      position: absolute;
-      left: 0;
-      color: var(--text-tertiary);
-    }
-
-    .ai-decision-flow__arrow {
-      font-family: var(--font-sans);
-      font-size: 20px;
-      line-height: 1;
-      color: var(--text-tertiary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transform: rotate(90deg);
-    }
-    @media (min-width: 768px) {
-      .ai-decision-flow__arrow { transform: none; }
-    }
   </style>
 </head>
 <body>
@@ -2998,278 +3014,412 @@
         </article>
       </div>
 
-      <div class="ds-container">
-
-        <!-- ===== 03.3 — SOLUTION DIRECTION ===== -->
-        <article class="ds-research-finding ds-research-finding--align-left">
-          <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 03.3 — SOLUTION DIRECTION ]</p>
-
-          <h2 class="ds-h2" data-lang-content="en">AI now pre-calculates each choice's outcome<br>and <em class="ds-signature ds-signature--accent-yellow">recommends the most appropriate one</em>.</h2>
-          <h2 class="ds-h2 ds-kr" data-lang-content="ko">AI가 각 선택의 결과를 미리 계산해,<br><em class="ds-signature ds-signature--accent-yellow">가장 적절한 선택을 제안</em>하는 방식으로 전환했습니다.</h2>
-
-          <p class="ds-research-finding__paragraph" data-lang-content="en">
-            Based on the current state, AI predicts the outcome of each choice,<br>compares cost and comfort, and recommends the most appropriate one.
+      <!-- ===== 4-2 — Solution direction (Figma 19:460) ===== -->
+      <div class="op-step" data-lang-aware>
+        <article class="op-step__card">
+          <header class="op-step__head">
+            <p class="op-step__num">4-2</p>
+            <p class="op-step__label">
+              <span data-lang-content="en">Solution direction</span>
+              <span data-lang-content="ko">솔루션 방향</span>
+            </p>
+          </header>
+          <h2 class="op-step__title">
+            <span data-lang-content="en">AI pre-calculates the outcome of each choice<br>and recommends the most appropriate one.</span>
+            <span data-lang-content="ko">AI가 각 선택의 결과를 미리 계산해<br>가장 적절한 선택을 제안합니다.</span>
+          </h2>
+          <p class="op-step__lead op-step__lead--close">
+            <span data-lang-content="en">Based on the current store state, AI predicts the outcome of each possible action,<br>weighs cost and comfort, and recommends the best option for the situation.</span>
+            <span data-lang-content="ko">AI는 현재 매장 상태를 바탕으로 가능한 각 행동의 결과를 예측하고,<br>비용과 쾌적도를 따져 상황에 가장 알맞은 선택을 제안합니다.</span>
           </p>
-          <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
-            AI는 현재 상태를 기반으로 각 선택의 결과를 예측하고<br>비용과 쾌적도를 비교해 가장 적절한 선택을 제안합니다.
-          </p>
-
-          <!-- AI 3-stage decision diagram (Input → Judgment → Output) -->
-          <div class="ai-decision-flow" data-lang-aware>
-            <div class="ai-decision-flow__step ai-decision-flow__step--input">
-              <p class="ai-decision-flow__counter">01</p>
-              <p class="ai-decision-flow__label">
-                <span data-lang-content="ko">입력</span>
-                <span data-lang-content="en">Input</span>
-              </p>
-              <h4 class="ai-decision-flow__title">
-                <span data-lang-content="ko">어떤 데이터를 받는가</span>
-                <span data-lang-content="en">What data is received</span>
-              </h4>
-              <ul class="ai-decision-flow__list">
-                <li>
-                  <span data-lang-content="ko">매장의 현재 온도/습도, 외부 기온, 시간대</span>
-                  <span data-lang-content="en">Real-time store temp/humidity, outdoor temp, time of day</span>
-                </li>
-                <li>
-                  <span data-lang-content="ko">사용자 누적 조작 이력</span>
-                  <span data-lang-content="en">User adjustment history</span>
-                </li>
-                <li>
-                  <span data-lang-content="ko">전기 요금 구조 (시간대별 단가)</span>
-                  <span data-lang-content="en">Time-of-use pricing structure</span>
-                </li>
-              </ul>
-            </div>
-
-            <span class="ai-decision-flow__arrow" aria-hidden="true">→</span>
-
-            <div class="ai-decision-flow__step ai-decision-flow__step--judgment">
-              <p class="ai-decision-flow__counter">02</p>
-              <p class="ai-decision-flow__label">
-                <span data-lang-content="ko">판단</span>
-                <span data-lang-content="en">Judgment</span>
-              </p>
-              <h4 class="ai-decision-flow__title">
-                <span data-lang-content="ko">어떤 기준으로 판단하는가</span>
-                <span data-lang-content="en">What criteria drive the judgment</span>
-              </h4>
-              <ul class="ai-decision-flow__list">
-                <li>
-                  <span data-lang-content="ko">비용 가중치 × 쾌적도 가중치 (사용자 모드 설정값)</span>
-                  <span data-lang-content="en">Cost weight × comfort weight (from user mode)</span>
-                </li>
-                <li>
-                  <span data-lang-content="ko">예상 누적 비용 vs 쾌적도 변화 폭</span>
-                  <span data-lang-content="en">Predicted cumulative cost vs comfort delta</span>
-                </li>
-                <li>
-                  <span data-lang-content="ko">과거 유사 상황의 성공률</span>
-                  <span data-lang-content="en">Historical success rate in similar contexts</span>
-                </li>
-              </ul>
-            </div>
-
-            <span class="ai-decision-flow__arrow" aria-hidden="true">→</span>
-
-            <div class="ai-decision-flow__step ai-decision-flow__step--output">
-              <p class="ai-decision-flow__counter">03</p>
-              <p class="ai-decision-flow__label">
-                <span data-lang-content="ko">출력</span>
-                <span data-lang-content="en">Output</span>
-              </p>
-              <h4 class="ai-decision-flow__title">
-                <span data-lang-content="ko">어떤 결과를 제공하는가</span>
-                <span data-lang-content="en">What output is delivered</span>
-              </h4>
-              <ul class="ai-decision-flow__list">
-                <li>
-                  <span data-lang-content="ko">3가지 후보 옵션 + 각각의 예상 결과 수치</span>
-                  <span data-lang-content="en">3 candidate options with predicted outcomes</span>
-                </li>
-                <li>
-                  <span data-lang-content="ko">추천 1순위 + 그 근거</span>
-                  <span data-lang-content="en">Top recommendation with rationale</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </article>
-
-        <!-- ===== 03.4 — IDEATION PROCESS ===== -->
-        <article class="ds-research-finding ds-research-finding--align-left">
-          <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 03.4 — IDEATION PROCESS ]</p>
-
-          <h2 class="ds-h2" data-lang-content="en">We derived features from user stories<br>and structured them by category.</h2>
-          <h2 class="ds-h2 ds-kr" data-lang-content="ko">유저 스토리를 기반으로 기능을 도출하고,<br>기능별로 카테고리화해 구조화했습니다</h2>
-
-          <!-- Feature Definition Based on User Scenarios -->
-          <h3 class="ds-research-finding__sub-heading">Feature Definition Based on User Scenarios</h3>
-
-          <div class="ds-research-finding__media-grid">
-            <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="16/10" data-zoomable="true">
-                <img src="operator/approach/user-story.png" alt="User stories" loading="lazy" />
+          <ol class="op-step__flow">
+            <li class="op-step__flow-step">
+              <h3 class="op-step__part">
+                <span class="op-step__part-num">01</span>
+                <span class="op-step__part-title">
+                  <span data-lang-content="en">Input</span>
+                  <span data-lang-content="ko">입력</span>
+                </span>
+              </h3>
+              <div class="op-step__cell">
+                <h4 class="op-step__cell-title">
+                  <span data-lang-content="en">What data is received</span>
+                  <span data-lang-content="ko">어떤 데이터를 받는가</span>
+                </h4>
+                <ul class="op-step__cell-list">
+                  <li>
+                    <span data-lang-content="en">Real-time store temperature &amp; humidity</span>
+                    <span data-lang-content="ko">매장의 실시간 온도·습도</span>
+                  </li>
+                  <li>
+                    <span data-lang-content="en">Outdoor temperature</span>
+                    <span data-lang-content="ko">외부 기온</span>
+                  </li>
+                  <li>
+                    <span data-lang-content="en">Time of day</span>
+                    <span data-lang-content="ko">시간대</span>
+                  </li>
+                  <li>
+                    <span data-lang-content="en">User adjustment history</span>
+                    <span data-lang-content="ko">사용자 조작 이력</span>
+                  </li>
+                  <li>
+                    <span data-lang-content="en">Time-of-use pricing structure</span>
+                    <span data-lang-content="ko">시간대별 전기 요금 구조</span>
+                  </li>
+                </ul>
               </div>
-              <figcaption class="ds-media-figure__caption" data-lang-aware>
+            </li>
+            <li class="op-step__flow-step">
+              <h3 class="op-step__part">
+                <span class="op-step__part-num">02</span>
+                <span class="op-step__part-title">
+                  <span data-lang-content="en">Judgement</span>
+                  <span data-lang-content="ko">판단</span>
+                </span>
+              </h3>
+              <div class="op-step__cell">
+                <h4 class="op-step__cell-title">
+                  <span data-lang-content="en">What criteria drive the judgment</span>
+                  <span data-lang-content="ko">어떤 기준으로 판단하는가</span>
+                </h4>
+                <ul class="op-step__cell-list">
+                  <li>
+                    <span data-lang-content="en">Cost × comfort weighting</span>
+                    <span data-lang-content="ko">비용 × 쾌적도 가중치</span>
+                  </li>
+                  <li>
+                    <span data-lang-content="en">Predicted cumulative cost</span>
+                    <span data-lang-content="ko">예상 누적 비용</span>
+                  </li>
+                  <li>
+                    <span data-lang-content="en">Comfort delta</span>
+                    <span data-lang-content="ko">쾌적도 변화 폭</span>
+                  </li>
+                  <li>
+                    <span data-lang-content="en">Historical success rate in similar contexts</span>
+                    <span data-lang-content="ko">과거 유사 상황의 성공률</span>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="op-step__flow-step">
+              <h3 class="op-step__part">
+                <span class="op-step__part-num">03</span>
+                <span class="op-step__part-title">
+                  <span data-lang-content="en">Output</span>
+                  <span data-lang-content="ko">출력</span>
+                </span>
+              </h3>
+              <div class="op-step__cell">
+                <h4 class="op-step__cell-title">
+                  <span data-lang-content="en">What output is delivered</span>
+                  <span data-lang-content="ko">어떤 결과를 제공하는가</span>
+                </h4>
+                <ul class="op-step__cell-list">
+                  <li>
+                    <span data-lang-content="en">Candidate options with predicted outcomes</span>
+                    <span data-lang-content="ko">후보 옵션과 각각의 예상 결과</span>
+                  </li>
+                  <li>
+                    <span data-lang-content="en">Top recommendation with rationale</span>
+                    <span data-lang-content="ko">추천 1순위와 그 근거</span>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ol>
+        </article>
+      </div>
+
+      <!-- ===== 4-3 — Ideal process (Figma 20:496) ===== -->
+      <div class="op-step" data-lang-aware>
+        <article class="op-step__card">
+          <header class="op-step__head">
+            <p class="op-step__num">4-3</p>
+            <p class="op-step__label">
+              <span data-lang-content="en">Ideal process</span>
+              <span data-lang-content="ko">아이디에이션 과정</span>
+            </p>
+          </header>
+          <h2 class="op-step__title">
+            <span data-lang-content="en">We translated user decision points into features, then prioritized them for the MVP.</span>
+            <span data-lang-content="ko">사용자의 판단 지점을 기능으로 옮기고,<br>MVP를 위해 우선순위를 정했습니다.</span>
+          </h2>
+          <p class="op-step__lead">
+            <span data-lang-content="en">Interview findings pointed to cost as a major concern, leading us to examine the pricing structure behind the bill.</span>
+            <span data-lang-content="ko">인터뷰에서 비용이 가장 큰 걱정거리로 드러나, 고지서 뒤에 있는 요금 구조를 살펴봤습니다.</span>
+          </p>
+          <h3 class="op-step__part op-step__part--near">
+            <span class="op-step__part-num">01</span>
+            <span class="op-step__part-title">
+              <span data-lang-content="en">Feature Definition</span>
+              <span data-lang-content="ko">기능 정의</span>
+            </span>
+          </h3>
+          <div class="op-step__figs op-step__figs--ideal">
+            <figure class="op-step__fig op-step__fig--edged">
+              <img src="operator/approach/user-story.png" alt="User stories" loading="lazy" />
+              <figcaption>
                 <span data-lang-content="en">User stories</span>
-                <span data-lang-content="ko">유저스토리</span>
+                <span data-lang-content="ko">유저 스토리</span>
               </figcaption>
             </figure>
-            <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="16/10" data-zoomable="true">
-                <img src="operator/approach/feature-categorization.png" alt="Feature categorization" loading="lazy" />
-              </div>
-              <figcaption class="ds-media-figure__caption" data-lang-aware>
+            <figure class="op-step__fig">
+              <img src="operator/approach/feature-categorization.png" alt="Feature categorization" loading="lazy" />
+              <figcaption>
                 <span data-lang-content="en">Feature categorization</span>
                 <span data-lang-content="ko">기능 카테고리화</span>
               </figcaption>
             </figure>
           </div>
-
-          <p class="ds-research-finding__paragraph" data-lang-content="en">
-            We identified each decision point users face during operation,<br>then split functions into what AI handles automatically versus what stays under user control.
+          <p class="op-step__lead">
+            <span data-lang-content="en">We identified the key decision points users face during daily operations and translated them into features,<br>separating what AI handles automatically from what remains under user control.</span>
+            <span data-lang-content="ko">사용자가 매일 운영 중에 마주하는 주요 판단 지점을 식별해 기능으로 옮기고,<br>AI가 자동으로 처리할 부분과 사용자가 통제할 부분을 나눴습니다.</span>
           </p>
-          <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
-            사용자가 매 순간 판단해야 할 결정 지점을 식별하고,<br>AI가 자동으로 처리할 부분과 사용자가 통제할 부분을 분리해 기능을 정의했습니다
-          </p>
-
-          <!-- Feature Prioritization -->
-          <h3 class="ds-research-finding__sub-heading">Feature Prioritization</h3>
-
-          <div class="ds-research-finding__media-grid">
-            <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="16/10" data-zoomable="true">
-                <img src="operator/approach/moscow.png" alt="MoSCoW" loading="lazy" />
-              </div>
-              <figcaption class="ds-media-figure__caption" data-lang-aware>
+          <h3 class="op-step__part">
+            <span class="op-step__part-num">02</span>
+            <span class="op-step__part-title">
+              <span data-lang-content="en">Feature Prioritization</span>
+              <span data-lang-content="ko">기능 우선순위</span>
+            </span>
+          </h3>
+          <div class="op-step__figs op-step__figs--ideal">
+            <figure class="op-step__fig">
+              <img src="operator/approach/moscow.png" alt="MoSCoW prioritization" loading="lazy" />
+              <figcaption>
                 <span data-lang-content="en">MoSCoW</span>
-                <span data-lang-content="ko">Moscow</span>
+                <span data-lang-content="ko">MoSCoW</span>
               </figcaption>
             </figure>
-            <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="16/10" data-zoomable="true">
-                <img src="operator/approach/2x2-matrix.png" alt="2×2 Matrix" loading="lazy" />
-              </div>
-              <figcaption class="ds-media-figure__caption" data-lang-aware>
+            <figure class="op-step__fig">
+              <img src="operator/approach/2x2-matrix.png" alt="2×2 prioritization matrix" loading="lazy" />
+              <figcaption>
                 <span data-lang-content="en">2×2 Matrix</span>
-                <span data-lang-content="ko">2X2 Matrix</span>
+                <span data-lang-content="ko">2×2 매트릭스</span>
               </figcaption>
             </figure>
           </div>
-
-          <p class="ds-research-finding__paragraph" data-lang-content="en">
-            Among the many features, we selected only those required for the MVP based on priority.
+          <p class="op-step__lead">
+            <span data-lang-content="en">We evaluated the feature set by importance and implementation priority,<br>narrowing it down to the features essential for the MVP.</span>
+            <span data-lang-content="ko">기능을 중요도와 구현 우선순위로 평가해,<br>MVP에 꼭 필요한 기능으로 좁혔습니다.</span>
           </p>
-          <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
-            다양한 기능 중, 우선순위를 기준으로 MVP에 필요한 기능만 선별했습니다.
+          <h3 class="op-step__part">
+            <span class="op-step__part-num">03</span>
+            <span class="op-step__part-title">
+              <span data-lang-content="en">MVP feature set</span>
+              <span data-lang-content="ko">MVP 기능</span>
+            </span>
+          </h3>
+          <p class="op-step__lead">
+            <span data-lang-content="en">The prioritization process narrowed the product down to a focused MVP.</span>
+            <span data-lang-content="ko">우선순위 정리를 거쳐 제품을 핵심에 집중한 MVP로 좁혔습니다.</span>
           </p>
+          <ul class="op-step__chips">
+            <li class="op-step__chip">
+              <span data-lang-content="en">Real-time comfort status</span>
+              <span data-lang-content="ko">실시간 쾌적도 상태</span>
+            </li>
+            <li class="op-step__chip">
+              <span data-lang-content="en">AI recommendation</span>
+              <span data-lang-content="ko">AI 추천</span>
+            </li>
+            <li class="op-step__chip">
+              <span data-lang-content="en">Cost &amp; comfort comparison</span>
+              <span data-lang-content="ko">비용 · 쾌적도 비교</span>
+            </li>
+            <li class="op-step__chip">
+              <span data-lang-content="en">Predicted outcome</span>
+              <span data-lang-content="ko">예상 결과</span>
+            </li>
+            <li class="op-step__chip">
+              <span data-lang-content="en">Open / Peak / Close guidance</span>
+              <span data-lang-content="ko">오픈 / 피크 / 마감 가이드</span>
+            </li>
+            <li class="op-step__chip">
+              <span data-lang-content="en">Daily summary</span>
+              <span data-lang-content="ko">일일 요약</span>
+            </li>
+            <li class="op-step__chip">
+              <span data-lang-content="en">Mode Setting</span>
+              <span data-lang-content="ko">모드 설정</span>
+            </li>
+          </ul>
         </article>
+      </div>
 
-        <!-- ===== 03.5 — STRUCTURE DESIGN ===== -->
-        <article class="ds-research-finding ds-research-finding--align-left">
-          <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 03.5 — STRUCTURE DESIGN ]</p>
-
-          <h2 class="ds-h2" data-lang-content="en">We designed a structure that lets cost and comfort<br>be compared on one screen, and selected immediately.</h2>
-          <h2 class="ds-h2 ds-kr" data-lang-content="ko">비용과 쾌적도를 한 화면에서 비교하고<br>바로 선택할 수 있도록 구조를 설계했다</h2>
-
-          <!-- Block 1: IA image (left) + body + closing → (right) -->
-          <div class="context-block">
-            <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="4/3" data-zoomable="true">
-                <img src="operator/approach/ia.png" alt="Information Architecture" loading="lazy" />
+      <!-- ===== 4-4 — Structure design (Figma 26:4) ===== -->
+      <div class="op-step" data-lang-aware>
+        <article class="op-step__card">
+          <header class="op-step__head">
+            <p class="op-step__num">4-4</p>
+            <p class="op-step__label">
+              <span data-lang-content="en">Structure design</span>
+              <span data-lang-content="ko">구조 설계</span>
+            </p>
+          </header>
+          <h2 class="op-step__title">
+            <span data-lang-content="en">We designed a two-step experience quick pop-up decisions, deeper main-screen insights.</span>
+            <span data-lang-content="ko">팝업에서는 빠르게 결정하고, 메인 화면에서는 더 깊이 살펴보는<br>두 단계의 경험을 설계했습니다.</span>
+          </h2>
+          <h3 class="op-step__part">
+            <span class="op-step__part-num">01</span>
+            <span class="op-step__part-title">
+              <span data-lang-content="en">User flow</span>
+              <span data-lang-content="ko">유저 플로우</span>
+            </span>
+          </h3>
+          <div class="op-step__media-row">
+            <div class="op-step__flowmap" role="img" aria-label="Pop-up notification, then review the suggestion: if convinced, a quick decision; if more detail is needed, the main screen.">
+              <div class="op-step__flowmap-node">
+                <img class="op-step__flowmap-icon" src="operator/approach/icon-notifications.svg" width="24" height="24" alt="" />
+                <p class="op-step__flowmap-title">
+                  <span data-lang-content="en">Pop-up Notification</span>
+                  <span data-lang-content="ko">팝업 알림</span>
+                </p>
+                <p class="op-step__flowmap-sub">
+                  <span data-lang-content="en">Alert - Recommended action</span>
+                  <span data-lang-content="ko">알림 - 추천 행동</span>
+                </p>
               </div>
-              <figcaption class="ds-media-figure__caption" data-lang-aware>
-                <span data-lang-content="en">Information Architecture</span>
-                <span data-lang-content="ko">IA</span>
-              </figcaption>
-            </figure>
-            <div class="context-block__text">
-              <p class="ds-research-finding__paragraph" data-lang-content="en">
-                To let operators compare without navigating away<br>critical in busy store contexts<br>we placed these four data points together on the main screen:
-                <br><br>
-                Predicted cost<br>Cumulative cost<br>Comfort change<br>Recommended solution
+              <img class="op-step__flowmap-arrow" src="operator/approach/icon-flow-arrow.svg" width="11.547" height="25" alt="" />
+              <div class="op-step__flowmap-node op-step__flowmap-node--check">
+                <p class="op-step__flowmap-title">
+                  <span data-lang-content="en">Review the suggestion</span>
+                  <span data-lang-content="ko">제안 확인</span>
+                </p>
+                <p class="op-step__flowmap-sub">
+                  <span data-lang-content="en">Can the user decide with the information provided?</span>
+                  <span data-lang-content="ko">주어진 정보만으로 결정할 수 있는가?</span>
+                </p>
+              </div>
+              <div class="op-step__flowmap-branches">
+                <div class="op-step__flowmap-branch">
+                  <img class="op-step__flowmap-arrow" src="operator/approach/icon-flow-arrow.svg" width="11.547" height="25" alt="" />
+                  <p class="op-step__flowmap-chip op-step__flowmap-chip--yes">
+                    <span data-lang-content="en">Convince</span>
+                    <span data-lang-content="ko">납득</span>
+                  </p>
+                  <div class="op-step__flowmap-node">
+                    <p class="op-step__flowmap-title">
+                      <span data-lang-content="en">Quick decision</span>
+                      <span data-lang-content="ko">빠른 결정</span>
+                    </p>
+                    <p class="op-step__flowmap-sub">
+                      <span data-lang-content="en">Act and return to work</span>
+                      <span data-lang-content="ko">실행 후 업무로 복귀</span>
+                    </p>
+                  </div>
+                </div>
+                <div class="op-step__flowmap-branch">
+                  <img class="op-step__flowmap-arrow" src="operator/approach/icon-flow-arrow.svg" width="11.547" height="25" alt="" />
+                  <p class="op-step__flowmap-chip">
+                    <span data-lang-content="en">Need more detail</span>
+                    <span data-lang-content="ko">더 알고 싶음</span>
+                  </p>
+                  <div class="op-step__flowmap-node">
+                    <p class="op-step__flowmap-title">
+                      <span data-lang-content="en">Main Screen</span>
+                      <span data-lang-content="ko">메인 화면</span>
+                    </p>
+                    <p class="op-step__flowmap-sub">
+                      <span data-lang-content="en">Compare costs,<br>comfort and recommendations</span>
+                      <span data-lang-content="ko">비용, 쾌적도,<br>추천을 비교</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="op-step__aside">
+              <p class="op-step__statement">
+                <span data-lang-content="en">Pop-up first, details when needed</span>
+                <span data-lang-content="ko">팝업 먼저, 필요할 때 자세히</span>
               </p>
-              <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
-                바쁜 매장에서 화면 전환 없이 동시에 비교할 수 있도록,<br>아래 4가지 정보를 메인 화면에 함께 배치했습니다
-                <br><br>
-                예상 비용<br>누적 비용<br>쾌적도 변화<br>추천 솔루션
-              </p>
-
-              <p class="ds-research-finding__closing-implication" data-lang-content="en">
-                → Designed for fast decisions first, with a discovery layer<br>for when users want to dig deeper.
-              </p>
-              <p class="ds-research-finding__closing-implication ds-kr" data-lang-content="ko">
-                → 빠른 결정 중심, 필요 시 탐색하는 구조로 설계했습니다.
+              <p class="op-step__lead">
+                <span data-lang-content="en">Users review a pop-up notification and make a quick decision. When they need more information, they navigate to the main screen to compare costs, comfort changes, and recommended actions.</span>
+                <span data-lang-content="ko">사용자는 팝업 알림을 확인하고 빠르게 결정합니다. 더 많은 정보가 필요하면 메인 화면으로 이동해 비용, 쾌적도 변화, 추천 행동을 비교합니다.</span>
               </p>
             </div>
           </div>
-
-          <!-- Block 1.5: Crazy 8 video (left) + Interaction Strategy text (right) -->
-          <div class="context-block">
-            <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="4/3">
-                <video src="operator/approach/crazy-8.mp4" autoplay muted loop playsinline aria-label="Crazy 8 ideation sketches"></video>
-              </div>
-              <figcaption class="ds-media-figure__caption" data-lang-aware>
+          <h3 class="op-step__part">
+            <span class="op-step__part-num">02</span>
+            <span class="op-step__part-title">
+              <span data-lang-content="en">Information Architecture</span>
+              <span data-lang-content="ko">정보 구조</span>
+            </span>
+          </h3>
+          <div class="op-step__media-row">
+            <figure class="op-step__fig op-step__fig--4x3">
+              <img src="operator/approach/ia.png" alt="Information architecture" loading="lazy" />
+              <figcaption>
+                <span data-lang-content="en">Information Architecture</span>
+                <span data-lang-content="ko">정보 구조</span>
+              </figcaption>
+            </figure>
+            <div class="op-step__aside">
+              <p class="op-step__statement">
+                <span data-lang-content="en">Four key data points, one screen</span>
+                <span data-lang-content="ko">핵심 정보 네 가지, 한 화면에</span>
+              </p>
+              <p class="op-step__lead">
+                <span data-lang-content="en">We brought four essential data points together on the main screen,<br>allowing operators to evaluate a recommendation<br>without navigating between multiple views.</span>
+                <span data-lang-content="ko">꼭 필요한 네 가지 정보를 메인 화면에 함께 배치해,<br>운영자가 여러 화면을 오가지 않고도<br>추천을 판단할 수 있게 했습니다.</span>
+              </p>
+              <ul class="op-step__bullets">
+                <li>
+                  <span data-lang-content="en">Predicted cost</span>
+                  <span data-lang-content="ko">예상 비용</span>
+                </li>
+                <li>
+                  <span data-lang-content="en">Cumulative cost</span>
+                  <span data-lang-content="ko">누적 비용</span>
+                </li>
+                <li>
+                  <span data-lang-content="en">Comfort change</span>
+                  <span data-lang-content="ko">쾌적도 변화</span>
+                </li>
+                <li>
+                  <span data-lang-content="en">Recommended solution</span>
+                  <span data-lang-content="ko">추천 솔루션</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <h3 class="op-step__part">
+            <span class="op-step__part-num">03</span>
+            <span class="op-step__part-title">
+              <span data-lang-content="en">Crazy 8 · Wireframes · Design System</span>
+              <span data-lang-content="ko">Crazy 8 · 와이어프레임 · 디자인 시스템</span>
+            </span>
+          </h3>
+          <p class="op-step__lead">
+            <span data-lang-content="en">We explored layout ideas, refined the screen structure, and established visual consistency.</span>
+            <span data-lang-content="ko">레이아웃 아이디어를 탐색하고, 화면 구조를 다듬고, 시각적 일관성을 확립했습니다.</span>
+          </p>
+          <div class="op-step__figs op-step__figs--3">
+            <figure class="op-step__fig op-step__fig--4x3">
+              <video src="operator/approach/crazy-8.mp4" autoplay muted loop playsinline aria-label="Crazy 8 ideation sketches"></video>
+              <figcaption>
                 <span data-lang-content="en">Crazy 8</span>
                 <span data-lang-content="ko">Crazy 8</span>
               </figcaption>
             </figure>
-            <div class="context-block__text">
-              <div class="ds-research-finding__heading-group">
-                <h3 class="ds-research-finding__sub-heading">Interaction Strategy</h3>
-                <p class="ds-research-finding__paragraph" data-lang-content="en">
-                  We determined that most users would handle decisions<br>quickly through pop-up notifications,<br>and would only navigate to the main screen when they wanted more<br>details about a suggestion or had specific questions.
-                </p>
-                <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
-                  대다수의 사용자는 팝업알림을 통해 빠르게 결정을 처리하고,<br>제안에 대해 더 알고 싶거나 의문이 생긴 경우에만,<br>메인화면으로 이동한다고 판단했습니다.
-                </p>
-              </div>
-
-              <p class="ds-research-finding__closing-implication" data-lang-content="en">
-                → The main screen needed to be designed for users who want to know more after seeing the pop-up.
-              </p>
-              <p class="ds-research-finding__closing-implication ds-kr" data-lang-content="ko">
-                → 메인 화면은 팝업에서 더 알고싶은 유저를 위한 화면으로<br>설계해야했습니다.
-              </p>
-            </div>
-          </div>
-
-          <!-- Block 2: 2-col grid — Wireframe + Design system, each with body caption -->
-          <div class="ds-research-finding__media-grid">
-            <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="16/10" data-zoomable="true">
-                <img src="operator/approach/wireframe.png" alt="Wireframe" loading="lazy" />
-              </div>
-              <figcaption class="ds-media-figure__caption" data-lang-aware>
+            <figure class="op-step__fig op-step__fig--4x3">
+              <img src="operator/approach/wireframe.png" alt="Wireframes" loading="lazy" />
+              <figcaption>
                 <span data-lang-content="en">Wireframe</span>
-                <span data-lang-content="ko">Wireframe</span>
-              </figcaption>
-              <!-- MVP-prioritization sentence removed — duplicated 03.4 Feature Prioritization -->
-            </figure>
-            <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="16/10" data-zoomable="true">
-                <img src="operator/approach/design-system.png" alt="Design system" loading="lazy" />
-              </div>
-              <figcaption class="ds-media-figure__caption" data-lang-aware>
-                <span data-lang-content="en">Design system</span>
-                <span data-lang-content="ko">Design system</span>
+                <span data-lang-content="ko">와이어프레임</span>
               </figcaption>
             </figure>
-            <!-- Both locales lifted out of the figure to span the grid and
-                 centred: the lines are longer than a 528px column allows, and
-                 the pair now reads as a caption for both images rather than
-                 for the design-system one alone. -->
-            <p class="ds-research-finding__paragraph ds-research-finding__paragraph--oneline ds-research-finding__paragraph--span" data-lang-content="en">
-              We built a visual hierarchy: information that demands recognition within 3 seconds (current cost, comfort)<br>gets large typography, while supporting data sits smaller beneath it.
-            </p>
-            <p class="ds-research-finding__paragraph ds-research-finding__paragraph--oneline ds-research-finding__paragraph--span ds-kr" data-lang-content="ko">
-              3초 안에 인지가 필요한 정보(현재 비용·쾌적도)는 큰 타이포로, 보조 정보는 작게 배치하는 시각적 위계를 설계했습니다
-            </p>
+            <figure class="op-step__fig op-step__fig--4x3">
+              <img src="operator/approach/design-system.png" alt="Design system" loading="lazy" />
+              <figcaption>
+                <span data-lang-content="en">Design System</span>
+                <span data-lang-content="ko">디자인 시스템</span>
+              </figcaption>
+            </figure>
           </div>
         </article>
-
       </div>
     </section>
 
