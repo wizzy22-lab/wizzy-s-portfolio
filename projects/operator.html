@@ -695,12 +695,7 @@
        so the emphasis survives on type alone once the hue is gone. */
     .ds-signature--accent-blue-vivid { color: var(--text-primary); }
 
-    /* ===== 04 — KEY FEATURES ===== */
-    #features .ds-container {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-6);                  /* 24 — between rows */
-    }
+    /* ===== feature-row (now only the 05 iteration row) ===== */
     .feature-row {
       display: grid;
       grid-template-columns: 1fr;
@@ -1367,9 +1362,9 @@
        the page gutter either side (a 1200 card at 1920), 48 inside easing
        to 24, 32 corners, 64/80 between sheets in a section, and the
        section's own 72/96/120 above and below. Inside the card, Figma. */
-    #overview, #research, #problem, #approach { padding-block: 72px; }
-    @media (min-width: 768px) { #overview, #research, #problem, #approach { padding-block: 96px; } }
-    @media (min-width: 992px) { #overview, #research, #problem, #approach { padding-block: 120px; } }
+    #overview, #research, #problem, #approach, #features { padding-block: 72px; }
+    @media (min-width: 768px) { #overview, #research, #problem, #approach, #features { padding-block: 96px; } }
+    @media (min-width: 992px) { #overview, #research, #problem, #approach, #features { padding-block: 120px; } }
     .op-step {
       width: 100%;
       max-width: 1920px;
@@ -1967,6 +1962,54 @@
       .op-step__figs--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
     .op-step__lead + .op-step__figs { margin-top: 24px; }
+
+    /* 5-1 to 5-3 Key features (Figma 31:232) — the feature's recording
+       beside what it does, its outcome, and the MVP features it ships. */
+    .op-step__head + .op-step__part { margin-top: 34px; }
+    .op-step__feature {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 24px;
+      margin-top: 12px;
+    }
+    @container op-card (min-width: 900px) {
+      .op-step__feature { grid-template-columns: minmax(0, 790fr) minmax(0, 528fr); }
+    }
+    /* Recordings are 4:3, shown whole. */
+    .op-step__feature-media {
+      display: block;
+      align-self: start;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+    /* 5-2's recording is 16:9 on a flat #dee3e6 ground: hold it centred in
+       the same 4:3 box, with that ground above and below. */
+    .op-step__feature-media--wide {
+      object-fit: contain;
+      background: #dee3e6;
+    }
+    .op-step__feature-text { display: flex; flex-direction: column; }
+    .op-step__feature-text > .op-step__lead { margin-top: 12px; }
+    .op-step__feature-text > .op-step__lead + .op-step__statement { margin-top: 24px; }
+    .op-step__feature-text > .op-step__statement--outcome + .op-step__lead { margin-top: 0; }   /* Figma: the outcome line sits right under its label */
+    .op-step__chips--stack {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      margin-top: auto;                   /* sits on the media's bottom edge */
+      padding-top: 24px;
+    }
+    .op-step__chips--stack .op-step__chip {   /* a step below the body copy */
+      padding: 8px 12px;
+      border-radius: 10px;
+      color: #6e7884;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
 
     /* Approach / Define / Ideate / Outcome — flex column with explicit
        vertical gap between cards (cards have varying max-widths and
@@ -3423,104 +3466,163 @@
       </div>
     </section>
 
-    <!-- ====================  04 — KEY FEATURES  ==================== -->
+    <!-- ====================  5 — KEY FEATURES (Figma 31:232)  ==================== -->
     <section id="features">
-      <div class="ds-container">
-
-        <header class="ds-section-header" data-lang-aware>
-          <p class="ds-section-header__eyebrow">[ 04 — KEY FEATURES ]</p>
-        </header>
-
-        <!-- Feature 01 — Instant decision via pop up -->
-        <article class="feature-row">
-          <div class="feature-row__media" data-aspect="16/10">
-            <video src="operator/features/feature-01.mp4" autoplay muted loop playsinline aria-label="Feature 01 — instant decision via pop-up"></video>
-          </div>
-          <div class="feature-row__card" data-lang-aware>
-            <div class="feature-row__top">
-              <p class="feature-row__eyebrow">FEATURE 01 — INSTANT DECISION VIA POP UP</p>
-              <h3 class="feature-row__title">
-                <span data-lang-content="ko">팝업에서 상태와 추천을<br>확인하고 바로 적용</span>
-                <span data-lang-content="en">Check status & recommendation in<br>the pop-up, and apply immediately</span>
-              </h3>
-              <p class="feature-row__body">
-                <span data-lang-content="ko">바쁜 운영 환경에서 사용자는 팝업 알림을 통해<br>현재 상태와 AI가 제안한 솔루션을<br>바로 확인하고 즉시 적용할 수 있습니다</span>
-                <span data-lang-content="en">In busy operations, users can check the<br>current state and AI's recommendation<br>through pop-up notifications and<br>apply them immediately.</span>
+      <!-- ===== 5-1 — Key features ===== -->
+      <div class="op-step" data-lang-aware>
+        <article class="op-step__card">
+          <header class="op-step__head">
+            <p class="op-step__num">5-1</p>
+            <p class="op-step__label">
+              <span data-lang-content="en">Key Features</span>
+              <span data-lang-content="ko">핵심 기능</span>
+            </p>
+          </header>
+          <h3 class="op-step__part">
+            <span class="op-step__part-num">01</span>
+            <span class="op-step__part-title">
+              <span data-lang-content="en">INSTANT DECISIONS VIA POP-UPS</span>
+              <span data-lang-content="ko">팝업으로 즉시 결정</span>
+            </span>
+          </h3>
+          <div class="op-step__feature">
+            <video class="op-step__feature-media" src="operator/features/feature-01.mp4" autoplay muted loop playsinline aria-label="Instant decisions via pop-ups"></video>
+            <div class="op-step__feature-text">
+              <p class="op-step__statement">
+                <span data-lang-content="en">Check the current status and act on AI recommendations in seconds.</span>
+                <span data-lang-content="ko">현재 상태를 확인하고 AI 추천을 몇 초 만에 실행합니다.</span>
               </p>
-            </div>
-            <div class="feature-row__bottom">
-              <hr class="feature-row__divider" />
-              <div class="feature-row__outcome">
-                <span class="feature-row__outcome-label">OUTCOME</span>
-                <span class="feature-row__outcome-text">
-                  <span data-lang-content="ko">10초 안에 빠르게 내리는 결정</span>
-                  <span data-lang-content="en">Decisions made within 10 seconds</span>
-                </span>
-              </div>
+              <p class="op-step__lead">
+                <span data-lang-content="en">During busy store operations, users can review the current conditions and AI&#39;s recommended action through a pop-up, then apply it immediately without navigating to the main screen.</span>
+                <span data-lang-content="ko">바쁜 매장 운영 중에도 팝업으로 현재 상태와 AI의 추천 행동을 확인하고, 메인 화면으로 이동하지 않고 바로 적용할 수 있습니다.</span>
+              </p>
+              <p class="op-step__statement op-step__statement--outcome">
+                <span data-lang-content="en">Outcomes</span>
+                <span data-lang-content="ko">결과</span>
+              </p>
+              <p class="op-step__lead">
+                <span data-lang-content="en">Faster in-the-moment decisions</span>
+                <span data-lang-content="ko">그 자리에서 더 빠른 결정</span>
+              </p>
+              <ul class="op-step__chips op-step__chips--stack">
+              <li class="op-step__chip">
+                <span data-lang-content="en">Open / Peak / Close guidance ✅</span>
+                <span data-lang-content="ko">오픈 / 피크 / 마감 가이드 ✅</span>
+              </li>
+              <li class="op-step__chip">
+                <span data-lang-content="en">Real-time comfort status ✅</span>
+                <span data-lang-content="ko">실시간 쾌적도 상태 ✅</span>
+              </li>
+              <li class="op-step__chip">
+                <span data-lang-content="en">AI recommendation ✅</span>
+                <span data-lang-content="ko">AI 추천 ✅</span>
+              </li>
+              </ul>
             </div>
           </div>
         </article>
+      </div>
 
-        <!-- Feature 02 — Data log & learning -->
-        <article class="feature-row">
-          <div class="feature-row__media" data-aspect="16/10">
-            <video src="operator/features/feature-02.mp4" autoplay muted loop playsinline aria-label="Feature 02 — data log & learning"></video>
-          </div>
-          <div class="feature-row__card" data-lang-aware>
-            <div class="feature-row__top">
-              <p class="feature-row__eyebrow">FEATURE 02 — DATA LOG & LEARNING</p>
-              <h3 class="feature-row__title">
-                <span data-lang-content="ko">선택한 결과를 기록하고<br>학습하는 데이터 로그</span>
-                <span data-lang-content="en">A data log that records and learns<br>from each choice's outcome</span>
-              </h3>
-              <p class="feature-row__body">
-                <span data-lang-content="ko">AI는 냉난방 조절 이력과 그에 따른 결과를<br>함께 기록하고 시각화합니다.<br><br>사용자는 자신의 선택이 비용과 쾌적도에 어떤<br>영향을 주었는지 확인 할 수 있습니다.<br><br>AI는 누적된 데이터를 학습해<br>추천 정확도를 점차 개선하고, 이후 결정이<br>점점 더 쉽고 정확해지도록 돕습니다.</span>
-                <span data-lang-content="en">AI records HVAC adjustments along with their<br>outcomes and visualizes the results.<br><br>Users can see how each choice<br>affected both cost and comfort.<br><br>AI learns from the accumulated data<br>to improve recommendation accuracy over time,<br>so decisions become easier and more precise.</span>
+      <!-- ===== 5-2 — Key features ===== -->
+      <div class="op-step" data-lang-aware>
+        <article class="op-step__card">
+          <header class="op-step__head">
+            <p class="op-step__num">5-2</p>
+            <p class="op-step__label">
+              <span data-lang-content="en">Key Features</span>
+              <span data-lang-content="ko">핵심 기능</span>
+            </p>
+          </header>
+          <h3 class="op-step__part">
+            <span class="op-step__part-num">02</span>
+            <span class="op-step__part-title">
+              <span data-lang-content="en">DATA LOG &amp; LEARNING</span>
+              <span data-lang-content="ko">데이터 로그 &amp; 학습</span>
+            </span>
+          </h3>
+          <div class="op-step__feature">
+            <video class="op-step__feature-media op-step__feature-media--wide" src="operator/features/feature-02.mp4" autoplay muted loop playsinline aria-label="Data log and learning"></video>
+            <div class="op-step__feature-text">
+              <p class="op-step__statement">
+                <span data-lang-content="en">Track how each decision affects cost and comfort.</span>
+                <span data-lang-content="ko">각 결정이 비용과 쾌적도에 준 영향을 추적합니다.</span>
               </p>
-            </div>
-            <div class="feature-row__bottom">
-              <hr class="feature-row__divider" />
-              <div class="feature-row__outcome">
-                <span class="feature-row__outcome-label">OUTCOME</span>
-                <span class="feature-row__outcome-text">
-                  <span data-lang-content="ko">비용 변화 + 쾌적도 변화<br>데이터 시각화</span>
-                  <span data-lang-content="en">Cost & comfort change<br>data visualization</span>
-                </span>
-              </div>
+              <p class="op-step__lead">
+                <span data-lang-content="en">The system records HVAC adjustments and their outcomes, allowing users to see how each action affects energy costs and comfort. Accumulated data also informs future recommendations, helping AI improve its accuracy over time.</span>
+                <span data-lang-content="ko">시스템은 냉난방 조절과 그 결과를 기록해, 각 행동이 에너지 비용과 쾌적도에 어떤 영향을 주었는지 보여줍니다. 누적된 데이터는 이후 추천에도 반영되어 AI의 정확도를 점차 높입니다.</span>
+              </p>
+              <p class="op-step__statement op-step__statement--outcome">
+                <span data-lang-content="en">Outcomes</span>
+                <span data-lang-content="ko">결과</span>
+              </p>
+              <p class="op-step__lead">
+                <span data-lang-content="en">Visualized cost and comfort changes</span>
+                <span data-lang-content="ko">비용·쾌적도 변화 시각화</span>
+              </p>
+              <ul class="op-step__chips op-step__chips--stack">
+              <li class="op-step__chip">
+                <span data-lang-content="en">Daily summary ✅</span>
+                <span data-lang-content="ko">일일 요약 ✅</span>
+              </li>
+              <li class="op-step__chip">
+                <span data-lang-content="en">Cost &amp; comfort comparison ✅</span>
+                <span data-lang-content="ko">비용 · 쾌적도 비교 ✅</span>
+              </li>
+              <li class="op-step__chip">
+                <span data-lang-content="en">Predicted outcome ✅</span>
+                <span data-lang-content="ko">예상 결과 ✅</span>
+              </li>
+              </ul>
             </div>
           </div>
         </article>
+      </div>
 
-        <!-- Feature 03 — Mode setting -->
-        <article class="feature-row">
-          <div class="feature-row__media" data-aspect="16/10">
-            <video src="operator/features/feature-03.mp4" autoplay muted loop playsinline aria-label="Feature 03 — mode setting"></video>
-          </div>
-          <div class="feature-row__card" data-lang-aware>
-            <div class="feature-row__top">
-              <p class="feature-row__eyebrow">FEATURE 03 — MODE SETTING</p>
-              <h3 class="feature-row__title">
-                <span data-lang-content="ko">사용자가 원하는<br>비용과 쾌적도 기준을 설정하고 운영</span>
-                <span data-lang-content="en">Users set their own cost &amp; comfort<br>criteria and let AI operate within<br>those bounds</span>
-              </h3>
-              <p class="feature-row__body">
-                <span data-lang-content="ko">모드 설정을 통해 사용자가 비용과 쾌적도 기준을<br>함께 설정할 수 있습니다<br><br>AI는 이 기준을 바탕으로 두 요소를 동시에<br>만족할 수 있는 운영 방식을 제안합니다</span>
-                <span data-lang-content="en">Through mode settings, users can configure<br>cost and comfort criteria together.<br><br>Based on these criteria, AI proposes<br>an operation strategy that satisfies<br>both at once.</span>
+      <!-- ===== 5-3 — Key features ===== -->
+      <div class="op-step" data-lang-aware>
+        <article class="op-step__card">
+          <header class="op-step__head">
+            <p class="op-step__num">5-3</p>
+            <p class="op-step__label">
+              <span data-lang-content="en">Key Features</span>
+              <span data-lang-content="ko">핵심 기능</span>
+            </p>
+          </header>
+          <h3 class="op-step__part">
+            <span class="op-step__part-num">03</span>
+            <span class="op-step__part-title">
+              <span data-lang-content="en">MODE SETTING</span>
+              <span data-lang-content="ko">모드 설정</span>
+            </span>
+          </h3>
+          <div class="op-step__feature">
+            <video class="op-step__feature-media" src="operator/features/feature-03.mp4" autoplay muted loop playsinline aria-label="Mode setting"></video>
+            <div class="op-step__feature-text">
+              <p class="op-step__statement">
+                <span data-lang-content="en">Set cost and comfort priorities to guide AI recommendations.</span>
+                <span data-lang-content="ko">비용과 쾌적도의 우선순위를 정해 AI 추천의 기준으로 삼습니다.</span>
               </p>
-            </div>
-            <div class="feature-row__bottom">
-              <hr class="feature-row__divider" />
-              <div class="feature-row__outcome">
-                <span class="feature-row__outcome-label">OUTCOME</span>
-                <span class="feature-row__outcome-text">
-                  <span data-lang-content="ko">비용 + 쾌적도 균형 운영</span>
-                  <span data-lang-content="en">Balanced cost &amp; comfort operation</span>
-                </span>
-              </div>
+              <p class="op-step__lead">
+                <span data-lang-content="en">Users configure their preferred balance between energy savings and comfort. AI uses these preferences to recommend operating strategies aligned with their priorities.</span>
+                <span data-lang-content="ko">사용자는 에너지 절감과 쾌적도 사이에서 원하는 균형을 설정하고, AI는 이 기준에 맞는 운영 방식을 추천합니다.</span>
+              </p>
+              <p class="op-step__statement op-step__statement--outcome">
+                <span data-lang-content="en">Outcomes</span>
+                <span data-lang-content="ko">결과</span>
+              </p>
+              <p class="op-step__lead">
+                <span data-lang-content="en">Recommendations tailored to cost and comfort priorities</span>
+                <span data-lang-content="ko">비용·쾌적도 우선순위에 맞춘 추천</span>
+              </p>
+              <ul class="op-step__chips op-step__chips--stack">
+              <li class="op-step__chip">
+                <span data-lang-content="en">Mode Setting ✅</span>
+                <span data-lang-content="ko">모드 설정 ✅</span>
+              </li>
+              </ul>
             </div>
           </div>
         </article>
-
       </div>
     </section>
 
