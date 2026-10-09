@@ -623,734 +623,6 @@
       }
     }
 
-    /* Section header */
-    .ds-section-header {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-3);
-      margin-bottom: var(--space-10);
-      max-width: 800px;
-    }
-    @media (min-width: 1440px) {
-      .ds-section-header {
-        margin-bottom: var(--space-14);
-      }
-    }
-    .ds-section-header__eyebrow {
-      font-family: var(--font-sans);
-      font-size: var(--text-eyebrow-lg-size);
-      line-height: var(--text-eyebrow-lg-line-height);
-      letter-spacing: var(--text-eyebrow-letter-spacing);
-      font-weight: var(--text-eyebrow-weight);
-      text-transform: uppercase;
-      color: var(--accent-yellow);
-      margin: 0;
-    }
-    .ds-section-header__title {
-      font-family: var(--font-sans);
-      font-size: var(--text-h1-size);
-      line-height: var(--text-h1-line-height);
-      letter-spacing: var(--text-h1-letter-spacing);
-      font-weight: var(--text-h1-weight);
-      margin: 0;
-    }
-    html[data-lang="ko"] .ds-section-header__title {
-      font-family: var(--font-kr);
-    }
-    html[data-lang="ko"] .ds-section-header__title strong {
-      font-weight: 500;
-    }
-
-    /* Overview eyebrow — centered (no title beneath it) */
-    #overview .ds-section-header {
-      align-items: center;
-      max-width: none;
-      text-align: center;
-    }
-
-    /* Approach eyebrow — centered (title stays left-aligned beneath) */
-    #research .ds-section-header__eyebrow,
-    #approach .ds-section-header__eyebrow,
-    #features .ds-section-header__eyebrow,
-    #outcome .ds-section-header__eyebrow {
-      text-align: center;
-    }
-    #research .ds-section-header,
-    #approach .ds-section-header,
-    #features .ds-section-header,
-    #outcome .ds-section-header {
-      max-width: none;
-    }
-
-    /* Research-finding modifier: flush to container left edge
-       (at 1920 with container max-width 1280, this gives 320 left margin from viewport) */
-    .ds-research-finding--align-left {
-      margin-inline: 0;
-      text-align: left;
-    }
-
-    /* Yellow-accent emphasis (for use inside headings) */
-    .ds-signature--accent-yellow { color: var(--accent-yellow); }
-    /* Was a vivid-blue emphasis. The signature is already serif italic,
-       so the emphasis survives on type alone once the hue is gone. */
-    .ds-signature--accent-blue-vivid { color: var(--text-primary); }
-
-    /* ===== feature-row (now only the 05 iteration row) ===== */
-    .feature-row {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: var(--space-3);                  /* 12 — image to card */
-    }
-    @media (min-width: 768px) {
-      .feature-row {
-        /* Was 876/392, which resolved to a 343px card — narrower than the
-           author-set lines inside it. The widest is 353px and the card's
-           24px padding takes 48, so the column has to clear ~401. Taken off
-           the media column, which is 16:10 and just scales. */
-        grid-template-columns: 790fr 478fr;
-      }
-    }
-    .feature-row__media {
-      aspect-ratio: 16 / 10;                /* mobile: 16:10 */
-      background: var(--bg-surface);        /* dark surface per Figma */
-      border-radius: 15px;                  /* Figma 14.92 ≈ 15 */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--text-tertiary);
-      font-family: monospace;
-      font-size: var(--text-caption-size);
-      overflow: hidden;
-    }
-    @media (min-width: 768px) {
-      .feature-row__media {
-        aspect-ratio: auto;
-        height: 548px;                      /* Figma fixed height */
-      }
-    }
-    .feature-row__media > video,
-    .feature-row__media > img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .feature-row__card {
-      background: var(--bg-surface);        /* dark card per Figma */
-      color: var(--text-primary);           /* light text on dark */
-      border-radius: 21px;                  /* Figma 21.16 ≈ 21 */
-      padding: var(--space-6);              /* 24 */
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      box-sizing: border-box;
-      min-height: 548px;                    /* mobile fallback */
-    }
-    @media (min-width: 768px) {
-      .feature-row__card {
-        height: 548px;                      /* Figma fixed height */
-        min-height: 0;
-      }
-    }
-    .feature-row__top { display: flex; flex-direction: column; }
-    .feature-row__bottom { display: flex; flex-direction: column; gap: var(--space-4); }
-    .feature-row__eyebrow {
-      font-family: var(--font-sans);
-      font-size: 13px;
-      line-height: 1.2;
-      letter-spacing: 1.16px;
-      font-weight: 500;
-      text-transform: uppercase;
-      color: var(--accent-yellow);          /* yellow eyebrow per Figma */
-      margin: 0;
-    }
-    .feature-row__title {
-      font-family: inherit;
-      font-size: 20px;
-      line-height: 1.47;                    /* 35.27 / 24 */
-      letter-spacing: 0;
-      font-weight: 500;
-      color: var(--text-primary);
-      margin: 0;
-      margin-top: var(--space-3);           /* 12 — from eyebrow */
-    }
-    .feature-row__body {
-      font-family: inherit;
-      font-size: 16px;
-      line-height: 1.5;                     /* 24 / 16 */
-      font-weight: 400;
-      color: var(--text-secondary);
-      margin: 0;
-      margin-top: var(--space-12);          /* 48 — from title */
-    }
-    .feature-row__divider {
-      border: 0;
-      height: 1px;
-      background: rgba(245, 245, 240, 0.12); /* light hairline on dark bg */
-      margin: 0;
-      width: 100%;
-    }
-    .feature-row__outcome {
-      display: flex;
-      align-items: baseline;
-      gap: var(--space-6);                  /* 24 */
-    }
-    .feature-row__outcome-label {
-      font-family: var(--font-sans);
-      font-size: 13px;
-      line-height: 1.2;
-      letter-spacing: 0.6px;
-      font-weight: 500;
-      text-transform: uppercase;
-      color: var(--text-tertiary);
-      flex-shrink: 0;
-    }
-    .feature-row__outcome-text {
-      font-family: var(--font-sans);
-      font-size: 16px;
-      line-height: 1.2;                     /* 19.2 / 16 */
-      font-weight: 400;
-      color: var(--text-primary);
-    }
-
-    /* ----- feature-row body: 3-block variant (STUCK / WHY / FIX) -----
-       Used by 05.2 onboarding card. Body is rendered as a div with
-       block children separated by hairline rules. Tighter rhythm so
-       three blocks fit inside the 548px fixed card height on desktop. */
-    .feature-row__body--blocks {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-3);                  /* 12 between blocks */
-      margin-top: var(--space-5);           /* 20 — tightened from 48 */
-      padding: 0;
-    }
-    .feature-row__block {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      padding-top: var(--space-3);          /* 12 */
-      border-top: 1px solid var(--border-hairline);
-    }
-    .feature-row__block:first-child {
-      padding-top: 0;
-      border-top: 0;
-    }
-    .feature-row__block-label {
-      font-family: var(--font-sans);
-      font-size: 13px;
-      line-height: 1.2;
-      letter-spacing: 1.16px;
-      font-weight: 500;
-      text-transform: uppercase;
-      color: var(--accent-yellow);
-      margin: 0;
-    }
-    .feature-row__block-text {
-      font-family: inherit;
-      font-size: 13px;
-      line-height: 1.5;                     /* 19.5 / 13 */
-      font-weight: 400;
-      color: var(--text-secondary);
-      margin: 0;
-    }
-    .feature-row__card.ds-kr .feature-row__block-text {
-      font-family: var(--font-kr);
-    }
-
-    /* ===== 05 — RESULT & IMPACT ===== */
-    #outcome .ds-container {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-20);                 /* 80 — between articles */
-      align-items: stretch;
-    }
-
-    /* 05.1 UT layout — 2-col: full image (left) + body+protocol (right) */
-    .ut-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: var(--space-6);                  /* 24 */
-    }
-    @media (min-width: 768px) {
-      .ut-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-    .ut-grid__right {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;       /* body top, protocol image bottom */
-      gap: var(--space-6);
-    }
-    .ut-grid__protocol .ds-media-placeholder[data-aspect="628/220"],
-    .ut-grid__protocol .ds-media-image[data-aspect="628/220"] {
-      aspect-ratio: 628 / 220;              /* wide cinematic ratio per Figma */
-    }
-
-    /* SUS Score callout — wide horizontal cream card with big dark "76" */
-    .sus-callout {
-      background: var(--card-cream);        /* CAEAFF light blue */
-      color: var(--text-on-cream);          /* dark text */
-      border-radius: 31px;
-      padding: var(--space-12);             /* 48 */
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: var(--space-12);                 /* 48 */
-      align-items: center;
-      max-width: 1119px;                    /* Figma spec — sits with ~80 margin each side at 1920 */
-      margin-inline: auto;
-    }
-    @media (min-width: 768px) {
-      .sus-callout {
-        grid-template-columns: auto 1fr;
-        gap: var(--space-20);               /* 80 */
-        padding: 56px 80px;                  /* match Figma vertical+horizontal padding */
-      }
-    }
-    .sus-callout__score {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: var(--space-2);
-    }
-    .sus-callout__label {
-      font-family: var(--font-sans);
-      font-size: 16px;
-      line-height: 1.2;
-      letter-spacing: 1.71px;
-      font-weight: 500;
-      text-transform: uppercase;
-      color: var(--text-on-cream);
-      opacity: 0.6;
-      margin: 0;
-    }
-    .sus-callout__number {
-      font-family: var(--font-sans);
-      font-size: 56px;
-      line-height: 1.2;
-      letter-spacing: -7.78px;
-      font-weight: 400;
-      color: var(--text-on-cream);          /* dark per Figma */
-      margin: 0;
-    }
-    .sus-callout__text {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-3);                  /* 12 */
-    }
-    .sus-callout__text > p {
-      font-family: inherit;
-      font-size: 20px;
-      line-height: 1.5;                     /* 36 / 24 */
-      font-weight: 400;
-      color: var(--text-on-cream);
-      margin: 0;
-    }
-
-    /* ---------------------------------------------------------------
-       SUS callout — 4-step UT flow variant
-       Outer .sus-callout--4step keeps cream chrome but switches to a
-       block layout so .ut-4step grid drives the 4-column flow inside.
-       Stuck → Why → Fix → Result, with SUS 76 nested in step 4.
-       --------------------------------------------------------------- */
-    .sus-callout--4step {
-      display: block;
-    }
-
-    .ut-4step {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: var(--space-6);
-      align-items: stretch;
-    }
-    @media (min-width: 768px) {
-      .ut-4step {
-        grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
-        gap: var(--space-4);
-      }
-    }
-
-    .ut-4step__item {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-2);
-      padding-top: var(--space-3);
-      border-top: var(--border-thin) solid rgba(10, 14, 15, 0.18);
-      box-sizing: border-box;
-    }
-    .ut-4step__item--result {
-      border-top: 2px solid var(--accent-yellow);
-    }
-
-    .ut-4step__counter {
-      font-family: var(--font-sans);
-      font-size: 20px;
-      line-height: 1;
-      font-weight: 400;
-      color: var(--text-on-cream);
-      opacity: 0.4;
-      margin: 0;
-    }
-    .ut-4step__item--result .ut-4step__counter {
-      opacity: 0.7;
-    }
-
-    .ut-4step__label {
-      font-family: var(--font-sans);
-      font-size: 13px;
-      line-height: 1.2;
-      letter-spacing: 1.5px;
-      font-weight: 500;
-      text-transform: uppercase;
-      color: var(--text-on-cream);
-      margin: 0;
-    }
-
-    .ut-4step__body {
-      font-family: var(--font-sans);
-      font-size: 16px;
-      line-height: 1.5;
-      font-weight: 400;
-      color: var(--text-on-cream);
-      opacity: 0.78;
-      margin: var(--space-1) 0 0 0;
-    }
-    .ut-4step.ds-kr .ut-4step__body {
-      font-family: var(--font-kr);
-    }
-
-    /* SUS score + interpretation — sits under the 4-step flow inside the
-       cream callout. Split out of step 04 so the number reads as a caveated
-       reference value, not as the step's outcome. */
-    .sus-note {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: var(--space-4);
-      align-items: center;
-      margin-top: var(--space-10);
-      padding-top: var(--space-6);
-      border-top: var(--border-thin) solid rgba(10, 14, 15, 0.18);
-    }
-    @media (min-width: 768px) {
-      .sus-note {
-        grid-template-columns: auto 1fr;
-        gap: var(--space-12);
-      }
-    }
-    .sus-note__score {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .sus-note__text {
-      font-family: var(--font-sans);
-      font-size: 16px;
-      line-height: 1.6;
-      font-weight: 400;
-      color: var(--text-on-cream);
-      opacity: 0.78;
-      margin: 0;
-    }
-    .sus-callout.ds-kr .sus-note__text {
-      font-family: var(--font-kr);
-    }
-
-    /* 76 number — keeps .sus-callout__number font stack at column scale */
-    .sus-callout__number--inline {
-      font-size: 56px;
-      line-height: 1;
-      letter-spacing: -2px;
-    }
-
-    .ut-4step__arrow {
-      font-family: var(--font-sans);
-      font-size: 20px;
-      line-height: 1;
-      color: var(--text-on-cream);
-      opacity: 0.35;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transform: rotate(90deg);
-    }
-    @media (min-width: 768px) {
-      .ut-4step__arrow {
-        transform: none;
-        align-items: flex-start;
-        padding-top: calc(var(--space-3) + 8px);
-      }
-    }
-
-    /* Impact grid — 3 cards alternating colors (cream / dark / yellow) */
-    .impact-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: var(--space-3);                  /* 12 */
-    }
-    @media (min-width: 768px) {
-      .impact-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-    .impact-card {
-      border-radius: 24px;
-      padding: var(--space-12);             /* 48 */
-      min-height: 280px;
-      box-sizing: border-box;
-    }
-    /* Card 1 — User Impact (cream) */
-    .impact-card--user {
-      background: var(--card-cream);        /* CAEAFF */
-      color: var(--text-on-cream);
-    }
-    /* Card 2 — Business Impact (dark, accent-blue title) */
-    .impact-card--business {
-      background: var(--bg-surface);
-      color: var(--text-primary);
-    }
-    /* Card 3 — KPI Result (yellow) */
-    .impact-card--kpi {
-      background: var(--accent-yellow);
-      color: var(--text-on-cream);
-    }
-
-    .impact-card__title {
-      font-family: inherit;
-      font-size: 18px;
-      line-height: 1.2;                     /* 21.6 / 18 */
-      font-weight: 500;
-      letter-spacing: 0;
-      text-transform: uppercase;
-      margin: 0;
-      opacity: 0.6;                         /* slight dim for label feel */
-    }
-    .impact-card--business .impact-card__title {
-      color: var(--accent-blue);
-      opacity: 1;
-    }
-    .impact-card__subtitle {
-      font-family: inherit;
-      font-size: 18px;
-      line-height: 1.5;                     /* 27.2 / 18 */
-      font-weight: 400;
-      letter-spacing: 0;
-      margin: 0;
-      margin-top: var(--space-2);           /* 8 */
-    }
-    .impact-card__list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      margin-top: var(--space-6);           /* 24 */
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-2);
-    }
-    .impact-card__list li {
-      font-family: inherit;
-      font-size: 18px;
-      line-height: 1.6;                     /* 28.8 / 18 */
-      font-weight: 400;
-      letter-spacing: 0;
-      padding-left: var(--space-5, 20px);
-      position: relative;
-    }
-    .impact-card__list li::before {
-      content: '•';
-      position: absolute;
-      left: 0;
-    }
-
-    /* KPI definition variant — 2 cards (USER / BUSINESS), each listing
-       metric + what it tells us. Wider cards than the old 3-up impact grid. */
-    @media (min-width: 768px) {
-      .impact-grid--kpi-def {
-        grid-template-columns: repeat(2, 1fr);
-        gap: var(--space-6);
-      }
-    }
-    .impact-grid--kpi-def + .insight-callout {
-      margin-top: var(--space-10);
-    }
-    .kpi-list {
-      gap: var(--space-6);
-    }
-    .kpi-list li {
-      font-size: 16px;
-      line-height: 1.6;
-    }
-    .kpi-list li strong {
-      font-weight: 500;
-      font-size: 18px;
-      line-height: 1.4;
-    }
-    .kpi-list li::before {
-      content: '';
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: currentColor;
-      opacity: 0.5;
-      top: 0.62em;
-    }
-
-    /* ===== 06 — REFLECTION ===== */
-    .reflection-list {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: var(--space-3);
-    }
-    .reflection-item {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-3);
-      background: var(--bg-surface);
-      border-radius: 24px;
-      padding: var(--space-8);
-      box-sizing: border-box;
-    }
-    /* Desktop: counter + title on the left, prose on the right, so the body
-       keeps a readable measure instead of spanning the full 1080 card. */
-    @media (min-width: 768px) {
-      .reflection-item {
-        display: grid;
-        grid-template-columns: 420fr 560fr;
-        column-gap: var(--space-12);
-        row-gap: var(--space-3);
-        align-items: start;
-        padding: var(--space-12);
-      }
-      .reflection-item__counter { grid-column: 1; grid-row: 1; }
-      .reflection-item__title   { grid-column: 1; grid-row: 2; }
-      .reflection-item__body    { grid-column: 2; grid-row: 1 / span 2; }
-    }
-    .reflection-item__counter {
-      font-family: var(--font-sans);
-      font-size: 20px;
-      line-height: 1;
-      font-weight: 400;
-      color: var(--accent-yellow);
-      margin: 0;
-    }
-    .reflection-item__title {
-      font-family: inherit;
-      font-size: 20px;
-      line-height: 1.4;
-      font-weight: 500;
-      letter-spacing: 0;
-      color: var(--text-primary);
-      margin: 0;
-    }
-    .reflection-item__body {
-      font-family: inherit;
-      font-size: 16px;
-      line-height: 1.7;
-      font-weight: 400;
-      color: var(--text-secondary);
-      opacity: 0.82;
-      margin: 0;
-    }
-    .reflection-limitation {
-      font-family: inherit;
-      font-size: var(--text-caption-size);
-      line-height: 1.6;
-      color: var(--text-tertiary);
-      margin: 0;
-      padding-top: var(--space-6);
-      border-top: var(--border-thin) solid var(--border-hairline);
-    }
-    #reflection .ds-section-header__eyebrow { text-align: center; }
-    #reflection .ds-section-header { max-width: none; }
-
-    /* Insight callout — cream rounded box with heading + body all centered (per Figma) */
-    .insight-callout {
-      background: var(--card-cream);
-      color: var(--text-on-cream);
-      border-radius: 24px;
-      padding: var(--space-8);                /* 32 mobile */
-      /* 880 rather than 796: the longest author-set line in these boxes wants
-         723px and the 60px side padding eats 120 of the box. The callouts
-         shrink to their own content, so the wider cap only reaches the one
-         that needs it — the shorter two keep the width they had. */
-      max-width: 880px;
-      margin-inline: auto;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-3);                    /* 12 — heading → body */
-    }
-    @media (min-width: 768px) {
-      .insight-callout {
-        padding: 30px 60px;                   /* Figma: 30 vertical + ~60 horizontal */
-      }
-    }
-    .insight-callout__heading {
-      font-family: var(--font-sans);
-      font-size: 20px;
-      line-height: 1.2;
-      letter-spacing: 0.5px;
-      font-weight: 500;
-      color: var(--text-on-cream);
-      margin: 0;
-    }
-    .insight-callout__body {
-      font-family: inherit;
-      font-size: 18px;
-      line-height: 1.4;                       /* 25.2 / 18 */
-      font-weight: 400;
-      color: var(--text-on-cream);
-      margin: 0;
-    }
-
-    /* Closing implication line ("→ ..." 18px SemiBold for emphasis after body) */
-    .ds-research-finding__closing-implication {
-      font-family: inherit;
-      font-size: 18px;
-      line-height: 1.5;
-      font-weight: 500;
-      color: var(--text-primary);
-      margin: 0;
-    }
-
-    /* Context Research block — 2-col layout (image left + text right) */
-    .context-block {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: var(--space-6);                    /* 24 — Figma image to text gap */
-    }
-    @media (min-width: 768px) {
-      .context-block {
-        grid-template-columns: 634fr 622fr;   /* image | text — Figma proportions */
-      }
-    }
-    .context-block__text {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-6);                    /* 24 — between heading-groups */
-    }
-
-
-    /* Sentences the author sets as a single line. The design system caps
-       body copy at a 720px measure, which is right for multi-line prose but
-       folds a couple of these one-liners onto a stub second line. Releasing
-       the cap lets the parent (1080 here) govern, so the line holds on
-       desktop and still wraps naturally once the viewport is genuinely too
-       narrow — forcing nowrap there would trade a wrap for a scrollbar. */
-    .ds-research-finding__paragraph--oneline {
-      max-width: none;
-    }
-    /* A line too long for its column, promoted to a full-width row of the
-       media grid and centred under the pair it now describes. */
-    .ds-research-finding__media-grid > .ds-research-finding__paragraph--span {
-      grid-column: 1 / -1;
-      text-align: center;
-    }
-
-    /* The project tagline is set as a single line. At 32px it wants 821px and
-       the section header's measure is 800 — so the cap comes off the header
-       here rather than the heading, which is what actually constrains it. */
-    .ds-h2--oneline { max-width: none; }
-
     /* ===============================================================
        STEP CARDS — Figma "1-1/ Start point" (4:4) and the frames after it.
        A white 1438 card on the page ground: a big step number, an orange
@@ -1362,9 +634,9 @@
        the page gutter either side (a 1200 card at 1920), 48 inside easing
        to 24, 32 corners, 64/80 between sheets in a section, and the
        section's own 72/96/120 above and below. Inside the card, Figma. */
-    #overview, #research, #problem, #approach, #features { padding-block: 72px; }
-    @media (min-width: 768px) { #overview, #research, #problem, #approach, #features { padding-block: 96px; } }
-    @media (min-width: 992px) { #overview, #research, #problem, #approach, #features { padding-block: 120px; } }
+    #overview, #research, #problem, #approach, #features, #outcome, #reflection { padding-block: 72px; }
+    @media (min-width: 768px) { #overview, #research, #problem, #approach, #features, #outcome, #reflection { padding-block: 96px; } }
+    @media (min-width: 992px) { #overview, #research, #problem, #approach, #features, #outcome, #reflection { padding-block: 120px; } }
     .op-step {
       width: 100%;
       max-width: 1920px;
@@ -2010,6 +1282,55 @@
       line-height: 1.2;
       letter-spacing: 0;
     }
+
+    /* 6-1 Usability test (Figma 34:300) — the session photo beside the four
+       tasks and the protocol, two finding boxes, then the SUS score. */
+    .op-step__fig--ut img { aspect-ratio: 528 / 330; }
+    .op-step__fig--protocol img { aspect-ratio: 1256 / 440; }
+    .op-step__steps {
+      padding-left: 24px;
+      list-style: decimal;
+      color: #6e7884;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    .op-step__aside > .op-step__statement + .op-step__steps { margin-top: 8px; }
+    .op-step__aside > .op-step__steps + .op-step__fig { margin-top: 40px; }
+    .op-step__boxes--2 {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+    }
+    @container op-card (min-width: 700px) {
+      .op-step__boxes--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    .op-step__part + .op-step__boxes { margin-top: 12px; }
+    .op-step__box--score {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 24px;
+    }
+    .op-step__score {
+      color: #000;
+      font-size: 48px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+    .op-step__box--score .op-step__box-body { margin-top: 0; }
+
+    /* 6-2 Iteration (Figma 34:348) and 7 Reflection (Figma 36:393) — plain
+       note boxes: body first, then an optional bold takeaway. */
+    .op-step__box--note > .op-step__box-body:first-child { margin-top: 0; }
+    .op-step__box-body--strong { color: #1e2225; }
+    .op-step__takeaway {
+      margin-top: 12px;
+      color: #535351;
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+    .op-step__part-title--sans { font-family: inherit; }   /* Figma sets 7's in Manrope */
+    .op-step__feature-text > .op-step__lead + .op-step__statement--far { margin-top: 48px; }
+    .op-step__feature-text > .op-step__statement + .op-step__bullets { margin-top: 12px; }
 
     /* Approach / Define / Ideate / Outcome — flex column with explicit
        vertical gap between cards (cards have varying max-widths and
@@ -3628,335 +2949,247 @@
 
     <!-- ====================  05 — RESULT & IMPACT  ==================== -->
     <section id="outcome">
-      <div class="ds-container">
-
-        <header class="ds-section-header" data-lang-aware>
-          <p class="ds-section-header__eyebrow">[ 05 — RESULT & IMPACT ]</p>
-        </header>
-
-        <!-- ===== 05.1 — USABILITY TESTING ===== -->
-        <article class="ds-research-finding ds-research-finding--align-left">
-          <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 05.1 — USABILITY TESTING ]</p>
-
-          <h2 class="ds-h2" data-lang-content="en">We tested the decision process in real operating contexts<br>— 5 participants, 4 tasks</h2>
-          <h2 class="ds-h2 ds-kr" data-lang-content="ko">참가자 5명과 4개 과제로,<br>실제 운영 상황에서의 판단 과정을 테스트했습니다</h2>
-
-          <!-- 2-col: UT photo (left, full height) + body text + protocol image (right) -->
-          <div class="ut-grid">
-            <figure class="ds-media-figure ut-grid__left">
-              <div class="ds-media-image" data-aspect="16/10">
-                <img src="operator/outcome/ut-photo.png" alt="User test photo" loading="lazy" />
-              </div>
-              <figcaption class="ds-media-figure__caption" data-lang-aware>
-                <span data-lang-content="en">UT photo</span>
-                <span data-lang-content="ko">UT사진</span>
+      <!-- ===== 6-1 — Usability test (Figma 34:300) ===== -->
+      <div class="op-step" data-lang-aware>
+        <article class="op-step__card">
+          <header class="op-step__head">
+            <p class="op-step__num">6-1</p>
+            <p class="op-step__label">
+              <span data-lang-content="en">Usability test</span>
+              <span data-lang-content="ko">사용성 테스트</span>
+            </p>
+          </header>
+          <h2 class="op-step__title">
+            <span data-lang-content="en">We tested the decision-making flow<br>with 5 participants across 4 tasks.</span>
+            <span data-lang-content="ko">참가자 5명, 4개 과제로<br>판단 흐름을 테스트했습니다.</span>
+          </h2>
+          <h3 class="op-step__part">
+            <span class="op-step__part-num">01</span>
+            <span class="op-step__part-title">
+              <span data-lang-content="en">UT Process</span>
+              <span data-lang-content="ko">UT 과정</span>
+            </span>
+          </h3>
+          <div class="op-step__media-row">
+            <figure class="op-step__fig op-step__fig--ut">
+              <img src="operator/outcome/ut-photo.png" alt="A participant running the test at a store counter" loading="lazy" />
+              <figcaption>
+                <span data-lang-content="en">UT Photo</span>
+                <span data-lang-content="ko">UT 사진</span>
               </figcaption>
             </figure>
-
-            <div class="ut-grid__right">
-              <p class="ds-research-finding__paragraph" data-lang-content="en">
-                We designed 4 tasks simulating real store operation:<br>① understand the current store state<br>② understand why the AI recommended an action<br>③ decide whether to apply it<br>④ interpret the cost-comfort outcome.
-                <br><br>
-                Each task had defined metrics:<br>time, accuracy, understanding, trust, and hesitation.
+            <div class="op-step__aside">
+              <p class="op-step__statement">
+                <span data-lang-content="en">We simulated real store operations to evaluate whether users could:</span>
+                <span data-lang-content="ko">실제 매장 운영 상황을 가정해, 사용자가 다음을 할 수 있는지 평가했습니다.</span>
               </p>
-              <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
-                실제 매장 운영 상황을 가정해 4개 과제로 테스트를 설계했습니다<br>① 현재 매장 상태 이해<br>② AI 추천의 이유 이해<br>③ 추천 적용 여부 결정<br>④ 결과(비용·쾌적도) 해석.
-                <br><br>
-                과제별로 소요 시간, 정확도, 이해·신뢰, 망설임을 측정 기준으로 정의했습니다.
-              </p>
-
-              <figure class="ds-media-figure ut-grid__protocol">
-                <div class="ds-media-image" data-aspect="628/220" data-zoomable="true">
-                  <img src="operator/outcome/protocol.png" alt="UT protocol" loading="lazy" />
-                </div>
-                <figcaption class="ds-media-figure__caption" data-lang-aware>
-                  <span data-lang-content="en">UT protocol</span>
+              <ol class="op-step__steps">
+                <li>
+                  <span data-lang-content="en">Understand the current store state</span>
+                  <span data-lang-content="ko">현재 매장 상태 이해하기</span>
+                </li>
+                <li>
+                  <span data-lang-content="en">Understand why AI recommended an action</span>
+                  <span data-lang-content="ko">AI가 그 행동을 추천한 이유 이해하기</span>
+                </li>
+                <li>
+                  <span data-lang-content="en">Decide whether to apply the recommendation</span>
+                  <span data-lang-content="ko">추천을 적용할지 결정하기</span>
+                </li>
+                <li>
+                  <span data-lang-content="en">Interpret the predicted cost and comfort outcomes</span>
+                  <span data-lang-content="ko">예상 비용·쾌적도 결과 해석하기</span>
+                </li>
+              </ol>
+              <figure class="op-step__fig op-step__fig--protocol">
+                <img src="operator/outcome/protocol.png" alt="UT protocol spreadsheets" loading="lazy" />
+                <figcaption>
+                  <span data-lang-content="en">UT Protocol</span>
                   <span data-lang-content="ko">UT 프로토콜</span>
                 </figcaption>
               </figure>
             </div>
           </div>
-
-          <!-- SUS Score callout — 4-step UT flow (Stuck → Why → Fix → Result) -->
-          <div class="sus-callout sus-callout--4step" data-lang-aware>
-            <div class="ut-4step">
-
-              <div class="ut-4step__item">
-                <p class="ut-4step__counter">01</p>
-                <p class="ut-4step__label">
-                  <span data-lang-content="ko">문제 발생</span>
-                  <span data-lang-content="en">What went wrong</span>
-                </p>
-                <p class="ut-4step__body">
-                  <span data-lang-content="ko">신규 사용자 5명 중 4명이 첫 매장 등록 단계에서 멈췄습니다. 설정 진입점이 메뉴 깊은 곳에 있어 찾지 못했고, 진입 후에도 시작까지 시간이 오래 걸렸습니다.</span>
-                  <span data-lang-content="en">4 of 5 first-time users got stuck at store registration. The setup entry was buried in the menu, and even after finding it, getting started took long.</span>
-                </p>
-              </div>
-
-              <span class="ut-4step__arrow" aria-hidden="true">→</span>
-
-              <div class="ut-4step__item">
-                <p class="ut-4step__counter">02</p>
-                <p class="ut-4step__label">
-                  <span data-lang-content="ko">원인</span>
-                  <span data-lang-content="en">Why it happened</span>
-                </p>
-                <p class="ut-4step__body">
-                  <span data-lang-content="ko">첫 화면에서 입력해야 할 항목이 7가지로 인지 부담이 컸고, '비용 모드 / 쾌적 모드' 용어가 직관적이지 않았습니다.</span>
-                  <span data-lang-content="en">The first screen demanded 7 inputs, and the 'cost mode / comfort mode' terms weren't intuitive.</span>
-                </p>
-              </div>
-
-              <span class="ut-4step__arrow" aria-hidden="true">→</span>
-
-              <div class="ut-4step__item">
-                <p class="ut-4step__counter">03</p>
-                <p class="ut-4step__label">
-                  <span data-lang-content="ko">개선</span>
-                  <span data-lang-content="en">What was improved</span>
-                </p>
-                <p class="ut-4step__body">
-                  <span data-lang-content="ko">입력 항목을 3단계로 분할한 온보딩 플로우를 신설하고, 모드 설정에 비용·쾌적 시각 슬라이더를 도입했습니다.</span>
-                  <span data-lang-content="en">We split input into a 3-step onboarding flow and introduced a visual cost-comfort slider for mode setting.</span>
-                </p>
-              </div>
-
-              <span class="ut-4step__arrow" aria-hidden="true">→</span>
-
-              <div class="ut-4step__item ut-4step__item--result">
-                <p class="ut-4step__counter">04</p>
-                <p class="ut-4step__label">
-                  <span data-lang-content="ko">개선 후 변화</span>
-                  <span data-lang-content="en">What changed after</span>
-                </p>
-                <p class="ut-4step__body">
-                  <span data-lang-content="ko">개선안은 필수 입력을 7개에서 3개로 줄인 온보딩으로 재설계했고, 동일 과제 기준으로 재검증을 진행했습니다.</span>
-                  <span data-lang-content="en">The redesign cut required inputs from 7 to 3, and was re-validated against the same tasks.</span>
-                </p>
-              </div>
-
+          <h3 class="op-step__part">
+            <span class="op-step__part-num">02</span>
+            <span class="op-step__part-title">
+              <span data-lang-content="en">Usability Test Findings</span>
+              <span data-lang-content="ko">사용성 테스트 결과</span>
+            </span>
+          </h3>
+          <div class="op-step__boxes op-step__boxes--2">
+            <div class="op-step__box">
+              <h4 class="op-step__box-title">
+                <span data-lang-content="en">01 — What Went Wrong</span>
+                <span data-lang-content="ko">01 — 문제 발생</span>
+              </h4>
+              <p class="op-step__box-body">
+                <span data-lang-content="en">First-time users struggled to understand how to get started.<br>The AI-assisted HVAC model was unfamiliar to participants, making the initial setup and mode selection difficult to navigate.</span>
+                <span data-lang-content="ko">처음 사용하는 사용자는 어떻게 시작해야 할지 이해하기 어려워했습니다.<br>AI가 돕는 냉난방 방식이 낯설어, 초기 설정과 모드 선택을 진행하기 어려웠습니다.</span>
+              </p>
             </div>
-
-            <!-- SUS score + how we read it (exploratory, n=5) -->
-            <div class="sus-note">
-              <div class="sus-note__score">
-                <p class="sus-callout__label">SUS SCORE</p>
-                <p class="sus-callout__number sus-callout__number--inline">76</p>
-              </div>
-              <p class="sus-note__text">
-                <span data-lang-content="ko">SUS(System Usability Scale) 평균 76점 (n=5 · 개별 72.5~80) — 통상 기준선인 68점을 웃도는 수준입니다. 참가자 5명의 탐색적 테스트이므로, 결과는 제품 성과가 아닌 개선 방향을 확인하는 참고값으로 해석했습니다.</span>
-                <span data-lang-content="en">SUS averaged 76 (n=5 · individual 72.5–80), above the common benchmark of 68.<br>As an exploratory test with 5 participants, we read this as directional input, not product performance.</span>
+            <div class="op-step__box">
+              <h4 class="op-step__box-title">
+                <span data-lang-content="en">02 — Why It Happened</span>
+                <span data-lang-content="ko">02 — 원인</span>
+              </h4>
+              <p class="op-step__box-body">
+                <span data-lang-content="en">The initial setup required 7 inputs at once, while the terms “Cost Mode” and “Comfort Mode” were difficult to interpret without additional guidance.</span>
+                <span data-lang-content="ko">초기 설정에서 한 번에 7가지를 입력해야 했고, ‘비용 모드’와 ‘쾌적 모드’라는 용어는 추가 안내 없이는 이해하기 어려웠습니다.</span>
+              </p>
+            </div>
+          </div>
+          <h3 class="op-step__part">
+            <span class="op-step__part-num">03</span>
+            <span class="op-step__part-title">
+              <span data-lang-content="en">SUS Score</span>
+              <span data-lang-content="ko">SUS 점수</span>
+            </span>
+          </h3>
+          <div class="op-step__box op-step__box--score">
+            <p class="op-step__score">76</p>
+            <div>
+              <p class="op-step__box-body">
+                <span data-lang-content="en">The average SUS score was 76 (n = 5; individual scores: 72.5–80), above the commonly cited benchmark of 68.</span>
+                <span data-lang-content="ko">SUS 평균 점수는 76점(n = 5, 개별 72.5–80)으로, 흔히 기준으로 삼는 68점을 웃돌았습니다.</span>
+              </p>
+              <p class="op-step__box-body">
+                <span data-lang-content="en">Given the small sample, we treated this as directional usability evidence rather than a definitive measure of product performance.</span>
+                <span data-lang-content="ko">표본이 작아, 제품 성과를 확정하는 지표가 아니라 사용성의 방향을 확인하는 참고값으로 해석했습니다.</span>
               </p>
             </div>
           </div>
         </article>
+      </div>
 
-        <!-- ===== 05.2 — ITERATION ===== -->
-        <article class="ds-research-finding ds-research-finding--align-left">
-          <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 05.2 — ITERATION ]</p>
-
-          <h2 class="ds-h2" data-lang-content="en">We cut required fields to three and added a step-by-step guide,<br>so first-time setup was designed to finish in under a minute.</h2>
-          <h2 class="ds-h2 ds-kr" data-lang-content="ko">필수 입력을 3개로 줄이고 단계별 가이드를 더해,<br>첫 매장 등록을 1분 안에 끝낼 수 있도록 설계했습니다</h2>
-
-          <!-- Feature row: media + card (reuse 04 pattern) -->
-          <article class="feature-row">
-            <div class="feature-row__media" data-aspect="16/10">
-              <video src="operator/outcome/onboarding.mp4" autoplay muted loop playsinline aria-label="Onboarding flow"></video>
-            </div>
-            <div class="feature-row__card" data-lang-aware>
-              <div class="feature-row__top">
-                <p class="feature-row__eyebrow">ADD SPECIFIC ONBOARDING</p>
-                <h3 class="feature-row__title">
-                  <span data-lang-content="ko">쉽게 설정할 수 있는<br>온보딩 추가</span>
-                  <span data-lang-content="en">Onboarding flow<br>added for easier setup</span>
-                </h3>
-                <div class="feature-row__body feature-row__body--blocks">
-                  <div class="feature-row__block">
-                    <p class="feature-row__block-label">
-                      <span data-lang-content="ko">막힌 지점</span>
-                      <span data-lang-content="en">Stuck</span>
-                    </p>
-                    <p class="feature-row__block-text">
-                      <span data-lang-content="ko">초기 메인 화면에서 '내 매장을 어떻게 등록하지?' 단계에서 멈춤. 설정 진입점이 메뉴 깊은 곳에 있어 5명 중 4명이 발견하지 못했습니다.</span>
-                      <span data-lang-content="en">Users got stuck at "how do I register my store?" on the main screen. The setup entry was buried deep in the menu — 4 out of 5 testers couldn't find it.</span>
-                    </p>
-                  </div>
-                  <div class="feature-row__block">
-                    <p class="feature-row__block-label">
-                      <span data-lang-content="ko">원인</span>
-                      <span data-lang-content="en">Why</span>
-                    </p>
-                    <p class="feature-row__block-text">
-                      <span data-lang-content="ko">한 번에 입력해야 할 정보가 7가지(매장 면적·업종·운영시간·기준 온도 등)였고, "이걸 다 알아야 시작 가능한가?"라는 인지 부담과 거부감이 발생했습니다.</span>
-                      <span data-lang-content="en">Setup demanded 7 inputs at once (area, business type, operating hours, target temp...). The cognitive load made users feel they had to know everything before they could begin.</span>
-                    </p>
-                  </div>
-                  <div class="feature-row__block">
-                    <p class="feature-row__block-label">
-                      <span data-lang-content="ko">해결</span>
-                      <span data-lang-content="en">Fix</span>
-                    </p>
-                    <p class="feature-row__block-text">
-                      <span data-lang-content="ko">필수 3개 항목(업종·면적·운영시간)만 받는 3단계 온보딩으로 분할하고, 나머지 4개는 사용 중 누적 데이터로 AI가 자동 보정하도록 설계했습니다.</span>
-                      <span data-lang-content="en">We split it into a 3-step onboarding that asks only 3 essential items (business type, area, hours). The remaining 4 are auto-tuned by AI from accumulated usage data.</span>
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div class="feature-row__bottom">
-                <hr class="feature-row__divider" />
-                <div class="feature-row__outcome">
-                  <span class="feature-row__outcome-label">OUTCOME</span>
-                  <span class="feature-row__outcome-text">
-                    <span data-lang-content="ko">필수 입력 7개 → 3개 · 3단계 온보딩 신설</span>
-                    <span data-lang-content="en">Required inputs 7 → 3 · New 3-step onboarding</span>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </article>
-        </article>
-
-        <!-- ===== 05.3 — IMPACT ===== -->
-        <article class="ds-research-finding ds-research-finding--align-left">
-          <p class="ds-eyebrow ds-eyebrow--accent-blue">[ 05.3 — IMPACT ]</p>
-
-          <h2 class="ds-h2" data-lang-content="en">Instead of claiming outcomes,<br>we defined how success would be measured</h2>
-          <h2 class="ds-h2 ds-kr" data-lang-content="ko">성과를 단정하는 대신,<br>무엇으로 성공을 측정할지 정의했습니다</h2>
-
-          <!-- Image + body -->
-          <div class="context-block">
-            <figure class="ds-media-figure">
-              <div class="ds-media-image" data-aspect="4/3" data-zoomable="true">
-                <img src="operator/outcome/kpi-overview.png" alt="KPI definition" loading="lazy" />
-              </div>
-              <figcaption class="ds-media-figure__caption" data-lang-aware>
-                <span data-lang-content="en">KPI (Key Performance Indicator)</span>
-                <span data-lang-content="ko">KPI (Key Performance Indicator)</span>
-              </figcaption>
-            </figure>
-            <div class="context-block__text">
-              <p class="ds-research-finding__paragraph" data-lang-content="en">
-                A 5-person test can't prove business impact. Instead,<br>we defined the KPIs this system should be measured<br>by if deployed across user behavior and business performance.
-              </p>
-              <p class="ds-research-finding__paragraph ds-kr" data-lang-content="ko">
-                참가자 5명의 테스트만으로 비즈니스 성과를 주장할 수는 없습니다.<br>대신 이 시스템이 실제 배포된다면 무엇을 측정해야 하는지,<br>사용자 행동과 비즈니스 성과 양쪽에서 KPI를 정의했습니다.
-              </p>
-            </div>
-          </div>
-
-          <!-- KPI definition cards — replaced the former USER / BUSINESS / KPI RESULT
-               trio. The old KPI RESULT numbers (10% / 40% / 15%) were unmeasured
-               claims for a concept project, so the frame is now "what we'd measure". -->
-          <div class="impact-grid impact-grid--kpi-def">
-            <article class="impact-card impact-card--user" data-lang-aware>
-              <p class="impact-card__title">USER KPIs</p>
-              <ul class="impact-card__list kpi-list" data-lang-aware>
-                <li>
-                  <span data-lang-content="ko"><strong>판단 소요 시간 ↓</strong><br>상황 인지부터 조작 완료까지의 시간. 의사결정 흐름의 효율 지표</span>
-                  <span data-lang-content="en"><strong>Time to make an adjustment ↓</strong><br>From context recognition to action<br>efficiency of the decision flow</span>
-                </li>
-                <li>
-                  <span data-lang-content="ko"><strong>추천 수용률 ↑</strong><br>전체 추천 중 실제 실행된 비율. AI 판단에 대한 신뢰의 직접 지표</span>
-                  <span data-lang-content="en"><strong>Adoption rate of recommendations ↑</strong><br>Executed ÷ total recommendations<br>the direct measure of trust in AI judgment</span>
-                </li>
-                <li>
-                  <span data-lang-content="ko"><strong>반복 조작 감소 ↓</strong><br>안정 상태 도달까지의 재조정 횟수.<br>기준 제공이 불안을 줄였는지의 지표</span>
-                  <span data-lang-content="en"><strong>Reduction in trial-and-error ↓</strong><br>Repeated adjustments before reaching a stable state</span>
-                </li>
-              </ul>
-            </article>
-
-            <article class="impact-card impact-card--business" data-lang-aware>
-              <p class="impact-card__title">BUSINESS KPIs</p>
-              <ul class="impact-card__list kpi-list" data-lang-aware>
-                <li>
-                  <span data-lang-content="ko"><strong>매장당 에너지 비용 ↓</strong><br>기준선 대비 총 에너지 비용. 비용 최적화의 핵심 지표</span>
-                  <span data-lang-content="en"><strong>Energy cost per store ↓</strong><br>Total energy cost vs baseline<br>the core cost-optimization metric</span>
-                </li>
-                <li>
-                  <span data-lang-content="ko"><strong>피크 수요 감소 ↓</strong><br>피크 시간대 최대 부하. 도입 전후 비교</span>
-                  <span data-lang-content="en"><strong>Peak demand reduction ↓</strong><br>Max load during peak hours, before vs after</span>
-                </li>
-                <li>
-                  <span data-lang-content="ko"><strong>리텐션 ↑</strong><br>재방문 활성 사용자 비율. 장기 유용성 지표</span>
-                  <span data-lang-content="en"><strong>User retention rate ↑</strong><br>Returning active users<br>the long-term usefulness metric</span>
-                </li>
-              </ul>
-            </article>
-          </div>
-
-          <!-- Which KPI comes first, and why -->
-          <div class="insight-callout">
-            <p class="insight-callout__body" data-lang-aware>
-              <span data-lang-content="ko">이 중 가장 먼저 확인할 지표는 <strong>추천 수용률</strong>입니다.<br>사용자가 AI의 제안을 실제로 따르는가 — 이것이 '판단을 대신해주는 시스템'이라는<br>이 제품의 가설을 검증하는 첫 번째 증거이기 때문입니다.</span>
-              <span data-lang-content="en">The first metric to watch is <strong>adoption rate</strong> — whether users actually follow<br>the AI's suggestions is the first proof of a system built to judge on their behalf.</span>
+      <!-- ===== 6-2 — Iteration (Figma 34:348) ===== -->
+      <div class="op-step" data-lang-aware>
+        <article class="op-step__card">
+          <header class="op-step__head">
+            <p class="op-step__num">6-2</p>
+            <p class="op-step__label">
+              <span data-lang-content="en">Iteration</span>
+              <span data-lang-content="ko">개선</span>
+            </p>
+          </header>
+          <h2 class="op-step__title">
+            <span data-lang-content="en">We introduced guided onboarding<br>to help first-time users understand<br>and set up a new way to manage HVAC</span>
+            <span data-lang-content="ko">처음 쓰는 사용자도 새로운 냉난방 관리 방식을<br>이해하고 설정할 수 있도록<br>가이드 온보딩을 도입했습니다</span>
+          </h2>
+          <h3 class="op-step__part">
+            <span class="op-step__part-num">01</span>
+            <span class="op-step__part-title">
+              <span data-lang-content="en">The Problem</span>
+              <span data-lang-content="ko">문제</span>
+            </span>
+          </h3>
+          <div class="op-step__box op-step__box--note">
+            <p class="op-step__box-body op-step__box-body--strong">
+              <span data-lang-content="en">First-time users struggled to understand how the AI-assisted HVAC model worked and how to get started</span>
+              <span data-lang-content="ko">처음 사용하는 사용자는 AI가 돕는 냉난방 방식이 어떻게 작동하는지, 어떻게 시작해야 하는지 이해하기 어려워했습니다</span>
             </p>
           </div>
+          <h3 class="op-step__part">
+            <span class="op-step__part-num">02</span>
+            <span class="op-step__part-title">
+              <span data-lang-content="en">The Solution</span>
+              <span data-lang-content="ko">해결</span>
+            </span>
+          </h3>
+          <div class="op-step__feature">
+            <video class="op-step__feature-media" src="operator/outcome/onboarding.mp4" autoplay muted loop playsinline aria-label="Guided onboarding flow"></video>
+            <div class="op-step__feature-text">
+              <p class="op-step__statement">
+                <span data-lang-content="en">GUIDED ONBOARDING<br>Making an unfamiliar model easier to understand</span>
+                <span data-lang-content="ko">가이드 온보딩<br>낯선 방식을 더 쉽게 이해하도록</span>
+              </p>
+              <p class="op-step__lead">
+                <span data-lang-content="en">We designed an onboarding experience that introduces the product&#39;s operating model and explains how AI uses cost and comfort to recommend HVAC adjustments.<br><br>By helping users understand the system before interacting with it, onboarding provides a clearer path to the first recommendation.</span>
+                <span data-lang-content="ko">제품의 운영 방식을 소개하고, AI가 비용과 쾌적도를 바탕으로 냉난방 조절을 어떻게 추천하는지 설명하는 온보딩을 설계했습니다.<br><br>사용자가 직접 조작하기 전에 시스템을 먼저 이해하도록 도와, 첫 추천까지 더 분명한 길을 만들었습니다.</span>
+              </p>
+              <p class="op-step__statement op-step__statement--far">
+                <span data-lang-content="en">Outcomes</span>
+                <span data-lang-content="ko">결과</span>
+              </p>
+              <ul class="op-step__bullets">
+                <li>
+                  <span data-lang-content="en">Introduced the AI-assisted HVAC operating model</span>
+                  <span data-lang-content="ko">AI가 돕는 냉난방 운영 방식을 소개했습니다</span>
+                </li>
+                <li>
+                  <span data-lang-content="en">Clarified how cost and comfort inform AI recommendations</span>
+                  <span data-lang-content="ko">비용과 쾌적도가 AI 추천에 어떻게 반영되는지 명확히 했습니다</span>
+                </li>
+              </ul>
+            </div>
+          </div>
         </article>
-
       </div>
     </section>
 
-    <!-- ====================  06 — REFLECTION  ==================== -->
+    <!-- ====================  7 — REFLECTION (Figma 36:393)  ==================== -->
     <section id="reflection">
-      <div class="ds-container">
-
-        <header class="ds-section-header" data-lang-aware>
-          <p class="ds-section-header__eyebrow">[ 06 — REFLECTION ]</p>
-        </header>
-
-        <article class="ds-research-finding ds-research-finding--align-left">
-          <h2 class="ds-h2" data-lang-content="en">I had lived this problem —<br>so I solved it with validation, not conviction</h2>
-          <h2 class="ds-h2 ds-kr" data-lang-content="ko">직접 겪은 문제였기에,<br>확신 대신 검증으로 풀었습니다</h2>
-
-          <div class="reflection-list">
-
-            <div class="reflection-item" data-lang-aware>
-              <p class="reflection-item__counter">01</p>
-              <h3 class="reflection-item__title">
-                <span data-lang-content="ko">운영자였던 경험은 출발점이었지만, 근거는 아니었습니다</span>
-                <span data-lang-content="en">Being an operator was a starting point, not evidence</span>
-              </h3>
-              <p class="reflection-item__body">
-                <span data-lang-content="ko">매장을 운영하며 직접 겪은 문제라 문제 정의는 빨랐습니다. 하지만 내 경험을 근거로 쓰는 대신 가설로 두고, 커뮤니티 데이터·인터뷰·요금구조 분석으로 검증했습니다. 개인 경험은 방향을 주지만, 그것을 일반화하지 않는 것이 더 중요했습니다.</span>
-                <span data-lang-content="en">Having run a store, I defined the problem fast. But I treated my experience as a hypothesis, validating it with community data, interviews, and pricing-structure analysis. Personal experience gives direction; not generalizing it mattered more.</span>
-              </p>
-            </div>
-
-            <div class="reflection-item" data-lang-aware>
-              <p class="reflection-item__counter">02</p>
-              <h3 class="reflection-item__title">
-                <span data-lang-content="ko">직접 계산해보니 처음 방향이 틀렸고, 그래서 바꿀 수 있었습니다</span>
-                <span data-lang-content="en">Calculating it myself proved the first direction wrong — and that's why I could change it</span>
-              </h3>
-              <p class="reflection-item__body">
-                <span data-lang-content="ko">요금구조만 활용하면 될 것이라는 가설을 시나리오로 직접 계산해 확인했습니다. 절감 효과는 작았고 쾌적 기준과 충돌했습니다. 이 반증 덕분에 비용 1축이 아닌 비용·쾌적 2축 판단으로 방향을 바꿀 수 있었습니다. 검증은 아이디어를 버리게 하는 것이 아니라, 더 나은 방향을 줍니다.</span>
-                <span data-lang-content="en">I tested the 'pricing structure alone' hypothesis with scenario calculations. Savings were small and clashed with comfort. That refutation enabled the shift from a single cost axis to judging cost and comfort together. Validation doesn't kill ideas — it gives better directions.</span>
-              </p>
-            </div>
-
-            <div class="reflection-item" data-lang-aware>
-              <p class="reflection-item__counter">03</p>
-              <h3 class="reflection-item__title">
-                <span data-lang-content="ko">성과를 주장할 수 없을 때, 측정을 설계하는 것도 디자이너의 일이었습니다</span>
-                <span data-lang-content="en">When you can't claim outcomes, designing the measurement is also the designer's job</span>
-              </h3>
-              <p class="reflection-item__body">
-                <span data-lang-content="ko">컨셉 프로젝트라 비즈니스 성과를 증명할 수는 없었습니다. 대신 무엇으로 성공을 판단할지 KPI를 정의했고, 그 첫 번째가 추천 수용률입니다. 숫자를 만들 수 없다면, 숫자를 잴 방법을 만드는 것이 정직한 결론이라고 생각했습니다.</span>
-                <span data-lang-content="en">As a concept project, business impact couldn't be proven. So I defined the KPIs success should be judged by — starting with adoption rate. If you can't produce the number, building the way to measure it is the honest conclusion.</span>
-              </p>
-            </div>
-
+      <div class="op-step" data-lang-aware>
+        <article class="op-step__card">
+          <header class="op-step__head">
+            <p class="op-step__num">7</p>
+            <p class="op-step__label">
+              <span data-lang-content="en">Reflection</span>
+              <span data-lang-content="ko">회고</span>
+            </p>
+          </header>
+          <h3 class="op-step__part">
+            <span class="op-step__part-num">01</span>
+            <span class="op-step__part-title op-step__part-title--sans">
+              <span data-lang-content="en">Experience Is a Starting Point, Not Evidence</span>
+              <span data-lang-content="ko">경험은 근거가 아니라 출발점입니다</span>
+            </span>
+          </h3>
+          <div class="op-step__box op-step__box--note">
+            <p class="op-step__box-body">
+              <span data-lang-content="en">Having run a store, I could identify the problem quickly. But I treated my experience as a hypothesis, validating it through community research, interviews, and pricing-structure analysis.</span>
+              <span data-lang-content="ko">매장을 직접 운영해본 덕분에 문제를 빠르게 찾을 수 있었습니다. 하지만 내 경험을 가설로 두고, 커뮤니티 리서치·인터뷰·요금 구조 분석으로 검증했습니다.</span>
+            </p>
+            <p class="op-step__takeaway">
+              <span data-lang-content="en">Personal experience gives direction, but research determines what can be generalized.</span>
+              <span data-lang-content="ko">개인 경험은 방향을 주지만, 무엇을 일반화할 수 있는지는 리서치가 정합니다.</span>
+            </p>
           </div>
-
-          <!-- Scope limitation — keeps the research claims bounded -->
-          <p class="reflection-limitation" data-lang-aware>
-            <span data-lang-content="ko">이번 리서치는 인터뷰 5인, 사용성 테스트 5인의 탐색적 결과로, 발견된 패턴을 시장 전체로 일반화하지 않았습니다.</span>
-            <span data-lang-content="en">This research is exploratory — 5 interviews and a 5-person usability test. We did not generalize the patterns to the whole market.</span>
-          </p>
+          <h3 class="op-step__part">
+            <span class="op-step__part-num">02</span>
+            <span class="op-step__part-title op-step__part-title--sans">
+              <span data-lang-content="en">Validation Changed the Direction</span>
+              <span data-lang-content="ko">검증이 방향을 바꿨습니다</span>
+            </span>
+          </h3>
+          <div class="op-step__box op-step__box--note">
+            <p class="op-step__box-body">
+              <span data-lang-content="en">I tested whether pricing structure alone could guide cost-saving decisions. Scenario calculations showed that savings were limited and often conflicted with comfort, leading me to shift toward evaluating both cost and comfort together.</span>
+              <span data-lang-content="ko">요금 구조만으로 비용 절감 판단을 이끌 수 있는지 시나리오로 직접 계산해 확인했습니다. 절감 효과는 제한적이었고 쾌적도와 자주 충돌해, 비용과 쾌적도를 함께 판단하는 방향으로 전환했습니다.</span>
+            </p>
+            <p class="op-step__takeaway">
+              <span data-lang-content="en">Validation doesn&#39;t just confirm ideas. It helps uncover better directions.</span>
+              <span data-lang-content="ko">검증은 아이디어를 확인하는 데 그치지 않고, 더 나은 방향을 찾게 해줍니다.</span>
+            </p>
+          </div>
+          <h3 class="op-step__part">
+            <span class="op-step__part-num">03</span>
+            <span class="op-step__part-title op-step__part-title--sans">
+              <span data-lang-content="en">What Remains to Be Validated</span>
+              <span data-lang-content="ko">아직 검증이 남은 것</span>
+            </span>
+          </h3>
+          <div class="op-step__box op-step__box--note">
+            <p class="op-step__box-body">
+              <span data-lang-content="en">This was an exploratory project based on 5 interviews and a usability test with 5 participants. Due to scheduling constraints, I couldn&#39;t re-test the revised onboarding with the original participants, so its effectiveness remains unverified. In a future iteration, I would validate the revised experience and explore how AI recommendations could eventually extend to automated HVAC control within user-defined boundaries.</span>
+              <span data-lang-content="ko">인터뷰 5명과 사용성 테스트 5명을 바탕으로 한 탐색적 프로젝트였습니다. 일정상 개선한 온보딩을 기존 참가자와 다시 테스트하지 못해, 그 효과는 아직 검증되지 않았습니다. 다음 단계에서는 개선된 경험을 검증하고, AI 추천이 사용자가 정한 범위 안에서 냉난방 자동 제어로 확장될 수 있는지 탐색하려 합니다.</span>
+            </p>
+            <p class="op-step__takeaway">
+              <span data-lang-content="en">A clear design direction is only the beginning; its impact still needs to be validated.</span>
+              <span data-lang-content="ko">명확한 디자인 방향은 시작일 뿐, 그 효과는 여전히 검증이 필요합니다.</span>
+            </p>
+          </div>
         </article>
-
       </div>
     </section>
 
