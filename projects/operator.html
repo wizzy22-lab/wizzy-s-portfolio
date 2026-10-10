@@ -638,10 +638,10 @@
        `.spec-card` (style.css there), so the case studies share one rhythm:
        the page gutter either side (a 1200 card at 1920), 48 inside easing
        to 24, 32 corners, 64/80 between sheets in a section, and the
-       section's own 72/96/120 above and below. Inside the card, Figma. */
-    #overview, #research, #problem, #approach, #features, #outcome, #reflection { padding-block: 72px; }
-    @media (min-width: 768px) { #overview, #research, #problem, #approach, #features, #outcome, #reflection { padding-block: 96px; } }
-    @media (min-width: 992px) { #overview, #research, #problem, #approach, #features, #outcome, #reflection { padding-block: 120px; } }
+       section's own 64/80 above and below — the same as the card gap, so
+       sections sit exactly twice as far apart as cards. Inside the card, Figma. */
+    #overview, #research, #problem, #approach, #features, #outcome, #reflection { padding-block: 64px; }
+    @media (min-width: 1360px) { #overview, #research, #problem, #approach, #features, #outcome, #reflection { padding-block: 80px; } }
     .op-step {
       width: 100%;
       max-width: 1920px;
