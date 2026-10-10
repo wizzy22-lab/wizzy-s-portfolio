@@ -705,6 +705,22 @@
       border-radius: 16px;
       background: #fafafa;
     }
+    /* the box a step lands on (2-1 Observation): the chosen ring of 1-2.
+       While armed it sits like any box, and turns orange once it is well in
+       view; without the script (or with reduced motion) it shows orange. */
+    .op-step__box--key {
+      border-color: #ff8c42;
+      background: #fff;
+      box-shadow: 0 0 0 1px #ff8c42;
+    }
+    .op-step__box--key.is-lit {   /* only the turn to orange animates, not the arming */
+      transition: border-color 0.6s 0.2s ease, background-color 0.6s 0.2s ease, box-shadow 0.6s 0.2s ease;
+    }
+    .op-step__box--key.is-armed:not(.is-lit) {
+      border-color: #f5f5f5;
+      background: #fafafa;
+      box-shadow: 0 0 0 1px transparent;
+    }
     .op-step__box-title {
       color: #000;
       font-size: 20px;
@@ -948,6 +964,18 @@
       border: 1px solid #f5f5f5;
       border-radius: 16px;
       background: #fafafa;
+    }
+    /* 2-1 — the four patterns arrive one after another, once, when the
+       grid comes into view. The script arms the hidden start only when it
+       will play, so without it (or with reduced motion) all four show. */
+    .op-step__cells.is-armed > .op-step__cell { opacity: 0; }
+    .op-step__cells.is-played > .op-step__cell { animation: op-cell-in 0.5s ease-out both; }
+    .op-step__cells.is-played > .op-step__cell:nth-child(2) { animation-delay: 0.15s; }
+    .op-step__cells.is-played > .op-step__cell:nth-child(3) { animation-delay: 0.3s; }
+    .op-step__cells.is-played > .op-step__cell:nth-child(4) { animation-delay: 0.45s; }
+    @keyframes op-cell-in {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: none; }
     }
     .op-step__cell-title {
       text-wrap: balance;                 /* cells are 258 at 1920, not Figma's 317, so no hand breaks */
@@ -1976,7 +2004,7 @@
             <span data-lang-content="en">Analyzing community data revealed recurring patterns.</span>
             <span data-lang-content="ko">자영업자 커뮤니티 데이터를 분석한 결과 다음과 같은 패턴이 반복적으로 나타났습니다.</span>
           </p>
-          <ul class="op-step__cells">
+          <ul class="op-step__cells" data-stagger>
             <li class="op-step__cell">
               <h4 class="op-step__cell-title">
                 <span data-lang-content="en">1. Repeated adjustments from missing criteria</span>
@@ -2026,7 +2054,7 @@
                 <span data-lang-content="ko">관찰</span>
             </span>
           </h3>
-          <div class="op-step__box">
+          <div class="op-step__box op-step__box--key">
             <h4 class="op-step__box-title">
               <span data-lang-content="en">Small business owners adjusted HVAC throughout the day as store conditions changed.</span>
               <span data-lang-content="ko">자영업자들은 매장 상황이 바뀔 때마다 하루 종일 냉난방을 조절하고 있었습니다.</span>
@@ -3473,6 +3501,30 @@
     (function () {
       const tiles = document.querySelector('[data-pick]');
       if (holdStep(tiles, (picked) => tiles.classList.toggle('is-picked', picked))) tiles.classList.add('is-armed');
+    })();
+
+    // ===== 2-1 — the four patterns arrive one after another, once =====
+    (function () {
+      const cells = document.querySelector('[data-stagger]');
+      if (!cells || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      cells.classList.add('is-armed');
+      new IntersectionObserver((entries, io) => {
+        if (!entries[0].isIntersecting) return;
+        cells.classList.add('is-played');
+        io.disconnect();
+      }, { threshold: 0.3 }).observe(cells);
+    })();
+
+    // ===== 2-1 — the Observation box turns orange once it is well in view =====
+    (function () {
+      const key = document.querySelector('.op-step__box--key');
+      if (!key || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      key.classList.add('is-armed');
+      new IntersectionObserver((entries, io) => {
+        if (!entries[0].isIntersecting) return;
+        key.classList.add('is-lit');
+        io.disconnect();
+      }, { threshold: 1, rootMargin: '0px 0px -15% 0px' }).observe(key);
     })();
 
     // ===== 4-1 — Before → After plays once on arrival =====
