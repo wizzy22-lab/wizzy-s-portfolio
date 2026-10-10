@@ -94,6 +94,20 @@
     @media (min-width: 48rem) { :root { --page-gutter: 64px; } }
     @media (min-width: 80rem) { :root { --page-gutter: 180px; } }
     @media (min-width: 96rem) { :root { --page-gutter: 360px; } }
+    /* Spacing inside a step card — one value per role, page-wide, so the
+       sections read as one system even where their Figma frames disagree.
+       head: runner (number + label) to the first line of content
+       s:    a heading (part, statement, decision, box/cell/tile title) to its own content
+       m:    body to a component and back, padding inside boxes, grid gaps
+       para: one blank line between paragraphs (16px x 1.6)
+       l:    anything to the next labelled sub-block (part, statement, decision, flow) */
+    :root {
+      --op-head: 32px;
+      --op-gap-s: 12px;
+      --op-gap-m: 24px;
+      --op-para: 25.6px;
+      --op-gap-l: 48px;
+    }
 
     .ds-container.ds-nav__inner,
     .ds-container.section-nav__wrap,
@@ -613,15 +627,6 @@
       transform: rotate(5.47deg);
     }
 
-    /* Section spacing — Section 10 spec */
-    main > section {
-      padding-block: var(--space-20);
-    }
-    @media (min-width: 1440px) {
-      main > section {
-        padding-block: var(--space-30);
-      }
-    }
 
     /* ===============================================================
        STEP CARDS — Figma "1-1/ Start point" (4:4) and the frames after it.
@@ -721,7 +726,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 8px 24px;
-      margin-top: 24px;
+      margin-top: var(--op-gap-s);
     }
     .op-step__term dt {
       color: #ff8c42;
@@ -739,7 +744,7 @@
     /* 1-2 Target (Figma 6:30) — a lead, three candidate tiles, then the
        decision and its reasoning. */
     .op-step__lead {
-      margin-top: 34px;
+      margin-top: var(--op-head);
       color: #6e7884;
       font-size: 16px;
       line-height: 1.6;
@@ -757,7 +762,7 @@
     }
     .op-step__tile {
       min-height: 260px;
-      padding: 19px;
+      padding: var(--op-gap-m);
       border: 1px solid #f5f5f5;
       border-radius: 16px;
       background: #fafafa;
@@ -773,7 +778,7 @@
       letter-spacing: -0.2px;
     }
     .op-step__tile-list {
-      margin-top: 8px;
+      margin-top: var(--op-gap-s);
       padding-left: 24px;
       list-style: disc;
       color: #6e7884;
@@ -781,7 +786,7 @@
       line-height: 1.5;
     }
     .op-step__decision {
-      margin-top: 24px;
+      margin-top: var(--op-gap-l);
       color: #000;
       font-size: 20px;
       font-weight: 800;
@@ -792,7 +797,7 @@
     /* 2-1 Secondary research (Figma 9:184) — a display title, then three
        numbered parts: data, patterns, observation. */
     .op-step__title {
-      margin-top: 34px;
+      margin-top: var(--op-head);
       text-wrap: balance;   /* the card is 1104 inside at 1920, not Figma's 1342 */
       color: #000;
       font-size: clamp(28px, 3.3vw, 48px);  /* SSP's .spec-card__title scale */
@@ -829,8 +834,8 @@
     }
     .op-step__part + .op-step__lead,
     .op-step__part + .op-step__figs,
-    .op-step__part + .op-step__box,
-    .op-step__lead + .op-step__cells { margin-top: 12px; }
+    .op-step__part + .op-step__box { margin-top: var(--op-gap-s); }
+    .op-step__lead + .op-step__cells { margin-top: var(--op-gap-m); }
     .op-step__figs {
       display: grid;
       grid-template-columns: minmax(0, 1fr);
@@ -871,7 +876,7 @@
       .op-step__cells { grid-template-columns: repeat(4, minmax(0, 1fr)); }
     }
     .op-step__cell {
-      padding: 20px;
+      padding: var(--op-gap-m);
       border: 1px solid #f5f5f5;
       border-radius: 16px;
       background: #fafafa;
@@ -893,7 +898,7 @@
 
     /* 2-2 Primary research (Figma 10:239) — adds a media + text row, a
        wider figure ratio, and three finding cells. */
-    .op-step__title + .op-step__part { margin-top: 36px; }
+    .op-step__title + .op-step__part { margin-top: var(--op-gap-l); }
     .op-step__media-row {
       display: grid;
       grid-template-columns: minmax(0, 1fr);
@@ -905,6 +910,7 @@
     }
     .op-step__part + .op-step__media-row { margin-top: 12px; }
     .op-step__media-row .op-step__lead { margin-top: 0; }
+    .op-step__aside > .op-step__statement + .op-step__lead { margin-top: var(--op-gap-s); }
     .op-step__fig--interview img { aspect-ratio: 653 / 408; }
     .op-step__figs--wide img { aspect-ratio: 634 / 356.63; }
     .op-step__figs + .op-step__lead { margin-top: 24px; }
@@ -921,7 +927,6 @@
     @container op-card (min-width: 900px) {
       .op-step__cells--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
-    .op-step__cells--3 .op-step__cell-body { margin-top: 24px; }
 
     /* 2-3 Context research (Figma 12:337) — image beside a statement and
        its reading, and an insight box that carries the cost/comfort scale. */
@@ -1111,7 +1116,7 @@
       display: grid;
       grid-template-columns: minmax(0, 1fr);
       gap: 24px;
-      margin-top: 76px;
+      margin-top: var(--op-gap-l);
       list-style: none;
     }
     @container op-card (min-width: 900px) {
@@ -1138,7 +1143,6 @@
     /* 4-3 Ideal process (Figma 20:496) — two image pairs at the original
        files' 16:10, then the MVP feature set as a row of chips. */
     .op-step__figs--ideal img { aspect-ratio: 528 / 330; }
-    .op-step__lead + .op-step__part--near { margin-top: 24px; }   /* Figma: intro sits closer than the later leads */
     .op-step__fig--edged img { outline: 1px solid #f5f5f5; outline-offset: -1px; }
     .op-step__chips {
       display: flex;
@@ -1148,7 +1152,7 @@
       list-style: none;
     }
     .op-step__chip {
-      padding: 20px;
+      padding: var(--op-gap-m);
       border: 1px solid #f5f5f5;
       border-radius: 16px;
       background: #fafafa;
@@ -1234,10 +1238,11 @@
       .op-step__figs--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
     .op-step__lead + .op-step__figs { margin-top: 24px; }
+    .op-step__media-row + .op-step__lead { margin-top: var(--op-gap-m); }
 
     /* 5-1 to 5-3 Key features (Figma 31:232) — the feature's recording
        beside what it does, its outcome, and the MVP features it ships. */
-    .op-step__head + .op-step__part { margin-top: 34px; }
+    .op-step__head + .op-step__part { margin-top: var(--op-head); }
     .op-step__feature {
       display: grid;
       grid-template-columns: minmax(0, 1fr);
@@ -1264,8 +1269,8 @@
     }
     .op-step__feature-text { display: flex; flex-direction: column; }
     .op-step__feature-text > .op-step__lead { margin-top: 12px; }
-    .op-step__feature-text > .op-step__lead + .op-step__statement { margin-top: 24px; }
-    .op-step__feature-text > .op-step__statement--outcome + .op-step__lead { margin-top: 0; }   /* Figma: the outcome line sits right under its label */
+    .op-step__feature-text > .op-step__lead + .op-step__statement { margin-top: var(--op-gap-l); }
+    .op-step__feature-text > .op-step__statement + .op-step__lead { margin-top: var(--op-gap-s); }
     .op-step__chips--stack {
       flex-direction: column;
       align-items: flex-start;
@@ -1294,8 +1299,8 @@
       font-size: 16px;
       line-height: 1.6;
     }
-    .op-step__aside > .op-step__statement + .op-step__steps { margin-top: 8px; }
-    .op-step__aside > .op-step__steps + .op-step__fig { margin-top: 40px; }
+    .op-step__aside > .op-step__statement + .op-step__steps { margin-top: var(--op-gap-s); }
+    .op-step__aside > .op-step__steps + .op-step__fig { margin-top: var(--op-gap-m); }
     .op-step__boxes--2 {
       display: grid;
       grid-template-columns: minmax(0, 1fr);
@@ -1329,33 +1334,8 @@
       line-height: 1.2;
     }
     .op-step__part-title--sans { font-family: inherit; }   /* Figma sets 7's in Manrope */
-    .op-step__feature-text > .op-step__lead + .op-step__statement--far { margin-top: 48px; }
     .op-step__feature-text > .op-step__statement + .op-step__bullets { margin-top: 12px; }
 
-    /* Approach / Define / Ideate / Outcome — flex column with explicit
-       vertical gap between cards (cards have varying max-widths and
-       margin-inline:auto for centering; flex parent ensures separation). */
-    #research .ds-container,
-    #approach .ds-container,
-    #define .ds-container,
-    #ideate .ds-container,
-    #reflection .ds-container,
-    #outcome .ds-container {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-20);
-      align-items: center;
-    }
-    @media (max-width: 767px) {
-      #research .ds-container,
-      #approach .ds-container,
-      #define .ds-container,
-      #ideate .ds-container,
-      #reflection .ds-container,
-      #outcome .ds-container {
-        gap: var(--space-10);
-      }
-    }
     /* Section header occupies full container width (don't constrain) */
     #research .ds-section-header,
     #approach .ds-section-header,
@@ -2514,7 +2494,7 @@
             <span data-lang-content="en">Interview findings pointed to cost as a major concern, leading us to examine the pricing structure behind the bill.</span>
             <span data-lang-content="ko">인터뷰에서 비용이 가장 큰 걱정거리로 드러나, 고지서 뒤에 있는 요금 구조를 살펴봤습니다.</span>
           </p>
-          <h3 class="op-step__part op-step__part--near">
+          <h3 class="op-step__part">
             <span class="op-step__part-num">01</span>
             <span class="op-step__part-title">
               <span data-lang-content="en">Feature Definition</span>
