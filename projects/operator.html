@@ -741,20 +741,21 @@
       line-height: 1.6;
     }
 
-    /* 1-1 — the screen holds while the box turns from the problem into the
-       question, so each can be read. The card sticks under the nav for one
-       screen of scroll (--room, a spacer after it): the first half shows the
-       problem, the second the question, then the page moves on. The two
-       boxes share one grid cell with the same frame, so only the content
-       changes: the question fades in over the problem, which stays beneath
-       until it is covered. The script adds .is-swap, and .is-pinned only
-       when the card fits on screen; without it, or with reduced motion, the
-       boxes simply list. */
-    .op-step--start.is-pinned::after { content: ''; display: block; height: var(--room, 0px); }
-    .op-step--start.is-pinned .op-step__card {
+    /* Held steps (1-1, 1-2) — the screen holds while the card changes, so
+       each state can be read. The card sticks for one screen of scroll
+       (--room, a spacer after it): under the nav when it fits, otherwise
+       with its foot on the screen's foot (--stick, set by the script). The
+       first half shows the before, the second the after, then the page
+       moves on. Without the script, or with reduced motion, nothing holds. */
+    .op-step.is-pinned::after { content: ''; display: block; height: var(--room, 0px); }
+    .op-step.is-pinned .op-step__card {
       position: sticky;
-      top: calc(var(--nav-offset) + 24px);
+      top: var(--stick, calc(var(--nav-offset) + 24px));
     }
+    /* 1-1 — the box turns from the problem into the question. The two boxes
+       share one grid cell with the same frame, so only the content changes:
+       the question fades in over the problem, which stays beneath until it
+       is covered. Without .is-swap the boxes simply list. */
     .op-step__boxes.is-swap { display: grid; }
     .op-step__boxes.is-swap > .op-step__box { grid-area: 1 / 1; }
     .op-step__boxes.is-swap > .op-step__box + .op-step__box {
@@ -804,6 +805,37 @@
       background: #fafafa;
     }
     .op-step__tile-icon { display: block; }
+    /* 1-2 — the chosen candidate. Shown chosen by default; while the script
+       holds the card (.is-armed) the three start equal, to be compared, and
+       the choice lands at the hold's midpoint (.is-picked). */
+    .op-step__tile { position: relative; transition: opacity 0.45s ease, background-color 0.45s ease, border-color 0.45s ease, box-shadow 0.45s ease; }
+    .op-step__tiles[data-pick] > .op-step__tile:not(.op-step__tile--pick) { opacity: 0.4; }
+    .op-step__tile--pick {
+      border-color: #ff8c42;
+      background: #fff;
+      box-shadow: 0 0 0 1px #ff8c42;                   /* a 2px ring without moving the content */
+    }
+    .op-step__tile-badge {
+      position: absolute;
+      top: var(--op-gap-m);
+      right: var(--op-gap-m);
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: #ff8c42;
+      color: #000;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.4;
+      text-transform: uppercase;
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+    .op-step__tiles.is-armed:not(.is-picked) > .op-step__tile { opacity: 1; }
+    .op-step__tiles.is-armed:not(.is-picked) > .op-step__tile--pick {
+      border-color: #f5f5f5;
+      background: #fafafa;
+      box-shadow: none;
+    }
+    .op-step__tiles.is-armed:not(.is-picked) .op-step__tile-badge { opacity: 0; transform: translateY(-4px); }
     .op-step__tile-title {
       margin-top: 12px;
       color: #000;
@@ -1795,7 +1827,7 @@
             <span data-lang-content="en">To choose a target, I compared three candidates by cost impact and whether the problem is already solved today.</span>
             <span data-lang-content="ko">타겟 선정을 위해 비용 영향과 현재 해결 여부를 기준으로 세 가지 후보를 비교했습니다.</span>
           </p>
-          <ul class="op-step__tiles">
+          <ul class="op-step__tiles" data-pick>
             <li class="op-step__tile">
               <img class="op-step__tile-icon" src="operator/overview/icon-household.svg" width="48" height="48" alt="" />
               <h4 class="op-step__tile-title">
@@ -1842,7 +1874,11 @@
                 </li>
               </ul>
             </li>
-            <li class="op-step__tile">
+            <li class="op-step__tile op-step__tile--pick">
+              <span class="op-step__tile-badge">
+                <span data-lang-content="en">Selected</span>
+                <span data-lang-content="ko">선택</span>
+              </span>
               <img class="op-step__tile-icon" src="operator/overview/icon-store.svg" width="48" height="48" alt="" />
               <h4 class="op-step__tile-title">
                 <span data-lang-content="en">Small business stores</span>
@@ -3393,44 +3429,50 @@
       }).observe(scale);
     })();
 
-    // ===== 1-1 — the screen holds while the problem turns into the question =====
-    (function () {
-      const boxes = document.querySelector('[data-swap]');
-      if (!boxes || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      const step = boxes.closest('.op-step');
-      const card = boxes.closest('.op-step__card');
+    // ===== Held steps — the screen holds for one screen of scroll while the
+    // card turns from its before to its after at the midpoint, and back on
+    // the way up. The card sticks under the nav when it fits, otherwise
+    // with its foot on the screen's foot, so what changes stays in view.
+    const holdStep = (el, onTurn) => {
+      if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const step = el.closest('.op-step');
+      const card = el.closest('.op-step__card');
+      const navTop = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-offset')) + 24;
       let room = 0;
       let queued = false;
 
-      // Hold only when the whole card fits under the nav; a taller card
-      // (narrow screens) just turns as it passes, without holding.
       const measure = () => {
-        step.classList.add('is-pinned');
-        const stickAt = parseFloat(getComputedStyle(card).top);
-        const fits = card.offsetHeight <= window.innerHeight - stickAt - 24;
-        step.classList.toggle('is-pinned', fits);
-        room = fits ? window.innerHeight : 0;
+        const stick = Math.min(navTop, window.innerHeight - card.offsetHeight - 24);
+        room = window.innerHeight;
+        step.style.setProperty('--stick', stick + 'px');
         step.style.setProperty('--room', room + 'px');
+        step.classList.add('is-pinned');
         update();
       };
       const update = () => {
         queued = false;
-        let turned;
-        if (room) {
-          const stickAt = parseFloat(getComputedStyle(card).top);
-          turned = (stickAt - step.getBoundingClientRect().top) / room >= 0.5;
-        } else {
-          turned = boxes.getBoundingClientRect().top < window.innerHeight * 0.4;
-        }
-        boxes.classList.toggle('is-turned', turned);
+        const stick = parseFloat(step.style.getPropertyValue('--stick'));
+        onTurn((stick - step.getBoundingClientRect().top) / room >= 0.5);
       };
 
-      boxes.classList.add('is-swap');
       new ResizeObserver(measure).observe(card);     // width and language swaps
       window.addEventListener('resize', measure);    // the hold follows the viewport height
       window.addEventListener('scroll', () => {
         if (!queued) { queued = true; requestAnimationFrame(update); }
       }, { passive: true });
+      return true;
+    };
+
+    // 1-1 — the problem turns into the question
+    (function () {
+      const boxes = document.querySelector('[data-swap]');
+      if (holdStep(boxes, (turned) => boxes.classList.toggle('is-turned', turned))) boxes.classList.add('is-swap');
+    })();
+
+    // 1-2 — three candidates, compared, then the one chosen
+    (function () {
+      const tiles = document.querySelector('[data-pick]');
+      if (holdStep(tiles, (picked) => tiles.classList.toggle('is-picked', picked))) tiles.classList.add('is-armed');
     })();
 
     // ===== 4-1 — Before → After plays once on arrival =====
