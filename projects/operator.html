@@ -779,6 +779,13 @@
       font-weight: 800;
       line-height: 1.2;
     }
+    .op-step__box-eyebrow {   /* a small heading inside the box, above its title */
+      margin-bottom: 8px;
+      color: #6e7884;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
     .op-step__box-title em {
       font-style: normal;
       color: #ff8c42;
@@ -1477,7 +1484,7 @@
 
     /* 6-2 Iteration (Figma 34:348) and 7 Reflection (Figma 36:393) — plain
        note boxes: body first, then an optional bold takeaway. */
-    .op-step__box--note > .op-step__box-body:first-child { margin-top: 0; }
+    .op-step__box > .op-step__box-body:first-child { margin-top: 0; }
     .op-step__box-body--strong { color: #1e2225; }
     .op-step__takeaway {
       margin-top: 12px;
@@ -2159,10 +2166,10 @@
             </span>
           </h3>
           <div class="op-step__box op-step__box--key">
-            <h4 class="op-step__box-title">
+            <p class="op-step__box-body">
               <span data-lang-content="en">Small business owners repeatedly adjusted HVAC settings as store conditions changed, but lacked clear criteria for judging which settings were right.</span>
               <span data-lang-content="ko">자영업자들은 매장 상황에 따라 냉난방 설정을 반복적으로 조정했지만, 어떤 설정이 적절한지 판단할 명확한 기준은 부족했습니다.</span>
-            </h4>
+            </p>
           </div>
         </article>
       </div>
@@ -2198,8 +2205,8 @@
               </figcaption>
             </figure>
             <p class="op-step__lead">
-              <span data-lang-content="en">To see in what context the lack of decision criteria found in the community analysis shows up in real store operations, we interviewed 5 small business owners.<br><br>We explored when they adjust settings, what influences their decisions, and how they assess the outcome.</span>
-              <span data-lang-content="ko">커뮤니티 분석에서 발견한 판단 기준의 부재가 실제 매장 운영에서 어떤 맥락으로 나타나는지 확인하기 위해 자영업자 5명을 인터뷰했습니다.<br><br>언제 설정을 바꾸는지, 어떤 요인이 결정에 영향을 주는지, 조절 결과를 어떻게 판단하는지 살펴봤습니다.</span>
+              <span data-lang-content="en">To see in what context the lack of decision criteria found in the community analysis shows up in real store operations, we interviewed 5 small business owners.<br><br>We explored when they adjust settings, what influences their decisions,<br>and how they assess the outcome.</span>
+              <span data-lang-content="ko">커뮤니티 분석에서 발견한 판단 기준의 부재가 실제 매장 운영에서 어떤 맥락으로 나타나는지 확인하기 위해 자영업자 5명을 인터뷰했습니다.<br><br>언제 설정을 바꾸는지, 어떤 요인이 결정에 영향을 주는지,<br>조절 결과를 어떻게 판단하는지 살펴봤습니다.</span>
             </p>
           </div>
 
@@ -2227,8 +2234,8 @@
             </figure>
           </div>
           <p class="op-step__lead">
-            <span data-lang-content="en">Organizing the interviews through affinity mapping and thematic analysis showed that owners struggled to tell how much a settings change affected cost, and that while they responded differently to each store situation, they lacked clear criteria for deciding.<br><br>In short, users were adjusting their HVAC, but had little basis for judging whether those choices worked.</span>
-            <span data-lang-content="ko">인터뷰 내용을 어피니티 맵핑과 주제별 분석으로 정리한 결과, 설정을 바꿔도 비용이 얼마나 달라지는지 알기 어렵고, 매장 상황에 따라 다르게 대응하면서도 명확한 판단 기준이 부족하다는 점을 확인했습니다.<br><br>즉, 사용자는 냉난방을 조절하고 있었지만 그 선택이 효과적이었는지 판단할 근거는 부족했습니다.</span>
+            <span data-lang-content="en">Organizing the interviews through affinity mapping and thematic analysis showed that owners struggled to tell how much a settings change affected cost,<br>and that while they responded differently to each store situation, they lacked clear criteria for deciding.<br><br>In short, users were adjusting their HVAC, but had little basis for judging whether those choices worked.</span>
+            <span data-lang-content="ko">인터뷰 내용을 어피니티 맵핑과 주제별 분석으로 정리한 결과, 설정을 바꿔도 비용이 얼마나 달라지는지 알기 어렵고,<br>매장 상황에 따라 다르게 대응하면서도 명확한 판단 기준이 부족하다는 점을 확인했습니다.<br><br>즉, 사용자는 냉난방을 조절하고 있었지만 그 선택이 효과적이었는지 판단할 근거는 부족했습니다.</span>
           </p>
 
           <h3 class="op-step__part">
@@ -2241,32 +2248,32 @@
           <ul class="op-step__cells op-step__cells--3" data-stagger>
             <li class="op-step__cell">
               <h4 class="op-step__cell-title">
-                <span data-lang-content="en">1. They can't predict the outcome</span>
-                <span data-lang-content="ko">1. 결과를 예측할 수 없다</span>
+                <span data-lang-content="en">1. Hard to predict the outcome</span>
+                <span data-lang-content="ko">1. 결과를 예측하기 어렵다</span>
               </h4>
               <p class="op-step__cell-body">
-                <span data-lang-content="en">Even after adjusting the settings, they can’t tell how much the energy bill will change, leaving them unsure whether to adjust again</span>
-                <span data-lang-content="ko">설정을 바꿔도 전기요금이 얼마나 달라지는지 알 수 없어, 다시 조절해야 할지 확신하지 못한다</span>
+                <span data-lang-content="en">It's hard to know how much the electricity bill changes after a settings change, so they can't be sure of the result.</span>
+                <span data-lang-content="ko">설정을 바꿔도 전기요금이 얼마나 달라지는지 알기 어려워, 조절 결과를 확신하기 어렵다.</span>
               </p>
             </li>
             <li class="op-step__cell">
               <h4 class="op-step__cell-title">
-                <span data-lang-content="en">2. They adapt to each situation, but without clear criteria</span>
-                <span data-lang-content="ko">2. 상황마다 다르게 대응하지만, 명확한 기준은 없다</span>
+                <span data-lang-content="en">2. Torn between cost and comfort</span>
+                <span data-lang-content="ko">2. 비용과 쾌적도 사이의 고민</span>
               </h4>
               <p class="op-step__cell-body">
-                <span data-lang-content="en">They adjust differently when busy or quiet, yet they don't know which approach is right.</span>
-                <span data-lang-content="ko">바쁠 때와 한가할 때 다르게 조절하지만, 어떤 방식이 맞는지는 알지 못한다.</span>
+                <span data-lang-content="en">They want to cut HVAC costs, but turning settings down can make customers uncomfortable, so adjusting isn't easy.</span>
+                <span data-lang-content="ko">냉난방 비용을 줄이고 싶지만, 설정을 낮추면 고객이 불편해질 수 있어 쉽게 조절하기 어렵다.</span>
               </p>
             </li>
             <li class="op-step__cell">
               <h4 class="op-step__cell-title">
-                <span data-lang-content="en">3. They fall back on intuition</span>
-                <span data-lang-content="ko">3. 직관에 의존하게 된다</span>
+                <span data-lang-content="en">3. They adjust by intuition</span>
+                <span data-lang-content="ko">3. 직관에 의존해 조절한다</span>
               </h4>
               <p class="op-step__cell-body">
-                <span data-lang-content="en">In the end, they keep changing settings based on how the store feels or what worked in the past.</span>
-                <span data-lang-content="ko">결국 매장에서 느껴지는 체감이나 예전에 효과가 있었던 방식에 따라 계속 설정을 바꾸게 된다.</span>
+                <span data-lang-content="en">Without clear criteria, they adjust settings based on how the store feels or on past experience.</span>
+                <span data-lang-content="ko">명확한 판단 기준이 없어, 매장에서 느껴지는 체감이나 과거 경험을 바탕으로 설정을 조정한다.</span>
               </p>
             </li>
           </ul>
@@ -2279,13 +2286,17 @@
             </span>
           </h3>
           <div class="op-step__box op-step__box--key">
+            <p class="op-step__box-eyebrow">
+              <span data-lang-content="en">The owner's decision dilemma</span>
+              <span data-lang-content="ko">운영자의 의사결정 딜레마</span>
+            </p>
             <h4 class="op-step__box-title">
-              <span data-lang-content="en">With no immediate way to see the result, the next decision also relied on guesswork.</span>
-              <span data-lang-content="ko">조절 결과를 즉시 알 수 없어, 다음 판단도 추측에 의존했습니다.</span>
+              <span data-lang-content="en">Owners wanted to cut costs, but couldn&#39;t sacrifice customer comfort.</span>
+              <span data-lang-content="ko">비용을 줄이고 싶어도, 고객의 쾌적함을 희생할 수는 없었습니다.</span>
             </h4>
             <p class="op-step__box-body">
-              <span data-lang-content="en">Even after changing HVAC settings, the impact on cost can only be checked when the bill arrives a month later. As a result, users adjust again without knowing which settings actually work.</span>
-              <span data-lang-content="ko">냉난방 설정을 바꿔도 비용에 미치는 영향은 한 달 뒤 고지서가 와야 확인할 수 있습니다. 그 결과 사용자는 어떤 설정이 효과적인지 알기 어려운 상태에서 다시 조절하게 됩니다.</span>
+              <span data-lang-content="en">The interviews confirmed that owners&#39; HVAC decisions hinge not only on cost but also on customer comfort.</span>
+              <span data-lang-content="ko">인터뷰를 통해 운영자의 냉난방 결정에는 비용뿐 아니라 고객의 쾌적함도 중요하게 작용한다는 점을 확인했습니다.</span>
             </p>
           </div>
         </article>
@@ -2302,13 +2313,9 @@
             </p>
           </header>
           <h2 class="op-step__title">
-            <span data-lang-content="en">Cost savings alone could hardly guide HVAC decisions in a real store.</span>
-            <span data-lang-content="ko">비용 절감만으로는 실제 매장의 냉난방 판단을 이끌기 어려웠습니다.</span>
+            <span data-lang-content="en">To weigh cost and comfort together,<br>we first had to understand how HVAC costs are determined.</span>
+            <span data-lang-content="ko">비용과 쾌적도를 함께 고려하려면,<br>냉난방 비용이 결정되는 구조부터 이해해야 했습니다.</span>
           </h2>
-          <p class="op-step__lead">
-            <span data-lang-content="en">Interview findings pointed to cost as a major concern, leading us to examine the pricing structure behind the bill.</span>
-            <span data-lang-content="ko">인터뷰에서 비용이 가장 큰 걱정거리로 드러나, 고지서 뒤에 있는 요금 구조를 살펴봤습니다.</span>
-          </p>
 
           <h3 class="op-step__part">
             <span class="op-step__part-num">01</span>
@@ -2327,12 +2334,12 @@
             </figure>
             <div class="op-step__aside">
               <p class="op-step__statement">
-                <span data-lang-content="en">Energy costs are determined by multiple variables, including peak, mid-peak, and off-peak time slots, as well as progressive billing based on usage.</span>
-                <span data-lang-content="ko">에너지 비용은 피크·중간·경부하 시간대와 사용량에 따른 누진 과금 등 여러 변수로 결정됩니다.</span>
+                <span data-lang-content="en">Energy costs are determined by multiple variables, including peak, mid-peak, and off-peak time slots,<br>as well as progressive billing based on usage.</span>
+                <span data-lang-content="ko">에너지 비용은 피크·중간·경부하 시간대와<br>사용량에 따른 누진 과금 등 여러 변수로 결정됩니다.</span>
               </p>
               <p class="op-step__lead">
-                <span data-lang-content="en">For busy small business owners, understanding how these variables affect the final bill is difficult during daily operations.</span>
-                <span data-lang-content="ko">운영에 바쁜 자영업자가 이 변수들이 최종 요금에 어떤 영향을 주는지 매일 따져보기는 어렵습니다.</span>
+                <span data-lang-content="en">For busy small business owners, understanding how these variables affect the final bill<br>is difficult during daily operations.</span>
+                <span data-lang-content="ko">운영에 바쁜 자영업자가 이 변수들이 최종 요금에 어떤 영향을 주는지<br>매일 따져보기는 어렵습니다.</span>
               </p>
             </div>
           </div>
@@ -2382,12 +2389,12 @@
           <div class="op-step__box op-step__box--scale op-step__box--key">
             <div>
               <h4 class="op-step__box-title">
-                <span data-lang-content="en">HVAC management needed decision criteria that weigh cost and comfort together.</span>
-                <span data-lang-content="ko">냉난방 관리에는 비용과 쾌적도를 함께 고려하는 판단 기준이 필요했습니다.</span>
+                <span data-lang-content="en">HVAC management needed decision criteria<br>that weigh cost and comfort together.</span>
+                <span data-lang-content="ko">냉난방 관리에는 비용과 쾌적도를<br>함께 고려하는 판단 기준이 필요했습니다.</span>
               </h4>
               <p class="op-step__box-body">
-                <span data-lang-content="en">Minimizing cost alone could not fully reflect how a real store operates. Users needed help judging the balance between cost and comfort to fit their store's situation.</span>
-                <span data-lang-content="ko">비용만을 최소화하는 방식으로는 실제 매장의 운영 맥락을 충분히 반영하기 어려웠습니다. 사용자가 매장 상황에 맞춰 비용과 쾌적도 사이의 균형을 판단할 수 있도록 돕는 것이 필요했습니다.</span>
+                <span data-lang-content="en">Minimizing cost alone could not fully reflect how a real store operates.</span>
+                <span data-lang-content="ko">비용만을 최소화하는 방식으로는 실제 매장의 운영 맥락을 충분히 반영하기 어려웠습니다.</span>
               </p>
             </div>
             <div class="op-step__scale" aria-hidden="true" data-scale>
