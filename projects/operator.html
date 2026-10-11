@@ -705,7 +705,7 @@
       border-radius: 16px;
       background: #fafafa;
     }
-    /* the box a step lands on (2-1 Observation): the chosen ring of 1-2.
+    /* the box a step lands on (2-1 Observation, 2-2 Insight): the chosen ring of 1-2.
        While armed it sits like any box, and turns orange once it is well in
        view; without the script (or with reduced motion) it shows orange. */
     .op-step__box--key {
@@ -965,8 +965,8 @@
       border-radius: 16px;
       background: #fafafa;
     }
-    /* 2-1 — the four patterns arrive one after another, once, when the
-       grid comes into view. The script arms the hidden start only when it
+    /* 2-1, 2-2 — the patterns / findings arrive one after another, once,
+       when the grid comes into view. The script arms the hidden start only when it
        will play, so without it (or with reduced motion) all four show. */
     .op-step__cells.is-armed > .op-step__cell { opacity: 0; }
     .op-step__cells.is-played > .op-step__cell { animation: op-cell-in 0.5s ease-out both; }
@@ -2138,7 +2138,7 @@
               <span data-lang-content="ko">발견</span>
             </span>
           </h3>
-          <ul class="op-step__cells op-step__cells--3">
+          <ul class="op-step__cells op-step__cells--3" data-stagger>
             <li class="op-step__cell">
               <h4 class="op-step__cell-title">
                 <span data-lang-content="en">1. They can't predict the outcome</span>
@@ -2178,7 +2178,7 @@
               <span data-lang-content="ko">인사이트!</span>
             </span>
           </h3>
-          <div class="op-step__box">
+          <div class="op-step__box op-step__box--key">
             <h4 class="op-step__box-title">
               <span data-lang-content="en">Without immediate feedback, every adjustment becomes a guess.</span>
               <span data-lang-content="ko">즉각적인 피드백이 없어, 모든 조절이 추측이 됩니다.</span>
@@ -3503,28 +3503,25 @@
       if (holdStep(tiles, (picked) => tiles.classList.toggle('is-picked', picked))) tiles.classList.add('is-armed');
     })();
 
-    // ===== 2-1 — the four patterns arrive one after another, once =====
+    // ===== 2-1, 2-2 — the findings arrive one after another, once, then
+    // the box they lead to (Observation, Insight) turns orange in full view =====
     (function () {
-      const cells = document.querySelector('[data-stagger]');
-      if (!cells || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      cells.classList.add('is-armed');
-      new IntersectionObserver((entries, io) => {
-        if (!entries[0].isIntersecting) return;
-        cells.classList.add('is-played');
-        io.disconnect();
-      }, { threshold: 0.3 }).observe(cells);
-    })();
-
-    // ===== 2-1 — the Observation box turns orange once it is well in view =====
-    (function () {
-      const key = document.querySelector('.op-step__box--key');
-      if (!key || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      key.classList.add('is-armed');
-      new IntersectionObserver((entries, io) => {
-        if (!entries[0].isIntersecting) return;
-        key.classList.add('is-lit');
-        io.disconnect();
-      }, { threshold: 1, rootMargin: '0px 0px -15% 0px' }).observe(key);
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const once = (el, cls, options) => {
+        new IntersectionObserver((entries, io) => {
+          if (!entries[0].isIntersecting) return;
+          el.classList.add(cls);
+          io.disconnect();
+        }, options).observe(el);
+      };
+      document.querySelectorAll('[data-stagger]').forEach((cells) => {
+        cells.classList.add('is-armed');
+        once(cells, 'is-played', { threshold: 0.3 });
+      });
+      document.querySelectorAll('.op-step__box--key').forEach((key) => {
+        key.classList.add('is-armed');
+        once(key, 'is-lit', { threshold: 1, rootMargin: '0px 0px -15% 0px' });
+      });
     })();
 
     // ===== 4-1 — Before → After plays once on arrival =====
