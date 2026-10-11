@@ -808,6 +808,7 @@
     .op-step__boxes.is-swap { display: grid; }
     .op-step__boxes.is-swap > .op-step__box { grid-area: 1 / 1; }
     .op-step__boxes.is-swap > .op-step__box + .op-step__box {
+      justify-content: center;   /* the question sits mid-frame: equal space above and below */
       opacity: 0;
       visibility: hidden;
       transition: opacity 0.45s ease, visibility 0s 0.45s;
@@ -1930,8 +1931,8 @@
                 <span data-lang-content="ko">매장을 운영하며 반복되는 냉방비 문제를 경험했습니다.</span>
               </h3>
               <p class="op-step__box-body">
-                <span data-lang-content="en">When the store is busy, there's no time to check and fine-tune the HVAC. You run the cooling hard so customers stay comfortable, and only feel the cost a month later when the bill arrives.<br><br>Knowing how to cut costs and actually doing it in the middle of operations turned out to be two different things.</span>
-                <span data-lang-content="ko">매장이 바쁠 때는 냉난방 상태를 세밀하게 확인하고 조절할 여유가 없습니다. 일단 손님들이 쾌적하게 머물 수 있도록 냉방을 강하게 가동하고, 비용은 한 달 뒤 고지서를 받고 나서야 실감하게 됩니다.<br><br>비용을 줄이는 방법을 아는 것과 실제 운영 중에 이를 실행하는 것은 다른 문제였습니다.</span>
+                <span data-lang-content="en">When the store is busy, there's no time to check and fine-tune the HVAC.<br>You run the cooling hard so customers stay comfortable, and only feel the cost a month later when the bill arrives.<br><br>Knowing how to cut costs and actually doing it in the middle of operations turned out to be two different things.</span>
+                <span data-lang-content="ko">매장이 바쁠 때는 냉난방 상태를 세밀하게 확인하고 조절할 여유가 없습니다.<br>일단 손님들이 쾌적하게 머물 수 있도록 냉방을 강하게 가동하고, 비용은 한 달 뒤 고지서를 받고 나서야 실감하게 됩니다.<br><br>비용을 줄이는 방법을 아는 것과 실제 운영 중에 이를 실행하는 것은 다른 문제였습니다.</span>
               </p>
             </div>
             <div class="op-step__box">
@@ -2040,8 +2041,8 @@
             <span data-lang-content="ko">자영업 매장을 타깃으로 설정했습니다.</span>
           </h3>
           <p class="op-step__lead">
-            <span data-lang-content="en">For households, the business impact of cutting costs is relatively limited, and large buildings often already have an energy management system. Small business stores, by contrast, feel HVAC costs heavily yet lack a way to manage them around day-to-day operations.</span>
-            <span data-lang-content="ko">가정은 비용 절감의 사업적 영향이 상대적으로 제한적이고, 대형 건물은 기존 에너지 관리 시스템을 갖춘 경우가 많았습니다. 반면 자영업 매장은 냉난방 비용의 영향이 크면서도, 운영 상황에 맞춰 관리할 수 있는 체계가 부족하다고 판단했습니다.</span>
+            <span data-lang-content="en">For households, the business impact of cutting costs is relatively limited, and large buildings often already have an energy management system.<br>Small business stores, by contrast, feel HVAC costs heavily yet lack a way to manage them around day-to-day operations.</span>
+            <span data-lang-content="ko">가정은 비용 절감의 사업적 영향이 상대적으로 제한적이고, 대형 건물은 기존 에너지 관리 시스템을 갖춘 경우가 많았습니다.<br>반면 자영업 매장은 냉난방 비용의 영향이 크면서도, 운영 상황에 맞춰 관리할 수 있는 체계가 부족하다고 판단했습니다.</span>
           </p>
           <p class="op-step__lead">
             <span data-lang-content="en">So I set small business stores as the main target, and confirmed the real problem through community research and interviews.</span>
@@ -2068,8 +2069,8 @@
             <span data-lang-content="ko">명확한 기준이 없어,<br>냉난방 조절은 시행착오의 반복이 되었습니다.</span>
           </h2>
           <p class="op-step__lead">
-            <span data-lang-content="en">I collected and categorized data from small business owner communities to explore the problems that keep recurring in HVAC management.<br><br>The analysis showed a pattern: owners weighed cost against comfort, yet changed settings without clear criteria, and each responded in their own way depending on the store's situation.<br><br>This suggested that the difficulty of managing HVAC may not be a simple control problem, but one tied to the absence of decision criteria.</span>
-            <span data-lang-content="ko">자영업자 커뮤니티 데이터를 수집하고 분류해, 냉난방 관리 과정에서 반복적으로 나타나는 문제를 탐색했습니다.<br><br>분석 결과, 비용과 쾌적함 사이에서 고민하면서도 명확한 기준 없이 설정을 바꾸고, 매장 상황에 따라 각자 다른 방식으로 대응하는 패턴이 나타났습니다.<br><br>이를 통해 냉난방 관리의 어려움이 단순한 조작 문제가 아니라, 판단 기준의 부재와 관련 있을 수 있다고 보았습니다.</span>
+            <span data-lang-content="en">I collected and categorized data from small business owner communities to explore the problems that keep recurring in HVAC management.<br><br>The analysis showed a pattern: owners weighed cost against comfort, yet changed settings without clear criteria,<br>and each responded in their own way depending on the store's situation.<br><br>This suggested that the difficulty of managing HVAC may not be a simple control problem, but one tied to the absence of decision criteria.</span>
+            <span data-lang-content="ko">자영업자 커뮤니티 데이터를 수집하고 분류해, 냉난방 관리 과정에서 반복적으로 나타나는 문제를 탐색했습니다.<br><br>분석 결과, 비용과 쾌적함 사이에서 고민하면서도 명확한 기준 없이 설정을 바꾸고,<br>매장 상황에 따라 각자 다른 방식으로 대응하는 패턴이 나타났습니다.<br><br>이를 통해 냉난방 관리의 어려움이 단순한 조작 문제가 아니라, 판단 기준의 부재와 관련 있을 수 있다고 보았습니다.</span>
           </p>
 
           <h3 class="op-step__part">
@@ -2159,13 +2160,9 @@
           </h3>
           <div class="op-step__box op-step__box--key">
             <h4 class="op-step__box-title">
-              <span data-lang-content="en">The community data showed a pattern of repeatedly adjusting HVAC settings as store conditions changed.</span>
-              <span data-lang-content="ko">커뮤니티 데이터에서는 매장 상황에 따라 냉난방 설정을 반복적으로 조정하는 패턴이 나타났습니다.</span>
+              <span data-lang-content="en">Small business owners repeatedly adjusted HVAC settings as store conditions changed, but lacked clear criteria for judging which settings were right.</span>
+              <span data-lang-content="ko">자영업자들은 매장 상황에 따라 냉난방 설정을 반복적으로 조정했지만, 어떤 설정이 적절한지 판단할 명확한 기준은 부족했습니다.</span>
             </h4>
-            <p class="op-step__box-body">
-              <span data-lang-content="en">Their experiences revealed repeated adjustments, different approaches, and uncertainty about what to do.</span>
-              <span data-lang-content="ko">이들의 경험에서 반복되는 조정, 제각각인 방식, 무엇을 해야 할지에 대한 불확실성이 드러났습니다.</span>
-            </p>
           </div>
         </article>
       </div>
@@ -2181,8 +2178,8 @@
             </p>
           </header>
           <h2 class="op-step__title">
-            <span data-lang-content="en">HVAC adjustments kept repeating, but it was hard to judge which choice was right.</span>
-            <span data-lang-content="ko">냉난방 조절은 반복되지만, 어떤 선택이 적절한지는 판단하기 어려웠습니다.</span>
+            <span data-lang-content="en">HVAC settings couldn&#39;t be decided on cost alone.</span>
+            <span data-lang-content="ko">냉난방 설정은 비용만으로 결정할 수 없었습니다.</span>
           </h2>
 
           <h3 class="op-step__part">
@@ -2201,8 +2198,8 @@
               </figcaption>
             </figure>
             <p class="op-step__lead">
-              <span data-lang-content="en">To understand what drives HVAC decisions in real store operations, we interviewed 5 small business owners.<br>We explored when they adjust settings, what influences their decisions, and how they assess the outcome.</span>
-              <span data-lang-content="ko">실제 매장 운영에서 무엇이 냉난방 결정을 이끄는지 알아보기 위해 자영업자 5명을 인터뷰했습니다.<br>언제 설정을 바꾸는지, 어떤 요인이 결정에 영향을 주는지, 조절 결과를 어떻게 판단하는지 살펴봤습니다.</span>
+              <span data-lang-content="en">To see in what context the lack of decision criteria found in the community analysis shows up in real store operations, we interviewed 5 small business owners.<br><br>We explored when they adjust settings, what influences their decisions, and how they assess the outcome.</span>
+              <span data-lang-content="ko">커뮤니티 분석에서 발견한 판단 기준의 부재가 실제 매장 운영에서 어떤 맥락으로 나타나는지 확인하기 위해 자영업자 5명을 인터뷰했습니다.<br><br>언제 설정을 바꾸는지, 어떤 요인이 결정에 영향을 주는지, 조절 결과를 어떻게 판단하는지 살펴봤습니다.</span>
             </p>
           </div>
 
