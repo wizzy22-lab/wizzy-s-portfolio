@@ -763,15 +763,18 @@
     /* the box a step lands on (2-1 Observation, 2-2 Insight): the chosen ring of 1-2.
        While armed it sits like any box, and turns orange once it is well in
        view; without the script (or with reduced motion) it shows orange. */
-    .op-step__box--key {
+    .op-step__box--key,
+    .op-step__cell--key {
       border-color: #ff8c42;
       background: #fff;
       box-shadow: 0 0 0 1px #ff8c42;
     }
-    .op-step__box--key.is-lit {   /* only the turn to orange animates, not the arming */
-      transition: border-color 0.6s 0.2s ease, background-color 0.6s 0.2s ease, box-shadow 0.6s 0.2s ease;
+    :is(.op-step__box--key, .op-step__cell--key).is-lit {   /* only the turn to orange animates, not the arming */
+      transition: border-color 0.6s var(--lit-delay, 0.2s) ease, background-color 0.6s var(--lit-delay, 0.2s) ease, box-shadow 0.6s var(--lit-delay, 0.2s) ease;
     }
-    .op-step__box--key.is-armed:not(.is-lit) {
+    /* 4-2: the output lights once the three steps have arrived. */
+    .op-step__cell--key { --lit-delay: 1s; }
+    :is(.op-step__box--key, .op-step__cell--key).is-armed:not(.is-lit) {
       border-color: #f5f5f5;
       background: #fafafa;
       box-shadow: 0 0 0 1px transparent;
@@ -1020,14 +1023,17 @@
       border-radius: 16px;
       background: #fafafa;
     }
-    /* 2-1, 2-2 — the patterns / findings arrive one after another, once,
-       when the grid comes into view. The script arms the hidden start only when it
-       will play, so without it (or with reduced motion) all four show. */
-    .op-step__cells.is-armed > .op-step__cell { opacity: 0; }
-    .op-step__cells.is-played > .op-step__cell { animation: op-cell-in 0.5s ease-out both; }
-    .op-step__cells.is-played > .op-step__cell:nth-child(2) { animation-delay: 0.15s; }
-    .op-step__cells.is-played > .op-step__cell:nth-child(3) { animation-delay: 0.3s; }
-    .op-step__cells.is-played > .op-step__cell:nth-child(4) { animation-delay: 0.45s; }
+    /* [data-stagger] (2-1, 2-2 findings, 4-2 flow, 4-3 MVP chips, 4-4 user
+       flow, 6-2 outcomes) — the items arrive one after another, once, when
+       the set comes into view; the script numbers them (--i). It arms the
+       hidden start only when it will play, so without it (or with reduced
+       motion) everything shows. */
+    [data-stagger].is-armed > * { opacity: 0; }
+    [data-stagger].is-played > * {
+      animation: op-cell-in 0.5s ease-out both;
+      animation-delay: calc(var(--i, 0) * var(--stagger-step, 0.15s));
+    }
+    .op-step__flowmap[data-stagger] { --stagger-step: 0.3s; }   /* a path, read node by node */
     @keyframes op-cell-in {
       from { opacity: 0; transform: translateY(16px); }
       to { opacity: 1; transform: none; }
@@ -1472,6 +1478,25 @@
       line-height: 1.2;
     }
     .op-step__box--score .op-step__box-body { margin-top: 0; }
+    /* 6-1 — counts up to its value once on view; tabular figures and a
+       two-digit floor keep the box from twitching as it climbs. */
+    .op-step__score {
+      min-width: 2ch;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* 3 — the statement turns while the screen holds: first the half it
+       rules out reads at full strength, then it steps back and the half it
+       lands on takes over, its key phrase turning orange. Both lines are
+       always set, so only colour changes. Without the script (or with
+       reduced motion) the second half shows as it ends. */
+    .op-step__turn em { font-style: normal; color: #ff8c42; }
+    .op-step__turn.is-armed :is(.op-step__turn-from, .op-step__turn-to, em) {
+      transition: color 0.5s ease;
+    }
+    .op-step__turn.is-armed:not(.is-turned) .op-step__turn-to,
+    .op-step__turn.is-armed:not(.is-turned) .op-step__turn-to em { color: #c9ced3; }
+    .op-step__turn.is-armed.is-turned .op-step__turn-from { color: #c9ced3; }
 
     /* 6-2 Iteration (Figma 34:348) and 7 Reflection (Figma 36:393) — plain
        note boxes: body first, then an optional bold takeaway. */
@@ -2391,7 +2416,7 @@
               <span data-lang-content="ko">인사이트!</span>
             </span>
           </h3>
-          <div class="op-step__box op-step__box--scale">
+          <div class="op-step__box op-step__box--scale op-step__box--key">
             <div>
               <h4 class="op-step__box-title">
                 <span data-lang-content="en">Cost savings alone couldn't guide real-world HVAC decisions.</span>
@@ -2480,9 +2505,9 @@
               <span data-lang-content="ko">문제 정의</span>
             </p>
           </header>
-          <h2 class="op-step__title">
-            <span data-lang-content="en">Managing HVAC wasn't a control problem —<br>it was a decision problem.</span>
-            <span data-lang-content="ko">냉난방 관리는 기기 제어의 문제가 아니라,<br>판단의 문제였습니다.</span>
+          <h2 class="op-step__title op-step__turn" data-turn>
+            <span data-lang-content="en"><span class="op-step__turn-from">Managing HVAC wasn't a control problem —</span><br><span class="op-step__turn-to">it was a <em>decision problem</em>.</span></span>
+            <span data-lang-content="ko"><span class="op-step__turn-from">냉난방 관리는 기기 제어의 문제가 아니라,</span><br><span class="op-step__turn-to"><em>판단의 문제</em>였습니다.</span></span>
           </h2>
           <p class="op-step__lead op-step__lead--close">
             <span data-lang-content="en">HVAC systems made it easy to monitor and adjust settings, but they didn't show the impact of those decisions.<br>Users couldn't tell whether a change would actually reduce energy costs without compromising comfort,<br>so they had to rely on repeated adjustments and intuition.</span>
@@ -2588,7 +2613,7 @@
             <span data-lang-content="en">Based on the current store state, AI predicts the outcome of each possible action,<br>weighs cost and comfort, and recommends the best option for the situation.</span>
             <span data-lang-content="ko">AI는 현재 매장 상태를 바탕으로 가능한 각 행동의 결과를 예측하고,<br>비용과 쾌적도를 따져 상황에 가장 알맞은 선택을 제안합니다.</span>
           </p>
-          <ol class="op-step__flow">
+          <ol class="op-step__flow" data-stagger>
             <li class="op-step__flow-step">
               <h3 class="op-step__part">
                 <span class="op-step__part-num">01</span>
@@ -2667,7 +2692,7 @@
                   <span data-lang-content="ko">출력</span>
                 </span>
               </h3>
-              <div class="op-step__cell">
+              <div class="op-step__cell op-step__cell--key">
                 <h4 class="op-step__cell-title">
                   <span data-lang-content="en">What output is delivered</span>
                   <span data-lang-content="ko">어떤 결과를 제공하는가</span>
@@ -2771,7 +2796,7 @@
             <span data-lang-content="en">The prioritization process narrowed the product down to a focused MVP.</span>
             <span data-lang-content="ko">우선순위 정리를 거쳐 제품을 핵심에 집중한 MVP로 좁혔습니다.</span>
           </p>
-          <ul class="op-step__chips">
+          <ul class="op-step__chips" data-stagger>
             <li class="op-step__chip">
               <span data-lang-content="en">Real-time comfort status</span>
               <span data-lang-content="ko">실시간 쾌적도 상태</span>
@@ -2826,7 +2851,7 @@
             </span>
           </h3>
           <div class="op-step__media-row">
-            <div class="op-step__flowmap" role="img" aria-label="Pop-up notification, then review the suggestion: if convinced, a quick decision; if more detail is needed, the main screen.">
+            <div class="op-step__flowmap" data-stagger role="img" aria-label="Pop-up notification, then review the suggestion: if convinced, a quick decision; if more detail is needed, the main screen.">
               <div class="op-step__flowmap-node">
                 <img class="op-step__flowmap-icon" src="operator/approach/icon-notifications.svg" width="24" height="24" alt="" />
                 <p class="op-step__flowmap-title">
@@ -3239,7 +3264,7 @@
             </span>
           </h3>
           <div class="op-step__box op-step__box--score">
-            <p class="op-step__score">76</p>
+            <p class="op-step__score" data-count>76</p>
             <div>
               <p class="op-step__box-body">
                 <span data-lang-content="en">The average SUS score was 76 (n = 5; individual scores: 72.5–80), above the commonly cited benchmark of 68.</span>
@@ -3303,7 +3328,7 @@
                 <span data-lang-content="en">Outcomes</span>
                 <span data-lang-content="ko">결과</span>
               </p>
-              <ul class="op-step__bullets">
+              <ul class="op-step__bullets" data-stagger>
                 <li>
                   <span data-lang-content="en">Introduced the AI-assisted HVAC operating model</span>
                   <span data-lang-content="ko">AI가 돕는 냉난방 운영 방식을 소개했습니다</span>
@@ -3634,14 +3659,21 @@
       if (holdStep(boxes, (turned) => boxes.classList.toggle('is-turned', turned))) boxes.classList.add('is-swap');
     })();
 
+    // 3 — the statement turns from what it rules out to what it lands on
+    (function () {
+      const turn = document.querySelector('[data-turn]');
+      if (holdStep(turn, (turned) => turn.classList.toggle('is-turned', turned))) turn.classList.add('is-armed');
+    })();
+
     // 1-2 — three candidates, compared, then the one chosen
     (function () {
       const tiles = document.querySelector('[data-pick]');
       if (holdStep(tiles, (picked) => tiles.classList.toggle('is-picked', picked))) tiles.classList.add('is-armed');
     })();
 
-    // ===== 2-1, 2-2 — the findings arrive one after another, once, then
-    // the box they lead to (Observation, Insight) turns orange in full view =====
+    // ===== Sets that arrive one after another, once (2-1, 2-2, 4-2, 4-3, 4-4,
+    // 6-2), and the box they lead to (2-1 Observation, 2-2 / 2-3 Insight,
+    // 4-2 Output) turning orange in full view =====
     (function () {
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       const once = (el, cls, options) => {
@@ -3651,11 +3683,12 @@
           io.disconnect();
         }, options).observe(el);
       };
-      document.querySelectorAll('[data-stagger]').forEach((cells) => {
-        cells.classList.add('is-armed');
-        once(cells, 'is-played', { threshold: 0.3 });
+      document.querySelectorAll('[data-stagger]').forEach((set) => {
+        [...set.children].forEach((item, i) => item.style.setProperty('--i', i));
+        set.classList.add('is-armed');
+        once(set, 'is-played', { threshold: 0.3 });
       });
-      document.querySelectorAll('.op-step__box--key').forEach((key) => {
+      document.querySelectorAll('.op-step__box--key, .op-step__cell--key').forEach((key) => {
         key.classList.add('is-armed');
         once(key, 'is-lit', { threshold: 1, rootMargin: '0px 0px -15% 0px' });
       });
@@ -3671,6 +3704,36 @@
         shift.classList.add('is-played');
         io.disconnect();
       }, { threshold: 0.5 }).observe(shift);
+    })();
+
+    // ===== 6-1 — the SUS score counts up to its value, once, on view =====
+    (function () {
+      const score = document.querySelector('[data-count]');
+      if (!score || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const target = Number(score.textContent);
+      const DURATION = 1200;
+      score.textContent = '0';
+      new IntersectionObserver((entries, io) => {
+        if (!entries[0].isIntersecting) return;
+        io.disconnect();
+        const start = performance.now();
+        const tick = (now) => {
+          const t = Math.min((now - start) / DURATION, 1);
+          score.textContent = String(Math.round(target * (1 - Math.pow(1 - t, 3))));   // ease-out
+          if (t < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      }, { threshold: 1 }).observe(score);
+    })();
+
+    // ===== Videos — hovering one pauses it, so a frame can be read;
+    // leaving lets it play on =====
+    (function () {
+      if (!window.matchMedia('(hover: hover)').matches) return;
+      document.querySelectorAll('.op-step video').forEach((video) => {
+        video.addEventListener('mouseenter', () => video.pause());
+        video.addEventListener('mouseleave', () => { video.play().catch(() => {}); });
+      });
     })();
 
     // ===== Hero — the cards play alert → tap → press → confirmation =====
