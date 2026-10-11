@@ -844,6 +844,12 @@
       line-height: 1.6;
     }
     .op-step__lead + .op-step__lead { margin-top: 25.6px; }   /* one blank line */
+    .op-step__footnote {   /* a scope note under a lead, set small */
+      margin-top: 12px;
+      color: #8b8b88;
+      font-size: 12px;
+      line-height: 1.6;
+    }
     .op-step__tiles {
       display: grid;
       grid-template-columns: minmax(0, 1fr);
@@ -1154,9 +1160,10 @@
       text-align: center;
     }
     .op-step__weight--cost { background: #ff8c42; color: #000; }
-    /* 4-1 Design direction (Figma 16:410) — Before / After panels with the
-       original axes diagrams inside, recoloured to the page's three:
-       cost orange (the axis Operator adds), comfort black, rules grey. */
+    /* 4-1 Design direction (Figma 16:410) — Before / After panels: a status
+       panel that can only be pressed, then AI's options with their expected
+       effects and an approve step. The page's three: cost orange, text
+       black, rules grey. */
     .op-step__lead + .op-step__lead--flush { margin-top: 0; }
     .op-step__lead + .op-step__shift { margin-top: 48px; }
     .op-step__shift {
@@ -1203,28 +1210,26 @@
       text-align: center;
     }
     .op-step__shift-arrow { display: block; }
-    /* 4-1 — the shift, played once when the panels come into view (~3.2s, 1.2× the first cut):
-       the Before dot wanders its one axis, the missing cost axis flickers,
-       then the After cost axis draws, comfort rises, the target zone opens
-       and the dot travels from the origin into it. The script arms the
+    /* 4-1 — the shift, played once when the panels come into view (~3s):
+       Before, the minus and plus are pressed back and forth while the
+       cost of each press stays a question that flickers; After, AI's two
+       options arrive with their expected effects, the user's pick is
+       ringed in orange and the approve button appears. The script arms the
        hidden start only when it will play, so without it (or with reduced
        motion) the finished diagrams show as drawn. */
-    .op-shift__sway, .op-shift__target, .op-shift__zone { transform-box: fill-box; transform-origin: center; }
+    .op-shift__press, .op-shift__approve { transform-box: fill-box; transform-origin: center; }
     .op-step__shift.is-armed .op-shift__draw { stroke-dasharray: 1; stroke-dashoffset: 1; }
-    .op-step__shift.is-armed :is(.op-shift__tip, .op-shift__zone, .op-shift__target) { opacity: 0; }
-    .op-step__shift.is-played .op-shift__sway    { animation: op-shift-sway 1.2s ease-in-out both; }
+    .op-step__shift.is-armed :is(.op-shift__row, .op-shift__approve) { opacity: 0; }
+    .op-step__shift.is-played .op-shift__press--minus { animation: op-shift-press 0.3s 0s ease-in-out both, op-shift-press 0.3s 0.7s ease-in-out both; }
+    .op-step__shift.is-played .op-shift__press--plus  { animation: op-shift-press 0.3s 0.35s ease-in-out both; }
     .op-step__shift.is-played .op-shift__missing { animation: op-shift-flicker 0.72s 1.08s linear both; }
-    .op-step__shift.is-played .op-shift__draw--x { animation: op-shift-draw 0.6s 1.44s ease-out both; }
-    .op-step__shift.is-played .op-shift__tip--x  { animation: op-shift-in 0.3s 1.92s ease-out both; }
-    .op-step__shift.is-played .op-shift__draw--y { animation: op-shift-draw 0.6s 1.8s ease-out both; }
-    .op-step__shift.is-played .op-shift__tip--y  { animation: op-shift-in 0.3s 2.28s ease-out both; }
-    .op-step__shift.is-played .op-shift__zone    { animation: op-shift-zone 0.42s 2.4s ease-out both; }
-    .op-step__shift.is-played .op-shift__target  { animation: op-shift-travel 0.72s 2.52s cubic-bezier(0.3, 0, 0.2, 1) both; }
-    @keyframes op-shift-sway {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-14px); }
-      55% { transform: translateX(10px); }
-      80% { transform: translateX(-5px); }
+    .op-step__shift.is-played .op-shift__row--a  { animation: op-shift-in 0.36s 1.44s ease-out both; }
+    .op-step__shift.is-played .op-shift__row--b  { animation: op-shift-in 0.36s 1.74s ease-out both; }
+    .op-step__shift.is-played .op-shift__pick    { animation: op-shift-draw 0.5s 2.16s ease-out both; }
+    .op-step__shift.is-played .op-shift__approve { animation: op-shift-pop 0.42s 2.64s ease-out both; }
+    @keyframes op-shift-press {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(0.86); }
     }
     @keyframes op-shift-flicker {
       0%, 40%, 80% { opacity: 1; }
@@ -1232,16 +1237,13 @@
       100% { opacity: 1; }
     }
     @keyframes op-shift-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
-    @keyframes op-shift-in { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes op-shift-zone {
+    @keyframes op-shift-in {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: none; }
+    }
+    @keyframes op-shift-pop {
       from { opacity: 0; transform: scale(0.6); }
       to { opacity: 1; transform: scale(1); }
-    }
-    /* from the axes' origin (60,180) to the zone's centre (170,80) */
-    @keyframes op-shift-travel {
-      from { opacity: 0; transform: translate(-110px, 100px); }
-      20% { opacity: 1; }
-      to { opacity: 1; transform: translate(0, 0); }
     }
 
     @container op-card (min-width: 700px) {
@@ -1267,6 +1269,8 @@
       flex-direction: column;
     }
     .op-step__flow-step .op-step__part { margin-top: 0; }
+    .op-step__flow + .op-step__footnote { margin-top: 24px; }
+    .op-step__flow-step .op-step__cell > .op-step__cell-list:first-child { margin-top: 0; }
     .op-step__flow-step .op-step__cell {
       flex: 1;
       margin-top: 12px;
@@ -2476,12 +2480,12 @@
             </p>
           </header>
           <h2 class="op-step__title op-step__turn" data-turn>
-            <span data-lang-content="en"><span class="op-step__turn-from">The problem with HVAC management wasn't control —</span><br><span class="op-step__turn-to">it was how hard it is to keep making <em>decisions that fit operations</em>.</span></span>
-            <span data-lang-content="ko"><span class="op-step__turn-from">냉난방 관리의 문제는 조작이 아니라,</span><br><span class="op-step__turn-to"><em>운영 상황에 맞는 판단</em>을 지속하기 어렵다는 것이었습니다.</span></span>
+            <span data-lang-content="en"><span class="op-step__turn-from">The problem with HVAC management wasn't simple control —</span><br><span class="op-step__turn-to">it was how hard it is to keep making <em>decisions that fit operations</em>.</span></span>
+            <span data-lang-content="ko"><span class="op-step__turn-from">냉난방 관리의 문제는 단순한 조작이 아니라,</span><br><span class="op-step__turn-to"><em>운영 상황에 맞는 판단</em>을 지속하기 어렵다는 것이었습니다.</span></span>
           </h2>
           <p class="op-step__lead op-step__lead--close">
-            <span data-lang-content="en">Store owners want to manage HVAC costs efficiently, but in busy moments it's hard to keep checking the environment and adjusting settings. Yet cutting HVAC on cost alone can lose the comfort the store needs.<br><br>Help store owners manage cost efficiently with comfort in mind, while reducing the burden of repeatedly checking information and adjusting settings.</span>
-            <span data-lang-content="ko">매장 운영자는 냉난방 비용을 효율적으로 관리하고 싶지만, 바쁜 상황에서 환경을 지속적으로 확인하고 설정을 조정하기는 어렵습니다. 그렇다고 비용만을 기준으로 냉난방을 줄이면 매장에 필요한 쾌적도를 놓칠 수 있습니다.<br><br>매장 운영자가 반복적으로 정보를 확인하고 설정을 조정하는 부담을 줄이면서, 쾌적도를 고려해 비용을 효율적으로 관리할 수 있도록 돕는다.</span>
+            <span data-lang-content="en">Store owners want to manage HVAC costs efficiently, but during busy operations it's hard to keep checking the store environment and adjusting settings. Yet putting cost savings first can lose the comfort customers need.</span>
+            <span data-lang-content="ko">매장 운영자는 냉난방 비용을 효율적으로 관리하고 싶지만, 바쁜 운영 중에는 매장 환경을 지속적으로 확인하고 설정을 조정하기 어렵습니다. 그렇다고 비용 절감만을 우선하면 고객에게 필요한 쾌적도를 놓칠 수 있습니다.</span>
           </p>
         </article>
       </div>
@@ -2500,34 +2504,41 @@
             </p>
           </header>
           <h2 class="op-step__title">
-            <span data-lang-content="en">We shifted from operating HVAC directly to supporting better decisions.</span>
-            <span data-lang-content="ko">냉난방을 직접 조작하는 방식에서, 더 나은 판단을 지원하는 방식으로 전환했습니다.</span>
+            <span data-lang-content="en">We shifted from operating HVAC directly<br>to supporting better decisions.</span>
+            <span data-lang-content="ko">냉난방을 직접 조작하는 방식에서,<br>더 나은 판단을 지원하는 방식으로 전환했습니다.</span>
           </h2>
           <p class="op-step__lead op-step__lead--close">
-            <span data-lang-content="en">Competitor analysis showed that existing systems support status checks and device control, but are relatively weak at guiding choices that weigh cost and comfort together. Operator focused on helping users decide their next action by presenting adjustment options and their expected effects.</span>
-            <span data-lang-content="ko">경쟁 서비스 분석을 통해 기존 시스템은 상태 확인과 기기 제어를 지원하는 반면, 비용과 쾌적도를 함께 고려한 선택을 안내하는 부분은 상대적으로 부족하다고 판단했습니다. Operator는 조정안과 예상 효과를 제시해 다음 행동을 결정하도록 돕는 데 집중했습니다.</span>
+            <span data-lang-content="en">Competitor analysis showed that existing systems focused on checking HVAC status and controlling devices. What they lacked, relatively, was helping users see how an adjustment affects cost and the store environment, and decide their next action on that basis.</span>
+            <span data-lang-content="ko">경쟁 서비스 분석 결과, 기존 시스템은 냉난방 상태를 확인하고 기기를 제어하는 기능에 집중하고 있었습니다. 반면, 조정이 비용과 매장 환경에 어떤 영향을 미치는지 파악하고, 이를 바탕으로 다음 행동을 결정하도록 돕는 기능은 상대적으로 부족했습니다.</span>
           </p>
-          <p class="op-step__lead op-step__lead--flush">
-            <span data-lang-content="en">We designed it so that AI recommends adjustments and shows their expected effects, while users make the choice that fits their store's situation.</span>
-            <span data-lang-content="ko">AI는 조정안을 추천하고 예상 효과를 제시하며, 사용자는 매장 상황에 맞는 선택을 할 수 있도록 설계했습니다.</span>
+          <p class="op-step__lead">
+            <span data-lang-content="en">Going beyond status checks and control, Operator was designed so that AI presents adjustments and their expected effects to fit the store's situation, and users review them and decide. This lets owners weigh cost and comfort together while easing the burden of checking information and making a judgment every time.</span>
+            <span data-lang-content="ko">Operator는 단순한 상태 확인과 제어를 넘어, AI가 매장 상황에 맞는 조정안과 예상 효과를 제시하고 사용자가 이를 검토해 직접 결정하는 방식을 설계했습니다. 이를 통해 운영자가 매번 정보를 확인하고 판단해야 하는 부담을 줄이면서, 비용과 쾌적도를 함께 고려할 수 있도록 했습니다.</span>
           </p>
           <div class="op-step__shift" data-shift>
             <div class="op-step__shift-panel">
               <svg class="op-step__shift-svg" viewBox="0 0 240 200" role="img" aria-hidden="true" focusable="false">
-                <!-- one horizontal axis: comfort only -->
-                <line x1="20" y1="100" x2="220" y2="100" stroke="#A9AFB7" stroke-width="2" stroke-linecap="round"/>
-                <polyline points="210,92 220,100 210,108" fill="none" stroke="#A9AFB7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <line x1="60" y1="96" x2="60" y2="104" stroke="#A9AFB7" stroke-width="1.5"/>
-                <line x1="120" y1="96" x2="120" y2="104" stroke="#A9AFB7" stroke-width="1.5"/>
-                <line x1="180" y1="96" x2="180" y2="104" stroke="#A9AFB7" stroke-width="1.5"/>
-                <g class="op-shift__sway"><circle cx="160" cy="100" r="8" fill="#000000"/></g>
-                <text class="direction-shift__svg-label--ko" x="220" y="128" text-anchor="end" fill="#000000" font-size="13" font-weight="800">쾌적도</text>
-                <text class="direction-shift__svg-label--en" x="220" y="128" text-anchor="end" fill="#000000" font-size="13" font-weight="800">Comfort</text>
-                <!-- the missing cost axis -->
+                <!-- a status panel: the reading and two buttons, nothing about cost -->
+                <rect x="20" y="24" width="200" height="112" rx="12" fill="#FFFFFF" stroke="#A9AFB7" stroke-width="1.5"/>
+                <g>
+                  <text class="direction-shift__svg-label--ko" x="36" y="48" text-anchor="start" fill="#6E7884" font-size="11" font-weight="400">현재 26°C · 습도 60%</text>
+                  <text class="direction-shift__svg-label--en" x="36" y="48" text-anchor="start" fill="#6E7884" font-size="11" font-weight="400">Now 26°C · 60% humidity</text>
+                </g>
+                <text x="120" y="100" text-anchor="middle" fill="#000000" font-size="30" font-weight="800">26°</text>
+                <g class="op-shift__press op-shift__press--minus">
+                  <circle cx="54" cy="90" r="16" fill="#FFFFFF" stroke="#A9AFB7" stroke-width="1.5"/>
+                  <line x1="47" y1="90" x2="61" y2="90" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
+                </g>
+                <g class="op-shift__press op-shift__press--plus">
+                  <circle cx="186" cy="90" r="16" fill="#FFFFFF" stroke="#A9AFB7" stroke-width="1.5"/>
+                  <line x1="179" y1="90" x2="193" y2="90" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
+                  <line x1="186" y1="83" x2="186" y2="97" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
+                </g>
+                <!-- what the panel can't say: the cost of each press -->
                 <g class="op-shift__missing">
-                  <line x1="120" y1="40" x2="120" y2="80" stroke="#A9AFB7" stroke-width="1.5" stroke-dasharray="4 4" stroke-linecap="round"/>
-                  <text class="direction-shift__svg-label--ko" x="120" y="32" text-anchor="middle" fill="#6E7884" font-size="11" font-style="italic">비용 축 부재</text>
-                  <text class="direction-shift__svg-label--en" x="120" y="32" text-anchor="middle" fill="#6E7884" font-size="11" font-style="italic">No cost axis</text>
+                  <line x1="120" y1="142" x2="120" y2="168" stroke="#A9AFB7" stroke-width="1.5" stroke-dasharray="4 4" stroke-linecap="round"/>
+                  <text class="direction-shift__svg-label--ko" x="120" y="188" text-anchor="middle" fill="#6E7884" font-size="11" font-weight="400" font-style="italic">비용 영향 ?</text>
+                  <text class="direction-shift__svg-label--en" x="120" y="188" text-anchor="middle" fill="#6E7884" font-size="11" font-weight="400" font-style="italic">Cost impact ?</text>
                 </g>
               </svg>
               <p class="op-step__shift-title">
@@ -2538,23 +2549,36 @@
             <img class="op-step__shift-arrow" src="operator/approach/icon-direction-arrow.svg" width="23.094" height="74" alt="" />
             <div class="op-step__shift-panel">
               <svg class="op-step__shift-svg" viewBox="0 0 240 200" role="img" aria-hidden="true" focusable="false">
-                <!-- cost (x) — drawn first: the axis the Before panel was missing -->
-                <line class="op-shift__draw op-shift__draw--x" pathLength="1" x1="60" y1="180" x2="220" y2="180" stroke="#FF8C42" stroke-width="2" stroke-linecap="round"/>
-                <g class="op-shift__tip op-shift__tip--x">
-                  <polyline points="210,172 220,180 210,188" fill="none" stroke="#FF8C42" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <text class="direction-shift__svg-label--ko" x="220" y="198" text-anchor="end" fill="#FF8C42" font-size="13" font-weight="800">비용</text>
-                  <text class="direction-shift__svg-label--en" x="220" y="198" text-anchor="end" fill="#FF8C42" font-size="13" font-weight="800">Cost</text>
+                <!-- AI's adjustment options, each with its expected effect -->
+                <g>
+                  <text class="direction-shift__svg-label--ko" x="20" y="20" text-anchor="start" fill="#6E7884" font-size="11" font-weight="400">AI 조정안</text>
+                  <text class="direction-shift__svg-label--en" x="20" y="20" text-anchor="start" fill="#6E7884" font-size="11" font-weight="400">AI suggestions</text>
                 </g>
-                <!-- comfort (y) -->
-                <line class="op-shift__draw op-shift__draw--y" pathLength="1" x1="60" y1="180" x2="60" y2="20" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
-                <g class="op-shift__tip op-shift__tip--y">
-                  <polyline points="52,30 60,20 68,30" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <text class="direction-shift__svg-label--ko" x="50" y="28" text-anchor="end" fill="#000000" font-size="13" font-weight="800">쾌적</text>
-                  <text class="direction-shift__svg-label--en" x="50" y="28" text-anchor="end" fill="#000000" font-size="13" font-weight="800">Comfort</text>
+                <g class="op-shift__row op-shift__row--a">
+                  <rect x="20" y="30" width="200" height="50" rx="10" fill="#FFFFFF" stroke="#A9AFB7" stroke-width="1.5"/>
+                  <text class="direction-shift__svg-label--ko" x="34" y="60" text-anchor="start" fill="#000000" font-size="13" font-weight="800">A  25°C</text>
+                  <text class="direction-shift__svg-label--en" x="34" y="60" text-anchor="start" fill="#000000" font-size="13" font-weight="800">A  25°C</text>
+                  <text class="direction-shift__svg-label--ko" x="206" y="52" text-anchor="end" fill="#FF8C42" font-size="11" font-weight="800">비용 −8%</text>
+                  <text class="direction-shift__svg-label--en" x="206" y="52" text-anchor="end" fill="#FF8C42" font-size="11" font-weight="800">Cost −8%</text>
+                  <text class="direction-shift__svg-label--ko" x="206" y="70" text-anchor="end" fill="#6E7884" font-size="11" font-weight="400">쾌적 유지</text>
+                  <text class="direction-shift__svg-label--en" x="206" y="70" text-anchor="end" fill="#6E7884" font-size="11" font-weight="400">Comfort kept</text>
                 </g>
-                <!-- target zone: low cost, high comfort -->
-                <rect class="op-shift__zone" x="140" y="50" width="60" height="60" rx="6" fill="#FF8C42" fill-opacity="0.12" stroke="#A9AFB7" stroke-width="1.5" stroke-dasharray="4 3"/>
-                <g class="op-shift__target"><circle cx="170" cy="80" r="6" fill="#000000" stroke="#FF8C42" stroke-width="2"/></g>
+                <g class="op-shift__row op-shift__row--b">
+                  <rect x="20" y="90" width="200" height="50" rx="10" fill="#FFFFFF" stroke="#A9AFB7" stroke-width="1.5"/>
+                  <text class="direction-shift__svg-label--ko" x="34" y="120" text-anchor="start" fill="#000000" font-size="13" font-weight="800">B  제습 모드</text>
+                  <text class="direction-shift__svg-label--en" x="34" y="120" text-anchor="start" fill="#000000" font-size="13" font-weight="800">B  Dry mode</text>
+                  <text class="direction-shift__svg-label--ko" x="206" y="112" text-anchor="end" fill="#FF8C42" font-size="11" font-weight="800">비용 −12%</text>
+                  <text class="direction-shift__svg-label--en" x="206" y="112" text-anchor="end" fill="#FF8C42" font-size="11" font-weight="800">Cost −12%</text>
+                  <text class="direction-shift__svg-label--ko" x="206" y="130" text-anchor="end" fill="#6E7884" font-size="11" font-weight="400">쾌적 +3</text>
+                  <text class="direction-shift__svg-label--en" x="206" y="130" text-anchor="end" fill="#6E7884" font-size="11" font-weight="400">Comfort +3</text>
+                </g>
+                <!-- the one the user picks, then approves -->
+                <rect class="op-shift__draw op-shift__pick" pathLength="1" x="20" y="90" width="200" height="50" rx="10" fill="none" stroke="#FF8C42" stroke-width="2"/>
+                <g class="op-shift__approve">
+                  <rect x="142" y="154" width="78" height="30" rx="15" fill="#000000"/>
+                  <text class="direction-shift__svg-label--ko" x="181" y="174" text-anchor="middle" fill="#FFFFFF" font-size="12" font-weight="800">✓ 승인</text>
+                  <text class="direction-shift__svg-label--en" x="181" y="174" text-anchor="middle" fill="#FFFFFF" font-size="12" font-weight="800">✓ Approve</text>
+                </g>
               </svg>
               <p class="op-step__shift-title">
                 <span data-lang-content="en">After - Our approach</span>
@@ -2580,8 +2604,8 @@
             <span data-lang-content="ko">AI가 냉난방 조정안을 추천하고,<br>사용자가 승인 여부를 결정합니다.</span>
           </h2>
           <p class="op-step__lead op-step__lead--close">
-            <span data-lang-content="en">We envisioned an experience that proposes adjustments based on the current store state and the user's cost and comfort priorities, and shows the expected change alongside.<br><br>We prototyped a flow in which approving a recommendation changes the settings. No real AI prediction model or HVAC device control was implemented; this explored a product experience that reduces the burden of judgment and operation.</span>
-            <span data-lang-content="ko">현재 매장 상태와 비용·쾌적도에 대한 우선순위를 바탕으로 조정안을 제안하고, 예상되는 변화를 함께 보여주는 경험을 구상했습니다.<br><br>사용자가 추천을 승인하면 설정이 변경되는 흐름을 프로토타입으로 설계했습니다. 실제 AI 모델의 예측 성능이나 냉난방 기기 제어가 구현된 것은 아니며, 사용자 판단과 조작 부담을 줄이기 위한 제품 경험을 탐색했습니다.</span>
+            <span data-lang-content="en">We envisioned an experience that proposes adjustments based on the current store state and the user's cost and comfort priorities, and shows the expected change alongside.</span>
+            <span data-lang-content="ko">현재 매장 상태와 비용·쾌적도에 대한 우선순위를 바탕으로 조정안을 제안하고, 예상되는 변화를 함께 보여주는 경험을 구상했습니다.</span>
           </p>
           <ol class="op-step__flow" data-stagger>
             <li class="op-step__flow-step">
@@ -2593,10 +2617,6 @@
                 </span>
               </h3>
               <div class="op-step__cell">
-                <h4 class="op-step__cell-title">
-                  <span data-lang-content="en">Data to consider</span>
-                  <span data-lang-content="ko">고려할 데이터</span>
-                </h4>
                 <ul class="op-step__cell-list">
                   <li>
                     <span data-lang-content="en">Store temperature &amp; humidity</span>
@@ -2625,15 +2645,11 @@
               <h3 class="op-step__part">
                 <span class="op-step__part-num">02</span>
                 <span class="op-step__part-title">
-                  <span data-lang-content="en">Judgement</span>
-                  <span data-lang-content="ko">판단</span>
+                  <span data-lang-content="en">Criteria</span>
+                  <span data-lang-content="ko">판단 기준</span>
                 </span>
               </h3>
               <div class="op-step__cell">
-                <h4 class="op-step__cell-title">
-                  <span data-lang-content="en">Proposed decision criteria</span>
-                  <span data-lang-content="ko">제안한 판단 기준</span>
-                </h4>
                 <ul class="op-step__cell-list">
                   <li>
                     <span data-lang-content="en">Priority between cost and comfort</span>
@@ -2663,10 +2679,6 @@
                 </span>
               </h3>
               <div class="op-step__cell op-step__cell--key">
-                <h4 class="op-step__cell-title">
-                  <span data-lang-content="en">Results designed to provide</span>
-                  <span data-lang-content="ko">제공하도록 설계한 결과</span>
-                </h4>
                 <ul class="op-step__cell-list">
                   <li>
                     <span data-lang-content="en">Candidate adjustments and expected results</span>
@@ -2680,9 +2692,9 @@
               </div>
             </li>
           </ol>
-          <p class="op-step__lead">
-            <span data-lang-content="en">※ This structure is a proposed system concept; no real AI prediction performance or recommendation logic was implemented or validated.</span>
-            <span data-lang-content="ko">※ 위 구조는 제안한 시스템 개념이며, 실제 AI 모델의 예측 성능이나 추천 로직을 구현·검증한 것은 아닙니다.</span>
+          <p class="op-step__footnote">
+            <span data-lang-content="en">*Rather than implementing a real AI model's prediction performance or HVAC device control, this project focused on designing and exploring a product experience that reduces owners' judgment and operating burden through AI's adjustment suggestions and expected effects.</span>
+            <span data-lang-content="ko">*본 프로젝트는 실제 AI 모델의 예측 성능이나 냉난방 기기 제어를 구현하는 대신, AI의 조정 제안과 예상 효과를 통해 운영자의 판단과 조작 부담을 줄이는 제품 경험을 설계하고 탐색하는 데 집중했습니다.</span>
           </p>
         </article>
       </div>
