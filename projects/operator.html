@@ -203,6 +203,62 @@
       .ds-nav__menu { gap: 52px; }
     }
 
+    /* Below 1024px the four links and the toggle don't fit beside the mark
+       (531px in the widest locale), so — as on main — they fold behind a
+       button and the bar keeps only the mark and that button. */
+    .ds-nav__right { display: none; }
+    .ds-nav__mobile { display: block; }
+    @media (min-width: 1024px) {
+      .ds-nav__right { display: flex; }
+      .ds-nav__mobile { display: none; }
+    }
+
+    /* Wider than the glyph so the tap target clears 44px; the negative
+       margin keeps the glyph itself on the bar's right edge. */
+    .ds-nav__menu-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      margin-right: -12px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: opacity var(--duration-base) var(--ease-default);
+    }
+    .ds-nav__menu-btn:hover { opacity: 0.7; }
+    .ds-nav__menu-btn [data-icon="close"] { display: none; }
+    .ds-nav__menu-btn[aria-expanded="true"] [data-icon="open"] { display: none; }
+    .ds-nav__menu-btn[aria-expanded="true"] [data-icon="close"] { display: inline; }
+
+    /* Drops from under the 70px bar, against the fixed header. Opaque
+       rather than the bar's translucent fill, so the list stays readable
+       over whatever is behind it — the anchor row included. */
+    .ds-nav__panel {
+      position: absolute;
+      inset-inline: 0;
+      top: var(--nav-bar-h);
+      padding: 8px 24px 24px;
+      border-top: 1px solid var(--border);
+      background: var(--bg-page);
+      /* Over the anchor row, which comes later in the header. */
+      z-index: 1;
+    }
+    .ds-nav__panel[hidden] { display: none; }
+    .ds-nav__panel-menu {
+      display: flex;
+      flex-direction: column;
+    }
+    .ds-nav__panel-menu .ds-nav-link { padding-block: 12px; }
+    .ds-nav__panel-lang {
+      margin-top: 8px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
     .ds-nav-link {
       font-family: var(--font-brand);
       font-size: 16px;
@@ -213,10 +269,9 @@
       color: var(--text-dim);
       text-decoration: none;
       white-space: nowrap;
-      transition: color var(--duration-base) var(--ease-default);
+      transition: opacity var(--duration-base) var(--ease-default);
     }
-    .ds-nav-link:hover,
-    .ds-nav-link:focus-visible { color: var(--text); }
+    .ds-nav-link:hover { opacity: 0.7; }
 
     /* Lang toggle (EN / KO) — label scale, achromatic. */
     .ds-lang-toggle {
@@ -1641,23 +1696,23 @@
   <header class="ds-nav">
     <div class="ds-container ds-nav__inner">
       <a class="ds-nav__brand"
-         href="https://wizzy-lime.vercel.app/ko"
-         data-href-en="https://wizzy-lime.vercel.app/en"
-         data-href-ko="https://wizzy-lime.vercel.app/ko">haeji</a>
+         href="https://www.wizzydesign.space/ko"
+         data-href-en="https://www.wizzydesign.space/en"
+         data-href-ko="https://www.wizzydesign.space/ko">Heaji Wi</a>
 
       <div class="ds-nav__right">
         <nav class="ds-nav__menu" aria-label="Primary">
           <a class="ds-nav-link"
-             href="https://wizzy-lime.vercel.app/ko#project"
-             data-href-en="https://wizzy-lime.vercel.app/en#project"
-             data-href-ko="https://wizzy-lime.vercel.app/ko#project">
+             href="https://www.wizzydesign.space/ko#project"
+             data-href-en="https://www.wizzydesign.space/en#project"
+             data-href-ko="https://www.wizzydesign.space/ko#project">
             <span data-lang-content="en">project</span>
             <span data-lang-content="ko">프로젝트</span>
           </a>
           <a class="ds-nav-link"
-             href="https://wizzy-lime.vercel.app/ko#about"
-             data-href-en="https://wizzy-lime.vercel.app/en#about"
-             data-href-ko="https://wizzy-lime.vercel.app/ko#about">
+             href="https://www.wizzydesign.space/ko#about"
+             data-href-en="https://www.wizzydesign.space/en#about"
+             data-href-ko="https://www.wizzydesign.space/ko#about">
             <span data-lang-content="en">about</span>
             <span data-lang-content="ko">소개</span>
           </a>
@@ -1665,9 +1720,9 @@
                never replaces the case study. -->
           <a class="ds-nav-link"
              target="_blank" rel="noopener noreferrer"
-             href="https://wizzy-lime.vercel.app/HaejiWi_ProductDesigner_Resume_KO.pdf"
-             data-href-en="https://wizzy-lime.vercel.app/HaejiWi_ProductDesigner_Resume_EN.pdf"
-             data-href-ko="https://wizzy-lime.vercel.app/HaejiWi_ProductDesigner_Resume_KO.pdf">
+             href="https://www.wizzydesign.space/%EC%9C%84%ED%95%B4%EC%A7%80_UXUI%EB%94%94%EC%9E%90%EC%9D%B4%EB%84%88_%EC%9D%B4%EB%A0%A5%EC%84%9C.pdf"
+             data-href-en="https://www.wizzydesign.space/HeajiWi_UXUIDesigner_Resume.pdf"
+             data-href-ko="https://www.wizzydesign.space/%EC%9C%84%ED%95%B4%EC%A7%80_UXUI%EB%94%94%EC%9E%90%EC%9D%B4%EB%84%88_%EC%9D%B4%EB%A0%A5%EC%84%9C.pdf">
             <span data-lang-content="en">resume</span>
             <span data-lang-content="ko">이력서</span>
           </a>
@@ -1682,6 +1737,63 @@
           <button type="button" class="ds-lang-toggle__btn ds-lang-toggle__btn--active" data-lang="en" aria-label="English">EN</button>
           <span class="ds-lang-toggle__sep" aria-hidden="true">/</span>
           <button type="button" class="ds-lang-toggle__btn" data-lang="ko" aria-label="Korean">KO</button>
+        </div>
+      </div>
+
+      <!-- Below 1024px: the same links and toggle, folded behind a button. -->
+      <div class="ds-nav__mobile">
+        <button type="button" class="ds-nav__menu-btn"
+                aria-expanded="false" aria-controls="mobile-nav"
+                aria-label="Menu" data-aria-label-en="Menu" data-aria-label-ko="메뉴">
+          <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+            <g data-icon="open">
+              <path d="M2 5 H18" stroke="currentColor" stroke-width="1.25" />
+              <path d="M2 10 H18" stroke="currentColor" stroke-width="1.25" />
+              <path d="M2 15 H18" stroke="currentColor" stroke-width="1.25" />
+            </g>
+            <g data-icon="close">
+              <path d="M4 4 L16 16" stroke="currentColor" stroke-width="1.25" />
+              <path d="M16 4 L4 16" stroke="currentColor" stroke-width="1.25" />
+            </g>
+          </svg>
+        </button>
+
+        <div class="ds-nav__panel" id="mobile-nav" hidden>
+          <nav class="ds-nav__panel-menu" aria-label="Primary">
+            <a class="ds-nav-link" data-nav-close
+               href="https://www.wizzydesign.space/ko#project"
+               data-href-en="https://www.wizzydesign.space/en#project"
+               data-href-ko="https://www.wizzydesign.space/ko#project">
+              <span data-lang-content="en">project</span>
+              <span data-lang-content="ko">프로젝트</span>
+            </a>
+            <a class="ds-nav-link" data-nav-close
+               href="https://www.wizzydesign.space/ko#about"
+               data-href-en="https://www.wizzydesign.space/en#about"
+               data-href-ko="https://www.wizzydesign.space/ko#about">
+              <span data-lang-content="en">about</span>
+              <span data-lang-content="ko">소개</span>
+            </a>
+            <a class="ds-nav-link" data-nav-close
+               target="_blank" rel="noopener noreferrer"
+               href="https://www.wizzydesign.space/%EC%9C%84%ED%95%B4%EC%A7%80_UXUI%EB%94%94%EC%9E%90%EC%9D%B4%EB%84%88_%EC%9D%B4%EB%A0%A5%EC%84%9C.pdf"
+               data-href-en="https://www.wizzydesign.space/HeajiWi_UXUIDesigner_Resume.pdf"
+               data-href-ko="https://www.wizzydesign.space/%EC%9C%84%ED%95%B4%EC%A7%80_UXUI%EB%94%94%EC%9E%90%EC%9D%B4%EB%84%88_%EC%9D%B4%EB%A0%A5%EC%84%9C.pdf">
+              <span data-lang-content="en">resume</span>
+              <span data-lang-content="ko">이력서</span>
+            </a>
+            <a class="ds-nav-link" data-nav-close href="#contact">
+              <span data-lang-content="en">contact</span>
+              <span data-lang-content="ko">연락처</span>
+            </a>
+          </nav>
+          <div class="ds-nav__panel-lang">
+            <div class="ds-lang-toggle" role="group" aria-label="Language">
+              <button type="button" class="ds-lang-toggle__btn ds-lang-toggle__btn--active" data-lang="en" aria-label="English">EN</button>
+              <span class="ds-lang-toggle__sep" aria-hidden="true">/</span>
+              <button type="button" class="ds-lang-toggle__btn" data-lang="ko" aria-label="Korean">KO</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -3315,9 +3427,9 @@
             <li>
               <a class="ds-footer__link"
                  target="_blank" rel="noopener noreferrer"
-                 href="https://wizzy-lime.vercel.app/HaejiWi_ProductDesigner_Resume_KO.pdf"
-                 data-href-en="https://wizzy-lime.vercel.app/HaejiWi_ProductDesigner_Resume_EN.pdf"
-                 data-href-ko="https://wizzy-lime.vercel.app/HaejiWi_ProductDesigner_Resume_KO.pdf">
+                 href="https://www.wizzydesign.space/%EC%9C%84%ED%95%B4%EC%A7%80_UXUI%EB%94%94%EC%9E%90%EC%9D%B4%EB%84%88_%EC%9D%B4%EB%A0%A5%EC%84%9C.pdf"
+                 data-href-en="https://www.wizzydesign.space/HeajiWi_UXUIDesigner_Resume.pdf"
+                 data-href-ko="https://www.wizzydesign.space/%EC%9C%84%ED%95%B4%EC%A7%80_UXUI%EB%94%94%EC%9E%90%EC%9D%B4%EB%84%88_%EC%9D%B4%EB%A0%A5%EC%84%9C.pdf">
                 <span data-lang-content="en">Resume</span>
                 <span data-lang-content="ko">이력서</span>
               </a>
@@ -3340,8 +3452,8 @@
       <!-- The mark, and the notice under it. Left-aligned on mobile,
            where it has dropped below the columns rather than beside them. -->
       <div class="ds-footer__mark-wrap">
-        <p class="ds-footer__mark" aria-hidden="true">wizzy</p>
-        <p class="ds-footer__copyright">© 2026 wizzy</p>
+        <p class="ds-footer__mark" aria-hidden="true">Heaji Wi</p>
+        <p class="ds-footer__copyright">© 2026 Heaji Wi</p>
       </div>
     </div>
   </footer>
@@ -3372,6 +3484,9 @@
         document.querySelectorAll('[data-href-' + lang + ']').forEach((el) => {
           el.setAttribute('href', el.getAttribute('data-href-' + lang));
         });
+        document.querySelectorAll('[data-aria-label-' + lang + ']').forEach((el) => {
+          el.setAttribute('aria-label', el.getAttribute('data-aria-label-' + lang));
+        });
       };
 
       buttons.forEach((btn) => {
@@ -3380,6 +3495,28 @@
 
       // Initialize from current data-lang (default = en)
       setLang(root.dataset.lang || 'en');
+    })();
+
+    // ===== Mobile menu — below 1024px the links fold behind a button =====
+    (function () {
+      const btn = document.querySelector('.ds-nav__menu-btn');
+      const panel = document.getElementById('mobile-nav');
+      if (!btn || !panel) return;
+      const setOpen = (open) => {
+        btn.setAttribute('aria-expanded', String(open));
+        panel.hidden = !open;
+      };
+      btn.addEventListener('click', () => setOpen(panel.hidden));
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !panel.hidden) setOpen(false);
+      });
+      // A hash link remounts nothing, so the panel takes itself down.
+      panel.querySelectorAll('[data-nav-close]').forEach((a) =>
+        a.addEventListener('click', () => setOpen(false))
+      );
+      // Widening past the breakpoint puts the full nav back in the bar.
+      const wide = window.matchMedia('(min-width: 1024px)');
+      wide.addEventListener('change', () => { if (wide.matches) setOpen(false); });
     })();
 
     // ===== Footer email — copy on click instead of handing off to a
