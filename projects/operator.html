@@ -789,25 +789,6 @@
       font-size: 16px;
       line-height: 1.6;
     }
-    /* "HVAC?" and its definition, set as a term/definition pair. */
-    .op-step__term {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px 24px;
-      margin-top: var(--op-gap-s);
-    }
-    .op-step__term dt {
-      color: #ff8c42;
-      font-size: 20px;
-      font-weight: 800;
-      line-height: 1.2;
-    }
-    .op-step__term dd {
-      max-width: 680px;
-      color: #6e7884;
-      font-size: 16px;
-      line-height: 1.6;
-    }
 
     /* Held steps (1-1, 1-2) — the screen holds while the card changes, so
        each state can be read. The card sticks for one screen of scroll
@@ -1958,13 +1939,6 @@
                 <span data-lang-content="en">So, is this problem repeating in <em>other stores</em> too?</span>
                 <span data-lang-content="ko">그렇다면, 이 문제는 <em>다른 매장</em>에서도 반복되고 있을까요?</span>
               </h3>
-              <dl class="op-step__term">
-                <dt>HVAC?</dt>
-                <dd>
-                  <span data-lang-content="en">is a system that manages a space’s temperature, humidity, and air quality.</span>
-                  <span data-lang-content="ko">공간의 온도, 습도, 공기질을 관리하는 냉난방·환기 시스템입니다.</span>
-                </dd>
-              </dl>
             </div>
           </div>
         </article>
@@ -2010,7 +1984,7 @@
               <img class="op-step__tile-icon" src="operator/overview/icon-building.svg" width="48" height="48" alt="" />
               <h4 class="op-step__tile-title">
                 <span data-lang-content="en">Large buildings</span>
-                <span data-lang-content="ko">대형건물</span>
+                <span data-lang-content="ko">대형 건물</span>
               </h4>
               <ul class="op-step__tile-list">
                 <li>
@@ -2039,7 +2013,7 @@
               <img class="op-step__tile-icon" src="operator/overview/icon-store.svg" width="48" height="48" alt="" />
               <h4 class="op-step__tile-title">
                 <span data-lang-content="en">Small business stores</span>
-                <span data-lang-content="ko">자영업자 매장</span>
+                <span data-lang-content="ko">자영업 매장</span>
               </h4>
               <ul class="op-step__tile-list">
                 <li>
@@ -2063,7 +2037,7 @@
           </ul>
           <h3 class="op-step__decision">
             <span data-lang-content="en">I set small business stores as the target.</span>
-            <span data-lang-content="ko">자영업자 매장을 타깃으로 설정했습니다.</span>
+            <span data-lang-content="ko">자영업 매장을 타깃으로 설정했습니다.</span>
           </h3>
           <p class="op-step__lead">
             <span data-lang-content="en">For households, the business impact of cutting costs is relatively limited, and large buildings often already have an energy management system. Small business stores, by contrast, feel HVAC costs heavily yet lack a way to manage them around day-to-day operations.</span>
@@ -2156,12 +2130,12 @@
             </li>
             <li class="op-step__cell">
               <h4 class="op-step__cell-title">
-                <span data-lang-content="en">3. Abandonment from store specific complexity</span>
-                <span data-lang-content="ko">3. 매장별 상황 차이로 인한 사용 포기</span>
+                <span data-lang-content="en">3. Hard to adjust across store situations</span>
+                <span data-lang-content="ko">3. 매장별 상황에 따른 조절의 어려움</span>
               </h4>
               <p class="op-step__cell-body">
-                <span data-lang-content="en">Each store's setup differs, adapting controls becomes too hard, they give up</span>
-                <span data-lang-content="ko">매장마다 상황이 달라 조작 방법을 맞추기 어려워, 결국 사용을 포기하게 된다</span>
+                <span data-lang-content="en">Every store's situation differs, so it's hard to apply a consistent adjustment criterion</span>
+                <span data-lang-content="ko">매장마다 상황이 달라 일관된 조절 기준을 적용하기 어렵다</span>
               </p>
             </li>
             <li class="op-step__cell">
@@ -2185,8 +2159,8 @@
           </h3>
           <div class="op-step__box op-step__box--key">
             <h4 class="op-step__box-title">
-              <span data-lang-content="en">Small business owners adjusted HVAC throughout the day as store conditions changed.</span>
-              <span data-lang-content="ko">자영업자들은 매장 상황이 바뀔 때마다 하루 종일 냉난방을 조절하고 있었습니다.</span>
+              <span data-lang-content="en">The community data showed a pattern of repeatedly adjusting HVAC settings as store conditions changed.</span>
+              <span data-lang-content="ko">커뮤니티 데이터에서는 매장 상황에 따라 냉난방 설정을 반복적으로 조정하는 패턴이 나타났습니다.</span>
             </h4>
             <p class="op-step__box-body">
               <span data-lang-content="en">Their experiences revealed repeated adjustments, different approaches, and uncertainty about what to do.</span>
@@ -2502,8 +2476,8 @@
             <span data-lang-content="ko"><span class="op-step__turn-from">냉난방 관리의 문제는 조작이 아니라,</span><br><span class="op-step__turn-to"><em>운영 상황에 맞는 판단</em>을 지속하기 어렵다는 것이었습니다.</span></span>
           </h2>
           <p class="op-step__lead op-step__lead--close">
-            <span data-lang-content="en">Store owners want to manage HVAC costs efficiently, but in busy moments it's hard to keep checking the environment and adjusting settings. Yet cutting HVAC on cost alone can lose the comfort the store needs.<br><br>Help store owners manage cost efficiently while accounting for comfort, without having to step into HVAC management all the time.</span>
-            <span data-lang-content="ko">매장 운영자는 냉난방 비용을 효율적으로 관리하고 싶지만, 바쁜 상황에서 환경을 지속적으로 확인하고 설정을 조정하기는 어렵습니다. 그렇다고 비용만을 기준으로 냉난방을 줄이면 매장에 필요한 쾌적도를 놓칠 수 있습니다.<br><br>매장 운영자가 냉난방 관리에 지속적으로 개입하지 않아도, 쾌적도를 고려하면서 비용을 효율적으로 관리할 수 있도록 돕는다.</span>
+            <span data-lang-content="en">Store owners want to manage HVAC costs efficiently, but in busy moments it's hard to keep checking the environment and adjusting settings. Yet cutting HVAC on cost alone can lose the comfort the store needs.<br><br>Help store owners manage cost efficiently with comfort in mind, while reducing the burden of repeatedly checking information and adjusting settings.</span>
+            <span data-lang-content="ko">매장 운영자는 냉난방 비용을 효율적으로 관리하고 싶지만, 바쁜 상황에서 환경을 지속적으로 확인하고 설정을 조정하기는 어렵습니다. 그렇다고 비용만을 기준으로 냉난방을 줄이면 매장에 필요한 쾌적도를 놓칠 수 있습니다.<br><br>매장 운영자가 반복적으로 정보를 확인하고 설정을 조정하는 부담을 줄이면서, 쾌적도를 고려해 비용을 효율적으로 관리할 수 있도록 돕는다.</span>
           </p>
         </article>
       </div>
@@ -2526,8 +2500,8 @@
             <span data-lang-content="ko">냉난방을 직접 조작하는 방식에서, 더 나은 판단을 지원하는 방식으로 전환했습니다.</span>
           </h2>
           <p class="op-step__lead op-step__lead--close">
-            <span data-lang-content="en">Where existing systems focused on checking the current state and changing settings, Operator focused on helping users decide their next action by weighing cost and comfort together.</span>
-            <span data-lang-content="ko">기존 시스템이 현재 상태를 확인하고 설정을 변경하는 데 초점을 맞췄다면, Operator는 비용과 쾌적도를 함께 고려해 다음 행동을 결정하도록 돕는 데 집중했습니다.</span>
+            <span data-lang-content="en">Competitor analysis showed that existing systems support status checks and device control, but are relatively weak at guiding choices that weigh cost and comfort together. Operator focused on helping users decide their next action by presenting adjustment options and their expected effects.</span>
+            <span data-lang-content="ko">경쟁 서비스 분석을 통해 기존 시스템은 상태 확인과 기기 제어를 지원하는 반면, 비용과 쾌적도를 함께 고려한 선택을 안내하는 부분은 상대적으로 부족하다고 판단했습니다. Operator는 조정안과 예상 효과를 제시해 다음 행동을 결정하도록 돕는 데 집중했습니다.</span>
           </p>
           <p class="op-step__lead op-step__lead--flush">
             <span data-lang-content="en">We designed it so that AI recommends adjustments and shows their expected effects, while users make the choice that fits their store's situation.</span>
@@ -2616,13 +2590,13 @@
               </h3>
               <div class="op-step__cell">
                 <h4 class="op-step__cell-title">
-                  <span data-lang-content="en">What data is received</span>
-                  <span data-lang-content="ko">어떤 데이터를 받는가</span>
+                  <span data-lang-content="en">Data to consider</span>
+                  <span data-lang-content="ko">고려할 데이터</span>
                 </h4>
                 <ul class="op-step__cell-list">
                   <li>
-                    <span data-lang-content="en">Real-time store temperature &amp; humidity</span>
-                    <span data-lang-content="ko">매장의 실시간 온도·습도</span>
+                    <span data-lang-content="en">Store temperature &amp; humidity</span>
+                    <span data-lang-content="ko">매장의 온도·습도</span>
                   </li>
                   <li>
                     <span data-lang-content="en">Outdoor temperature</span>
@@ -2637,8 +2611,8 @@
                     <span data-lang-content="ko">사용자 조작 이력</span>
                   </li>
                   <li>
-                    <span data-lang-content="en">Time-of-use pricing structure</span>
-                    <span data-lang-content="ko">시간대별 전기 요금 구조</span>
+                    <span data-lang-content="en">Time-of-use electricity pricing</span>
+                    <span data-lang-content="ko">시간대별 전기요금 구조</span>
                   </li>
                 </ul>
               </div>
@@ -2653,25 +2627,25 @@
               </h3>
               <div class="op-step__cell">
                 <h4 class="op-step__cell-title">
-                  <span data-lang-content="en">What criteria drive the judgment</span>
-                  <span data-lang-content="ko">어떤 기준으로 판단하는가</span>
+                  <span data-lang-content="en">Proposed decision criteria</span>
+                  <span data-lang-content="ko">제안한 판단 기준</span>
                 </h4>
                 <ul class="op-step__cell-list">
                   <li>
-                    <span data-lang-content="en">Cost × comfort weighting</span>
-                    <span data-lang-content="ko">비용 × 쾌적도 가중치</span>
+                    <span data-lang-content="en">Priority between cost and comfort</span>
+                    <span data-lang-content="ko">비용과 쾌적도 간 우선순위</span>
                   </li>
                   <li>
-                    <span data-lang-content="en">Predicted cumulative cost</span>
-                    <span data-lang-content="ko">예상 누적 비용</span>
+                    <span data-lang-content="en">Expected cost</span>
+                    <span data-lang-content="ko">예상 비용</span>
                   </li>
                   <li>
-                    <span data-lang-content="en">Comfort delta</span>
-                    <span data-lang-content="ko">쾌적도 변화 폭</span>
+                    <span data-lang-content="en">Comfort change</span>
+                    <span data-lang-content="ko">쾌적도 변화</span>
                   </li>
                   <li>
-                    <span data-lang-content="en">Historical success rate in similar contexts</span>
-                    <span data-lang-content="ko">과거 유사 상황의 성공률</span>
+                    <span data-lang-content="en">Using records from similar past situations</span>
+                    <span data-lang-content="ko">과거 유사 상황의 기록 활용</span>
                   </li>
                 </ul>
               </div>
@@ -2686,22 +2660,26 @@
               </h3>
               <div class="op-step__cell op-step__cell--key">
                 <h4 class="op-step__cell-title">
-                  <span data-lang-content="en">What output is delivered</span>
-                  <span data-lang-content="ko">어떤 결과를 제공하는가</span>
+                  <span data-lang-content="en">Results designed to provide</span>
+                  <span data-lang-content="ko">제공하도록 설계한 결과</span>
                 </h4>
                 <ul class="op-step__cell-list">
                   <li>
-                    <span data-lang-content="en">Candidate options with predicted outcomes</span>
-                    <span data-lang-content="ko">후보 옵션과 각각의 예상 결과</span>
+                    <span data-lang-content="en">Candidate adjustments and expected results</span>
+                    <span data-lang-content="ko">후보 조정안과 예상 결과</span>
                   </li>
                   <li>
-                    <span data-lang-content="en">Top recommendation with rationale</span>
-                    <span data-lang-content="ko">추천 1순위와 그 근거</span>
+                    <span data-lang-content="en">Recommendation and its rationale</span>
+                    <span data-lang-content="ko">추천안과 추천 근거</span>
                   </li>
                 </ul>
               </div>
             </li>
           </ol>
+          <p class="op-step__lead">
+            <span data-lang-content="en">※ This structure is a proposed system concept; no real AI prediction performance or recommendation logic was implemented or validated.</span>
+            <span data-lang-content="ko">※ 위 구조는 제안한 시스템 개념이며, 실제 AI 모델의 예측 성능이나 추천 로직을 구현·검증한 것은 아닙니다.</span>
+          </p>
         </article>
       </div>
 
@@ -3027,12 +3005,12 @@
                 <span data-lang-content="ko">팝업에는 현재 상태와 추천 이유, 적용 후 예상 변화를 간결하게 보여주고, 핵심 행동인 승인에 시각적 강조를 집중했습니다. 이를 통해 사용자가 매장 업무를 중단하고 여러 화면을 탐색해야 하는 부담을 줄이고자 했습니다.</span>
               </p>
               <p class="op-step__statement op-step__statement--outcome">
-                <span data-lang-content="en">Outcomes</span>
-                <span data-lang-content="ko">결과</span>
+                <span data-lang-content="en">Design goal</span>
+                <span data-lang-content="ko">설계 목표</span>
               </p>
               <p class="op-step__lead">
-                <span data-lang-content="en">Faster in-the-moment decisions</span>
-                <span data-lang-content="ko">그 자리에서 더 빠른 결정</span>
+                <span data-lang-content="en">Support quick decisions on the spot</span>
+                <span data-lang-content="ko">현장에서 빠른 의사결정을 지원</span>
               </p>
               <ul class="op-step__chips op-step__chips--stack">
               <li class="op-step__chip">
@@ -3074,20 +3052,20 @@
             <video class="op-step__feature-media op-step__feature-media--wide" src="operator/features/feature-02.mp4" autoplay muted loop playsinline aria-label="Data log and learning"></video>
             <div class="op-step__feature-text">
               <p class="op-step__statement">
-                <span data-lang-content="en">Track how each decision affects cost and comfort.</span>
-                <span data-lang-content="ko">각 결정이 비용과 쾌적도에 준 영향을 추적합니다.</span>
+                <span data-lang-content="en">We envisioned a data log so users can look back on how each decision affected cost and comfort.</span>
+                <span data-lang-content="ko">각 결정이 비용과 쾌적도에 미친 영향을 돌아볼 수 있도록 데이터 기록 기능을 구상했습니다.</span>
               </p>
               <p class="op-step__lead">
                 <span data-lang-content="en">We envisioned a data log so users can check the results of their HVAC adjustments and help improve future recommendations.<br><br>A record of adjustments and the resulting cost and comfort changes lets users look back on past choices. Longer term, we envisioned using the accumulated records to understand each store's patterns and preferences.<br><br>AI learning from real accumulated data, and the resulting gain in recommendation accuracy, were outside the scope of implementation and validation.</span>
                 <span data-lang-content="ko">사용자가 냉난방 조절의 결과를 확인하고, 향후 추천을 개선할 수 있도록 데이터 기록 기능을 구상했습니다.<br><br>냉난방 조절과 비용·쾌적도 변화의 기록을 통해 사용자가 과거의 선택을 돌아볼 수 있도록 설계했습니다. 장기적으로는 누적된 기록을 매장별 패턴과 선호를 이해하는 데 활용하는 방향을 구상했습니다.<br><br>실제 데이터 축적을 통한 AI 학습이나 추천 정확도 향상은 구현 및 검증 범위에 포함되지 않았습니다.</span>
               </p>
               <p class="op-step__statement op-step__statement--outcome">
-                <span data-lang-content="en">Outcomes</span>
-                <span data-lang-content="ko">결과</span>
+                <span data-lang-content="en">Design goal</span>
+                <span data-lang-content="ko">설계 목표</span>
               </p>
               <p class="op-step__lead">
-                <span data-lang-content="en">Visualized cost and comfort changes</span>
-                <span data-lang-content="ko">비용·쾌적도 변화 시각화</span>
+                <span data-lang-content="en">Record and visualize cost and comfort changes</span>
+                <span data-lang-content="ko">비용·쾌적도 변화의 기록 및 시각화</span>
               </p>
               <ul class="op-step__chips op-step__chips--stack">
               <li class="op-step__chip">
@@ -3137,12 +3115,12 @@
                 <span data-lang-content="ko">비용 관리 모드와 쾌적도 우선 모드를 제공해, 매장 운영 상황에 따라 사용자가 원하는 기준을 선택할 수 있도록 설계했습니다. AI 추천은 사용자가 선택한 우선순위를 반영하는 방향으로 구상했습니다.</span>
               </p>
               <p class="op-step__statement op-step__statement--outcome">
-                <span data-lang-content="en">Outcomes</span>
-                <span data-lang-content="ko">결과</span>
+                <span data-lang-content="en">Design goal</span>
+                <span data-lang-content="ko">설계 목표</span>
               </p>
               <p class="op-step__lead">
-                <span data-lang-content="en">Recommendations tailored to cost and comfort priorities</span>
-                <span data-lang-content="ko">비용·쾌적도 우선순위에 맞춘 추천</span>
+                <span data-lang-content="en">Recommendations that reflect the user&#39;s cost and comfort priorities</span>
+                <span data-lang-content="ko">사용자의 비용·쾌적도 우선순위를 반영한 추천</span>
               </p>
               <ul class="op-step__chips op-step__chips--stack">
               <li class="op-step__chip">
@@ -3198,16 +3176,16 @@
                   <span data-lang-content="ko">현재 매장 상태 이해하기</span>
                 </li>
                 <li>
-                  <span data-lang-content="en">Understand why AI recommended an action</span>
-                  <span data-lang-content="ko">AI가 그 행동을 추천한 이유 이해하기</span>
+                  <span data-lang-content="en">Understand how the reason for a recommendation relates to the store&#39;s situation</span>
+                  <span data-lang-content="ko">추천 이유와 매장 상황의 연관성 이해하기</span>
                 </li>
                 <li>
-                  <span data-lang-content="en">Decide whether to apply the recommendation</span>
-                  <span data-lang-content="ko">추천을 적용할지 결정하기</span>
+                  <span data-lang-content="en">Decide whether to approve the recommendation</span>
+                  <span data-lang-content="ko">추천을 승인할지 결정하기</span>
                 </li>
                 <li>
-                  <span data-lang-content="en">Interpret the predicted cost and comfort outcomes</span>
-                  <span data-lang-content="ko">예상 비용·쾌적도 결과 해석하기</span>
+                  <span data-lang-content="en">Interpret the expected cost and comfort changes</span>
+                  <span data-lang-content="ko">예상 비용·쾌적도 변화 해석하기</span>
                 </li>
               </ol>
               <figure class="op-step__fig op-step__fig--protocol">
@@ -3317,17 +3295,17 @@
                 <span data-lang-content="ko">제품의 작동 방식과 매장별 설정의 역할을 이해할 수 있도록 온보딩을 보완했습니다. 또한 비용 관리와 쾌적도 모드의 차이를 설명하고, 한 달과 일 년 기준의 예상 절감 효과를 함께 제시해 추천의 의미를 더 구체적으로 파악할 수 있도록 했습니다.<br><br>팝업 승인 이후에는 다음 단계와 구체적인 행동 안내를 추가해 사용자가 이어지는 흐름을 이해할 수 있도록 개선했습니다.</span>
               </p>
               <p class="op-step__statement op-step__statement--far">
-                <span data-lang-content="en">Outcomes</span>
-                <span data-lang-content="ko">결과</span>
+                <span data-lang-content="en">What changed</span>
+                <span data-lang-content="ko">개선 내용</span>
               </p>
               <ul class="op-step__bullets" data-stagger>
                 <li>
-                  <span data-lang-content="en">Introduced the AI-assisted HVAC operating model</span>
-                  <span data-lang-content="ko">AI가 돕는 냉난방 운영 방식을 소개했습니다</span>
+                  <span data-lang-content="en">Guided users through the AI-based HVAC operating model and store-specific setup</span>
+                  <span data-lang-content="ko">AI 기반 냉난방 운영 방식과 매장별 설정 과정을 안내했습니다</span>
                 </li>
                 <li>
-                  <span data-lang-content="en">Clarified how cost and comfort inform AI recommendations</span>
-                  <span data-lang-content="ko">비용과 쾌적도가 AI 추천에 어떻게 반영되는지 명확히 했습니다</span>
+                  <span data-lang-content="en">Explained the difference between the cost and comfort modes, and their expected effects, in concrete terms</span>
+                  <span data-lang-content="ko">비용과 쾌적도 모드의 차이 및 예상 효과를 구체적으로 설명했습니다</span>
                 </li>
               </ul>
               <p class="op-step__lead">
