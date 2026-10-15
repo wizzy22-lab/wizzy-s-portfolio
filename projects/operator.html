@@ -1306,6 +1306,9 @@
       line-height: 1.2;
       letter-spacing: -0.2px;
     }
+    /* forces the next chip onto a new row; the negative margin cancels the
+       extra row gap the zero-height line would add */
+    .op-step__chips-break { flex-basis: 100%; height: 0; margin-top: -24px; }
 
     /* 4-4 Structure design (Figma 26:4) — the pop-up → main-screen flow as
        a small diagram, the IA beside its reading, and three 4:3 figures. */
@@ -2277,7 +2280,7 @@
               </h4>
               <p class="op-step__cell-body">
                 <span data-lang-content="en">Without clear criteria, they adjust settings based on how the store feels or on past experience.</span>
-                <span data-lang-content="ko">명확한 판단 기준이 없어, 매장에서 느껴지는 체감이나 과거 경험을 바탕으로 설정을 조정한다.</span>
+                <span data-lang-content="ko">명확한 판단 기준이 없어, 매장에서 느껴지는 체감이나 과거 경험을<br>바탕으로 설정을 조정한다.</span>
               </p>
             </li>
           </ul>
@@ -2343,7 +2346,7 @@
               </p>
               <p class="op-step__lead">
                 <span data-lang-content="en">For busy small business owners, understanding how these variables affect the final bill<br>is difficult during daily operations.</span>
-                <span data-lang-content="ko">운영에 바쁜 자영업자가 이 변수들이 최종 요금에 어떤 영향을 주는지<br>매일 따져보기는 어렵습니다.</span>
+                <span data-lang-content="ko">운영에 바쁜 자영업자가 이 변수들이 최종 요금에<br>어떤 영향을 주는지 매일 따져보기는 어렵습니다.</span>
               </p>
             </div>
           </div>
@@ -2370,7 +2373,7 @@
             <div class="op-step__aside">
               <p class="op-step__lead">
                 <span data-lang-content="en">We built store-operation scenarios that account for time-of-use rates and usage, and compared the results of adjusting settings to minimize cost.</span>
-                <span data-lang-content="ko">시간대별 요금과 사용량을 고려한 매장 운영 시나리오를 구성하고, 비용을 최소화하는 방식으로 설정을 조정했을 때의 결과를 비교했습니다.</span>
+                <span data-lang-content="ko">시간대별 요금과 사용량을 고려한 매장 운영 시나리오를 구성하고,<br>비용을 최소화하는 방식으로 설정을 조정했을 때의 결과를 비교했습니다.</span>
               </p>
               <p class="op-step__statement">
                 <span data-lang-content="en">Cost savings came with trade-offs</span>
@@ -2378,7 +2381,7 @@
               </p>
               <p class="op-step__lead">
                 <span data-lang-content="en">Some scenarios showed potential savings of around 5–10% a month, but these assumed a specific pricing structure and usage conditions. In a real store, applicability could vary with operating hours, weather and usage patterns. Cutting costs could also conflict with keeping the space comfortable.<br><br>So rather than aiming HVAC management at cost savings alone, we broadened the goal to managing cost efficiently while accounting for comfort.</span>
-                <span data-lang-content="ko">일부 시나리오에서는 월 5~10% 수준의 절감 가능성을 확인했지만, 이는 특정 요금 구조와 사용 조건을 가정한 결과였습니다. 실제 매장에서는 운영시간과 날씨, 사용 패턴 등에 따라 적용 가능성이 달라질 수 있었습니다. 또한 비용을 줄이는 방식이 쾌적한 환경 유지와 충돌할 가능성도 있었습니다.<br><br>따라서 냉난방 관리의 목표를 비용 절감에만 두기보다, 쾌적도를 고려하면서 비용을 효율적으로 관리하는 것으로 확장했습니다.</span>
+                <span data-lang-content="ko">일부 시나리오에서는 월 5~10% 수준의 절감 가능성을 확인했지만, 이는 특정 요금 구조와 사용 조건을 가정한 결과였습니다. 실제 매장에서는 운영시간과 날씨, 사용 패턴 등에 따라 적용 가능성이 달라질 수 있었습니다. 또한 비용을 줄이는 방식이 쾌적한 환경 유지와 충돌할 가능성도 있었습니다.<br><br>따라서 냉난방 관리의 목표를 비용 절감에만 두기보다,<br>쾌적도를 고려하면서 비용을 효율적으로 관리하는 것으로 확장했습니다.</span>
               </p>
             </div>
           </div>
@@ -2509,11 +2512,11 @@
           </h2>
           <p class="op-step__lead op-step__lead--close">
             <span data-lang-content="en">Competitor analysis showed that existing systems focused on checking HVAC status and controlling devices. What they lacked, relatively, was helping users see how an adjustment affects cost and the store environment, and decide their next action on that basis.</span>
-            <span data-lang-content="ko">경쟁 서비스 분석 결과, 기존 시스템은 냉난방 상태를 확인하고 기기를 제어하는 기능에 집중하고 있었습니다. 반면, 조정이 비용과 매장 환경에 어떤 영향을 미치는지 파악하고, 이를 바탕으로 다음 행동을 결정하도록 돕는 기능은 상대적으로 부족했습니다.</span>
+            <span data-lang-content="ko">경쟁 서비스 분석 결과, 기존 시스템은 냉난방 상태를 확인하고 기기를 제어하는 기능에 집중하고 있었습니다.<br>반면, 조정이 비용과 매장 환경에 어떤 영향을 미치는지 파악하고, 이를 바탕으로 다음 행동을 결정하도록 돕는 기능은 상대적으로 부족했습니다.</span>
           </p>
           <p class="op-step__lead">
             <span data-lang-content="en">Going beyond status checks and control, Operator was designed so that AI presents adjustments and their expected effects to fit the store's situation, and users review them and decide. This lets owners weigh cost and comfort together while easing the burden of checking information and making a judgment every time.</span>
-            <span data-lang-content="ko">Operator는 단순한 상태 확인과 제어를 넘어, AI가 매장 상황에 맞는 조정안과 예상 효과를 제시하고 사용자가 이를 검토해 직접 결정하는 방식을 설계했습니다. 이를 통해 운영자가 매번 정보를 확인하고 판단해야 하는 부담을 줄이면서, 비용과 쾌적도를 함께 고려할 수 있도록 했습니다.</span>
+            <span data-lang-content="ko">Operator는 단순한 상태 확인과 제어를 넘어, AI가 매장 상황에 맞는 조정안과 예상 효과를 제시하고 사용자가 이를 검토해 직접 결정하는 방식을 설계했습니다.<br>이를 통해 운영자가 매번 정보를 확인하고 판단해야 하는 부담을 줄이면서, 비용과 쾌적도를 함께 고려할 수 있도록 했습니다.</span>
           </p>
           <div class="op-step__shift" data-shift>
             <div class="op-step__shift-panel">
@@ -2769,7 +2772,7 @@
           </div>
           <p class="op-step__lead">
             <span data-lang-content="en">We evaluated the feature set by importance and implementation priority,<br>narrowing it down to the features essential for the MVP.</span>
-            <span data-lang-content="ko">기능을 중요도와 구현 우선순위로 평가해,<br>MVP에 꼭 필요한 기능으로 좁혔습니다.</span>
+            <span data-lang-content="ko">기능을 중요도와 구현 우선순위로 평가해, MVP에 꼭 필요한 기능으로 좁혔습니다.</span>
           </p>
           <h3 class="op-step__part">
             <span class="op-step__part-num">03</span>
@@ -2799,6 +2802,7 @@
               <span data-lang-content="en">Predicted outcome</span>
               <span data-lang-content="ko">예상 결과</span>
             </li>
+            <li class="op-step__chips-break" aria-hidden="true"></li>
             <li class="op-step__chip">
               <span data-lang-content="en">Open / Peak / Close guidance</span>
               <span data-lang-content="ko">오픈 / 피크 / 마감 가이드</span>
@@ -2930,7 +2934,7 @@
               </p>
               <p class="op-step__lead">
                 <span data-lang-content="en">We gathered the key information on one screen, so users can review a recommendation without moving between screens.</span>
-                <span data-lang-content="ko">핵심 정보를 한 화면에 모아 여러 화면을 오가지 않고도 추천을 검토할 수 있도록 했습니다.</span>
+                <span data-lang-content="ko">핵심 정보를 한 화면에 모아 여러 화면을 오가지 않고도<br>추천을 검토할 수 있도록 했습니다.</span>
               </p>
               <ul class="op-step__bullets">
                 <li>
@@ -3014,11 +3018,11 @@
             <div class="op-step__feature-text">
               <p class="op-step__statement">
                 <span data-lang-content="en">Even during busy operations, users can check a recommendation in the pop-up and approve it quickly.</span>
-                <span data-lang-content="ko">바쁜 운영 중에도 팝업에서 추천을 확인하고 빠르게 승인할 수 있습니다.</span>
+                <span data-lang-content="ko">바쁜 운영 중에도 팝업에서 추천을 확인하고<br>빠르게 승인할 수 있습니다.</span>
               </p>
               <p class="op-step__lead">
                 <span data-lang-content="en">The pop-up briefly shows the current state, the reason for the recommendation and the expected change after applying it, with visual emphasis focused on the key action: approval. This aimed to spare users from stopping store work to navigate between screens.</span>
-                <span data-lang-content="ko">팝업에는 현재 상태와 추천 이유, 적용 후 예상 변화를 간결하게 보여주고, 핵심 행동인 승인에 시각적 강조를 집중했습니다. 이를 통해 사용자가 매장 업무를 중단하고 여러 화면을 탐색해야 하는 부담을 줄이고자 했습니다.</span>
+                <span data-lang-content="ko">팝업에는 현재 상태와 추천 이유, 적용 후 예상 변화를 간결하게 보여주고, 핵심 행동인 승인에 시각적 강조를 집중했습니다.<br>이를 통해 사용자가 매장 업무를 중단하고 여러 화면을 탐색해야 하는 부담을 줄이고자 했습니다.</span>
               </p>
               <p class="op-step__statement op-step__statement--outcome">
                 <span data-lang-content="en">Design goal</span>
@@ -3073,7 +3077,7 @@
               </p>
               <p class="op-step__lead">
                 <span data-lang-content="en">We envisioned a data log so users can check the results of their HVAC adjustments and help improve future recommendations.<br><br>A record of adjustments and the resulting cost and comfort changes lets users look back on past choices. Longer term, we envisioned using the accumulated records to understand each store's patterns and preferences.<br><br>AI learning from real accumulated data, and the resulting gain in recommendation accuracy, were outside the scope of implementation and validation.</span>
-                <span data-lang-content="ko">사용자가 냉난방 조절의 결과를 확인하고, 향후 추천을 개선할 수 있도록 데이터 기록 기능을 구상했습니다.<br><br>냉난방 조절과 비용·쾌적도 변화의 기록을 통해 사용자가 과거의 선택을 돌아볼 수 있도록 설계했습니다. 장기적으로는 누적된 기록을 매장별 패턴과 선호를 이해하는 데 활용하는 방향을 구상했습니다.<br><br>실제 데이터 축적을 통한 AI 학습이나 추천 정확도 향상은 구현 및 검증 범위에 포함되지 않았습니다.</span>
+                <span data-lang-content="ko">사용자가 냉난방 조절의 결과를 확인하고,<br>향후 추천을 개선할 수 있도록 데이터 기록 기능을 구상했습니다.<br><br>냉난방 조절과 비용·쾌적도 변화의 기록을 통해 사용자가<br>과거의 선택을 돌아볼 수 있도록 설계했습니다.<br>장기적으로는 누적된 기록을 매장별 패턴과 선호를 이해하는 데 활용하는 방향을 구상했습니다.<br><br>실제 데이터 축적을 통한 AI 학습이나 추천 정확도 향상은<br>구현 및 검증 범위에 포함되지 않았습니다.</span>
               </p>
               <p class="op-step__statement op-step__statement--outcome">
                 <span data-lang-content="en">Design goal</span>
@@ -3124,11 +3128,11 @@
             <div class="op-step__feature-text">
               <p class="op-step__statement">
                 <span data-lang-content="en">Users choose whether cost or comfort takes priority.</span>
-                <span data-lang-content="ko">비용과 쾌적도 중 어떤 기준을 우선할지 사용자가 선택하도록 했습니다.</span>
+                <span data-lang-content="ko">비용과 쾌적도 중 어떤 기준을 우선할지<br>사용자가 선택하도록 했습니다.</span>
               </p>
               <p class="op-step__lead">
                 <span data-lang-content="en">We offered a cost-management mode and a comfort-first mode so users can choose the criterion they want to fit the store's situation. AI recommendations were envisioned to reflect the priority the user chooses.</span>
-                <span data-lang-content="ko">비용 관리 모드와 쾌적도 우선 모드를 제공해, 매장 운영 상황에 따라 사용자가 원하는 기준을 선택할 수 있도록 설계했습니다. AI 추천은 사용자가 선택한 우선순위를 반영하는 방향으로 구상했습니다.</span>
+                <span data-lang-content="ko">비용 관리 모드와 쾌적도 우선 모드를 제공해, 매장 운영 상황에 따라 사용자가 원하는 기준을 선택할 수 있도록 설계했습니다.<br>AI 추천은 사용자가 선택한 우선순위를 반영하는 방향으로 구상했습니다.</span>
               </p>
               <p class="op-step__statement op-step__statement--outcome">
                 <span data-lang-content="en">Design goal</span>
@@ -3248,7 +3252,7 @@
               </h4>
               <p class="op-step__box-body">
                 <span data-lang-content="en">Users struggled to understand how AI recommendations applied to their own store.<br><br>We ran a usability test with 5 participants. The core problem it revealed wasn't only that they didn't know how to operate it. They found it hard to fully understand how AI produces its recommendations, and how those recommendations connect to their own store's situation.</span>
-                <span data-lang-content="ko">사용자는 AI 추천이 자신의 매장에 어떻게 적용되는지 이해하기 어려워했습니다.<br><br>5명을 대상으로 사용성 테스트를 진행했습니다. 테스트에서 확인한 핵심 문제는 단순히 조작 방법을 몰랐다는 것만이 아니었습니다. AI가 추천을 만드는 방식과 그 추천이 자신의 매장 상황에 어떻게 연결되는지 충분히 이해하기 어려워했습니다.</span>
+                <span data-lang-content="ko">사용자는 AI 추천이 자신의 매장에 어떻게 적용되는지<br>이해하기 어려워했습니다.<br><br>5명을 대상으로 사용성 테스트를 진행했습니다. 테스트에서 확인한 핵심 문제는 단순히 조작 방법을 몰랐다는 것만이 아니었습니다.<br>AI가 추천을 만드는 방식과 그 추천이 자신의 매장 상황에 어떻게 연결되는지 충분히 이해하기 어려워했습니다.</span>
               </p>
             </div>
             <div class="op-step__box">
@@ -3289,7 +3293,7 @@
           <div class="op-step__box op-step__box--note">
             <p class="op-step__box-body op-step__box-body--strong">
               <span data-lang-content="en">Users found it hard to understand how AI recommendations reflected their own store's situation, and struggled to pick out what was meaningful to them in the sample data and expected effects.</span>
-              <span data-lang-content="ko">사용자는 AI 추천이 자신의 매장 상황을 어떻게 반영하는지 이해하기 어려웠고, 가상의 데이터와 예상 효과에서도 본인에게 의미 있는 정보를 파악하기 어려워했습니다.</span>
+              <span data-lang-content="ko">사용자는 AI 추천이 자신의 매장 상황을 어떻게 반영하는지 이해하기 어려웠고,<br>가상의 데이터와 예상 효과에서도 본인에게 의미 있는 정보를 파악하기 어려워했습니다.</span>
             </p>
           </div>
           <h3 class="op-step__part">
@@ -3326,7 +3330,7 @@
               </ul>
               <p class="op-step__lead">
                 <span data-lang-content="en">After the improvements, feedback from colleagues showed they could grasp the product's core concepts more easily. However, since the improved design wasn't retested with the same users, it's hard to say the usability gains have been proven.</span>
-                <span data-lang-content="ko">개선 후 동료들의 피드백에서는 제품의 핵심 개념을 더 쉽게 이해할 수 있었다는 반응을 확인했습니다. 다만 동일한 사용자에게 개선안을 다시 테스트하지는 못했기 때문에, 실제 사용성 개선 효과가 입증됐다고 보기는 어렵습니다.</span>
+                <span data-lang-content="ko">개선 후 동료들의 피드백에서는 제품의 핵심 개념을 더 쉽게 이해할 수 있었다는 반응을 확인했습니다. 다만 동일한 사용자에게 개선안을 다시 테스트하지는 못했기 때문에,<br>실제 사용성 개선 효과가 입증됐다고 보기는 어렵습니다.</span>
               </p>
             </div>
           </div>
@@ -3355,7 +3359,7 @@
           <div class="op-step__box op-step__box--note">
             <p class="op-step__box-body">
               <span data-lang-content="en">Running a store helped me spot the problem quickly, but I didn't assume from my own experience alone that other stores had the same problem. Community research, interviews and pricing-structure analysis confirmed the problem's scope and validity.</span>
-              <span data-lang-content="ko">매장 운영 경험을 통해 문제를 빠르게 발견했지만, 개인 경험만으로 다른 매장에도 같은 문제가 있다고 단정하지 않았습니다. 커뮤니티 리서치와 인터뷰, 요금 구조 분석을 통해 문제의 범위와 타당성을 확인했습니다.</span>
+              <span data-lang-content="ko">매장 운영 경험을 통해 문제를 빠르게 발견했지만, 개인 경험만으로 다른 매장에도 같은 문제가 있다고 단정하지 않았습니다.<br>커뮤니티 리서치와 인터뷰, 요금 구조 분석을 통해 문제의 범위와 타당성을 확인했습니다.</span>
             </p>
             <p class="op-step__takeaway">
               <span data-lang-content="en">I learned that personal experience is a starting point for finding problems, but what can be generalized has to be judged through research.</span>
@@ -3372,7 +3376,7 @@
           <div class="op-step__box op-step__box--note">
             <p class="op-step__box-body">
               <span data-lang-content="en">Scenario analysis based on the pricing structure showed that cost savings alone could not adequately explain HVAC decisions in a real store. Building on this, I reframed the problem from cost savings to balancing comfort and cost, and made it concrete through user approval and a split of roles between the pop-up and the main screen.</span>
-              <span data-lang-content="ko">요금 구조에 기반한 시나리오 분석을 통해 비용 절감만으로는 실제 매장의 냉난방 판단을 충분히 설명하기 어렵다는 점을 확인했습니다. 이를 바탕으로 문제를 비용 절감에서 쾌적도와 비용의 균형으로 재정의하고, 사용자 승인 방식과 팝업·메인 화면의 역할 분리로 구체화했습니다.</span>
+              <span data-lang-content="ko">요금 구조에 기반한 시나리오 분석을 통해 비용 절감만으로는 실제 매장의 냉난방 판단을 충분히 설명하기 어렵다는 점을 확인했습니다.<br>이를 바탕으로 문제를 비용 절감에서 쾌적도와 비용의 균형으로 재정의하고, 사용자 승인 방식과 팝업·메인 화면의 역할 분리로 구체화했습니다.</span>
             </p>
             <p class="op-step__takeaway">
               <span data-lang-content="en">I learned that validation shouldn&#39;t stop at confirming an initial hypothesis; it should be used to define the problem more fittingly.</span>
@@ -3389,7 +3393,7 @@
           <div class="op-step__box op-step__box--note">
             <p class="op-step__box-body">
               <span data-lang-content="en">This was an exploratory project based on 5 interviews and a usability test with 5 participants. I couldn&#39;t re-validate the revised onboarding with the same participants, and real HVAC control and cost savings were not confirmed either.<br><br>Next, I want to test the improved experience again and validate how well recommendations are understood, and how effective they are, in real store conditions.</span>
-              <span data-lang-content="ko">이 프로젝트는 인터뷰 5명과 사용성 테스트 5명을 바탕으로 한 탐색적 프로젝트였습니다. 개선한 온보딩을 동일한 참가자에게 재검증하지 못했고, 실제 냉난방 제어와 비용 절감 효과도 확인하지 못했습니다.<br><br>다음 단계에서는 개선된 경험을 다시 테스트하고, 실제 매장 상황에서 추천의 이해도와 효과를 검증하고자 합니다.</span>
+              <span data-lang-content="ko">이 프로젝트는 인터뷰 5명과 사용성 테스트 5명을 바탕으로 한 탐색적 프로젝트였습니다.<br>개선한 온보딩을 동일한 참가자에게 재검증하지 못했고, 실제 냉난방 제어와 비용 절감 효과도 확인하지 못했습니다.<br><br>다음 단계에서는 개선된 경험을 다시 테스트하고, 실제 매장 상황에서 추천의 이해도와 효과를 검증하고자 합니다.</span>
             </p>
             <p class="op-step__takeaway">
               <span data-lang-content="en">A clear design direction is only the beginning; its impact still needs to be validated.</span>
